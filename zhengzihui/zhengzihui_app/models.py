@@ -8,76 +8,173 @@ from filer.fields.image import FilerImageField #YZ add for filer
 from filer.fields.file import FilerFileField
 
 # Create your models here.
-#所有数据库字段的开头字母大写，所有表单的id前需要加上表单名
-defaultURL = 'default'
-defaultImageURLofNews = 'img/News_img/%Y/%m/%d' #每次makemigration的时候好像是需要在not null 字段加入default
-defaultImageURLofAds = 'img/Ads_img/%Y/%m/%d'
-defaultImageURLofProduct = 'img/Product_img/%Y/%m/%d'
 
-defaultFileURLofProduct = 'file/Product_file/%Y/%m/%d'
-
-class News(models.Model):
-    News_id = models.AutoField(primary_key = True)
-    Title = models.CharField(max_length = 1000,null = False)
-    Content = models.TextField(max_length = 10000,null = False)
-    Image = models.ImageField(upload_to = defaultImageURLofNews,default = 'img/News_img/None/no-img.jpg')
-    Publish_Date = models.DateTimeField('date published')    
-    Publish_Editer = models.CharField(max_length=100,null = False)
     
-    def __str__(self):              # 在此处有__str__函数的字段能够在admin中显示其值
-        return self.Title
-    def __str__(self):              # __unicode__ on Python 2
-        return self.Content
+
+class tb_user(models.Model):
+    user_id = models.AutoField(primary_key = True,help_text="用户id")
+    user_name = models.CharField(max_length=100,null=False,blank=False,help_text="用户名称")
+    user_password = models.CharField(max_length=100,null=False,blank=False,help_text="密码")
+    user_telephone = models.CharField(max_length=40,null=False,blank=False,help_text="电话")
+    user_email = models.EmailField(null=False,blank=False,help_text="用户邮箱")
+	
+    PASSAUTH = 1
+    NOTPASSAUTH = 0
+    USER_AUTH_CHOICES = (
+    (PASSAUTH,'通过验证'),
+    (NOTPASSAUTH,"验证没有通过或者没有验证"),
     
-    def was_published_recently(self):
-        return self.Publish_Date >= timezone.now() - datetime.timedelta(days=1)
-        was_published_recently.admin_order_field = 'pub_date'
-    was_published_recently.boolean = True
-    was_published_recently.short_description = 'Published recently?'
+    )
+    user_auth = models.CharField(max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH,help_text="用户验证状态")#用户验证状态0：验证没有通过或者没有验证1：验证通过
+    
+    
+    Enterprise = 1
+    Personal = 0
+    User_Type_CHOICES = (
+    (Personal,'个人用户'),
+    (Enterprise,'企业用户'),
+    )
+    user_type = models.CharField(max_length=20,choices=User_Type_CHOICES,default=Personal,help_text="注册用户类型")
 
 
-class Product(models.Model):
-    Product_id = models.AutoField(primary_key = True)
-    Name = models.CharField(max_length=100,null = False)
-    Image = models.ImageField(upload_to = defaultImageURLofProduct,default = 'img/Product_img/None/no-img.jpg')
-    Info = models.TextField(max_length=10000,null = False)
-    FileAbout = models.FileField(upload_to=defaultFileURLofProduct,default =defaultURL)
-    Price = models.IntegerField(null = False)
-    Puton_Stuff = models.CharField(max_length=100,null = False)
-    
     def __str__(self):
-        return self.Name
-    def __str__(self):
-        return self.Info
+        return self.user_name
 
+    def __str__(self):
+        return self.user_email
+
+    def __str__(self):
+        return self.user_telephone
+
+    def __str__(self):
+        return self.user_auth
+
+    def __str__(self):
+        return self.user_type
+
+class tb_user_expand(models.Model):
+    user_id = models.AutoField(primary_key=True,help_text="用户id")
+    company_tel = models.CharField(max_length=30,null=False,blank=False,help_text="办公电话")
+    company_email = models.EmailField(null=False,blank=False,help_text="办公邮箱")
+    company_name = models.CharField(max_length=30,null=False,blank=False,help_text="公司名称")
+    company_district = models.CharField(max_length=50,null=False,blank=False,help_text="公司所在区县")
+    company_address = models.CharField(max_length=50,null=False,blank=False,help_text="公司注册地址")
+    company_registered_capital = models.IntegerField(null=False,blank=False,help_text="公司注册资本")
+    company_industry = models.CharField(max_length=30,null=False,blank=False,help_text="公司所属行业")
+    company_stuff_no = models.IntegerField(null=False,blank=False,help_text="公司人数")
+    company_nature = models.CharField(max_length=30,null=False,blank=False,help_text="公司性质")
+
+    def __str__(self):
+        return self.company_name
+
+    def __str__(self):
+        return self.company_email
+
+    def __str__(self):
+        return self.company_tel
+
+
+class  tb_service_provider(models.Model):
+    sp_code = models.IntegerField(primary_key=True,null=False,blank=False,help_text="服务提供商编码")
+    sp_id = models.IntegerField(null=False,blank=False,help_text="内部ID")
+    sp_name = models.CharField(max_length=40,null=False,blank=False,help_text="服务商名称")
+    psw = models.CharField(max_length=40,null=False,blank=False,help_text="密码")
+
+    tel = models.CharField(max_length=40,null=False,blank=False,help_text="电话")
+    email = models.EmailField(null=False,blank=False,help_text="邮箱")
+    master = models.CharField(max_length=50,null=False,blank=False,help_text="擅长领域")
+    sp_image1 = models.ImageField(null=False,blank=False,help_text="政资汇账户所有人身份证证件上传")
+    sp_image2 = models.ImageField(null=False,blank=False,help_text="账户所代表的公司执照上传")
+    sp_grade = models.IntegerField(null=False,blank=False,help_text="服务商等级")
+    sp_sort = models.IntegerField(null=False,blank=False,help_text="排序")
+    area_id = models.CharField(max_length=10,null=False,blank=False,help_text="服务提供商所在地")
+    Register_cap = models.IntegerField(null=False,blank=False,help_text="注册资金")
+    staff_number = models.IntegerField(null=False,blank=False,help_text="职员人数")
+    Annual_totals = models.IntegerField(null=False,blank=False,help_text="年营业额")
+    organization_name = models.CharField(max_length=40,null=False,blank=False,help_text="机构名称")
+    organization_id = models.IntegerField(null=False,blank=False,help_text="机构代码")
+    organization_assets = models.IntegerField(null=False,blank=False,help_text="机构资产")
+    organization_profile = models.CharField(max_length=100,null=False,blank=False,help_text="机构简介")
     
         
-class Ads(models.Model):
-    Ads_id = models.AutoField(primary_key = True)
-    Title = models.CharField(max_length=100,null =False)
-    Image = models.ImageField(upload_to = defaultImageURLofAds,default = 'img/Ads_img/None/no-img.jpg')
-    Content = models.TextField(max_length=1000,null =False)
+    PASSAUTH = 1
+    NOTPASSAUTH = 0
+    WAITAUTH = 2
+    AUTHING = 3
+    SP_AUTH_CHOICES=(
+    (NOTPASSAUTH,"未通过认证"),
+    (PASSAUTH,"通过认证"),
+    (WAITAUTH,"等待被认证"),
+    (AUTHING,"正在认证"),
+    )
     
-    Puton_Stuff = models.CharField(max_length=100,null = False)
+    sp_auth = models.CharField(max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False,help_text="服务商认证状态")
+    
+    RECOMMEND = 1
+    NOTRECOMMED = 0
+    IS_RECOMMEND_CHOICES = (
+    (RECOMMEND,'优先推荐(当有相同报价的服务商，是否优先考虑推荐)'),
+    (NOTRECOMMED,'不优先推荐'),
+    )
+    is_recommend = models.CharField(max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False,help_text="是否优先推荐")
     
     
-    
-    
-    
-    
-    
-    
-    
-    
- 
+class tb_News_Class(models.Model):
+    necl_id = models.AutoField(primary_key=True,help_text="分类id")
+    necl_code = models.IntegerField(null=False,blank=False,help_text="分类标识码")
+    necl_name = models.CharField(max_length=100,null=False,blank=False,help_text="分类名称")
+    necl_parent_id = models.IntegerField(help_text="父类ID")#估计是之后需要添加的外键
+    necl_sort = models.IntegerField(help_text="排序")
 
-class Book(models.Model):
-    title = models.CharField(max_length=255)
-    cover = FilerImageField(null=True, blank=True,related_name="book_covers")
-    back = FilerImageField(null=True, blank=True,related_name="book_backs")
-    content = FilerFileField(null=True, blank=True,related_name="company_disclaimer")
+    def __str__(self):
+        return self.necl_name
+
+
+class tb_News(models.Model):
+    news_id = models.AutoField(primary_key=True,help_text="新闻id")
+    article_id = models.IntegerField(null=False,blank=False,help_text="文章ID")
+    news_time = models.DateTimeField(null=False,blank=False,help_text="发布时间")
+    news_source = models.CharField(max_length=100,null=False,blank=False,help_text="新闻来源")
+    necl_id = models.IntegerField(null=False,blank=False,help_text="分类ID")#之后需要添加的外键
+    news_sort = models.IntegerField(null=False,blank=False,help_text="新闻排序")
+    click_counter = models.IntegerField(null=False,blank=False,help_text="总点击量")
     
+    HASALBUM = 1
+    NOTHASALBUM = 0
+    HAS_ALBUM_CHOICES = (
+    (HASALBUM,'拥有相册'),
+    (NOTHASALBUM,'没有相册'),
+    )
     
+    has_album =  models.CharField(max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False,help_text="是否拥有自己的相册")
+    
+    HOT = 1
+    NOTHOT = 0
+    NEWS_HOT_CHOICES=(
+    (HOT,'热点新闻'),
+    (NOTHOT,'非热点新闻'),
+    
+    )
+    news_hot = models.CharField(max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False,help_text="是否为热点新闻")
+    
+    TOP = 1
+    NOTTOP = 0
+    NEWS_TOP_CHOICES=(
+    (TOP,'置顶新闻'),
+    (NOTTOP,'非置顶新闻'),
+    
+    )
+    new_top = models.CharField(max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False,help_text="是否为置顶新闻")
+    
+    DISPLAY = 1
+    NOTDISPLAY = 0
+    NEWS_IS_DISPLAY_CHOICES=(
+    (DISPLAY,'前端展示新闻'),
+    (NOTDISPLAY,'非前端展示新闻'),
+    
+    )
+    new_is_display =  models.CharField(max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False,help_text="是否为前端展示新闻")
+	
     
     
     

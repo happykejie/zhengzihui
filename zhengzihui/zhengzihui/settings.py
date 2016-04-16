@@ -47,7 +47,7 @@ INSTALLED_APPS = (
     'suit',
     #YZ addfor filer
     'easy_thumbnails',
-    'filer',
+    #'filer',暂时用不到
     'mptt',
     'django.contrib.admin',
     'django.contrib.auth',
