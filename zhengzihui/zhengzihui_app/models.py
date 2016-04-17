@@ -60,17 +60,9 @@ class Ads(models.Model):
     
     Puton_Stuff = models.CharField(max_length=100,null = False)
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
- 
+   
 
+ 
 class Book(models.Model):
     title = models.CharField(max_length=255)
     cover = FilerImageField(null=True, blank=True,related_name="book_covers")
@@ -79,13 +71,34 @@ class Book(models.Model):
     
     
     
+      
+class tb_Artificial_Representations(models.Model):
+	arre_id = models.AutoField(primary_key = True)
+	arre_title = models.CharField(max_length = 100, null = False)#申诉标题
+	arre_content = models.TextField(max_length = 1000, null = False)#申诉内容
+	user_id = models.IntegerField(null = False)#申诉人id
+	user_name = models.CharField(max_length = 100, null = False)#申诉人名称
+	arre_state = models.IntegerField(null = False)#申述状态0：未受理	1：已受理	2：已解决
+	create_time = models.DateTimeField('提交申请时间')
+	
+
+
+class tb_Message(models.Model):
+	mess_id = models.IntegerField(primary_key = True)
+	send_id = models.IntegerField(null = False)#发送方ID
+	rec_id = models.IntegerField(null = False)#接受方ID
+	text_id = models.IntegerField(null = False)#文本ID
+	status = models.IntegerField(null = False)#消息状态
     
-    
-    
-    
-    
-    
-    
-    
-    
+class tb_MessageText(models.Model):
+	text_id = models.IntegerField(primary_key = True)
+	mete_title = models.CharField(max_length = 10, null = False)#短信标题
+	mete_content = models.CharField(max_length = 300, null = False)#短信内容
+	mete_time = models.DateTimeField('消息发送时间')
+	    
+class tb_SysMessage(models.Model):
+	sys_id = models.IntegerField(primary_key = True)
+	cust_id = models.IntegerField(null = False)#客户ID
+	mess_id = models.IntegerField(null = False)#短信ID
+	sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
     

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import Ads,News,Product,Book #引入需要管理的表单
+from .models import Ads,News,Product,Book,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage#引入需要管理的表单
 # Register your models here.
 
 
@@ -40,7 +40,47 @@ class ProductAdmin(admin.ModelAdmin):
     preview.allow_tags = True
     preview.short_description = "Product Picture"
     
+	
+class tb_Artificial_Representations_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加申诉信息',{'fields':['arre_title','arre_content','user_id','user_name','arre_state']}),
+            ('添加日期',{'fields':['create_time'],'classes': ['collapse']}),
+    
+    ]
+	list_display = ['arre_title', 'arre_content', 'user_id', 'user_name', 'arre_state', 'create_time']
+	
+	
+class tb_Message_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加站内短信ID信息',{'fields':['mess_id','send_id','rec_id','text_id','status']}),
+    
+    ]
+	list_display = ['mess_id', 'send_id', 'rec_id', 'text_id', 'status']
+	
+	
+class tb_MessageText_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加短信内容信息',{'fields':['text_id','mete_title','mete_content']}),
+            ('添加日期',{'fields':['mete_time'],'classes': ['collapse']}),
+    
+    ]
+	list_display = ['text_id', 'mete_title', 'mete_content', 'mete_time']
+	
+	
+class tb_SysMessage_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加站内系统短信信息',{'fields':['sys_id','cust_id','mess_id','sys_status']}),            
+    
+    ]
+	list_display = ['sys_id', 'cust_id', 'mess_id', 'sys_status']
+
 admin.site.register(Ads,AdsAdmin)
 admin.site.register(News,NewsAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Book)
+admin.site.register(tb_Artificial_Representations,tb_Artificial_Representations_Admin)
+admin.site.register(tb_Message,tb_Message_Admin)
+admin.site.register(tb_MessageText,tb_MessageText_Admin)
+admin.site.register(tb_SysMessage,tb_SysMessage_Admin)
+
+
