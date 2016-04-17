@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import Ads,News,Product,Book #引入需要管理的表单
+from .models import Ads,News,Product,Book,tb_article,tb_album,tb_pic,tb_accessory #引入需要管理的表单
 # Register your models here.
 
 
@@ -44,3 +44,7 @@ admin.site.register(Ads,AdsAdmin)
 admin.site.register(News,NewsAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Book)
+admin.site.register(tb_article)
+admin.site.register(tb_album)
+admin.site.register(tb_pic)
+admin.site.register(tb_accessory)

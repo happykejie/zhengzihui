@@ -1,4 +1,4 @@
-#coding:utf-8
+﻿#coding:utf-8
 import datetime
 
 from django.db import models
@@ -49,8 +49,7 @@ class Product(models.Model):
         return self.Name
     def __str__(self):
         return self.Info
-    def __str__(self):
-        return self.FileAbout
+
     
         
 class Ads(models.Model):
@@ -79,14 +78,71 @@ class Book(models.Model):
     content = FilerFileField(null=True, blank=True,related_name="company_disclaimer")
     
     
+class tb_article(models.Model):
+    article_id=models.IntegerField(max_length=10, null = False)
+    article_code=models.IntegerField(max_length=20, null = False)
+    article_name = models.CharField(max_length=40,null =False)
+    author = models.CharField(max_length=100,null =False)
+    author_email = models.CharField(max_length=100,null =False)
+    article_type=models.IntegerField(max_length=3, null = False)
+    affiliation_id=models.IntegerField(max_length=10, null = False)
+    article_code=models.IntegerField( null = True)
+    article_content = models.TextField(null =False)
+    article_keywords = models.TextField(null =False)
+    article_des = models.CharField(max_length=100,null =False)
+    article_sort=models.IntegerField(max_length=3, null = False)
+    upload_time=models.IntegerField(max_length=10, null = False)
+    is_default=models.IntegerField(max_length=1, null = False)
+    article_click=models.IntegerField(max_length=10, null = False)
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+class tb_album(models.Model):
+    album_id=models.IntegerField(max_length=10, null = False)
+    album_name = models.CharField(max_length=40,null =False)
+    album_type=models.IntegerField(max_length=3, null = False)
+    affiliation_id=models.IntegerField(max_length=10, null = False)
+    nacl_des = models.CharField(max_length=100,null =False)
+    nacl_sort = models.IntegerField(max_length=3,null =False)
+    nacl_cover = models.CharField(max_length=100,null =False)
+    upload_time = models.IntegerField(max_length=10,null =False)
+    is_default = models.IntegerField(max_length=1,null =False)
+
+
+class tb_pic(models.Model):
+    pic_id=models.IntegerField(max_length=10, null = False)
+    pic_name = models.CharField(max_length=40,null =False)
+    pic_tag = models.CharField(max_length=40,null =False)
+    album_id=models.IntegerField(max_length=10, null = False)
+    pic_uri = models.CharField(max_length=100,null =False)
+    pic_size=models.IntegerField(max_length=10, null = False)
+    pic_spec= models.CharField(max_length=100,null =False)
+    upload_time=models.IntegerField(max_length=10, null = False)
+    is_thumb=models.BooleanField(null = False)
+
+
+class tb_accessory(models.Model):
+    anne_id=models.IntegerField(max_length=10, null = False)
+    comm_id=models.IntegerField(max_length=10, null = False)
+    apubdate=models.IntegerField(max_length=10, null = False)
+    apublisher = models.CharField(max_length=2,null =False)
+    aposition= models.CharField(max_length=10,null =False)
+    aaddtion= models.CharField(max_length=50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     

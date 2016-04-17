@@ -78,14 +78,71 @@ class Book(models.Model):
     content = FilerFileField(null=True, blank=True,related_name="company_disclaimer")
     
     
+class tb_article(models.Model):
+    article_id=models.IntegerField(null = False)
+    article_code=models.IntegerField(null = False)
+    article_name = models.CharField(max_length=40,null =False)
+    author = models.CharField(max_length=100,null =False)
+    author_email = models.CharField(max_length=100,null =False)
+    article_type=models.IntegerField(null = False)
+    affiliation_id=models.IntegerField(null = False)
+    article_code=models.IntegerField(null = True)
+    article_content = models.TextField(null =False)
+    article_keywords = models.TextField(null =False)
+    article_des = models.CharField(max_length=100,null =False)
+    article_sort=models.IntegerField(null = False)
+    upload_time=models.IntegerField(null = False)
+    is_default=models.IntegerField(null = False)
+    article_click=models.IntegerField(null = False)
     
     
-    
-    
-    
-    
-    
-    
-    
-    
+class tb_album(models.Model):
+    album_id=models.IntegerField(null = False)
+    album_name = models.CharField(max_length=40,null =False)
+    album_type=models.IntegerField(null = False)
+    affiliation_id=models.IntegerField(null = False)
+    nacl_des = models.CharField(max_length=100,null =False)
+    nacl_sort = models.IntegerField(null =False)
+    nacl_cover = models.CharField(max_length=100,null =False)
+    upload_time = models.IntegerField(null =False)
+    is_default = models.IntegerField(null =False)
+
+
+class tb_pic(models.Model):
+    pic_id=models.IntegerField( null = False)
+    pic_name = models.CharField(max_length=40,null =False)
+    pic_tag = models.CharField(max_length=40,null =False)
+    album_id=models.IntegerField(null = False)
+    pic_uri = models.CharField(max_length=100,null =False)
+    pic_size=models.IntegerField(null = False)
+    pic_spec= models.CharField(max_length=100,null =False)
+    upload_time=models.IntegerField(null = False)
+    is_thumb=models.BooleanField(null = False)
+
+
+class tb_accessory(models.Model):
+    anne_id=models.IntegerField(null = False)
+    comm_id=models.IntegerField(null = False)
+    apubdate=models.IntegerField(null = False)
+    apublisher = models.CharField(max_length=2,null =False)
+    aposition= models.CharField(max_length=10,null =False)
+    aaddtion= models.CharField(max_length=50)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
