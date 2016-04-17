@@ -1,6 +1,6 @@
 ﻿#coding:utf-8
 import datetime
-
+#cyf
 from django.db import models
 from django.utils import timezone#引入datetime 和 timezone 为了was_published_recently函数
 
