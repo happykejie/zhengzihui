@@ -17,7 +17,7 @@ class tb_user(models.Model):
     user_password = models.CharField(max_length=100,null=False,blank=False,help_text="密码")
     user_telephone = models.CharField(max_length=40,null=False,blank=False,help_text="电话")
     user_email = models.EmailField(null=False,blank=False,help_text="用户邮箱")
-	
+    
     PASSAUTH = 1
     NOTPASSAUTH = 0
     USER_AUTH_CHOICES = (
@@ -174,7 +174,7 @@ class tb_News(models.Model):
     
     )
     new_is_display =  models.CharField(max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False,help_text="是否为前端展示新闻")
-	
+    
 
 class Tb_Notice(models.Model):
     Notice_id = models.AutoField(primary_key = True)  
@@ -186,7 +186,7 @@ class Tb_Notice(models.Model):
     Notice_sort = models.IntegerField('排序',null =False)
     Notice_is_display= models.IntegerField('是否显示',null =False)
     Notice_top = models.IntegerField('强制置顶',null =False)
-	
+    
     def __str__(self):
         return self.Notice_title
     def __str__(self):
@@ -200,7 +200,7 @@ class Tb_Notice_Class(models.Model):
     Nocl_des = models.CharField('分类描述',max_length=100,null =False)
     Nocl_parent_id = models.IntegerField('父类ID')
     Notice_sort = models.IntegerField('排序',null =False)
-	
+    
     def __str__(self):
         return self.Nocl_name
     def __str__(self):
@@ -229,7 +229,82 @@ class Tb_Apage_Class(models.Model):
         return self.Apcl_name
     
     
+class tb_item(models.Model):
+    item_id = models.IntegerField('ID', primary_key=True, null=False)
+    item_code = models.CharField(max_length=20,null=False)
+    item_name = models.CharField(max_length=100,null=False)
+    itcl_id = models.IntegerField(null=False)
+    item_level = models.IntegerField(null=False)
+    item_ga = models.CharField(max_length=40,null=False)
+    item_pa_id = models.IntegerField(null=False)
+    item_publish = models.IntegerField(null=False)
+    item_deadtime = models.IntegerField(null=False)
+    item_about = models.CharField(max_length=100,null=False)
+    item_url = models.CharField(max_length=100,null=False)
+    item_key = models.TextField(null=False)
+    item_status = models.IntegerField(null=False)
+    is_hot = models.IntegerField(null=False)
+    item_from = models.IntegerField(null=False,default = 0)
+    is_recommend = models.IntegerField(null=False,default = 0)
     
+
+class tb_item_class(models.Model):
+    itcl_id = models.IntegerField('ID', primary_key=True,null=False)
+    itcl_code = models.IntegerField(null=False)
+    itcl_name = models.CharField(max_length=100,null=False)
+    itcl_des = models.CharField(max_length=100,null=False)
+    necl_parent_id = models.IntegerField(null=False)
+    necl_sort = models.IntegerField(null=False)
+
+
+class tb_item_pa(models.Model):
+    ipa_id = models.IntegerField('ID', primary_key=True,null=False)
+    ipa_name = models.CharField(max_length=100,null=False)
+    ipa_parent_id = models.IntegerField(null=False)
+    ipa_sort = models.IntegerField(null=False)
+    area_id = models.IntegerField(null=False)
+
+
+class tb_article(models.Model):
+    article_id = models.IntegerField('ID', primary_key=True,null=False)
+    article_code = models.IntegerField(null=False)
+    article_name = models.CharField(max_length=100,null=False)
+    author = models.CharField(max_length=100,null=False)
+    author_email = models.CharField(max_length=100,null=False)
+    article_type = models.IntegerField(null=False)
+    affiliation_id = models.IntegerField(null=False)
+    article_content = models.TextField(null=False)
+    article_keywords = models.TextField(null=False)
+    article_des = models.CharField(max_length=100,null=False)
+    article_sort = models.IntegerField(null=False)
+    upload_time = models.DateTimeField(max_length=100,auto_now =True,null = False)
+    is_default = models.IntegerField(null=False)
+    article_click = models.IntegerField(null=False)
+
+class tb_album(models.Model):
+    album_id = models.IntegerField('ID', primary_key=True,null=False)
+    album_name = models.CharField(max_length=40,null=False)
+    album_type = models.IntegerField(null=False)
+    affiliation_id = models.IntegerField(null=False)
+    nacl_des = models.CharField(max_length=100,null=False)
+    nacl_sort = models.IntegerField(null=False)
+    nacl_cover = models.CharField(max_length=100,null=False)
+    upload_time = models.DateTimeField(max_length=100,auto_now = True,null = False)
+    is_default = models.IntegerField(null=False)
+
+
+
+class tb_pic(models.Model):
+    pic_id = models.IntegerField('ID', primary_key=True,null=False)
+    pic_name = models.CharField(max_length=40,null=False)
+    pic_tag = models.CharField(max_length=40,null=False)
+    album_id = models.IntegerField(null=False)
+    pic_uri = models.CharField(max_length=100,null=False)   
+    pic_size = models.IntegerField(null=False)
+    pic_spec = models.CharField(max_length=100,null=False)
+    upload_time = models.DateTimeField(max_length=100,auto_now = True,null = False)
+    is_thumb = models.IntegerField(null=False)
+
     
     
     

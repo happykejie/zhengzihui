@@ -19,4 +19,8 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^zzh_index/$','zhengzihui_app.views.ind',name='ind'),
+    url(r'^zzh_ajax/$','zhengzihui_app.views.ajax',name='ajax'),
+    url(r'^zzh_filter/$','zhengzihui_app.views.filter',name='filter'),
+    url(r'^hello/$','zhengzihui_app.views.hello',name = 'hello'),
 ]
