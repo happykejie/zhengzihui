@@ -19,7 +19,7 @@ def Searchgoods(request):
 		ads=[]
 		items=[]
 		goodsname=request.GET.get("inputitem")
-		#print (goodsname)
+		print (goodsname)
 		#goodsname="精准医学研究"
 		if goodsname is not None:
 		#分词
