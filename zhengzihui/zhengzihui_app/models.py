@@ -12,11 +12,11 @@ from filer.fields.file import FilerFileField
     
 
 class tb_user(models.Model):
-    user_id = models.AutoField(primary_key = True,help_text="用户id")
-    user_name = models.CharField(max_length=100,null=False,blank=False,help_text="用户名称")
-    user_password = models.CharField(max_length=100,null=False,blank=False,help_text="密码")
-    user_telephone = models.CharField(max_length=40,null=False,blank=False,help_text="电话")
-    user_email = models.EmailField(null=False,blank=False,help_text="用户邮箱")
+    user_id = models.AutoField("用户id",primary_key = True)
+    user_name = models.CharField("用户名称",max_length=100,null=False,blank=False)
+    user_password = models.CharField("密码",max_length=100,null=False,blank=False)
+    user_telephone = models.CharField("电话",max_length=40,null=False,blank=False)
+    user_email = models.EmailField("用户邮箱",null=False,blank=False)
     
     PASSAUTH = 1
     NOTPASSAUTH = 0
@@ -25,7 +25,7 @@ class tb_user(models.Model):
     (NOTPASSAUTH,"验证没有通过或者没有验证"),
     
     )
-    user_auth = models.CharField(max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH,help_text="用户验证状态")#用户验证状态0：验证没有通过或者没有验证1：验证通过
+    user_auth = models.CharField("用户验证状态",max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH)#用户验证状态0：验证没有通过或者没有验证1：验证通过
     
     
     Enterprise = 1
@@ -34,7 +34,7 @@ class tb_user(models.Model):
     (Personal,'个人用户'),
     (Enterprise,'企业用户'),
     )
-    user_type = models.CharField(max_length=20,choices=User_Type_CHOICES,default=Personal,help_text="注册用户类型")
+    user_type = models.CharField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
 
 
     def __str__(self):
@@ -53,16 +53,16 @@ class tb_user(models.Model):
         return self.user_type
 
 class tb_user_expand(models.Model):
-    user_id = models.AutoField(primary_key=True,help_text="用户id")
-    company_tel = models.CharField(max_length=30,null=False,blank=False,help_text="办公电话")
-    company_email = models.EmailField(null=False,blank=False,help_text="办公邮箱")
-    company_name = models.CharField(max_length=30,null=False,blank=False,help_text="公司名称")
-    company_district = models.CharField(max_length=50,null=False,blank=False,help_text="公司所在区县")
-    company_address = models.CharField(max_length=50,null=False,blank=False,help_text="公司注册地址")
-    company_registered_capital = models.IntegerField(null=False,blank=False,help_text="公司注册资本")
-    company_industry = models.CharField(max_length=30,null=False,blank=False,help_text="公司所属行业")
-    company_stuff_no = models.IntegerField(null=False,blank=False,help_text="公司人数")
-    company_nature = models.CharField(max_length=30,null=False,blank=False,help_text="公司性质")
+    user_id = models.AutoField("用户id",primary_key=True)
+    company_tel = models.CharField("办公电话",max_length=30,null=False,blank=False)
+    company_email = models.EmailField("办公邮箱",null=False,blank=False)
+    company_name = models.CharField("公司名称",max_length=30,null=False,blank=False)
+    company_district = models.CharField("公司所在区县",max_length=50,null=False,blank=False)
+    company_address = models.CharField("公司注册地址",max_length=50,null=False,blank=False)
+    company_registered_capital = models.IntegerField("公司注册资本",null=False,blank=False)
+    company_industry = models.CharField("公司所属行业",max_length=30,null=False,blank=False)
+    company_stuff_no = models.IntegerField("公司人数",null=False,blank=False)
+    company_nature = models.CharField("公司性质",max_length=30,null=False,blank=False)
 
     def __str__(self):
         return self.company_name
@@ -75,26 +75,26 @@ class tb_user_expand(models.Model):
 
 
 class  tb_service_provider(models.Model):
-    sp_code = models.IntegerField(primary_key=True,null=False,blank=False,help_text="服务提供商编码")
-    sp_id = models.IntegerField(null=False,blank=False,help_text="内部ID")
-    sp_name = models.CharField(max_length=40,null=False,blank=False,help_text="服务商名称")
-    psw = models.CharField(max_length=40,null=False,blank=False,help_text="密码")
+    sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
+    sp_id = models.IntegerField("内部ID",null=False,blank=False)
+    sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
+    psw = models.CharField("密码",max_length=40,null=False,blank=False)
 
-    tel = models.CharField(max_length=40,null=False,blank=False,help_text="电话")
-    email = models.EmailField(null=False,blank=False,help_text="邮箱")
-    master = models.CharField(max_length=50,null=False,blank=False,help_text="擅长领域")
-    sp_image1 = models.ImageField(null=False,blank=False,help_text="政资汇账户所有人身份证证件上传")
-    sp_image2 = models.ImageField(null=False,blank=False,help_text="账户所代表的公司执照上传")
-    sp_grade = models.IntegerField(null=False,blank=False,help_text="服务商等级")
-    sp_sort = models.IntegerField(null=False,blank=False,help_text="排序")
-    area_id = models.CharField(max_length=10,null=False,blank=False,help_text="服务提供商所在地")
-    Register_cap = models.IntegerField(null=False,blank=False,help_text="注册资金")
-    staff_number = models.IntegerField(null=False,blank=False,help_text="职员人数")
-    Annual_totals = models.IntegerField(null=False,blank=False,help_text="年营业额")
-    organization_name = models.CharField(max_length=40,null=False,blank=False,help_text="机构名称")
-    organization_id = models.IntegerField(null=False,blank=False,help_text="机构代码")
-    organization_assets = models.IntegerField(null=False,blank=False,help_text="机构资产")
-    organization_profile = models.CharField(max_length=100,null=False,blank=False,help_text="机构简介")
+    tel = models.CharField("电话",max_length=40,null=False,blank=False)
+    email = models.EmailField("邮箱",null=False,blank=False)
+    master = models.CharField("擅长领域",max_length=50,null=False,blank=False)
+    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",null=False,blank=False)
+    sp_image2 = models.ImageField("账户所代表的公司执照上传",null=False,blank=False)
+    sp_grade = models.IntegerField("服务商等级",null=False,blank=False)
+    sp_sort = models.IntegerField("排序",null=False,blank=False)
+    area_id = models.CharField("服务提供商所在地",max_length=10,null=False,blank=False)
+    Register_cap = models.IntegerField("注册资金",null=False,blank=False)
+    staff_number = models.IntegerField("职员人数",null=False,blank=False)
+    Annual_totals = models.IntegerField("年营业额",null=False,blank=False)
+    organization_name = models.CharField("机构名称",max_length=40,null=False,blank=False)
+    organization_id = models.IntegerField("机构代码",null=False,blank=False)
+    organization_assets = models.IntegerField("机构资产",null=False,blank=False)
+    organization_profile = models.CharField("机构简介",max_length=100,null=False,blank=False)
     
         
     PASSAUTH = 1
@@ -108,7 +108,7 @@ class  tb_service_provider(models.Model):
     (AUTHING,"正在认证"),
     )
     
-    sp_auth = models.CharField(max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False,help_text="服务商认证状态")
+    sp_auth = models.CharField("服务商认证状态",max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
     
     RECOMMEND = 1
     NOTRECOMMED = 0
@@ -116,28 +116,28 @@ class  tb_service_provider(models.Model):
     (RECOMMEND,'优先推荐(当有相同报价的服务商，是否优先考虑推荐)'),
     (NOTRECOMMED,'不优先推荐'),
     )
-    is_recommend = models.CharField(max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False,help_text="是否优先推荐")
+    is_recommend = models.CharField("是否优先推荐",max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
     
     
 class tb_News_Class(models.Model):
-    necl_id = models.AutoField(primary_key=True,help_text="分类id")
-    necl_code = models.IntegerField(null=False,blank=False,help_text="分类标识码")
-    necl_name = models.CharField(max_length=100,null=False,blank=False,help_text="分类名称")
-    necl_parent_id = models.IntegerField(help_text="父类ID")#估计是之后需要添加的外键
-    necl_sort = models.IntegerField(help_text="排序")
+    necl_id = models.AutoField("分类id",primary_key=True)
+    necl_code = models.IntegerField("分类标识码",null=False,blank=False)
+    necl_name = models.CharField("分类名称",max_length=100,null=False,blank=False)
+    necl_parent_id = models.IntegerField("父类ID",null=False,blank=False)#估计是之后需要添加的外键
+    necl_sort = models.IntegerField("排序",null=False,blank=False)
 
     def __str__(self):
         return self.necl_name
 
 
 class tb_News(models.Model):
-    news_id = models.AutoField(primary_key=True,help_text="新闻id")
-    article_id = models.IntegerField(null=False,blank=False,help_text="文章ID")
-    news_time = models.DateTimeField(null=False,blank=False,help_text="发布时间")
-    news_source = models.CharField(max_length=100,null=False,blank=False,help_text="新闻来源")
-    necl_id = models.IntegerField(null=False,blank=False,help_text="分类ID")#之后需要添加的外键
-    news_sort = models.IntegerField(null=False,blank=False,help_text="新闻排序")
-    click_counter = models.IntegerField(null=False,blank=False,help_text="总点击量")
+    news_id = models.AutoField("新闻id",primary_key=True)
+    article_id = models.IntegerField("文章ID",null=False,blank=False)
+    news_time = models.DateTimeField("发布时间",null=False,blank=False)
+    news_source = models.CharField("新闻来源",max_length=100,null=False,blank=False)
+    necl_id = models.IntegerField("分类ID",null=False,blank=False)#之后需要添加的外键
+    news_sort = models.IntegerField("新闻排序",null=False,blank=False)
+    click_counter = models.IntegerField("总点击量",null=False,blank=False)
     
     HASALBUM = 1
     NOTHASALBUM = 0
@@ -146,7 +146,7 @@ class tb_News(models.Model):
     (NOTHASALBUM,'没有相册'),
     )
     
-    has_album =  models.CharField(max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False,help_text="是否拥有自己的相册")
+    has_album =  models.CharField("是否拥有自己的相册",max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False)
     
     HOT = 1
     NOTHOT = 0
@@ -155,7 +155,7 @@ class tb_News(models.Model):
     (NOTHOT,'非热点新闻'),
     
     )
-    news_hot = models.CharField(max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False,help_text="是否为热点新闻")
+    news_hot = models.CharField("是否为热点新闻",max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False)
     
     TOP = 1
     NOTTOP = 0
@@ -164,7 +164,7 @@ class tb_News(models.Model):
     (NOTTOP,'非置顶新闻'),
     
     )
-    new_top = models.CharField(max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False,help_text="是否为置顶新闻")
+    new_top = models.CharField("是否为置顶新闻",max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False)
     
     DISPLAY = 1
     NOTDISPLAY = 0
@@ -173,7 +173,7 @@ class tb_News(models.Model):
     (NOTDISPLAY,'非前端展示新闻'),
     
     )
-    new_is_display =  models.CharField(max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False,help_text="是否为前端展示新闻")
+    new_is_display =  models.CharField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
     
 
 class Tb_Notice(models.Model):
@@ -282,7 +282,7 @@ class tb_article(models.Model):
     article_click = models.IntegerField(null=False)
 
 class tb_album(models.Model):
-    album_id = models.IntegerField('ID', primary_key=True,null=False)
+    album_id = models.AutoField('ID', primary_key=True,null=False)
     album_name = models.CharField(max_length=40,null=False)
     album_type = models.IntegerField(null=False)
     affiliation_id = models.IntegerField(null=False)
@@ -306,7 +306,49 @@ class tb_pic(models.Model):
     is_thumb = models.IntegerField(null=False)
 
     
+
+
+
+class tb_accessory(models.Model):
+    anne_id=models.IntegerField(null = False)
+    comm_id=models.IntegerField(null = False)
+    apubdate=models.IntegerField(null = False)
+    apublisher = models.CharField(max_length=2,null =False)
+    aposition= models.CharField(max_length=10,null =False)
+    aaddtion= models.CharField(max_length=50)
+
+
+
+class tb_Artificial_Representations(models.Model):
+	arre_id = models.AutoField(primary_key = True)
+	arre_title = models.CharField(max_length = 100, null = False)#申诉标题
+	arre_content = models.TextField(max_length = 1000, null = False)#申诉内容
+	user_id = models.IntegerField(null = False)#申诉人id
+	user_name = models.CharField(max_length = 100, null = False)#申诉人名称
+	arre_state = models.IntegerField(null = False)#申述状态0：未受理	1：已受理	2：已解决
+	create_time = models.DateTimeField('提交申请时间')
+	
+
+
+class tb_Message(models.Model):
+	mess_id = models.IntegerField(primary_key = True)
+	send_id = models.IntegerField(null = False)#发送方ID
+	rec_id = models.IntegerField(null = False)#接受方ID
+	text_id = models.IntegerField(null = False)#文本ID
+	status = models.IntegerField(null = False)#消息状态
     
+class tb_MessageText(models.Model):
+	text_id = models.IntegerField(primary_key = True)
+	mete_title = models.CharField(max_length = 10, null = False)#短信标题
+	mete_content = models.CharField(max_length = 300, null = False)#短信内容
+	mete_time = models.DateTimeField('消息发送时间')
+	    
+class tb_SysMessage(models.Model):
+	sys_id = models.IntegerField(primary_key = True)
+	cust_id = models.IntegerField(null = False)#客户ID
+	mess_id = models.IntegerField(null = False)#短信ID
+	sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
+        
     
     
     

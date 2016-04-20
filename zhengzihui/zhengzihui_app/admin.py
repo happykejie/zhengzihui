@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class#引入需要管理的表单
+from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_article,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage#引入需要管理的表单
 # Register your models here.
 class Tb_Apage_ClassAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -36,6 +36,40 @@ class Tb_NoticeAdmin(admin.ModelAdmin):
     list_display = ['Notice_title','Notice_source','Notice_time']
    # list_filter = ['Notice_time']
    # search_fields = ['Notice_title'] #如何进入description 以提示搜索标题
+   
+   
+class tb_Artificial_Representations_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加申诉信息',{'fields':['arre_title','arre_content','user_id','user_name','arre_state']}),
+            ('添加日期',{'fields':['create_time'],'classes': ['collapse']}),
+    
+    ]
+	list_display = ['arre_title', 'arre_content', 'user_id', 'user_name', 'arre_state', 'create_time']
+	
+	
+class tb_Message_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加站内短信ID信息',{'fields':['mess_id','send_id','rec_id','text_id','status']}),
+    
+    ]
+	list_display = ['mess_id', 'send_id', 'rec_id', 'text_id', 'status']
+	
+	
+class tb_MessageText_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加短信内容信息',{'fields':['text_id','mete_title','mete_content']}),
+            ('添加日期',{'fields':['mete_time'],'classes': ['collapse']}),
+    
+    ]
+	list_display = ['text_id', 'mete_title', 'mete_content', 'mete_time']
+	
+	
+class tb_SysMessage_Admin(admin.ModelAdmin):
+	fieldsets = [
+            ('添加站内系统短信信息',{'fields':['sys_id','cust_id','mess_id','sys_status']}),            
+    
+    ]
+	list_display = ['sys_id', 'cust_id', 'mess_id', 'sys_status']
 
 
 admin.site.register(tb_user_expand)
@@ -48,3 +82,14 @@ admin.site.register(Tb_Notice,Tb_NoticeAdmin)
 admin.site.register(Tb_Notice_Class,Tb_Notice_ClassAdmin)
 admin.site.register(Tb_Apage,Tb_ApageAdmin)
 admin.site.register(Tb_Apage_Class,Tb_Apage_ClassAdmin)
+
+
+admin.site.register(tb_article)
+admin.site.register(tb_album)
+admin.site.register(tb_pic)
+admin.site.register(tb_accessory)
+
+admin.site.register(tb_Artificial_Representations,tb_Artificial_Representations_Admin)
+admin.site.register(tb_Message,tb_Message_Admin)
+admin.site.register(tb_MessageText,tb_MessageText_Admin)
+admin.site.register(tb_SysMessage,tb_SysMessage_Admin)
