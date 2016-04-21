@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>政资汇-政府资助信息一站式服务平台</title>
+    <script src="../static/jQuery-2.14/jquery.js" type="text/javascript"></script>
+    <link href="../static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/client_filter.css" rel="stylesheet" type="text/css"/>
+    <script src="../static/js/client_filter.js" type="text/javascript"></script>
+    <script>
+	
+    $.ajaxSetup({
+
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+
+    });
+	</script>
+</head>
+<body>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+		<div class="navbar-header">
+			 <a class="navbar-brand" href="#">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="#">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>	
+		<!--div class="jumbotron"> </div -->
+<!--网站图标+搜索栏-->
+  <div class="row">
+    <div class="col-sm-4">
+      <center><img src="../static/images/logo.jpg"></img></center>
+    </div>
+	
+    <div class="col-sm-8">
+		<div class="row-fluid">
+			<div id="chosecity" >
+				<form action="">
+					<select name="切换城市" style="height:30px;width:100px">
+						<option value="chengdu" selected>成都</option>
+						<option value="shanghai">上海</option>
+						<option value="beijing">北京</option>
+						<option value="guangzhou">广州</option>
+					</select>
+				</form>
+			</div>
+		</div>
+		<div class="search">
+			<form action="/search" method="GET" class="search">
+					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:15%">搜索</button>
+			</form>
+		</div>
+      
+  </div>
+</div>
+
+
+<div class="row">
+<div class="col-sm-10">
+    
+    <div class="path">
+        <span>
+            您所在的位置：
+        </span>
+        <span>
+            <a href="#">
+                首页
+            </a>
+        </span>
+        <span>
+            <a href="#">
+                2016星火假计划
+            </a>
+        </span>
+    </div>
+
+        <div class="filter" id="filter">
+        <div class="f-row clearfix ">
+            <div class="f-head">
+                <span id="bumen">
+                部门:
+                </span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels">
+                <li><a href="javascript:void(0);">全部</a></li>
+                <li><a href="javascript:void(0);">经济与信息化</a></li>
+                <li><a href="javascript:void(0);">发展与改革</a></li>
+                <li><a href="javascript:void(0);">财政</a></li>
+                <li><a href="javascript:void(0);">科技</a></li>
+                <li><a href="javascript:void(0);">教育</a></li>
+                <li><a href="javascript:void(0);">文化</a></li>
+                <li><a href="javascript:void(0);">卫计</a></li>
+                <li><a href="javascript:void(0);">体育</a></li>
+                <li><a href="javascript:void(0);">知识产权</a></li>
+                <li><a href="javascript:void(0);">农业</a></li>
+                <li><a href="javascript:void(0);">林业</a></li>
+                <li><a href="javascript:void(0);">畜牧</a></li>
+                <li><a href="javascript:void(0);">渔业</a></li>
+                <li><a href="javascript:void(0);">粮食</a></li>
+                <li><a href="javascript:void(0);">中医药</a></li>
+                <li><a href="javascript:void(0);">国土</a></li>
+                <li><a href="javascript:void(0);">住建</a></li>
+                <li><a href="javascript:void(0);">交通</a></li>
+                <li><a href="javascript:void(0);">水利</a></li>
+                <li><a href="javascript:void(0);">能源</a></li>
+                <li><a href="javascript:void(0);">环保</a></li>
+                <li><a href="javascript:void(0);">商务</a></li>
+                <li><a href="javascript:void(0);">投资促进</a></li>
+                <li><a href="javascript:void(0);">工商</a></li>
+                <li><a href="javascript:void(0);">税务</a></li>
+                <li><a href="javascript:void(0);">民政</a></li>
+                <li><a href="javascript:void(0);">人社</a></li>
+                <li><a href="javascript:void(0);">扶贫</a></li>
+                <li><a href="javascript:void(0);">旅游</a></li>
+                <li><a href="javascript:void(0);">人民银行</a></li>
+                <li><a href="javascript:void(0);">银监</a></li>
+                <li><a href="javascript:void(0);">证监</a></li>
+                <li><a href="javascript:void(0);">保监</a></li>
+                <li><a href="javascript:void(0);">质监</a></li>
+                <li><a href="javascript:void(0);">药监</a></li>
+                <li><a href="javascript:void(0);">安监</a></li>
+            </ul>
+                <div class="multiple-btn">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:;" target="_blank" ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+
+        </div>
+        <div class="f-row clearfix">
+            <div class="f-head">
+                <span id="jibie">
+                级别:
+                </span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels ">
+                    <li><a href="javascript:void(0);">全部</a></li>
+                    <li><a href="javascript:void(0);">中央财政资金</a></li>
+                    <li><a href="javascript:void(0);">省级财政资金</a></li>
+                    <li><a href="javascript:void(0);">市级财政资金</a></li>
+                    <li><a href="javascript:void(0);">县级财政资金</a></li>
+            </ul>
+                <div class="multiple-btn">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+        </div>
+        <div class="f-row clearfix">
+            <div class="f-head">
+                <span id="zhuangtai">
+                状态:
+                </span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels ">
+                    <li><a href="javascript:void(0);">全部</a></li>
+                    <li><a href="javascript:void(0);">正在申报</a></li>
+                    <li><a href="javascript:void(0);">截止申报</a></li>
+                </ul>
+                <div class="multiple-btn">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)"  ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+        </div>
+    </div>
+		{% if flag %}
+		<div>
+			<p>您已经选择：</p>
+				
+			<p>
+			{{ selected.bumen }}
+			</p>
+			<p>
+			{{ selected.jibie }}
+			</p>
+			<p>
+			{{ selected.zhuangtai }}
+			</p>
+		</div>
+		{% endif %}
+	<div class="path" style="font-size:20px;">
+        <span>
+            详情：
+        </span>
+
+        <span>
+            <a href="#">
+                国家星火假计划
+            </a>
+        </span>
+    </div>
+	<div>
+<button type="button" class="btn btn-warning">进行中</button>
+<button type="button" class="btn btn-success">我的关注</button>
+
+	</div>	
+		<div class="search" style="margin-top:20px;">
+			<form action="/search" method="GET" class="search">
+			<button type="submit" style="float:right;width:4%">搜索</button>
+					<input  type="text" id="inputitem" name="inputitem" style="float:right;weight:5%;">
+					
+			</form>
+		</div>
+        <div class="sort">
+            <span>
+                <a href="#">
+                    综合
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+            <span>
+                <a href="#">
+                    挂网时间
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+            <span>
+                <a href="#">
+                    级别
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+            <span>
+                <a href="#">
+                    截止时间
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+        </div>
+		
+		
+		
+        <div id="list">
+            {% for goods in tb_goods_list %}
+            <div class="list-content">
+			<br><br><br>
+                <div class="row">                  
+                        <div class="col-sm-4"><a href="/hello/?id={{ goods.goods_name }}">{{ goods.goods_name }}</a>
+                    <p class="agency">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span>{{ goods.sp_id }}</span>
+                    </p>
+                    <p class="benefit">
+                        <span class="benefit-text">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <span>服务报价</span>
+                        </span>
+                        <span class="benefit-num">
+                           {{ goods_market_price }} 
+                        </span>
+                    </p>
+					</div>
+					<div class="col-sm-6">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                        <div class="info" style="left:{{ goods.successrate }};">{{ goods.goods_successrate }}</div>
+                    </div>
+                    <diV class="date">
+                        成功率
+                    </diV>
+					</div>
+                <div class="col-sm-2">
+                    <a href="/service_detail?goodsid={{goods.goods_id}}" ><button class="btn btn-warning">查看详情</button></a>
+				</div>
+				</div>
+            </div>
+            {% endfor %}
+        </div>    
+        <div id="load">
+            <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
+        </div>
+    
+</div>
+
+
+<div class="col-sm-2">
+
+<form class="form-horizontal" role="form">
+			<br><br><br>
+		<p style="font-size:20px;color:Orange;">	免费顾问服务</p>
+         <input type="text" class="form-control" id="firstname" 
+            placeholder="您的手机"><br>
+         <input type="text" class="form-control" id="lastname" 
+            placeholder="您的称呼"><br>
+		 <input type="text" class="form-control" id="lastname" 
+            placeholder="您需要什么"><br>
+
+         <a class="btn btn-warning btn-lg btn-block ">提交申请</a>
+	 <br><br><br><br><p style="font-size:15px;color:Orange;">热点需求</p>
+</form>
+
+</div>
+
+
+</div>
+</div>
+	
+</body>
+</html>

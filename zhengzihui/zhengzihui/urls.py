@@ -25,4 +25,11 @@ urlpatterns = [
     url(r'^zzh_ajax/$','zhengzihui_app.views.ajax',name='ajax'),
     url(r'^zzh_filter/$','zhengzihui_app.views.filter',name='filter'),
     url(r'^hello/$','zhengzihui_app.views.hello',name = 'hello'),
+    
+    #url(r'^zhengzihui_app/', include('zhengzihui_app.urls')),
+    url(r'^service_detail/','zhengzihui_app.views.service_detail',name="service_detail"),
+    
+    
+    url(r'^goodslist/$','zhengzihui_app.views.declare'),
+    url(r'^pay/', "zhengzihui_app.views.pay"),
 ]

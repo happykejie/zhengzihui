@@ -350,6 +350,23 @@ class tb_SysMessage(models.Model):
 	sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
         
     
+class tb_goods(models.Model):
+    goods_id = models.IntegerField(primary_key = True)#自增索引id主键
+    item_id = models.IntegerField(null = False)#服务对应项目的id
+    sp_id = models.IntegerField(null = False)#服务对应的服务提供商
+    goods_name = models.CharField(max_length = 40, null = False)#服务名称
+    goods_show = models.IntegerField(null = False)#是否显示，0为否，1为是，默认为1
+    goods_market_price = models.IntegerField(null = False)#服务市场报价
+    goods_price = models.IntegerField(null = False)#服务未打折扣报价(标价)
+    goods_price_discouint = models.FloatField(null = False)#折扣（标价乘以折扣等于实际成交价）
+    goods_pay = models.IntegerField(null = False)#该服务支持的支付方式
+    goods_guarantee = models.CharField(max_length = 100, null = False)#商家保证
+    goods_status = models.IntegerField(null = False)#服务提供商服务状态：0不可服务1可服务2暂时不可服务
+    goods_sort = models.IntegerField(null = False)#排序
+    goods_commend = models.IntegerField(null = False)#是否推荐此服务交易
+    goods_evaluation_good_star = models.IntegerField(null = False)#好评星级
+    goods_evaluation_count = models.IntegerField(null = False)#评价数
+    goods_successrate = models.IntegerField(null=False,default=50)#成功率
     
     
     
