@@ -246,7 +246,8 @@ class tb_item(models.Model):
     is_hot = models.IntegerField(null=False)
     item_from = models.IntegerField(null=False,default = 0)
     is_recommend = models.IntegerField(null=False,default = 0)
-    
+    def __str__(self):
+        return self.item_name
 
 class tb_item_class(models.Model):
     itcl_id = models.IntegerField('ID', primary_key=True,null=False)
@@ -263,6 +264,9 @@ class tb_item_pa(models.Model):
     ipa_parent_id = models.IntegerField(null=False)
     ipa_sort = models.IntegerField(null=False)
     area_id = models.IntegerField(null=False)
+    def __str__(self):
+        return self.ipa_name
+  
 
 
 class tb_article(models.Model):

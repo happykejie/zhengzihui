@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_article,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage#引入需要管理的表单
+from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_article,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item_pa,tb_item_class,tb_goods,tb_item#引入需要管理的表单
 # Register your models here.
 class Tb_Apage_ClassAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -72,11 +72,34 @@ class tb_SysMessage_Admin(admin.ModelAdmin):
 	list_display = ['sys_id', 'cust_id', 'mess_id', 'sys_status']
 
 
+class tb_item_pa_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目发布机构',{'fields':['ipa_id','ipa_name','ipa_parent_id','ipa_sort','area_id']}),
+    
+    ]
+    list_display = ['ipa_id', 'ipa_name', 'ipa_parent_id', 'ipa_sort', 'area_id']
+
+class tb_item_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目',{'fields':['item_id','item_code','item_name','item_level','item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']}),
+    
+    ]
+    list_display = ['item_id', 'item_code', 'item_name', 'item_level', 'item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']
+
+
+class tb_item_class_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目分类',{'fields':['itcl_id','itcl_code','itcl_name','itcl_des','necl_parent_id','necl_sort']}),
+    
+    ]
+    list_display = ['itcl_id', 'itcl_code', 'itcl_name', 'itcl_des', 'necl_parent_id','necl_sort']
+
 admin.site.register(tb_user_expand)
 admin.site.register(tb_user)
 admin.site.register(tb_service_provider)
 admin.site.register(tb_News_Class)
 admin.site.register(tb_News)
+admin.site.register(tb_goods)
 
 admin.site.register(Tb_Notice,Tb_NoticeAdmin)
 admin.site.register(Tb_Notice_Class,Tb_Notice_ClassAdmin)
@@ -88,8 +111,13 @@ admin.site.register(tb_article)
 admin.site.register(tb_album)
 admin.site.register(tb_pic)
 admin.site.register(tb_accessory)
+admin.site.register(tb_item)
 
 admin.site.register(tb_Artificial_Representations,tb_Artificial_Representations_Admin)
 admin.site.register(tb_Message,tb_Message_Admin)
 admin.site.register(tb_MessageText,tb_MessageText_Admin)
 admin.site.register(tb_SysMessage,tb_SysMessage_Admin)
+
+
+admin.site.register(tb_item_pa,tb_item_pa_Admin)
+admin.site.register(tb_item_class,tb_item_class_Admin)
