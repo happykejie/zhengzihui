@@ -100,9 +100,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
       #there have a option
-	 'NAME':'zzh',#your database name
+	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-	 'PASSWORD':'5102398',#password of mysql user
+	 'PASSWORD':'123654',#password of mysql user
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }

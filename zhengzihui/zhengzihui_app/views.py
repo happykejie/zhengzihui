@@ -151,7 +151,7 @@ def ajax(request):
     last_times = request.GET['times']
     print last_times
     last = int(last_times)
-    now = last + 5 #每次只取10条
+    now = last + 5 #每次只取5条
     print now
     items = tb_item.objects.all()[last:now]
     #序列化之后注意前端取数据的格式,数据部分在fields里面
