@@ -124,28 +124,28 @@ class tb_goods_Admin(admin.ModelAdmin):
 
 class tb_goods_click_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加图片',{'fields':['goods_id','goods_name','gocl_id','gocl_num']}),
+            ('添加商品点击率',{'fields':['goods_id','goods_name','gocl_id','gocl_num']}),
     
     ]
     list_display =['goods_id','goods_name','gocl_id','gocl_num']
 
 class tb_goods_class_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加图片',{'fields':['gocl_id','gocl_code','gocl_name','gocl_des','gocl_sort','gocl_parent_id']}),
+            ('添加商品分类',{'fields':['gocl_id','gocl_code','gocl_name','gocl_des','gocl_sort','gocl_parent_id']}),
     
     ]
     list_display =['gocl_id','gocl_code','gocl_name','gocl_des','gocl_sort','gocl_parent_id']
 
 class tb_goods_evaluation_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加图片',{'fields':['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']}),
+            ('添加商品评价',{'fields':['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']}),
     
     ]
     list_display =['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']
 
 class tb_order_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加图片',{'fields':['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']}),
+            ('添加商品',{'fields':['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']}),
     
     ]
     list_display =['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']
