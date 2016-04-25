@@ -76,9 +76,13 @@ class tb_service_provider_Admin(admin.ModelAdmin):
 
     def preview(self,obj):
 
-<<<<<<< HEAD
+
         return '<img src="/static/zhengzihui_app/%s" height="256" width="256" />' %(obj.sp_image2)
-=======
+
+    preview.allow_tags = True
+    preview.short_description = "服务商公司认证照片"
+    search_fields = ['sp_name']
+    
 class tb_item_pa_Admin(admin.ModelAdmin):
     fieldsets = [
             ('添加项目发布机构',{'fields':['ipa_id','ipa_name','ipa_parent_id','ipa_sort','area_id']}),
@@ -158,11 +162,8 @@ class tb_order_Admin(admin.ModelAdmin):
     ]
     list_display =['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']
 
->>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b
 
-    preview.allow_tags = True
-    preview.short_description = "服务商公司认证照片"
-    search_fields = ['sp_name']
+
     
 class tb_user_expand_Admin(admin.ModelAdmin):
     list_display = ['company_name','company_email','company_tel']

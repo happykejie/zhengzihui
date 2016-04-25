@@ -184,7 +184,7 @@ class tb_News(models.Model):
     
     )
     new_is_display =  models.IntegerField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
-<<<<<<< HEAD
+
     def __str__(self):
         return str(self.news_id)
     def __str__(self):
@@ -192,10 +192,10 @@ class tb_News(models.Model):
     def __str__(self):
         return str(self.news_time)
         
-=======
+
     
 
->>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b
+
 class Tb_Notice(models.Model):
     Notice_id = models.AutoField(primary_key = True)  
     Notice_title = models.CharField('公告标题',max_length=100,null =False)
