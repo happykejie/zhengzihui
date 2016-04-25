@@ -26,7 +26,7 @@ def Searchgoods(request):
 			seg_list = jieba.cut(goodsname,cut_all=False)
 		#搜索
 			for gname in seg_list:
-				ads+=tb_item.objects.filter(item_name__contains = gname)
+				ads+=tb_item.objects.filter(item_name__contains = gname) #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有object
 		#去重复
 			for i in ads: 
 				if i not in items:
@@ -35,7 +35,7 @@ def Searchgoods(request):
 			return render(request,'ind.html',{'selected':selected,'flag':flag,'items':items})
 
 
-def hello(request):
+def item_details(request):
 
     tb_item_list = tb_item.objects.all()
 
@@ -62,12 +62,10 @@ def hello(request):
 
 #点击搜索的下一级
 def ind(request):
-
-
 #首次只返回10条数据
-
     items = tb_item.objects.all()[:10]
     selected = {}
+#这里的筛选条件存在一个问题：当我选择一个键值时，之前的键值便没有，就是说每个分类下只能有一个选择条目
     flag = False
     if 'bumen' in request.session:
         value = request.session['bumen']
@@ -92,66 +90,10 @@ def ind(request):
 
 #项目信息滚动加载瀑布流
 def ajax(request):
-    p0 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/6.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p1 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/5.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p2 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/4.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p3 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/3.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
     last_times = request.GET['times']
     print last_times
     last = int(last_times)
-    now = last + 5 #每次只取10条
+    now = last + 5 #每次只取5条
     print now
     items = tb_item.objects.all()[last:now]
     #序列化之后注意前端取数据的格式,数据部分在fields里面
@@ -170,8 +112,72 @@ def filter(request):
         request.session['zhuangtai'] = keys
     return HttpResponseRedirect('/zzh_index/')
     
-'''
-def hello(request):
+<<<<<<< HEAD
+
+
+    
+
+
+
+def service_details(request):
+    
+    if request.GET['goodsid']:
+ 
+        service_detail_goods_id = request.GET['goodsid']
+        
+       
+    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的对象
+    service_detail_item_id = goods.item_id
+    item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
+
+    
+    return render(request,'service_detail.html',{'item':item,'goods':goods})
+    
+    
+    
+    
+def pay(request):
+	"""
+	the function of payment
+	"""
+	_goods_id = request.GET['goodsidtopay']
+	#print _goods_id
+	#_goods_id = '0001'
+	goods = tb_goods.objects.get(goods_id = _goods_id)
+	_price = goods.goods_price
+	_discount = goods.goods_price_discouint
+	_total_price = _price * _discount
+    #total_price=0.01 这里是测试字段，根据实际属性变动
+    #o_id = random.randint(1000001,9999999)
+    #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    #state = 0  # 0:未付款,1：已付款
+    #order=Orders(clientuser=user,orderid=o_id,ordertime=m_time,ordermoney=total_price,orderstate=state)
+    #order.save()
+	pay_url = p_alipay.alipay.create_direct_pay_by_user(_goods_id, "充值测试", "hello zhong",
+                                                            _total_price) 
+	return render(request, 'pay.html', {'pay_url': pay_url})
+	
+def service_list(request):
+    noservice = 1
+    noserviceinfo = "没有指定的服务商"
+    id1 = request.GET.get('itemid')
+    #print id1
+    tb_goods_list = tb_goods.objects.filter(item_id=id1)
+	#for a in tb_goods_list: 
+			#print (a.goods_id)
+    if tb_goods_list is None:
+        return render(request,'goods_list.html',{'noservice':noservice,'noserviceinfo':noserviceinfo})
+    else:
+        return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
+    
+    
+   
+   
+   
+   
+   
+   
+def create_test_data(request):
     p0 = tb_item( 
     	    item_id = 45,
             item_code = "58",
@@ -191,7 +197,64 @@ def hello(request):
             is_recommend = 0,
             )
     p0.save()
-    tb_item_list = tb_item.objects.all()
+    p001 = tb_item( 
+    	    item_id = 205,
+            item_code = "53248",
+            item_name = "四川省火星计划2016年度项目的通知",
+            itcl_id = 23,
+            item_level = 1,
+            item_ga = "科技厅",
+            item_pa_id = 3,
+            item_publish = 3,
+            item_deadtime = 3,
+            item_about = "科技创新",
+            item_url = "../static/images/7.jpg",
+            item_key = "成功率高",
+            item_status = 0,
+            is_hot = 45,
+            item_from = 0,
+            is_recommend = 0,
+            )
+    p001.save()
+    p002 = tb_item( 
+    	    item_id = 20168,
+            item_code = "58324234",
+            item_name = "四川省高端医疗计划项目的通知",
+            itcl_id = 23,
+            item_level = 1,
+            item_ga = "科技厅",
+            item_pa_id = 3,
+            item_publish = 2015,
+            item_deadtime = 2016,
+            item_about = "科技创新",
+            item_url = "../static/images/9.jpg",
+            item_key = "成功率高",
+            item_status = 0,
+            is_hot = 45,
+            item_from = 0,
+            is_recommend = 0,
+            )
+    p002.save()
+    p003 = tb_item( 
+    	    item_id = 2325,
+            item_code = "524332521",
+            item_name = "贵州省旅游重点点专项2016年度项目的通知",
+            itcl_id = 23,
+            item_level = 1,
+            item_ga = "科技厅",
+            item_pa_id = 3,
+            item_publish = 3,
+            item_deadtime = 3,
+            item_about = "科技创新",
+            item_url = "../static/images/2.jpg",
+            item_key = "成功率高",
+            item_status = 0,
+            is_hot = 45,
+            item_from = 0,
+            is_recommend = 0,
+            )
+    p003.save()
+    
 
     p2 = tb_item_class(
             itcl_id = 112,
@@ -232,6 +295,41 @@ def hello(request):
             article_click = 06,
             )
     p41.save()
+    
+    p42 = tb_article(
+            article_id = 451,
+            article_code = 2325,
+            article_name = "2016科技计划项目",
+            author = "models.CharField",
+            author_email = "models.CharField",
+            article_type = 98,
+            affiliation_id = 2325,
+            article_content = "models.TextField",
+            article_keywords = "models.TextField",
+            article_des = "models.CharField",
+            article_sort = 99,
+            
+            is_default = 00,
+            article_click = 06,
+            )
+    p42.save()
+    p43 = tb_article(
+            article_id = 451,
+            article_code = 2325,
+            article_name = "2016科技计划项目",
+            author = "models.CharField",
+            author_email = "models.CharField",
+            article_type = 98,
+            affiliation_id = 2325,
+            article_content = "models.TextField",
+            article_keywords = "models.TextField",
+            article_des = "models.CharField",
+            article_sort = 99,
+            
+            is_default = 00,
+            article_click = 06,
+            )
+    p43.save()
     p42 = tb_article(
             article_id = 452,
             article_code = 45,
@@ -384,17 +482,11 @@ def hello(request):
     p5.save()
     tb_album_list = tb_album.objects.all()
 
-    
 
-    item_id = request.GET['id']
+    return HttpResponse("插入数据成功！")
     
-    tb_article_list = tb_article.objects.get(affiliation_id=item_id)
+=======
 
-    #print tb_article_list.article_name
-
-    return render(request,'project_detail.html',{'tb_item_list':tb_item_list,'tb_item_class_list':tb_item_class_list,'tb_item_pa_list':tb_item_pa_list,'tb_article_list':tb_article_list,'tb_album_list':tb_album_list})
- '''   
-    
 
 
 
@@ -443,3 +535,4 @@ def declare(request):
 	#for a in tb_goods_list: 
 			#print (a.goods_id)
 	return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
+>>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b

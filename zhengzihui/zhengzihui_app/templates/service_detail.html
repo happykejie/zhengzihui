@@ -289,7 +289,7 @@
         <div id="list">
             {% for item in items %}
             <div class="list-content">
-                <a href="/hello/?id={{ item.item_id }}">
+                <a href="/item_details/?id={{ item.item_id }}">
                     <img src="{{ item.item_url }}" />
                 </a>
                 <span>
@@ -298,7 +298,7 @@
                 <div class="text">
                     <p class="title">
                         <label>{{ item.item_key }}</label>
-                        <a href="/hello/?id={{ item.item_id }}">{{ item.item_name }}</a>
+                        <a href="/item_details/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
@@ -331,7 +331,7 @@
                     <p>
                         已经有<span class="sum">{{item.is_hot}}</span>人参与
                     </p>
-                    <a href="/hello/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                    <a href="/item_details/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
                 <div class="line"></div>
             </div>

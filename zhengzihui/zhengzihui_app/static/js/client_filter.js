@@ -126,7 +126,7 @@ $(document).ready(function(){
                 $(this).find("a").unbind(".filter");
             });
             $all_li.each(function(){
-                $(this).bind("click.simple");
+                $(this).unbind("click.simple");
                 $(this).bind("click.multiple",function(){
                     if($(this).hasClass("selected")){
                         var selected_length = $(this).parent().children("li.selected").length;
