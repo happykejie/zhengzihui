@@ -112,7 +112,7 @@ def filter(request):
         request.session['zhuangtai'] = keys
     return HttpResponseRedirect('/zzh_index/')
     
-<<<<<<< HEAD
+
 
 
     
@@ -485,7 +485,7 @@ def create_test_data(request):
 
     return HttpResponse("插入数据成功！")
     
-=======
+
 
 
 
@@ -535,4 +535,4 @@ def declare(request):
 	#for a in tb_goods_list: 
 			#print (a.goods_id)
 	return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
->>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b
+
