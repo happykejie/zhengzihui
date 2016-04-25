@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_article,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage#引入需要管理的表单
+from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order#引入需要管理的表单
 # Register your models here.
 class Tb_Apage_ClassAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -76,7 +76,89 @@ class tb_service_provider_Admin(admin.ModelAdmin):
 
     def preview(self,obj):
 
+<<<<<<< HEAD
         return '<img src="/static/zhengzihui_app/%s" height="256" width="256" />' %(obj.sp_image2)
+=======
+class tb_item_pa_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目发布机构',{'fields':['ipa_id','ipa_name','ipa_parent_id','ipa_sort','area_id']}),
+    
+    ]
+    list_display = ['ipa_id', 'ipa_name', 'ipa_parent_id', 'ipa_sort', 'area_id']
+
+class tb_item_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目',{'fields':['item_id','item_code','item_name','itcl_id','item_level','item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']}),
+    
+    ]
+    list_display = ['item_id', 'item_code', 'item_name','itcl_id', 'item_level', 'item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']
+
+
+class tb_item_class_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加项目分类',{'fields':['itcl_id','itcl_code','itcl_name','itcl_des','necl_parent_id','necl_sort']}),
+    
+    ]
+    list_display = ['itcl_id', 'itcl_code', 'itcl_name', 'itcl_des', 'necl_parent_id','necl_sort']
+
+class tb_article_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加文章',{'fields':['article_id','article_code','article_name','author','author_email','article_type','affiliation_id','article_content','article_keywords','article_des','article_sort','is_default','article_click']}),
+    
+    ]
+    list_display = ['article_id','article_code','article_name','author','author_email','article_type','affiliation_id','article_content','article_keywords','article_type','article_des','article_sort','is_default','article_click']
+
+class tb_album_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加相册',{'fields':['album_id','album_name','album_type','affiliation_id','nacl_des','nacl_sort','is_default']}),
+    
+    ]
+    list_display = ['album_id','album_name','album_type','affiliation_id','nacl_des','nacl_sort','is_default']
+
+
+class tb_pic_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加图片',{'fields':['pic_id','pic_name','pic_tag','album_id','pic_object','pic_size']}),
+    
+    ]
+    list_display = ['pic_id','pic_name','pic_tag','album_id','pic_object','pic_size']
+
+class tb_goods_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加服务商品信息',{'fields':['goods_id','item_id','sp_id','goods_name','goods_market_price','goods_price','goods_price_discouint','goods_pay','goods_guarantee','goods_sort','goods_commend','goods_evaluation_good_star','goods_evaluation_count','goods_show','goods_status']}),
+    
+    ]
+    list_display = ['goods_id','item_id','sp_id','goods_name','goods_market_price','goods_price','goods_price_discouint','goods_pay','goods_guarantee','goods_sort','goods_commend','goods_evaluation_good_star','goods_evaluation_count','goods_show','goods_status']
+
+class tb_goods_click_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加商品点击率',{'fields':['goods_id','goods_name','gocl_id','gocl_num']}),
+    
+    ]
+    list_display =['goods_id','goods_name','gocl_id','gocl_num']
+
+class tb_goods_class_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加商品分类',{'fields':['gocl_id','gocl_code','gocl_name','gocl_des','gocl_sort','gocl_parent_id']}),
+    
+    ]
+    list_display =['gocl_id','gocl_code','gocl_name','gocl_des','gocl_sort','gocl_parent_id']
+
+class tb_goods_evaluation_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加商品评价',{'fields':['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']}),
+    
+    ]
+    list_display =['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']
+
+class tb_order_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加商品',{'fields':['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']}),
+    
+    ]
+    list_display =['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']
+
+>>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b
 
     preview.allow_tags = True
     preview.short_description = "服务商公司认证照片"
@@ -110,13 +192,22 @@ admin.site.register(Tb_Notice_Class,Tb_Notice_ClassAdmin)
 admin.site.register(Tb_Apage,Tb_ApageAdmin)
 admin.site.register(Tb_Apage_Class,Tb_Apage_ClassAdmin)
 
-
-admin.site.register(tb_article)
-admin.site.register(tb_album)
-admin.site.register(tb_pic)
+admin.site.register(tb_article,tb_article_Admin)
+admin.site.register(tb_album,tb_album_Admin)
+admin.site.register(tb_pic,tb_pic_Admin)
 admin.site.register(tb_accessory)
+admin.site.register(tb_item,tb_item_Admin)
+admin.site.register(tb_item_pa,tb_item_pa_Admin)
+admin.site.register(tb_item_class,tb_item_class_Admin)
+
+admin.site.register(tb_goods,tb_goods_Admin)
+admin.site.register(tb_goods_click,tb_goods_click_Admin)
+admin.site.register(tb_goods_class,tb_goods_class_Admin)
+admin.site.register(tb_goods_evaluation,tb_goods_evaluation_Admin)
+admin.site.register(tb_order,tb_order_Admin)
 
 admin.site.register(tb_Artificial_Representations,tb_Artificial_Representations_Admin)
 admin.site.register(tb_Message,tb_Message_Admin)
 admin.site.register(tb_MessageText,tb_MessageText_Admin)
 admin.site.register(tb_SysMessage,tb_SysMessage_Admin)
+

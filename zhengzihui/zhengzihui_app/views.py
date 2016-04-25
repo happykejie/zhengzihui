@@ -62,10 +62,7 @@ def item_details(request):
 
 #点击搜索的下一级
 def ind(request):
-
-
 #首次只返回10条数据
-
     items = tb_item.objects.all()[:10]
     selected = {}
 #这里的筛选条件存在一个问题：当我选择一个键值时，之前的键值便没有，就是说每个分类下只能有一个选择条目
@@ -93,66 +90,10 @@ def ind(request):
 
 #项目信息滚动加载瀑布流
 def ajax(request):
-    p0 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/6.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p1 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/5.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p2 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/4.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
-    p3 = {
-            "item_id":45,
-            "item_code" :"58%",
-            "item_name" :"四川省科学技术厅关于组织申报国家重点研发计划纳米科技等重点专项2016年度项目的通知",
-            "itcl_id" : 23,
-            "item_level" : 1,
-            "item_ga" :"科技厅",
-            "item_about" : "科技创新",
-            "item_url" : "../static/images/3.jpg",
-            "item_key" : "成功率高",
-            
-            "is_hot" :45
-         
-            }
     last_times = request.GET['times']
     print last_times
     last = int(last_times)
-    now = last + 5 #每次只取10条
+    now = last + 5 #每次只取5条
     print now
     items = tb_item.objects.all()[last:now]
     #序列化之后注意前端取数据的格式,数据部分在fields里面
@@ -171,6 +112,7 @@ def filter(request):
         request.session['zhuangtai'] = keys
     return HttpResponseRedirect('/zzh_index/')
     
+<<<<<<< HEAD
 
 
     
@@ -543,3 +485,54 @@ def create_test_data(request):
 
     return HttpResponse("插入数据成功！")
     
+=======
+
+
+
+
+def service_detail(request):
+    
+    if request.GET['goodsid']:
+ 
+        service_detail_goods_id = request.GET['goodsid']
+        
+       
+    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的对象
+    service_detail_item_id = goods.item_id
+    item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
+
+    
+    return render(request,'service_detail.html',{'item':item,'goods':goods})
+    
+    
+    
+    
+def pay(request):
+	"""
+	the function of payment
+	"""
+	_goods_id = request.GET['goodsidtopay']
+	print _goods_id
+	#_goods_id = '0001'
+	goods = tb_goods.objects.get(goods_id = _goods_id)
+	_price = goods.goods_price
+	_discount = goods.goods_price_discouint
+	_total_price = _price * _discount
+    #total_price=0.01 这里是测试字段，根据实际属性变动
+    #o_id = random.randint(1000001,9999999)
+    #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+    #state = 0  # 0:未付款,1：已付款
+    #order=Orders(clientuser=user,orderid=o_id,ordertime=m_time,ordermoney=total_price,orderstate=state)
+    #order.save()
+	pay_url = p_alipay.alipay.create_direct_pay_by_user(_goods_id, "充值测试", "hello zhong",
+                                                            _total_price) 
+	return render(request, 'pay.html', {'pay_url': pay_url})
+	
+def declare(request):
+	id1 = request.GET.get('itemid')
+	#print id1
+	tb_goods_list = tb_goods.objects.filter(item_id=id1)
+	#for a in tb_goods_list: 
+			#print (a.goods_id)
+	return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
+>>>>>>> de6ff94e1c5ce8abe14da43bf33455c11b03633b
