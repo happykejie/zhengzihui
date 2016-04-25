@@ -70,13 +70,40 @@ class tb_SysMessage_Admin(admin.ModelAdmin):
     
     ]
 	list_display = ['sys_id', 'cust_id', 'mess_id', 'sys_status']
+    
+class tb_service_provider_Admin(admin.ModelAdmin):
+    list_display = ['sp_name','sp_code','preview']
 
+    def preview(self,obj):
 
-admin.site.register(tb_user_expand)
-admin.site.register(tb_user)
-admin.site.register(tb_service_provider)
-admin.site.register(tb_News_Class)
-admin.site.register(tb_News)
+        return '<img src="/static/zhengzihui_app/%s" height="256" width="256" />' %(obj.sp_image2)
+
+    preview.allow_tags = True
+    preview.short_description = "服务商公司认证照片"
+    search_fields = ['sp_name']
+    
+class tb_user_expand_Admin(admin.ModelAdmin):
+    list_display = ['company_name','company_email','company_tel']
+    search_fields = ['company_name']
+ 
+class tb_user_Admin(admin.ModelAdmin):
+    list_display = ['user_name','user_email','user_telephone','user_auth','user_type']
+    search_fields = ['user_name']
+    
+class tb_News_Class_Admin(admin.ModelAdmin):
+    list_display = ['necl_name']
+    search_fields = ['necl_name']
+    
+class tb_News_Admin(admin.ModelAdmin):
+    list_display = ['news_id','article_id','news_time']
+    search_fields = ['news_id']
+    
+    
+admin.site.register(tb_user_expand,tb_user_expand_Admin)
+admin.site.register(tb_user,tb_user_Admin)
+admin.site.register(tb_service_provider,tb_service_provider_Admin)
+admin.site.register(tb_News_Class,tb_News_Class_Admin)
+admin.site.register(tb_News,tb_News_Admin)
 
 admin.site.register(Tb_Notice,Tb_NoticeAdmin)
 admin.site.register(Tb_Notice_Class,Tb_Notice_ClassAdmin)

@@ -25,7 +25,7 @@ class tb_user(models.Model):
     (NOTPASSAUTH,"验证没有通过或者没有验证"),
     
     )
-    user_auth = models.CharField("用户验证状态",max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH)#用户验证状态0：验证没有通过或者没有验证1：验证通过
+    user_auth = models.IntegerField("用户验证状态",max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH)#用户验证状态0：验证没有通过或者没有验证1：验证通过
     
     
     Enterprise = 1
@@ -34,7 +34,7 @@ class tb_user(models.Model):
     (Personal,'个人用户'),
     (Enterprise,'企业用户'),
     )
-    user_type = models.CharField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
+    user_type = models.IntegerField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
 
 
     def __str__(self):
@@ -74,6 +74,9 @@ class tb_user_expand(models.Model):
         return self.company_tel
 
 
+defaultImageURLoftb_service_provider_sp_image1 = 'img/tb_service_provider_sp_img1/%Y/%m/%d'
+defaultImageURLoftb_service_provider_sp_image2 = 'img/tb_service_provider_sp_img2/%Y/%m/%d'
+        
 class  tb_service_provider(models.Model):
     sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
     sp_id = models.IntegerField("内部ID",null=False,blank=False)
@@ -83,8 +86,8 @@ class  tb_service_provider(models.Model):
     tel = models.CharField("电话",max_length=40,null=False,blank=False)
     email = models.EmailField("邮箱",null=False,blank=False)
     master = models.CharField("擅长领域",max_length=50,null=False,blank=False)
-    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",null=False,blank=False)
-    sp_image2 = models.ImageField("账户所代表的公司执照上传",null=False,blank=False)
+    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=False,blank=False)
+    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=False,blank=False)
     sp_grade = models.IntegerField("服务商等级",null=False,blank=False)
     sp_sort = models.IntegerField("排序",null=False,blank=False)
     area_id = models.CharField("服务提供商所在地",max_length=10,null=False,blank=False)
@@ -108,7 +111,7 @@ class  tb_service_provider(models.Model):
     (AUTHING,"正在认证"),
     )
     
-    sp_auth = models.CharField("服务商认证状态",max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
+    sp_auth = models.IntegerField("服务商认证状态",max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
     
     RECOMMEND = 1
     NOTRECOMMED = 0
@@ -116,8 +119,15 @@ class  tb_service_provider(models.Model):
     (RECOMMEND,'优先推荐(当有相同报价的服务商，是否优先考虑推荐)'),
     (NOTRECOMMED,'不优先推荐'),
     )
-    is_recommend = models.CharField("是否优先推荐",max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
+    is_recommend = models.IntegerField("是否优先推荐",max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
     
+    def __str__(self):
+        return self.sp_name
+
+    def __str__(self):
+        return str(self.sp_code)
+
+   
     
 class tb_News_Class(models.Model):
     necl_id = models.AutoField("分类id",primary_key=True)
@@ -146,7 +156,7 @@ class tb_News(models.Model):
     (NOTHASALBUM,'没有相册'),
     )
     
-    has_album =  models.CharField("是否拥有自己的相册",max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False)
+    has_album =  models.IntegerField("是否拥有自己的相册",max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False)
     
     HOT = 1
     NOTHOT = 0
@@ -155,7 +165,7 @@ class tb_News(models.Model):
     (NOTHOT,'非热点新闻'),
     
     )
-    news_hot = models.CharField("是否为热点新闻",max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False)
+    news_hot = models.IntegerField("是否为热点新闻",max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False)
     
     TOP = 1
     NOTTOP = 0
@@ -164,7 +174,7 @@ class tb_News(models.Model):
     (NOTTOP,'非置顶新闻'),
     
     )
-    new_top = models.CharField("是否为置顶新闻",max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False)
+    new_top = models.IntegerField("是否为置顶新闻",max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False)
     
     DISPLAY = 1
     NOTDISPLAY = 0
@@ -173,9 +183,14 @@ class tb_News(models.Model):
     (NOTDISPLAY,'非前端展示新闻'),
     
     )
-    new_is_display =  models.CharField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
-    
-
+    new_is_display =  models.IntegerField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
+    def __str__(self):
+        return str(self.news_id)
+    def __str__(self):
+        return str(self.article_id)
+    def __str__(self):
+        return str(self.news_time)
+        
 class Tb_Notice(models.Model):
     Notice_id = models.AutoField(primary_key = True)  
     Notice_title = models.CharField('公告标题',max_length=100,null =False)
