@@ -536,3 +536,21 @@ def declare(request):
 			#print (a.goods_id)
 	return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
 
+
+
+
+
+
+def project_detail(request):
+    
+    if request.GET['id']:
+ 
+        project_detail_item_id = request.GET['id']
+        
+       
+    item = tb_item.objects.get(item_id = project_detail_item_id)
+    
+    article = tb_article.objects.get(affiliation_id = project_detail_item_id)
+
+    
+    return render(request,'project_detail.html',{'item':item,'article':article})
