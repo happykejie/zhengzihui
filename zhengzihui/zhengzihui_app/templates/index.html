@@ -54,14 +54,14 @@
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
 		<div class="navbar-header">
-			 <a class="navbar-brand" href="#">Hi,xxx 欢迎来到政资汇！</a>
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
 		</div>
 		<div style="float:right">
 			<ul class="nav navbar-nav">
 			<li class="active"><a href="#">退出</a></li>
 			<li><a href="#">登录</a></li>
 			<li><a href="#">注册</a></li>
-			<li><a href="#">我的政资汇</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
 			<li><a href="#">我的订单</a></li>
 			<li><a href="#">手机政资汇</a></li>
 			<li><a href="#">申请加盟</a></li>

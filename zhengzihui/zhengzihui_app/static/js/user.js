@@ -31,7 +31,7 @@ $(document).ready(function(){
                     $("#load").hide();
                     $("#boxright").html(html);
                 }else{
-                    $("#load").html("<p>请求的数据好像迷路啦！请重试！</p>");
+                    $("#load").html("<p>好像没有要请求的页面！</p>");
                 }
                 console.log(html);
             },error: function(XMLHttpRequest, textStatus, errorThrown) {

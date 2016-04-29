@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
 from django.core import serializers #用来序列化model 传给js
-from models import tb_item,tb_item_class,tb_item_pa,tb_article,tb_album,tb_pic,tb_goods
+from models import tb_item,tb_item_class,tb_item_pa,tb_article,tb_album,tb_pic,tb_goods,tb_user
 # Create your views here.
 def index(request):
 	#print (123)
@@ -566,12 +566,18 @@ def my_info(request):
 
     #保存修改信息
 def modify_user(request):
+    user = []
     if request.session['user_id']:
         user_id = request.session['user_id']
         user = tb_user.objects.get(user_id=user_id)
-    
-
-
+    user.user_name = request.POST['name']
+    user.user_email = request.POST['email']
+    user.user_password = request.POST['password']
+    user.user_telephone = request.POST['phonenumber']
+    usertype = int(request.POST['usertype'])
+    user.user_type = usertype
+    user.save()
+    return HttpResponseRedirect('/zzh/user_center')
     #安全中心
 def safe_center(request):
     if request.session['user_id']:
