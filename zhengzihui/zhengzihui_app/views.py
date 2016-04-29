@@ -60,12 +60,11 @@ def item_details(request):
     return render(request,'project_detail.html',{'tb_item_list':tb_item_list,'tb_item_class_list':tb_item_class_list,'tb_item_pa_list':tb_item_pa_list,'tb_article_list':tb_article_list,'tb_album_list':tb_album_list})
 
 
-#点击搜索的下一级
-def ind(request):
+#zss 点击搜索的下一级
+def search_result(request):
 #首次只返回10条数据
     items = tb_item.objects.all()[:10]
     selected = {}
-#这里的筛选条件存在一个问题：当我选择一个键值时，之前的键值便没有，就是说每个分类下只能有一个选择条目
     flag = False
     if 'bumen' in request.session:
         value = request.session['bumen']
@@ -86,10 +85,10 @@ def ind(request):
     else:
         selected['zhuangtai'] = ''
 
-    return render(request,'ind.html',{'selected':selected,'flag':flag,'items':items})
+    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':items})
 
-#项目信息滚动加载瀑布流
-def ajax(request):
+#zss项目信息滚动加载瀑布流
+def search_result_load(request):
     last_times = request.GET['times']
     print last_times
     last = int(last_times)
@@ -99,10 +98,8 @@ def ajax(request):
     #序列化之后注意前端取数据的格式,数据部分在fields里面
     return HttpResponse(serializers.serialize("json",items),content_type='application/json')  
  
-
-#条件筛选
-def filter(request):
-	
+#zss条件筛选
+def filter_labels(request):
     keys = request.GET['filterkeys']
     if 'bumen' in request.GET:
         request.session['bumen'] = keys    
@@ -110,12 +107,7 @@ def filter(request):
         request.session['jibie'] = keys 
     if 'zhuangtai' in request.GET:
         request.session['zhuangtai'] = keys
-    return HttpResponseRedirect('/zzh_index/')
-    
-
-
-
-    
+    return HttpResponseRedirect('/search_result/')
 
 
 
@@ -554,3 +546,82 @@ def project_detail(request):
 
     
     return render(request,'project_detail.html',{'item':item,'article':article})
+
+
+#zss
+#用户中心
+def user_center(request):
+    request.session['user_id'] = 3
+    return render(request,'user.html')
+
+#用户信息
+
+    #我的信息
+def my_info(request):
+    user = []
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        user = tb_user.objects.get(user_id=user_id)
+    return render(request,'my_info.html',{'user':user})
+
+    #保存修改信息
+def modify_user(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        user = tb_user.objects.get(user_id=user_id)
+    
+
+
+    #安全中心
+def safe_center(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #支付绑定
+def pay_combine(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #等级与成长
+def grade_grow(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+
+#订单管理
+    #全部订单
+def all_orders(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #未支付
+def not_pay(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #已支付
+def payed(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #已完成
+def completed(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+
+#评价管理
+    #全部评价
+def all_evaluations(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+
+    #未评论
+def not_evaluate(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        
+    #已评论
+def evaluated(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']

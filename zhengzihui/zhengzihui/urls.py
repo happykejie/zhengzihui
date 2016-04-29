@@ -19,13 +19,14 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^zzh_index/$','zhengzihui_app.views.ind',name='ind'),
     url(r'^index/$','zhengzihui_app.views.index',name='index'),
     url(r'^search/$','zhengzihui_app.views.Searchgoods',name='Searchgoods'),
     
-    url(r'^zzh_ajax/$','zhengzihui_app.views.ajax',name='ajax'),#用来干嘛的？？
-    
-    url(r'^zzh_filter/$','zhengzihui_app.views.filter',name='filter'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
+    #zss 二级页面
+    url(r'^search_result/$','zhengzihui_app.views.search_result',name='search_result'),
+    url(r'^search_result_load/$','zhengzihui_app.views.search_result_load',name='search_result_load'),#用来干嘛的？？
+    url(r'^filter_labels/$','zhengzihui_app.views.filter_labels',name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
+      
     
     url(r'^item_details/$','zhengzihui_app.views.item_details',name = 'item_details'),#当有id传入，可显示项目的相关信息
     
@@ -39,4 +40,41 @@ urlpatterns = [
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
     url(r'^create_test_data/$','zhengzihui_app.views.create_test_data',name='create_test_data'),
     url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),
+
+
+
+#用户中心
+    url(r'^zzh/user_center/', "zhengzihui_app.views.user_center",name="user_center"),
+    
+    #用户信息
+        #我的信息
+    url(r'^zzh/my_info/', "zhengzihui_app.views.my_info",name="my_info"),
+        #保存修改信息
+    url(r'^zzh/modify_user/', "zhengzihui_app.views.modify_user",name="modify_user"),
+        #安全中心
+    url(r'^zzh/safe_center/', "zhengzihui_app.views.safe_center",name="safe_center"),
+        #支付绑定
+    url(r'^zzh/pay_combine/', "zhengzihui_app.views.pay_combine",name="pay_combine"),
+        #等级与成长
+    url(r'^zzh/grade_grow/', "zhengzihui_app.views.grade_grow",name="grade_grow"),
+
+
+    #订单管理
+        #全部订单
+    url(r'^zzh/all_orders/', "zhengzihui_app.views.all_orders",name="all_orders"),
+        #未支付
+    url(r'^zzh/not_pay/', "zhengzihui_app.views.not_pay",name="not_pay"),
+        #已支付
+    url(r'^zzh/payed/', "zhengzihui_app.views.payed",name="payed"),
+       #已完成
+    url(r'^zzh/completed/', "zhengzihui_app.views.completed",name="completed"),
+
+
+    #评价管理
+        #全部评价
+    url(r'^zzh/all_evaluations/', "zhengzihui_app.views.all_evaluations",name="all_evaluations"),
+        #未评论
+    url(r'^zzh/not_evaluate/', "zhengzihui_app.views.not_evaluate",name="not_evaluate"),
+        #已评论
+    url(r'^zzh/evaluated/', "zhengzihui_app.views.evaluated",name="evaluated"),
 ]

@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>政资汇-政府资助信息一站式服务平台</title>
-    <script src="../static/jQuery-2.14/jquery.js" type="text/javascript"></script>
-    <link href="../static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="../static/css/client_filter.css" rel="stylesheet" type="text/css"/>
-    <script src="../static/js/client_filter.js" type="text/javascript"></script>
+    <script src="/static/jQuery-2.14/jquery.js" type="text/javascript"></script>
+    <link href="/static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/search_result.js" type="text/javascript"></script>
     <script>
 	
     $.ajaxSetup({
@@ -180,7 +180,7 @@
         <div id="list">
             {% for item in items %}
             <div class="list-content">
-                <a href="/project_detail/?id={{ item.item_id }}">
+                <a href="/item_details/?id={{ item.item_id }}">
                     <img src="{{ item.item_url }}" />
                 </a>
                 <span>
@@ -189,7 +189,7 @@
                 <div class="text">
                     <p class="title">
                         <label>{{ item.item_key }}</label>
-                        <a href="/project_detail/?id={{ item.item_id }}">{{ item.item_name }}</a>
+                        <a href="/item_details/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
@@ -222,7 +222,7 @@
                     <p>
                         已经有<span class="sum">{{item.is_hot}}</span>人参与
                     </p>
-                    <a href="/project_detail/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                    <a href="/item_details/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
                 <div class="line"></div>
             </div>

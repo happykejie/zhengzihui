@@ -1,0 +1,62 @@
+body{
+    margin:0px;
+    padding:0px;
+    font-family:"Microsoft YaHei UI";
+    font-size:100%;
+}
+#mainbox{
+    width:1200px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:white;
+}
+
+#boxleft,#boxright{
+    float:left;
+}
+
+/*左侧折叠菜单*/
+#boxleft{
+    width:200px;
+    height:auto;
+}
+#boxright{
+    max-width:1000px;
+    height:auto;
+    padding:20px 50px;
+}
+#boxleft  .panel + .panel{
+    margin:0px;
+}
+#boxleft a{
+    font-weight:600;
+    text-decoration:none;
+}
+#boxleft .panel-heading{
+    background-color: #2B2F3E;
+}
+
+#boxleft .panel-heading a{
+    color: white;
+}
+#boxleft .panel-heading a > span{
+    float:right;
+}
+#boxleft .panel-body a {
+    color: #929292;
+}
+#boxleft ul{
+    list-style-type: none;
+}
+#boxleft ul > li{
+    margin:5px 0px 5px 10px;
+    font-size:150%;
+}
+
+#boxright > #load{
+    width:100px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:200px;
+}

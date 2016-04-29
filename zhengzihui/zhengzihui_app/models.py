@@ -251,8 +251,8 @@ class Tb_Apage_Class(models.Model):
     
 class tb_item(models.Model):
     item_id = models.IntegerField('项目ID', primary_key=True, null=False,unique=True)
-    item_code = models.CharField('项目编号',max_length=20,null=False)
-    item_name = models.CharField('项目名称',max_length=100,null=False)
+    item_code = models.CharField('项目编号',max_length=20,null=False,blank=False)
+    item_name = models.CharField('项目名称',max_length=100,null=False,)
     itcl_id = models.IntegerField('项目分类ID',null=False)
     
     XIANJI = 1
@@ -313,7 +313,7 @@ class tb_item(models.Model):
     
     )
     is_recommend = models.IntegerField('是否推荐',choices=IS_RECOMMEND,default=NOTRECOMMED,null=False,blank=False)
-    def __str__(self):
+    def __unicode__(self):   #python 2 
         return self.item_name
 
 class tb_item_class(models.Model):
@@ -323,7 +323,8 @@ class tb_item_class(models.Model):
     itcl_des = models.CharField('分类描述',max_length=100,null=False)
     necl_parent_id = models.IntegerField('父类ID',null=False)
     necl_sort = models.IntegerField('排序',null=False)
-
+    def __unicode__(self):   #python 2 
+        return self.itcl_name
 
 class tb_item_pa(models.Model):
     ipa_id = models.IntegerField('ID', primary_key=True,null=False)
@@ -331,7 +332,7 @@ class tb_item_pa(models.Model):
     ipa_parent_id = models.IntegerField('所属上级机构的id',null=False)
     ipa_sort = models.IntegerField('排序',null=False)
     area_id = models.IntegerField('机构对应地区的id',null=False)
-    def __str__(self):
+    def __unicode__(self):   #python 2 
         return self.ipa_name
   
 
@@ -375,6 +376,9 @@ class tb_article(models.Model):
     )
     is_default = models.IntegerField('是否为默认文章',choices=IS_DEFAULT,default=ISDEFAULT,null=False,blank=False)
     article_click = models.IntegerField('文章点击数',null=False)
+    def __unicode__(self):   #python 2 
+        return self.article_name
+  
 
 class tb_album(models.Model):
     album_id = models.IntegerField('ID', primary_key=True,null=False)
@@ -410,7 +414,8 @@ class tb_album(models.Model):
     )
 
     is_default = models.IntegerField('是否为默认相册',choices=IS_DEFAULT,default=ISDEFAULT,null=False,blank=False)
-
+    def __unicode__(self):   #python 2 
+        return self.album_name
 
 
 class tb_pic(models.Model):
@@ -421,7 +426,8 @@ class tb_pic(models.Model):
     pic_object = models.ImageField('图片文件',upload_to='img_for_items',null = False)   
     pic_size = models.IntegerField('项目ID',null=False,default=0)
     upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
-
+    def __unicode__(self):   #python 2 
+        return self.pic_name
 
 
 class tb_accessory(models.Model):
@@ -431,7 +437,8 @@ class tb_accessory(models.Model):
     apublisher = models.CharField('附件上传者',max_length=2,null =False)
     aposition= models.CharField('附件位置',max_length=10,null =False)
     aaddtion= models.CharField('备注',max_length=50)
-
+    def __unicode__(self):   #python 2 
+        return self.apublisher
 
 
 class tb_Artificial_Representations(models.Model):
@@ -450,28 +457,33 @@ class tb_Artificial_Representations(models.Model):
     (SOLVED,'已解决'),
     
     )
-    arre_state = models.IntegerField('申述状态',choices=ARRE_STATE,default=NOTACCEPT,null=False,blank=False)#申述状态0：未受理	1：已受理	2：已解决
+    arre_state = models.IntegerField('申述状态',choices=ARRE_STATE,default=NOTACCEPT,null=False,blank=False)#申述状态0：未受理  1：已受理   2：已解决
     create_time = models.DateTimeField('提交申请时间')
-
+    def __unicode__(self):   #python 2 
+        return self.arre_title
 
 class tb_Message(models.Model):
-	mess_id = models.IntegerField(primary_key = True)
-	send_id = models.IntegerField(null = False)#发送方ID
-	rec_id = models.IntegerField(null = False)#接受方ID
-	text_id = models.IntegerField(null = False)#文本ID
-	status = models.IntegerField(null = False)#消息状态
+    mess_id = models.IntegerField(primary_key = True)
+    send_id = models.IntegerField(null = False)#发送方ID
+    rec_id = models.IntegerField(null = False)#接受方ID
+    text_id = models.IntegerField(null = False)#文本ID
+    status = models.IntegerField(null = False)#消息状态
+
+
     
 class tb_MessageText(models.Model):
-	text_id = models.IntegerField(primary_key = True)
-	mete_title = models.CharField(max_length = 10, null = False)#短信标题
-	mete_content = models.CharField(max_length = 300, null = False)#短信内容
-	mete_time = models.DateTimeField('消息发送时间')
-	    
+    text_id = models.IntegerField(primary_key = True)
+    mete_title = models.CharField(max_length = 10, null = False)#短信标题
+    mete_content = models.CharField(max_length = 300, null = False)#短信内容
+    mete_time = models.DateTimeField('消息发送时间')
+    def __unicode__(self):
+        return self.mete_title  
+    
 class tb_SysMessage(models.Model):
-	sys_id = models.IntegerField(primary_key = True)
-	cust_id = models.IntegerField(null = False)#客户ID
-	mess_id = models.IntegerField(null = False)#短信ID
-	sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
+    sys_id = models.IntegerField(primary_key = True)
+    cust_id = models.IntegerField(null = False)#客户ID
+    mess_id = models.IntegerField(null = False)#短信ID
+    sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
 
 
 class tb_goods(models.Model):
@@ -517,11 +529,9 @@ class tb_goods(models.Model):
     )
     goods_status = models.IntegerField("服务提供商服务状态",choices=GOODS_STATUS_CHOICES,default=NOTSERVE,null=False,blank=False)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.goods_name
 
-    def __str__(self):
-        return self.goods_guarantee
 
     
 class tb_goods_click(models.Model):
@@ -530,7 +540,7 @@ class tb_goods_click(models.Model):
     gocl_id = models.IntegerField("服务商品分类id",null = False)
     gocl_num = models.IntegerField("点击率状态",null = False)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.goods_name
 
 
@@ -542,10 +552,10 @@ class tb_goods_class(models.Model):
     gocl_sort = models.IntegerField("排序",null = False)
     gocl_parent_id = models.IntegerField("父分类id",null = False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.gocl_name
 
-    def __str__(self):
+    def __unicode__(self):
         return self.gocl_des
 
 
@@ -581,10 +591,10 @@ class tb_goods_evaluation(models.Model):
     )
     goev_status = models.IntegerField("评价状态",choices= GOEV_STATUS_CHOICES,default=MALICE,null=False,blank=False)
     
-    def __str__(self):
+    def __unicode__(self):
         return self.goods_name
 
-    def __str__(self):
+    def __unicode__(self):
         return self.user_name
 
 class tb_order(models.Model):
@@ -617,7 +627,7 @@ class tb_order(models.Model):
 
     order_from = models.IntegerField("WEB或者mobile",choices=ORDER_FROM,default=WEB,null=False,blank=False)
     express_id = models.IntegerField("物流公司id",null = False) 
-    express_no = models.CharField("物流单号",max_length = 100,null = False)	
+    express_no = models.CharField("物流单号",max_length = 100,null = False) 
 
     EVALUATE = 1
     NOTEVALUATE = 0
@@ -673,7 +683,8 @@ class tb_order(models.Model):
     (HAVERECEIPT,"已发货"),
     )
     express_state = models.IntegerField("物流状态",choices=EXPRESS_STATE_CHOICES,default= DELIVER,null=False,blank=False)
-
+    def __unicode__(self):
+        return self.item_name
     
     
     
