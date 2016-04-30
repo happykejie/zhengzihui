@@ -42,8 +42,12 @@ body{
 #boxleft .panel-heading a > span{
     float:right;
 }
-#boxleft .panel-body a {
+
+#boxleft .panel-body .not-clicked{
     color: #929292;
+}
+#boxleft .panel-body .clicked{
+    color: #FF404B;
 }
 #boxleft ul{
     list-style-type: none;
@@ -53,8 +57,45 @@ body{
     font-size:150%;
 }
 
+/*右侧显示区域*/
 #boxright > #load{
-    width:60px;
-    height:60px;
-    margin-left:80px;
+    width:100px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:200px;
+}
+
+#right-main-box > h3{
+    color: #1b453b;
+    margin-bottom: 30px;
+}
+#right-main-box > p{
+    padding-left:10px;
+    font-size:150%;
+    line-height:2;
+    background-color:#2B2F3E;
+    color:white;
+    font-weight:600;
+}
+#watch-list,#recommend-list {
+    width:100%;
+    height:auto;
+}
+.watch,.recommend {
+    margin:10px;
+    float:left;
+    width:250px;
+    height:300px;
+    padding:10px;
+    background-color: #f1f1f1;
+}
+.watch img, .recommend img{
+     width:230px;
+     height:230px;
+ }
+.watch p, .recommend p{
+    margin:10px 0px 5px 3px;
+    color: #757575;
+    font-weight:600;
 }

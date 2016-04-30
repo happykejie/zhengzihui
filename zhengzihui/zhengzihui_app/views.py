@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
 from django.core import serializers #用来序列化model 传给js
-from models import tb_item,tb_item_class,tb_item_pa,tb_article,tb_album,tb_pic,tb_goods,tb_user
+from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click
 # Create your views here.
 def index(request):
 	#print (123)
@@ -548,11 +548,46 @@ def project_detail(request):
     return render(request,'project_detail.html',{'item':item,'article':article})
 
 
+
 #zss
 #用户中心
 def user_center(request):
-    request.session['user_id'] = 3
-    return render(request,'user.html')
+    request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
+    user = []
+    a_click_items = []
+    a_recommend_items = []
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        user = tb_user.objects.get(user_id=user_id)
+
+    click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
+    for click_item in click_items:
+        a_click_item = {}    
+        a_click_item['id'] = click_item.item_id#获取项目id
+        a_click_item['name'] = click_item.item_name#获取项目名字
+        #album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id)[:1]#获取项目对应的相册id
+        #print album
+        #album_id = album.album_id
+        #print album_id
+        #a_click_item['pic_url'] = tb_pic.objects.filter(album_id=click_item.item_id).order_by('-pic_id')[:1].pic_object.url#获得最大pic_id的图片
+        a_click_item['pic_url'] = tb_pic.objects.get(album_id=click_item.item_id).pic_object.url[14:]#获得最大pic_id的图片
+        a_click_items.append(a_click_item)
+
+    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]
+    for recommend_item in recommend_items:
+        a_recommend_item= {}
+        a_recommend_item['id'] = recommend_item.item_id#获取项目id
+        a_recommend_item['name'] = recommend_item.item_name#获取项目名字
+        #album_id = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id)[:1].album_id#获取项目对应的相册id
+        #a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=recommend_item.item_id).order_by('-pic_id')[:1].pic_object.url#获得最大pic_id的图片
+        a_recommend_item['pic_url'] = tb_pic.objects.get(album_id=recommend_item.item_id).pic_object.url[14:]#获得最大pic_id的图片  切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_recommend_items.append(a_recommend_item)
+    return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
+
+#搜索一条项目
+def search_one_item(request):
+    if request.GET['item_id']:
+        item_id = request.GET['item_id']
 
 #用户信息
 

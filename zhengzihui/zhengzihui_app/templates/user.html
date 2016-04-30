@@ -25,10 +25,10 @@
                     </div>
                     <div id="UserCenter" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                         <ul class="panel-body">
-                            <li><a id="{% url 'my_info' %}" href="javascript:void(0);">我的信息</a></li>
-                            <li><a id="{% url 'safe_center' %}" href="javascript:void(0);">安全中心</a></li>
-                            <li><a id="{% url 'pay_combine' %}" href="javascript:void(0);">支付绑定</a></li>
-                            <li><a id="{% url 'grade_grow' %}" href="javascript:void(0);">我的等级与成长</a></li>
+                            <li><a class="not-clicked" id="{% url 'my_info' %}" href="javascript:void(0);">我的信息</a></li>
+                            <li><a class="not-clicked" id="{% url 'safe_center' %}" href="javascript:void(0);">安全中心</a></li>
+                            <li><a class="not-clicked" id="{% url 'pay_combine' %}" href="javascript:void(0);">支付绑定</a></li>
+                            <li><a class="not-clicked" id="{% url 'grade_grow' %}" href="javascript:void(0);">我的等级与成长</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,10 +42,10 @@
                     </div>
                     <div id="OrderCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                         <ul class="panel-body">
-                            <li><a id="{% url 'all_orders' %}" href="javascript:void(0);">全部订单</a></li>
-                            <li><a id="{% url 'not_pay' %}" href="javascript:void(0);">待付款</a></li>
-                            <li><a id="{% url 'payed' %}" href="javascript:void(0);">已付款待完成</a></li>
-                            <li><a id="{% url 'completed' %}" href="javascript:void(0);">已完成</a></li>
+                            <li><a class="not-clicked" id="{% url 'all_orders' %}" href="javascript:void(0);">全部订单</a></li>
+                            <li><a class="not-clicked" id="{% url 'not_pay' %}" href="javascript:void(0);">待付款</a></li>
+                            <li><a class="not-clicked" id="{% url 'payed' %}" href="javascript:void(0);">已付款待完成</a></li>
+                            <li><a class="not-clicked" id="{% url 'completed' %}" href="javascript:void(0);">已完成</a></li>
                         </ul>
                     </div>
                 </div>
@@ -59,9 +59,9 @@
                     </div>
                     <div id="EvaluationCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                         <ul class="panel-body">
-                            <li><a id="{% url 'all_evaluations' %}" href="javascript:void(0);">全部评价</a></li>
-                            <li><a id="{% url 'not_evaluate' %}" href="javascript:void(0);">未评价</a></li>
-                            <li><a id="{% url 'evaluated' %}" href="javascript:void(0);">已评价</a></li>
+                            <li><a class="not-clicked" id="{% url 'all_evaluations' %}" href="javascript:void(0);">全部评价</a></li>
+                            <li><a class="not-clicked" id="{% url 'not_evaluate' %}" href="javascript:void(0);">未评价</a></li>
+                            <li><a class="not-clicked" id="{% url 'evaluated' %}" href="javascript:void(0);">已评价</a></li>
                         </ul>
                     </div>
                 </div>
@@ -71,6 +71,32 @@
             <div id="load">
                 <img src="/static/images/load2.gif"/>
             </div>
+            <div id="right-main-box">
+                <h3>{{ user.user_name}}，欢迎您来到政资汇！</h3>
+                <p>浏览过的项目</p>
+                <div id="watch-list" class="clearfix">
+                {% for a_click_item in a_click_items%}
+                    <div class="watch">
+                        <a href="{% url 'search_one_item' %}?item_id={{ a_click_item.id }}">
+                            <img src="{{ a_click_item.pic_url }}"/>
+                            <p>{{ a_click_item.name }}</p>
+                        </a>
+                    </div> 
+                {% endfor %}          
+                </div>
+                <p>推荐的项目</p>
+                <div id="recommend-list" class="clearfix">
+                {% for a_recommend_item in a_recommend_items%}
+                    <div class="recommend">
+                        <a href="{% url 'search_one_item' %}?item_id={{ a_recommend_item.id }}">
+                            <img src="{{ a_recommend_item.pic_url }}"/>
+                            <p>{{ a_recommend_item.name }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+                </div>    
+            </div>
+
         </div>
     </div>
 

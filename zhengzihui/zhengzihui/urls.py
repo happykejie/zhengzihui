@@ -45,6 +45,8 @@ urlpatterns = [
 
 #用户中心
     url(r'^zzh/user_center/', "zhengzihui_app.views.user_center",name="user_center"),
+    #推荐的项目详情路径
+    url(r'^zzh/search_one_item/', "zhengzihui_app.views.search_one_item",name="search_one_item"),
     
     #用户信息
         #我的信息

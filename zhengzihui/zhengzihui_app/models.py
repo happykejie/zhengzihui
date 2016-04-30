@@ -316,6 +316,15 @@ class tb_item(models.Model):
     def __unicode__(self):   #python 2 
         return self.item_name
 
+class tb_item_click(models.Model):
+    item_id = models.IntegerField("项目id",null=False)
+    item_name = models.CharField("项目名称",max_length =100, null = False)
+    itcl_id = models.IntegerField("项目分类id",null = False)
+    click_counter = models.IntegerField("点击率",null = False,default=0)
+    
+    def __unicode__(self):
+        return self.item_name
+
 class tb_item_class(models.Model):
     itcl_id = models.IntegerField('ID', primary_key=True,null=False)
     itcl_code = models.IntegerField('分类标识码',null=False)
@@ -423,7 +432,7 @@ class tb_pic(models.Model):
     pic_name = models.CharField('图片名称',max_length=40,null=False)
     pic_tag = models.CharField('图片标签',max_length=40,null=False)
     album_id = models.IntegerField('相册id',null=False)
-    pic_object = models.ImageField('图片文件',upload_to='img_for_items',null = False)   
+    pic_object = models.ImageField('图片文件',upload_to='img_for_items/%Y/%m/%d',null = False,default="img_for_items/none/no_img.jpg")   
     pic_size = models.IntegerField('项目ID',null=False,default=0)
     upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
     def __unicode__(self):   #python 2 
@@ -528,6 +537,7 @@ class tb_goods(models.Model):
     (TEMPORARY,"暂时不可服务"),
     )
     goods_status = models.IntegerField("服务提供商服务状态",choices=GOODS_STATUS_CHOICES,default=NOTSERVE,null=False,blank=False)
+
     
     def __unicode__(self):
         return self.goods_name
@@ -538,7 +548,7 @@ class tb_goods_click(models.Model):
     goods_id = models.IntegerField("服务商品id",null=False)
     goods_name = models.CharField("服务商品名称",max_length =100, null = False)
     gocl_id = models.IntegerField("服务商品分类id",null = False)
-    gocl_num = models.IntegerField("点击率状态",null = False)
+    gocl_num = models.IntegerField("点击率状态",null = False,default=0)
     
     def __unicode__(self):
         return self.goods_name
