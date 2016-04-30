@@ -594,10 +594,16 @@ def search_one_item(request):
     #我的信息
 def my_info(request):
     user = []
+    company = []
+    usertype = False
     if request.session['user_id']:
         user_id = request.session['user_id']
         user = tb_user.objects.get(user_id=user_id)
-    return render(request,'my_info.html',{'user':user})
+        if user.user_type == 1:
+            company = tb_user_expand.objects.get(user_id=user_id)
+            usertype = True
+            print company
+    return render(request,'my_info.html',{'user':user,'company':company,'usertype':usertype})
 
     #保存修改信息
 def modify_user(request):
