@@ -565,22 +565,18 @@ def user_center(request):
         a_click_item = {}    
         a_click_item['id'] = click_item.item_id#获取项目id
         a_click_item['name'] = click_item.item_name#获取项目名字
-        #album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id)[:1]#获取项目对应的相册id
-        #print album
-        #album_id = album.album_id
-        #print album_id
-        #a_click_item['pic_url'] = tb_pic.objects.filter(album_id=click_item.item_id).order_by('-pic_id')[:1].pic_object.url#获得最大pic_id的图片
-        a_click_item['pic_url'] = tb_pic.objects.get(album_id=click_item.item_id).pic_object.url[14:]#获得最大pic_id的图片
+        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=click_item.item_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_click_items.append(a_click_item)
-
-    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]
+    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
     for recommend_item in recommend_items:
         a_recommend_item= {}
         a_recommend_item['id'] = recommend_item.item_id#获取项目id
         a_recommend_item['name'] = recommend_item.item_name#获取项目名字
-        #album_id = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id)[:1].album_id#获取项目对应的相册id
-        #a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=recommend_item.item_id).order_by('-pic_id')[:1].pic_object.url#获得最大pic_id的图片
-        a_recommend_item['pic_url'] = tb_pic.objects.get(album_id=recommend_item.item_id).pic_object.url[14:]#获得最大pic_id的图片  切片14是去除前缀zhengzihui_app 否则图片不能显示
+        album = tb_album.objects.filter(album_type=0,affiliation_id=recommend_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=recommend_item.item_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_recommend_items.append(a_recommend_item)
     return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
 
