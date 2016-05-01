@@ -56,55 +56,55 @@
                 <div class="form-group">
                     <label for="company_tel" class="col-sm-2 control-label">办公电话</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_tel" value="{{ company.company_tel }}">
+                        <input type="text" class="form-control" id="company_tel" name="company_tel" value="{{ company.company_tel }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_email" class="col-sm-2 control-label">办公邮箱</label>
                     <div class="col-sm-6">
-                        <input type="email" class="form-control" id="company_email" value="{{ company.company_email }}">
+                        <input type="email" class="form-control" id="company_email" name="company_email" value="{{ company.company_email }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_name" class="col-sm-2 control-label">公司名称</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_name" value="{{ company.company_name }}">
+                        <input type="text" class="form-control" id="company_name" name="company_name" value="{{ company.company_name }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_district" class="col-sm-2 control-label">公司所在区县</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company_district" value="{{ company.company_district }}">
+                        <input type="text" class="form-control" id="company_district" name="company_district" value="{{ company.company_district }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_address" class="col-sm-2 control-label">公司注册地址</label>
                     <div class="col-sm-8">
-                        <input type="text" class="form-control" id="company_address" value="{{ company.company_address }}">
+                        <input type="text" class="form-control" id="company_address" name="company_address" value="{{ company.company_address }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_registered_capital" class="col-sm-2 control-label">公司注册资本</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_registered_capital" value="{{ company.company_registered_capital }}">
+                        <input type="text" class="form-control" id="company_registered_capital" name="company_registered_capital" value="{{ company.company_registered_capital }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_industry" class="col-sm-2 control-label">公司所属行业</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_industry" value="{{ company.company_industry }}">
+                        <input type="text" class="form-control" id="company_industry" name="company_industry" value="{{ company.company_industry }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_stuff_no" class="col-sm-2 control-label">公司人数</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_stuff_no" value="{{ company.company_stuff_no }}">
+                        <input type="text" class="form-control" id="company_stuff_no" name="company_stuff_no" value="{{ company.company_stuff_no }}">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="company_nature" class="col-sm-2 control-label">公司性质</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="company_nature" value="{{ company.company_nature }}">
+                        <input type="text" class="form-control" id="company_nature" name="company_nature" value="{{ company.company_nature }}">
                     </div>
                 </div>
             </div>
@@ -120,15 +120,64 @@
 <script type="text/javascript">
     $().ready(function(){
 
+        //more输入验证
+        var check_more = function(){
+            $(this).parent().find(".formtips").remove();
+            if($(this).val() == ''){
+                $(this).after('<span class="formtips" style="color:red;font-weight:600;">输入为空，客官还是留下一些内容吧！</span>');
+            }
+        };
+
+        //more提交按钮验证
+        var checkbutton = function(){
+            var tag = false;
+            $("#more-info").find("input").each(function(){
+                $(this).parent().find(".formtips").remove();
+                if($(this).val() ===''){
+                    $(this).after('<span class="formtips" style="color:red;font-weight:600;">输入为空，客官还是留下一些内容吧！</span>');
+                    tag =  true;
+                }
+            });
+            if(tag){
+                return false;
+            }
+            
+        };
+
+
+        {% if usertype %}
+        	$("#more-info").find("input").each(function(){
+            	$(this).bind("blur.more",check_more);
+            	});
+        	$("#user-form").find("button").bind("click.checkbutton",checkbutton);
+        {% endif %}
+
         //控制企业用户填写信息
         $("#checkbox").on("click",function(){
-            console.log("click");
+            if($(this).find(":checked").val() === "1"){
+                $("#more-info").show();
+                $("#more-info").find("input").each(function(){
+                    $(this).bind("blur.more",check_more);
+                });
+                $("#user-form").find("button").bind("click.checkbutton",checkbutton);
+            }else{
+                $("#more-info").hide();
+                $("#more-info").find("input").each(function(){
+                    $(this).unbind("blur.more");
+                });
+                $("#user-form").find("button").unbind("click.checkbutton");
+            }
+        });
+
+        //控制企业用户填写信息
+        $("#checkbox").on("click",function(){
             if($(this).find(":checked").val() === "1"){
                 $("#more-info").show();
             }else{
                 $("#more-info").hide();
             }
         });
+
         //表单验证
         $("#user-form").validate({
             rules:{

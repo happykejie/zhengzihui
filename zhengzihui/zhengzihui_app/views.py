@@ -604,6 +604,7 @@ def my_info(request):
     #保存修改信息
 def modify_user(request):
     user = []
+    user_expand = []
     if request.session['user_id']:
         user_id = request.session['user_id']
         user = tb_user.objects.get(user_id=user_id)
@@ -614,6 +615,18 @@ def modify_user(request):
     usertype = int(request.POST['usertype'])
     user.user_type = usertype
     user.save()
+    if usertype == 1:
+        user_expand = tb_user_expand.objects.get(user_id=user.user_id)
+        user_expand.company_tel = request.POST['company_tel']
+        user_expand.company_email = request.POST['company_email']
+        user_expand.company_name = request.POST['company_name']
+        user_expand.company_district = request.POST['company_district']
+        user_expand.company_address = request.POST['company_address']
+        user_expand.company_registered_capital = request.POST['company_registered_capital']
+        user_expand.company_industry = request.POST['company_industry']
+        user_expand.company_stuff_no = request.POST['company_stuff_no']
+        user_expand.company_nature = request.POST['company_nature']
+        user_expand.save()
     return HttpResponseRedirect('/zzh/user_center')
     #安全中心
 def safe_center(request):
