@@ -44,8 +44,10 @@
                         <ul class="panel-body">
                             <li><a class="not-clicked" id="{% url 'all_orders' %}" href="javascript:void(0);">全部订单</a></li>
                             <li><a class="not-clicked" id="{% url 'not_pay' %}" href="javascript:void(0);">待付款</a></li>
-                            <li><a class="not-clicked" id="{% url 'payed' %}" href="javascript:void(0);">已付款待完成</a></li>
-                            <li><a class="not-clicked" id="{% url 'completed' %}" href="javascript:void(0);">已完成</a></li>
+                            <li><a class="not-clicked" id="{% url 'payed' %}" href="javascript:void(0);">已付款</a></li>
+                            <li><a class="not-clicked" id="{% url 'delivered' %}" href="javascript:void(0);">已发货</a></li>
+                            <li><a class="not-clicked" id="{% url 'checked' %}" href="javascript:void(0);">已验收</a></li>
+                            <li><a class="not-clicked" id="{% url 'delete' %}" href="javascript:void(0);">已取消</a></li>
                         </ul>
                     </div>
                 </div>

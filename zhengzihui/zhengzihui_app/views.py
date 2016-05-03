@@ -6,7 +6,7 @@ from django.shortcuts import render_to_response
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
 from django.core import serializers #用来序列化model 传给js
-from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click
+from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 # Create your views here.
 def index(request):
 	#print (123)
@@ -567,7 +567,7 @@ def user_center(request):
         a_click_item['name'] = click_item.item_name#获取项目名字
         album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
-        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=click_item.item_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_click_items.append(a_click_item)
     recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
     for recommend_item in recommend_items:
@@ -576,7 +576,7 @@ def user_center(request):
         a_recommend_item['name'] = recommend_item.item_name#获取项目名字
         album = tb_album.objects.filter(album_type=0,affiliation_id=recommend_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
-        a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=recommend_item.item_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_recommend_items.append(a_recommend_item)
     return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
 
@@ -585,7 +585,7 @@ def search_one_item(request):
     if request.GET['item_id']:
         item_id = request.GET['item_id']
 
-#用户信息
+#用户信息 zss
 
     #我的信息
 def my_info(request):
@@ -598,7 +598,6 @@ def my_info(request):
         if user.user_type == 1:
             company = tb_user_expand.objects.get(user_id=user_id)
             usertype = True
-            print company
     return render(request,'my_info.html',{'user':user,'company':company,'usertype':usertype})
 
     #保存修改信息
@@ -644,27 +643,149 @@ def grade_grow(request):
         user_id = request.session['user_id']
 
 
-#订单管理
+#订单管理 zss
     #全部订单
 def all_orders(request):
+    order_list = []
+    a_order_list = []
     if request.session['user_id']:
         user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
+
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        if order.order_state == 0:
+            a_order['order_state'] = '已取消'
+        if order.order_state == 1:
+            a_order['order_state'] = '未付款'
+        if order.order_state == 2:
+            a_order['order_state'] = '已付款'
+        if order.order_state == 3:
+            a_order['order_state'] = '已发货' 
+        if order.order_state == 4:
+            a_order['order_state'] = '已收货'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
 
     #未支付
 def not_pay(request):
+    order_list = []
+    a_order_list = []
     if request.session['user_id']:
         user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=1).order_by('-add_time')
+
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        a_order['order_state'] = '未付款'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
 
     #已支付
 def payed(request):
+    order_list = []
+    a_order_list = []
     if request.session['user_id']:
         user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=2).order_by('-add_time')
 
-    #已完成
-def completed(request):
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        a_order['order_state'] = '已支付'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
+
+
+    #已发货
+def delivered(request):
+    order_list = []
+    a_order_list = []
     if request.session['user_id']:
         user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        a_order['order_state'] = '已发货'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
+
+
+    #已验收
+def checked(request):
+    order_list = []
+    a_order_list = []
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=4).order_by('-add_time')
+
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        a_order['order_state'] = '已验收'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
+
+    #已取消
+def delete(request):
+    order_list = []
+    a_order_list = []
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=0).order_by('-add_time')
+
+    for order in order_list:
+        a_order = {}    
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['item_name'] = order.item_name#获取项目名字
+        a_order['order_state'] = '已取消'
+        a_order['order_amount'] = order.order_amount
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_list.html',{'a_order_list':a_order_list})
 
 #评价管理
     #全部评价

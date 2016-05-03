@@ -68,8 +68,12 @@ urlpatterns = [
     url(r'^zzh/not_pay/', "zhengzihui_app.views.not_pay",name="not_pay"),
         #已支付
     url(r'^zzh/payed/', "zhengzihui_app.views.payed",name="payed"),
-       #已完成
-    url(r'^zzh/completed/', "zhengzihui_app.views.completed",name="completed"),
+       #已发货
+    url(r'^zzh/delivered/', "zhengzihui_app.views.delivered",name="delivered"),
+       #已验收
+    url(r'^zzh/checked/', "zhengzihui_app.views.checked",name="checked"),
+       #已取消
+    url(r'^zzh/delete/', "zhengzihui_app.views.delete",name="delete"),
 
 
     #评价管理

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite #import for Adminsite change the header and title
 
 
-from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click#引入需要管理的表单
+from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area#引入需要管理的表单
 # Register your models here.
 class Tb_Apage_ClassAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -89,6 +89,13 @@ class tb_item_pa_Admin(admin.ModelAdmin):
     
     ]
     list_display = ['ipa_id', 'ipa_name', 'ipa_parent_id', 'ipa_sort', 'area_id']
+
+class tb_area_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('添加地区信息',{'fields':['area_id','area_name','area_parent_id','area_sort','area_deep']}),
+    
+    ]
+    list_display = ['area_id','area_name','area_parent_id','area_sort','area_deep']
 
 class tb_item_Admin(admin.ModelAdmin):
     fieldsets = [
@@ -207,6 +214,7 @@ admin.site.register(tb_accessory)
 admin.site.register(tb_item,tb_item_Admin)
 admin.site.register(tb_item_click,tb_item_click_Admin)
 admin.site.register(tb_item_pa,tb_item_pa_Admin)
+admin.site.register(tb_area,tb_area_Admin)
 admin.site.register(tb_item_class,tb_item_class_Admin)
 
 admin.site.register(tb_goods,tb_goods_Admin)

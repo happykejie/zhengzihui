@@ -316,6 +316,25 @@ class tb_item(models.Model):
     def __unicode__(self):   #python 2 
         return self.item_name
 
+class tb_item_pa(models.Model):
+    ipa_id = models.IntegerField('ID', primary_key=True,null=False)
+    ipa_name = models.CharField('机构名称',max_length=100,null=False)
+    ipa_parent_id = models.IntegerField('所属上级机构的id',null=False)
+    ipa_sort = models.IntegerField('排序',null=False)
+    area_id = models.IntegerField('机构对应地区的id',null=False)
+    def __unicode__(self):   #python 2 
+        return self.ipa_name
+
+class tb_area(models.Model):
+    area_id = models.IntegerField("地区id",primary_key=True,null=False)
+    area_name = models.CharField("地区名称",max_length =100, null = False)
+    area_parent_id = models.IntegerField("地区上一级id",null = False)
+    area_sort = models.IntegerField("地区排序",null = False,default=0)
+    area_deep = models.IntegerField("地区深度",null = False,default=0)
+    
+    def __unicode__(self):
+        return self.area_name
+
 class tb_item_click(models.Model):
     item_id = models.IntegerField("项目id",null=False)
     item_name = models.CharField("项目名称",max_length =100, null = False)
@@ -334,16 +353,6 @@ class tb_item_class(models.Model):
     necl_sort = models.IntegerField('排序',null=False)
     def __unicode__(self):   #python 2 
         return self.itcl_name
-
-class tb_item_pa(models.Model):
-    ipa_id = models.IntegerField('ID', primary_key=True,null=False)
-    ipa_name = models.CharField('机构名称',max_length=100,null=False)
-    ipa_parent_id = models.IntegerField('所属上级机构的id',null=False)
-    ipa_sort = models.IntegerField('排序',null=False)
-    area_id = models.IntegerField('机构对应地区的id',null=False)
-    def __unicode__(self):   #python 2 
-        return self.ipa_name
-  
 
 
 class tb_article(models.Model):
@@ -623,7 +632,7 @@ class tb_order(models.Model):
     payment_time = models.DateTimeField("支付(付款)时间",null=False,blank=False)
     final_time = models.DateTimeField("订单完成时间",null=False,blank=False)
     good_amount = models.IntegerField("商品总价格",null = False)
-    order_amount = models.IntegerField("订单总价格",null = False)
+    order_amount = models.IntegerField("订单总价格",null = False,default=0)
     refund_amount = models.IntegerField("退款金额",null = False)
     delay_time = models.DateTimeField("延迟时间",null=False,blank=False)
 
@@ -660,7 +669,7 @@ class tb_order(models.Model):
     (DELIVER,"已发货"),
     (RECEIPT,"已收货"),  
     )
-    order_state = models.IntegerField("订单状态",choices=ORDER_STATE_CHOICES,default=PAYMENT,null=False,blank=False)
+    order_state = models.IntegerField("订单状态",choices=ORDER_STATE_CHOICES,default=NOTPAYMENT,null=False,blank=False)
 
     NOTREFUND = 0
     PARTREFUND = 1

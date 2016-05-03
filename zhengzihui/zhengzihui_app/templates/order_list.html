@@ -1,0 +1,162 @@
+<div>
+    <style>
+    #order{
+        width:100%;
+        margin-left:auto;
+        margin-right:auto;
+        background-color: #ffffff;
+    }
+    .btn{
+        color:white;
+        font-weight:600;
+    }
+    .btn-default{
+        background-color: #2B2F3E;
+    }
+    #order-list{
+        padding:0px 10px 10px 10px;
+        border-width:3px;
+        border-style:solid;
+        border-color: #B9BFC1;
+        font-size:100%;
+        background-color:#F5F5F5;
+        margin-top:20px;
+    }
+    #order-list .title a{
+        text-decoration:none;
+        color: #595959;
+    }
+    #order-list .list-content{
+        position:relative;
+        margin:10px 0px 0px 0px;
+        height:150px;
+        overflow:hidden;
+        background-color:white;
+    }
+    #order-list  .text{
+        margin-left:230px;
+        margin-top:10px;
+        float:left;
+        margin-right:220px;
+    }
+    #order-list a img{
+        position:absolute;
+        left:10px;
+        top:10px;
+        width:200px;
+        height:130px;
+    }
+    #order-list .real-pay{
+        text-align:center;
+        position:absolute;
+        right:0px;
+        top:10px;
+        width:200px;
+        font-size:75%;
+        color: #929292;
+        padding:25px;
+    }
+    #order-list .real-pay > p{
+        margin:10px -25px;
+    }
+    #order-list .line{
+        position:absolute;
+        right:200px;
+        top:20px;
+        width:1px;
+        background-color: #e0e0e0;
+        height:110px;
+    }
+    #order-list .sum{
+        color:#FF8213;
+        font-size:250%;
+        font-weight:600;
+    }
+    #order-list .title {
+        font-weight:bold;
+    }
+    #order-list .list-content > span{
+        position:absolute;
+        left:10px;
+        top:10px;
+        background-color:#50B400;
+        color:white;
+        font-size:75%;
+        padding:3px 5px;
+
+    }
+    #order-list .agency{
+        font-size:85%;
+        color:#50B400;
+    }
+    #order-list .order-status,#order-list .glyphicon-send{
+        font-size:85%;
+    }
+    #order-list .order-status-title{
+        background-color:#1E2B33;
+        border-radius:5px;
+        padding:2px 8px 2px 5px;
+        color:white;
+    }
+    #order-list .order-status-text{
+        margin-left:15px;
+        font-weight:bold;
+        color: #19574c;
+    }
+</style>
+    <div id="order">
+        <p>我的订单</p>
+        <div id="order-button">
+            <button type="button" class="btn btn-success">全选</button>
+            <button type="button" class="btn btn-default">反选</button>
+            <button type="button" class="btn btn-default">全部确认</button>
+            <button type="button" class="btn btn-default">排序</button>
+        </div>
+        <div id="order-list">
+        {% for order in a_order_list %}
+            <div class="list-content">
+                <a href="{% url 'search_one_item' %}?item_id={{ order.item_id }}">
+                    <img src="{{ order.pic_url }}" />
+                </a>
+                <span>
+                    科技项目
+                </span>
+                <div class="text">
+                    <p class="title">
+                        <a href="{% url 'search_one_item' %}?item_id={{ order.item_id }}">{{ order.item_name }}</a>
+                    </p>
+                    <p class="agency">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span>{{ order.publish }}</span>
+                    </p>
+                    <p class="order-status">
+                        <span class="order-status-title">
+                            <span class="glyphicon glyphicon-send"></span>
+                            <span>交易状态:</span>
+                        </span>
+                        <span class="order-status-text">
+                            {{ order.order_state }}
+                        </span>
+                    </p>
+                </div>
+                <div class="real-pay">
+                    <p>实付款：</p>
+                    <p>
+                        <span class="sum">{{ order.order_amount }}</span>
+                    </p>
+                </div>
+                <div class="line"></div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+<script>
+    $(document).ready(function(){
+        $(".list-content").hover(function(){
+            $(this).css("box-shadow","1px 2px 3px #c0c0c0");
+        },function(){
+            $(this).css("box-shadow","0px 0px 0px");
+        });
+    })
+</script>
+</div>
