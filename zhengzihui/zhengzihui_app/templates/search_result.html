@@ -184,11 +184,11 @@
                     <img src="{{ item.pic_url }}" />
                 </a>
                 <span>
-                    科技项目
+                    {{ item.item_key }}
                 </span>
                 <div class="text">
                     <p class="title">
-                        <label>新鲜抢出</label>
+                        <label>{{ item.item_about }}</label>
                         <a href="/item_details/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
@@ -201,26 +201,26 @@
                             <span>额度</span>
                         </span>
                         <span class="benefit-num">
-                            3万~500万
+                            {{ item.item_ga }}
                         </span>
                     </p>
                     <div class="progress">
                         <div class="progress-bar"></div>
-                        <div class="info" style="left:40%;">40%</div>
+                        <div class="info" style="left:{{ item.item_consume_time }}%;">{{ item.item_consume_time }}%</div>
                     </div>
                     <diV class="date">
                         <span class="start">
-                            2016.01.25
+                            {{ item.item_publish }}
                         </span>
                          <span class="stop">
-                           2016.05.01
+                           {{ item.item_deadtime }}
                         </span>
                     </diV>
 
                 </div>
                 <div class="watch">
                     <p>
-                        已经有<span class="sum">432</span>人参与
+                        已经有<span class="sum">{{ item.sum }}</span>人参与
                     </p>
                     <a href="/item_details/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
