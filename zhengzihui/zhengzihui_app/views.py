@@ -111,19 +111,46 @@ def search_result(request):
         album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_item['num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
+        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
 #zss项目信息滚动加载瀑布流
 def search_result_load(request):
+    a_items = []
     last_times = request.GET['times']
     last = int(last_times)
     now = last + 5 #每次只取5条
     items = tb_item.objects.all()[last:now]
-    #序列化之后注意前端取数据的格式,数据部分在fields里面
-    return HttpResponse(serializers.serialize("json",items),content_type='application/json')  
+    for item in items:
+        a_item = {}    
+        a_item['item_id'] = item.item_id#获取项目id
+        a_item['item_name'] = item.item_name#获取项目名字 
+        a_item['item_ga'] = item.item_ga
+        a_item['item_key'] = item.item_key
+        a_item['item_about'] = item.item_about
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
+        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
+        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(item.item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_item['item_consume_time'] = 100
+            a_item['item_key'] = "已结束"
+        else:
+            a_item['item_consume_time'] = int(consume_time)
+        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
+        a_items.append(a_item)
+        #json.dumps('a_item',a_items)
+        #序列化之后注意前端取数据的格式,数据部分在fields里面
+        #return HttpResponse(serializers.serialize("json",a_items),content_type='application/json')  
+    return HttpResponse(json.dumps(a_items))  
  
 #zss条件筛选
 def filter_labels(request):

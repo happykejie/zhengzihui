@@ -56,7 +56,7 @@ $(document).ready(function(){
         if(! $bar.is(":animated")){
             var $width = $bar.next(".info").text();
             //$bar.animate({width:$width,opacity:"1"},200);   //有问题
-            $bar.css("width",$width).css("opacity","1");             //css方法有动画，神奇！
+            $bar.css("width",$width)//.css("opacity","1");             css方法有动画，神奇！
         }
     },function(){
         $(this).css("box-shadow","0px 0px 0px");
@@ -255,35 +255,38 @@ $(document).ready(function(){
 			var scrollTop=document.documentElement.scrollTop||document.body.scrollTop||0;//滚动条距离
 		    var windowHeight=document.documentElement.clientHeight||document.body.clientHeight||0;//窗口高度
             if(scrollTop>=bottom-windowHeight){
-                console.log(bottom);
-                console.log(scrollTop);
-                console.log(windowHeight);
+                //console.log(bottom);
+                //console.log(scrollTop);
+                //console.log(windowHeight);
                 $("#load").show();
                     $.ajax({method:"GET",url:"/search_result_load/",data:{"times":times},dataType:"json",success:function(data){
 						if(data.length > 0){  //返回的数据不能为空
 							$.each(data,function(index,obj){
-                            $last.clone(true).appendTo("#list").css("opacity","0.2");  //传递参数true，使复制事件，默认为false
+                            $last.clone(true).appendTo("#list")// 传递参数true，使复制事件，默认为false
                             var $last_now = $(".list-content").last();
-                            $last_now.find(".title > a").text(obj.fields.item_name);
-                            //$last_now.find("a > img").attr("src",obj.fields.item_url);
-                            //$last_now.find(".title > label").text(obj.fields.item_key);
-                            //$last_now.children("span").text(obj.fields.item_about);
-                            //$last_now.find(".benefit-num").text(obj.edu);
-                            //$last_now.find(".agency span").last().text(obj.fields.item_ga);
-                            //$last_now.find(".info").css("left",obj.fields.item_code).text(obj.fields.item_code); //注意控制style里的样式使用css，而不能使用attr
-                            //$last_now.find(".start").text(obj.start);
-                            //$last_now.find(".stop").text(obj.stop);
-                            //$last_now.find(".sum").text(obj.fields.is_hot);
-                            $last_now.animate({opacity:"1"},200);
+                            $last_now.find(".title > a").text(obj.item_name);
+                            $last_now.find("a").attr("href","/item_details/?id="+obj.item_id);
+                            $last_now.find("a > img").attr("src",obj.pic_url);
+                            $last_now.find(".title > label").text(obj.item_about);
+                            $last_now.find(".title > a").attr("href","/item_details/?id="+obj.item_id);
+                            $last_now.children("span").text(obj.item_key);
+                            $last_now.find(".benefit-num").text(obj.item_ga);
+                            $last_now.find(".agency span").last().text(obj.pa);
+                            $last_now.find(".info").css("left",obj.item_consume_time+"%").text(obj.item_consume_time+"%"); //注意控制style里的样式使用css，而不能使用attr
+                            $last_now.find(".start").text(obj.item_publish);
+                            $last_now.find(".stop").text(obj.item_deadtime);
+                            $last_now.find(".sum").text(obj.order_num);
+                            $last_now.find(".witch > a").attr("href","/item_details/?id="+obj.item_id);
+                            //$last_now.animate({opacity:"1"},200);
                             });
                             $("#load").hide();
                             times += 5; //每次取5条数据
-                            console.log(times);
-                            console.log(data[0].fields.item_name);  //后台序列化的结果就是将整个对象和方法都序列化啦，而数据内容区域在fields里面
+                            //console.log(times);
+                            //console.log(data[0].fields.item_name);  //后台序列化的结果就是将整个对象和方法都序列化啦，而数据内容区域在fields里面
+                            //console.log(data)
 						}else{
 							$("#load").html("<p>数据已经全部加载完毕啦，如果没有感兴趣的内容请移步其他网页！</p>");
 						}
-                         
                          },error: function(XMLHttpRequest, textStatus, errorThrown) {
                          console.log(XMLHttpRequest.status);
                          console.log(XMLHttpRequest.readyState);
