@@ -63,6 +63,7 @@ def item_details(request):
 #zss 点击搜索的下一级
 def search_result(request):
 #首次只返回10条数据
+    a_items = []
     items = tb_item.objects.all()[:10]
     selected = {}
     flag = False
@@ -85,15 +86,26 @@ def search_result(request):
     else:
         selected['zhuangtai'] = ''
 
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':items})
+
+    for item in items:
+        a_item = {}    
+        a_item['item_id'] = item.item_id#获取项目id
+        a_item['item_name'] = item.item_name#获取项目名字
+        a_item['item_publish'] = item.item_publish
+        a_item['item_deadtime'] = item.item_deadtime
+        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_items.append(a_item)
+
+    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
 #zss项目信息滚动加载瀑布流
 def search_result_load(request):
     last_times = request.GET['times']
-    print last_times
     last = int(last_times)
     now = last + 5 #每次只取5条
-    print now
     items = tb_item.objects.all()[last:now]
     #序列化之后注意前端取数据的格式,数据部分在fields里面
     return HttpResponse(serializers.serialize("json",items),content_type='application/json')  

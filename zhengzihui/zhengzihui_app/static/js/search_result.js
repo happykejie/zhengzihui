@@ -265,15 +265,15 @@ $(document).ready(function(){
                             $last.clone(true).appendTo("#list").css("opacity","0.2");  //传递参数true，使复制事件，默认为false
                             var $last_now = $(".list-content").last();
                             $last_now.find(".title > a").text(obj.fields.item_name);
-                            $last_now.find("a > img").attr("src",obj.fields.item_url);
-                            $last_now.find(".title > label").text(obj.fields.item_key);
-                            $last_now.children("span").text(obj.fields.item_about);
+                            //$last_now.find("a > img").attr("src",obj.fields.item_url);
+                            //$last_now.find(".title > label").text(obj.fields.item_key);
+                            //$last_now.children("span").text(obj.fields.item_about);
                             //$last_now.find(".benefit-num").text(obj.edu);
-                            $last_now.find(".agency span").last().text(obj.fields.item_ga);
-                            $last_now.find(".info").css("left",obj.fields.item_code).text(obj.fields.item_code); //注意控制style里的样式使用css，而不能使用attr
+                            //$last_now.find(".agency span").last().text(obj.fields.item_ga);
+                            //$last_now.find(".info").css("left",obj.fields.item_code).text(obj.fields.item_code); //注意控制style里的样式使用css，而不能使用attr
                             //$last_now.find(".start").text(obj.start);
                             //$last_now.find(".stop").text(obj.stop);
-                            $last_now.find(".sum").text(obj.fields.is_hot);
+                            //$last_now.find(".sum").text(obj.fields.is_hot);
                             $last_now.animate({opacity:"1"},200);
                             });
                             $("#load").hide();

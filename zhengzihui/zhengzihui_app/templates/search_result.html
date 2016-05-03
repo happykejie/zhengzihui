@@ -181,19 +181,19 @@
             {% for item in items %}
             <div class="list-content">
                 <a href="/item_details/?id={{ item.item_id }}">
-                    <img src="{{ item.item_url }}" />
+                    <img src="{{ item.pic_url }}" />
                 </a>
                 <span>
-                    {{ item.item_about }}
+                    科技项目
                 </span>
                 <div class="text">
                     <p class="title">
-                        <label>{{ item.item_key }}</label>
+                        <label>新鲜抢出</label>
                         <a href="/item_details/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <span>{{ item.item_ga }}</span>
+                        <span>{{ item.pa }}</span>
                     </p>
                     <p class="benefit">
                         <span class="benefit-text">
@@ -206,21 +206,21 @@
                     </p>
                     <div class="progress">
                         <div class="progress-bar"></div>
-                        <div class="info" style="left:{{ item.item_code }};">{{ item.item_code }}</div>
+                        <div class="info" style="left:40%;">40%</div>
                     </div>
                     <diV class="date">
                         <span class="start">
-                            2016.01.01
+                            2016.01.25
                         </span>
                          <span class="stop">
-                            2016.05.01
+                           2016.05.01
                         </span>
                     </diV>
 
                 </div>
                 <div class="watch">
                     <p>
-                        已经有<span class="sum">{{item.is_hot}}</span>人参与
+                        已经有<span class="sum">432</span>人参与
                     </p>
                     <a href="/item_details/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
