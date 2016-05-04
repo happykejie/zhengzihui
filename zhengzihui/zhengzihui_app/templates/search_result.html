@@ -19,6 +19,119 @@
 	</script>
 </head>
 <body>
+
+<!--导航部分-->
+<div class="container">
+<style type="text/css"><!--附加导航样式-->
+    /* Custom Styles */
+    ul.nav-tabs{
+        z-index:1;
+        width: 140px;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    }
+    ul.nav-tabs li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-tabs li:first-child{
+        border-top: none;
+    }
+    ul.nav-tabs li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-tabs li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-tabs li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    ul.nav-tabs.affix{
+        top: 30px; /* Set the top position of pinned element */
+    }
+    
+    
+    .image{height:250px;width:200px;background: #ffffff}
+</style>
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+        <div class="navbar-header">
+             <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+        </div>
+        <div style="float:right">
+            <ul class="nav navbar-nav">
+            <li class="active"><a href="#">退出</a></li>
+            <li><a href="#">登录</a></li>
+            <li><a href="#">注册</a></li>
+            <li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+            <li><a href="#">我的订单</a></li>
+            <li><a href="#">手机政资汇</a></li>
+            <li><a href="#">申请加盟</a></li>
+            <li><a href="#">人工申诉</a></li>
+            <li><a href="#">网站导航</a></li>
+         </ul>
+        </div>
+    </nav>  
+        <!--div class="jumbotron"> </div -->
+<!--网站图标+搜索栏-->
+  <div class="row">
+    <div class="col-sm-4">
+      <center><img src="/static/images/logo.jpg"></img></center>
+    </div>
+    
+    <div class="col-sm-8">
+        <div class="row-fluid">
+            <div id="chosecity" >
+                <form action="">
+                    <select name="切换城市" style="height:30px;width:100px">
+                        <option value="chengdu" selected>成都</option>
+                        <option value="shanghai">上海</option>
+                        <option value="beijing">北京</option>
+                        <option value="guangzhou">广州</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+        <div class="search">
+            <form action="/search" method="GET" class="search">
+                    <input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+                    <button type="submit" class="btn btn-primary btn-lg" style="float:left;width:15%">搜索</button>
+            </form>
+        </div>
+      
+  </div>
+</div>
+<br>
+<br>
+<!--导航栏-->
+<!--div class="jumbotron" --> 
+    <script>
+            function show(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="block";
+            }
+            function hide(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="none";
+            }
+        
+    </script>
+
+
+
+<!--内容部分-->
+
     <div class="content">
         <div class="path">
         <span>
@@ -180,7 +293,7 @@
         <div id="list">
             {% for item in items %}
             <div class="list-content">
-                <a href="/item_details/?id={{ item.item_id }}">
+                <a href="/project_detail/?id={{ item.item_id }}">
                     <img src="{{ item.pic_url }}" />
                 </a>
                 <span>
@@ -189,7 +302,7 @@
                 <div class="text">
                     <p class="title">
                         <label>{{ item.item_about }}</label>
-                        <a href="/item_details/?id={{ item.item_id }}">{{ item.item_name }}</a>
+                        <a href="/project_detail/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
@@ -222,7 +335,7 @@
                     <p>
                         已经有<span class="sum">{{ item.order_num }}</span>人参与
                     </p>
-                    <a href="/item_details/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                    <a href="/project_detail/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
                 <div class="line"></div>
             </div>
@@ -232,5 +345,42 @@
             <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
     </div>
+
+    <!--底部的广告位2号-->
+<div class="row-fluid" align="center">
+    <img class="img-responsive" src = "../static/images/测试静态页面用img/diguanggao.png">
+</div>
+<div align="center" >
+<table width="1000px" text-align="center">
+<tr>
+<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇app</font></B></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">政资汇简介</font></a></td>
+<td><a href="#"><font color="black">商务合作</font></a></td>
+<td><a href="#"><font color="black">联系我们</font></a></td>
+<td><a href="#"><font color="black">政资宝</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">可信网站</font></a></td>
+<td><a href="#"><font color="black">网站联盟</font></a></td>
+<td><a href="#"><font color="black">投诉建议</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">法律声明</font></a></td>
+<td><a href="#"><font color="black">友情链接</font></a></td>
+<td><a href="#"><font color="black">诚聘英才</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">网站地图</font></a></td>
+<td><a href="#"><font color="black">业务资质</font></a></td>
+</tr>
+</table>
+</div>
+
 </body>
 </html>

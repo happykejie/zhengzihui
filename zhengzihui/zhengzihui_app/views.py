@@ -15,51 +15,52 @@ def index(request):
 	return render_to_response('index.html',{})
 
 def Searchgoods(request):
-	if (request.method=="GET"):
-		selected = {}
-    		flag = False
-		ads=[]
-		items=[]
-		goodsname=request.GET.get("inputitem")
-		#print (goodsname)
-		#goodsname="精准医学研究"
-		if goodsname is not None:
-		#分词
-			seg_list = jieba.cut(goodsname,cut_all=False)
-		#搜索
-			for gname in seg_list:
-				ads+=tb_item.objects.filter(item_name__contains = gname) #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有object
-		#去重复
-			for i in ads: 
-				if i not in items:
-					items.append(i)
-					#print i.item_name
-			return render(request,'ind.html',{'selected':selected,'flag':flag,'items':items})
+    a_items = []
+    selected = {}
+    flag = False
+    ads=[]
+    items=[]
+    if (request.method=="GET"):	
+        goodsname=request.GET.get("inputitem")
+        #print (goodsname)
+        #goodsname="精准医学研究"
+        if goodsname is not None:
+        #分词
+            seg_list = jieba.cut(goodsname,cut_all=False)
+        #搜索
+            for gname in seg_list:
+                ads+=tb_item.objects.filter(item_name__contains = gname) #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有object
+        #去重复
+            for i in ads: 
+                if i not in items:
+                    items.append(i)
+                    #print i.item_name
+            for item in items:
+                a_item = {}    
+                a_item['item_id'] = item.item_id#获取项目id
+                a_item['item_name'] = item.item_name#获取项目名字 
+                a_item['item_ga'] = item.item_ga
+                a_item['item_key'] = item.item_key
+                a_item['item_about'] = item.item_about
+                now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+                a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
+                a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
+                start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
+                end_seconds = time.mktime(item.item_deadtime.timetuple())
+                consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+                if consume_time > 100:
+                    a_item['item_consume_time'] = 100
+                    a_item['item_key'] = "已结束"
+                else:
+                    a_item['item_consume_time'] = int(consume_time)
+                a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
+                album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+                album_id = album.album_id
+                a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+                a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
+                a_items.append(a_item)
 
-
-def item_details(request):
-
-    tb_item_list = tb_item.objects.all()
-
-
-    tb_item_class_list = tb_item_class.objects.all()
-
-
-    tb_item_pa_list = tb_item_pa.objects.all()
-
-
-
-    tb_album_list = tb_album.objects.all()
-
-    
-
-    item_id = request.GET['id']
-    
-    tb_article_list = tb_article.objects.get(affiliation_id=item_id)
-
-    #print tb_article_list.article_name
-
-    return render(request,'project_detail.html',{'tb_item_list':tb_item_list,'tb_item_class_list':tb_item_class_list,'tb_item_pa_list':tb_item_pa_list,'tb_article_list':tb_article_list,'tb_album_list':tb_album_list})
+    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
 
 #zss 点击搜索的下一级
@@ -164,9 +165,22 @@ def filter_labels(request):
     return HttpResponseRedirect('/search_result/')
 
 
+def project_detail(request):
+    
+    if request.GET['id']:
+ 
+        project_detail_item_id = request.GET['id']
+        
+       
+    item = tb_item.objects.get(item_id = project_detail_item_id)
+    
+    article = tb_article.objects.get(affiliation_id = project_detail_item_id)
+
+    
+    return render(request,'project_detail.html',{'item':item,'article':article})
+
 
 def service_details(request):
-    
     if request.GET['goodsid']:
  
         service_detail_goods_id = request.GET['goodsid']
@@ -182,35 +196,17 @@ def service_details(request):
     
     
     
-def pay(request):
-	"""
-	the function of payment
-	"""
-	_goods_id = request.GET['goodsidtopay']
-	#print _goods_id
-	#_goods_id = '0001'
-	goods = tb_goods.objects.get(goods_id = _goods_id)
-	_price = goods.goods_price
-	_discount = goods.goods_price_discouint
-	_total_price = _price * _discount
-    #total_price=0.01 这里是测试字段，根据实际属性变动
-    #o_id = random.randint(1000001,9999999)
-    #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-    #state = 0  # 0:未付款,1：已付款
-    #order=Orders(clientuser=user,orderid=o_id,ordertime=m_time,ordermoney=total_price,orderstate=state)
-    #order.save()
-	pay_url = p_alipay.alipay.create_direct_pay_by_user(_goods_id, "充值测试", "hello zhong",
-                                                            _total_price) 
-	return render(request, 'pay.html', {'pay_url': pay_url})
+
 	
 def service_list(request):
     noservice = 1
     noserviceinfo = "没有指定的服务商"
     id1 = request.GET.get('itemid')
     #print id1
-    tb_goods_list = tb_goods.objects.filter(item_id=id1)
-	#for a in tb_goods_list: 
-			#print (a.goods_id)
+    id1 = int(id1)
+    tb_goods_list = tb_goods.objects.filter(item_id=1)
+    #for a in tb_goods_list: 
+    #print (a.goods_id)
     if tb_goods_list is None:
         return render(request,'goods_list.html',{'noservice':noservice,'noserviceinfo':noserviceinfo})
     else:
@@ -265,26 +261,6 @@ def declare(request):
 	return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
 
 
-
-
-
-
-def project_detail(request):
-    
-    if request.GET['id']:
- 
-        project_detail_item_id = request.GET['id']
-        
-       
-    item = tb_item.objects.get(item_id = project_detail_item_id)
-    
-    article = tb_article.objects.get(affiliation_id = project_detail_item_id)
-
-    
-    return render(request,'project_detail.html',{'item':item,'article':article})
-
-
-
 #zss
 #用户中心
 def user_center(request):
@@ -316,10 +292,6 @@ def user_center(request):
         a_recommend_items.append(a_recommend_item)
     return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
 
-#搜索一条项目
-def search_one_item(request):
-    if request.GET['item_id']:
-        item_id = request.GET['item_id']
 
 #用户信息 zss
 
