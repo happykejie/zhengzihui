@@ -38,7 +38,7 @@ urlpatterns = [
     url(r'^service_list/$','zhengzihui_app.views.service_list',name="service_list"),
     
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
-    url(r'^create_test_data/$','zhengzihui_app.views.create_test_data',name='create_test_data'),
+
     url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),
 
 
