@@ -86,18 +86,11 @@ $(function(){
 			   <div class="labout span_1_of_a1">
 				   <div class="flexslider">
 					 <ul class="slides">
-						<li data-thumb="../static/images/p1.jpg">
-							<img src="../static/images/p1.jpg" />
+					 {% for pic in a_pics %}
+						<li data-thumb="{{ pic }}">
+							<img src="{{ pic }}" />
 						</li>
-						<li data-thumb="../static/images/p2.jpg">
-							<img src="../static/images/p2.jpg" />
-						</li>
-						<li data-thumb="../static/images/p3.jpg">
-							<img src="../static/images/p3.jpg" />
-						</li>
-						<li data-thumb="../static/images/p4.jpg">
-							<img src="../static/images/p4.jpg" />
-						</li>
+					 {% endfor %}
 					 </ul>
 				  </div>
 			  </div>

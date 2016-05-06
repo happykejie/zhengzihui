@@ -165,7 +165,7 @@ def filter_labels(request):
         request.session['zhuangtai'] = keys
     return HttpResponseRedirect('/search_result/')
 
-
+#lzh项目项目详情加载
 def project_detail(request):
     
     if request.GET['id']:
@@ -177,8 +177,16 @@ def project_detail(request):
     
     article = tb_article.objects.get(affiliation_id = project_detail_item_id)
 
+    a_pics = []
+
+    album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+    album_id = album.album_id
+    pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+    for pic in pics:
+        a_pic = pic.pic_object.url[14:]
+        a_pics.append(a_pic)
     
-    return render(request,'project_detail.html',{'item':item,'article':article})
+    return render(request,'project_detail.html',{'item':item,'article':article,'a_pics':a_pics})
 
 
 def service_details(request):
@@ -215,23 +223,6 @@ def service_list(request):
     
 
 
-def service_detail(request):
-    
-    if request.GET['goodsid']:
- 
-        service_detail_goods_id = request.GET['goodsid']
-        
-       
-    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的对象
-    service_detail_item_id = goods.item_id
-    item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
-
-    
-    return render(request,'service_detail.html',{'item':item,'goods':goods})
-    
-    
-    
-    
 def pay(request):
 	"""
 	the function of payment
