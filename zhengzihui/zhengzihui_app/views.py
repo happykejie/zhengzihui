@@ -148,6 +148,7 @@ def search_result_load(request):
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
+        print item
         #json.dumps('a_item',a_items)
         #序列化之后注意前端取数据的格式,数据部分在fields里面
         #return HttpResponse(serializers.serialize("json",a_items),content_type='application/json')  

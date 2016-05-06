@@ -37,13 +37,13 @@ class tb_user(models.Model):
     user_type = models.IntegerField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
 
 
-    def __str__(self):
+    def __unicode__(self):
         return self.user_name
 
-    def __str__(self):
+    def __unicode__(self):
         return self.user_email
 
-    def __str__(self):
+    def __unicode__(self):
         return self.user_telephone
 '''
     def __str__(self):
@@ -64,13 +64,13 @@ class tb_user_expand(models.Model):
     company_stuff_no = models.IntegerField("公司人数",null=False,blank=False)
     company_nature = models.CharField("公司性质",max_length=30,null=False,blank=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.company_name
 
-    def __str__(self):
+    def __unicode__(self):
         return self.company_email
 
-    def __str__(self):
+    def __unicode__(self):
         return self.company_tel
 
 
@@ -509,7 +509,7 @@ class tb_goods(models.Model):
     item_id = models.IntegerField("服务对应项目的id",null = False)
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
     goods_name = models.CharField("服务名称",max_length = 40, null = False)
-    goods_market_price = models.IntegerField("服务名称",null = False)
+    goods_market_price = models.IntegerField("服务价格",null = False)
     goods_price = models.IntegerField("服务未打折扣报价(标价)",null = False)
     goods_price_discouint = models.FloatField("折扣（标价乘以折扣等于实际成交价）",null = False)
     goods_pay = models.IntegerField("该服务支持的支付方式",null = False)
