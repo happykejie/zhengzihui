@@ -175,7 +175,10 @@ def project_detail(request):
        
     item = tb_item.objects.get(item_id = project_detail_item_id)
     
-    article = tb_article.objects.get(affiliation_id = project_detail_item_id)
+    article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
+    article0 = article[0]
+    article1 = article[1]
+    article2 = article[2]
 
     a_pics = []
 
@@ -186,7 +189,7 @@ def project_detail(request):
         a_pic = pic.pic_object.url[14:]
         a_pics.append(a_pic)
     
-    return render(request,'project_detail.html',{'item':item,'article':article,'a_pics':a_pics})
+    return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'article2':article2,'a_pics':a_pics})
 
 
 def service_details(request):
