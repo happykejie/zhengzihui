@@ -403,7 +403,7 @@ $(document).ready(function(){
                 <li><a href="#">我的资金</a></li>
                 <li><a href="#">我的关注</a></li>
                 <li><a href="#">我看过的</a></li>
-		<li><a href="#section-0">返回顶部</a></li>
+		<li><a href="#">返回顶部</a></li>
 		<li><a href="#">用户反馈</a></li>
             </ul>
         </div>
