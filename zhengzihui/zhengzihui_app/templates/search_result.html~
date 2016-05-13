@@ -197,7 +197,6 @@
                 <li><a href="javascript:void(0);">安监</a></li>
             </ul>
                 <div class="multiple-btn">
-                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
                     <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
                     <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
                 </div>
@@ -221,7 +220,7 @@
                     <li><a href="javascript:void(0);">县级财政资金</a></li>
             </ul>
                 <div class="multiple-btn">
-                   
+                    {{ selected.bumen }}
                     <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
                     <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
                 </div>

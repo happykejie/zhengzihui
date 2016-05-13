@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
+from itertools import chain
 import datetime 
 import time
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
@@ -67,8 +68,10 @@ def Searchgoods(request):
 def search_result(request):
 #首次只返回10条数据
     a_items = []
-    items = tb_item.objects.all()[:10]
+    items = []
+    #items = tb_item.objects.all()[:10]
     selected = {}
+    #_item_level = 0
     flag = False
     if 'bumen' in request.session:
         value = request.session['bumen']
@@ -88,7 +91,18 @@ def search_result(request):
         flag = True
     else:
         selected['zhuangtai'] = ''
-
+    jibiestr=selected['jibie'].encode("utf-8")
+    if (jibiestr == '全部'):
+    	items = tb_item.objects.all()[:10]
+    	#print(type( tb_item.objects.all()[:10]))
+    if "县级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 1)[:10]))
+    if "市级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 2)[:10]))
+    if "省级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 3)[:10]))
+    if "中央财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 4)[:10]))
 
     for item in items:
         a_item = {}    
@@ -114,6 +128,8 @@ def search_result(request):
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
+    
+    	
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
@@ -123,7 +139,45 @@ def search_result_load(request):
     last_times = request.GET['times']
     last = int(last_times)
     now = last + 5 #每次只取5条
-    items = tb_item.objects.all()[last:now]
+    
+    items = []
+    #items = tb_item.objects.all()[:10]
+    selected = {}
+    #_item_level = 0
+    flag = False
+    if 'bumen' in request.session:
+        value = request.session['bumen']
+        selected['bumen'] = value
+        flag = True
+    else:
+        selected['bumen'] = ''
+    if 'jibie' in request.session:
+        value = request.session['jibie']
+        selected['jibie'] = value
+        flag = True
+    else:
+        selected['jibie'] = ''
+    if 'zhuangtai' in request.session:
+        value = request.session['zhuangtai']
+        selected['zhuangtai'] = value
+        flag = True
+    else:
+        selected['zhuangtai'] = ''
+    jibiestr=selected['jibie'].encode("utf-8")
+    if (jibiestr == '全部'):
+    	items = tb_item.objects.all()[last:now]
+    	#print(type( tb_item.objects.all()[:10]))
+    if "县级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 1)[last:now]))
+    if "市级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 2)[last:now]))
+    if "省级财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 3)[last:now]))
+    if "中央财政资金" in jibiestr:
+    		items = chain(items,(tb_item.objects.filter(item_level = 4)[last:now]))
+    
+    
+    #items = tb_item.objects.all()[last:now]
     for item in items:
         a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
