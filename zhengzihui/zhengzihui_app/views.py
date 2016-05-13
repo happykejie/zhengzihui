@@ -197,13 +197,46 @@ def service_details(request):
  
         service_detail_goods_id = request.GET['goodsid']
         
-       
-    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的对象
+     
+    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的服务商
     service_detail_item_id = goods.item_id
     item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
-
     
-    return render(request,'service_detail.html',{'item':item,'goods':goods})
+    #计算日期百分比用于赋值进度条
+    starttime = item.item_publish
+    endtime = item.item_deadtime
+    days_total = (endtime - starttime).days
+    
+    days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+    if days_remain <= 0:
+        finish_percentage = 100
+    else:
+        finish_percentage = int((days_remain/days_total)*100)
+        
+    #取项目对应的图片，赋值相册空间
+    pics_url = []
+    album = tb_album.objects.filter(affiliation_id=item.item_id)[0]#获取项目对应的相册id
+    album_id = album.album_id
+    pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片                                                               #切片14是去除前缀zhengzihui_app 否则图片不能显示    
+    for pic in pics:
+        a_pic = pic.pic_object.url[14:] # 切片14是去除前缀zhengzihui_app 否则图片
+        pics_url.append(a_pic)
+    
+    
+    #用于推荐其他服务商
+    allgoods_for_itemhere = tb_goods.objects.filter(item_id = item.item_id).order_by("goods_sort")#获取提供该项目支持的服务商，并按照他们的升序降序排列
+    #获得排序最高的4个服务商
+    if len(allgoods_for_itemhere)> 4:
+        goods_recommend_display = allgoods_for_itemhere[0:4]
+    else:
+        goods_recommend_display = allgoods_for_itemhere
+    
+    
+    
+    #格式化日期
+    publish_time_format = item.item_publish.strftime("%Y-%m-%d %H:%I:%S")
+    datetime_format = item.item_deadtime.strftime("%Y-%m-%d %H:%I:%S")
+    return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display})
     
     
     
