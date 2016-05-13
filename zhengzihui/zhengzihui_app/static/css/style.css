@@ -141,7 +141,7 @@ a.project_src{
 	color: #82E1FD;
 }
 
-h3.like, h3.recent{
+h3.recommend, h3.recent{
 	color: #000;
 	font-size: 1.5em;
 	text-transform: uppercase;
