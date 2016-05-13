@@ -115,7 +115,7 @@
         <div id="order-list">
         {% for order in a_order_list %}
             <div class="list-content">
-                <a href="{% url 'search_one_item' %}?item_id={{ order.item_id }}">
+                <a href="{% url 'project_detail' %}?id={{ order.item_id }}">
                     <img src="{{ order.pic_url }}" />
                 </a>
                 <span>
@@ -123,7 +123,7 @@
                 </span>
                 <div class="text">
                     <p class="title">
-                        <a href="{% url 'search_one_item' %}?item_id={{ order.item_id }}">{{ order.item_name }}</a>
+                        <a href="{% url 'project_detail' %}?id={{ order.item_id }}">{{ order.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>

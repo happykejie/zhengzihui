@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^filter_labels/$','zhengzihui_app.views.filter_labels',name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
       
     
-    url(r'^item_details/$','zhengzihui_app.views.item_details',name = 'item_details'),#当有id传入，可显示项目的相关信息
+    url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),#当有id传入，可显示项目的相关信息
     
     #url(r'^zhengzihui_app/', include('zhengzihui_app.urls')),
     
@@ -38,15 +38,10 @@ urlpatterns = [
     url(r'^service_list/$','zhengzihui_app.views.service_list',name="service_list"),
     
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
-    url(r'^create_test_data/$','zhengzihui_app.views.create_test_data',name='create_test_data'),
-    url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),
 
-
-
+    
 #用户中心
     url(r'^zzh/user_center/', "zhengzihui_app.views.user_center",name="user_center"),
-    #推荐的项目详情路径
-    url(r'^zzh/search_one_item/', "zhengzihui_app.views.search_one_item",name="search_one_item"),
     
     #用户信息
         #我的信息

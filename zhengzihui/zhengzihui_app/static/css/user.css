@@ -6,6 +6,8 @@ body{
 }
 #mainbox{
     width:1200px;
+    margin-top:80px;
+    margin-bottom:100px;
     margin-left:auto;
     margin-right:auto;
     background-color:white;

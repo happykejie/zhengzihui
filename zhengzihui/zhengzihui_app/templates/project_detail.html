@@ -86,18 +86,11 @@ $(function(){
 			   <div class="labout span_1_of_a1">
 				   <div class="flexslider">
 					 <ul class="slides">
-						<li data-thumb="../static/images/p1.jpg">
-							<img src="../static/images/p1.jpg" />
+					 {% for pic in a_pics %}
+						<li data-thumb="{{ pic }}">
+							<img src="{{ pic }}" />
 						</li>
-						<li data-thumb="../static/images/p2.jpg">
-							<img src="../static/images/p2.jpg" />
-						</li>
-						<li data-thumb="../static/images/p3.jpg">
-							<img src="../static/images/p3.jpg" />
-						</li>
-						<li data-thumb="../static/images/p4.jpg">
-							<img src="../static/images/p4.jpg" />
-						</li>
+					 {% endfor %}
 					 </ul>
 				  </div>
 			  </div>
@@ -105,7 +98,7 @@ $(function(){
 			  <div class="title">
 							  	
 					<h1>
-					{{ article.article_name }}
+					{{ item.item_name }}
 
 					</h1>
 					
@@ -133,7 +126,7 @@ $(function(){
 				
 			    <div class="declare">
 				   
-					<a href="/service_list/?itemid={{ tb_article_list.affiliation_id }}"><button class="btn">我要申报</button></a><a class="project_src", href="#">查看原文</a>
+					<a href="/service_list/?itemid={{ item.item_id }}"><button class="btn">我要申报</button></a><a class="project_src", href="#">查看原文</a>
 				
 				</div>
 			</div>
@@ -159,7 +152,7 @@ $(function(){
 									<div class="facts">
 									  <ul class="tab_list">
 										
-									    <li><a>{{ article.article_name }}</a></li>
+									    <li><a>{{ article1.article_content }}</a></li>
 										
 									  </ul>   
 
@@ -167,7 +160,7 @@ $(function(){
 							     </div>	
 							      <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
 									<ul class="tab_list">
-									  	<li><a>{{ article.author_email }}</a></li>
+									  	<li><a>{{ article0.article_content }}</a></li>
 									  	
 									  </ul>      
 							     </div>	
