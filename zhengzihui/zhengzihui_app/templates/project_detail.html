@@ -102,7 +102,7 @@ $(function(){
 
 					</h1>
 					
-					<p class="support">资助额度: <span class="item_price">2万--500万</span></p>
+					<p class="support">资助额度: <span class="item_price">{{ item.item_ga }}</span></p>
 					<p class="deadline">剩余时间：
 					<span class="time-item">
 						<strong id="day_show">0天</strong>
@@ -111,7 +111,7 @@ $(function(){
 						<strong id="second_show">0秒</strong>
 					</span><!--倒计时模块-->
 					</p>
-					<p class="apartment">项目管理部门：<span class = "con_apartment">四川省科技厅</span></p>
+					<p class="apartment">项目管理部门：<span class = "con_apartment">{{ pa.ipa_name }}</span></p>
 			  	
 			    	<ul class="subproject">
 						<h3>项目列表</h3>
@@ -168,17 +168,17 @@ $(function(){
 					    </div>
 					</div>	
 				 
-					 <h3 class="like">热门推荐</h3>        			
-				     <ul id="flexiselDemo3">
-						<li><img src="../static/../static/images/p1.jpg" class="img-responsive" /><div class="grid-flex"><a href="#">Syenergy 2mm</a><p>Rs 850</p></div></li>
-						<li><img src="../static/images/p3.jpg" class="img-responsive" /><div class="grid-flex"><a href="#">Surf Yoke</a><p>Rs 1050</p></div></li>
-						<li><img src="../static/images/p3.jpg" class="img-responsive" /><div class="grid-flex"><a href="#">Salty Daiz</a><p>Rs 990</p></div></li>
-						<li><img src="../static/images/p4.jpg" class="img-responsive" /><div class="grid-flex"><a href="#">Cheeky Zane</a><p>Rs 850</p></div></li>
-						<li><img src="../static/images/p1.jpg" class="img-responsive" /><div class="grid-flex"><a href="#">Synergy</a><p>Rs 870</p></div></li>
+					 <h3 class="recommend">热门推荐</h3>        			
+				     <ul id="Picturecarousel">
+				     	{% for pic in a_pics %}
+					
+						<li><img src="{{ pic }}" class="img-responsive" /><div class="grid-flex"><a href="#">项目名称</a><p>￥10000</p></div></li>
+					 	{% endfor %}
+						<!--这里的图片可按需要从取推荐的前几个--> 
 				     </ul>
 				    <script type="text/javascript">
 					 $(window).load(function() {
-						$("#flexiselDemo3").flexisel({
+						$("#Picturecarousel").flexisel({
 							visibleItems: 3,
 							animationSpeed: 1000,
 							autoPlay: true,
