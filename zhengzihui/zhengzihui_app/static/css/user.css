@@ -1,0 +1,103 @@
+body{
+    margin:0px;
+    padding:0px;
+    font-family:"Microsoft YaHei UI";
+    font-size:100%;
+}
+#mainbox{
+    width:1200px;
+    margin-top:80px;
+    margin-bottom:100px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:white;
+}
+
+#boxleft,#boxright{
+    float:left;
+}
+
+/*左侧折叠菜单*/
+#boxleft{
+    width:200px;
+    height:auto;
+}
+#boxright{
+    width:1000px;
+    height:auto;
+    padding:20px 50px;
+}
+#boxleft  .panel + .panel{
+    margin:0px;
+}
+#boxleft a{
+    font-weight:600;
+    text-decoration:none;
+}
+#boxleft .panel-heading{
+    background-color: #2B2F3E;
+}
+
+#boxleft .panel-heading a{
+    color: white;
+}
+#boxleft .panel-heading a > span{
+    float:right;
+}
+
+#boxleft .panel-body .not-clicked{
+    color: #929292;
+}
+#boxleft .panel-body .clicked{
+    color: #FF404B;
+}
+#boxleft ul{
+    list-style-type: none;
+}
+#boxleft ul > li{
+    margin:5px 0px 5px 10px;
+    font-size:150%;
+}
+
+/*右侧显示区域*/
+#boxright > #load{
+    width:100px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:200px;
+}
+
+#right-main-box > h3{
+    color: #1b453b;
+    margin-bottom: 30px;
+}
+#right-main-box > p{
+    padding-left:10px;
+    font-size:150%;
+    line-height:2;
+    background-color:#2B2F3E;
+    color:white;
+    font-weight:600;
+}
+#watch-list,#recommend-list {
+    width:100%;
+    height:auto;
+}
+.watch,.recommend {
+    margin:10px;
+    float:left;
+    width:250px;
+    height:300px;
+    padding:10px;
+    background-color: #f1f1f1;
+}
+.watch img, .recommend img{
+     width:230px;
+     height:230px;
+ }
+.watch p, .recommend p{
+    margin:10px 0px 5px 3px;
+    color: #757575;
+    font-weight:600;
+}

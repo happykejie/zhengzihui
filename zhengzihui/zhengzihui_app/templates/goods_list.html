@@ -7,8 +7,8 @@
     <title>政资汇-政府资助信息一站式服务平台</title>
     <script src="../static/jQuery-2.14/jquery.js" type="text/javascript"></script>
     <link href="../static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="../static/css/client_filter.css" rel="stylesheet" type="text/css"/>
-    <script src="../static/js/client_filter.js" type="text/javascript"></script>
+    <link href="../static/css/search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="../static/js/search_result.js" type="text/javascript"></script>
     <script>
 	
     $.ajaxSetup({
@@ -260,7 +260,7 @@
             <div class="list-content">
 			<br><br><br>
                 <div class="row">                  
-                        <div class="col-sm-4"><a href="/hello/?id={{ goods.goods_name }}">{{ goods.goods_name }}</a>
+                        <div class="col-sm-4"><a href="/item_details/?id={{ goods.goods_name }}">{{ goods.goods_name }}</a>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
                         <span>{{ goods.sp_id }}</span>
@@ -285,7 +285,7 @@
                     </diV>
 					</div>
                 <div class="col-sm-2">
-                    <a href="/service_detail?goodsid={{goods.goods_id}}" ><button class="btn btn-warning">查看详情</button></a>
+                    <a href="/service_details?goodsid={{goods.goods_id}}" ><button class="btn btn-warning">查看详情</button></a>
 				</div>
 				</div>
             </div>
@@ -296,6 +296,7 @@
         </div>
     
 </div>
+
 
 
 <div class="col-sm-2">
@@ -318,7 +319,16 @@
 
 
 </div>
+
+
+<!--等着完善-->
+{% if 'noservice' in dic %}
+<div>
+<h2>23333333333{{noserviceinfo}}</h2>
 </div>
-	
+{% endif %}
+
+</div>
+
 </body>
 </html>

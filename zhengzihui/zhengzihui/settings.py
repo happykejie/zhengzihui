@@ -102,7 +102,7 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-	 'PASSWORD':'123654',#password of mysql user
+     'PASSWORD':'123654',#password of mysql user
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }
@@ -155,22 +155,58 @@ SUIT_CONFIG = {
 
     # menu
     # 'SEARCH_URL': '/admin/auth/user/',
-    # 'MENU_ICONS': {
-    #    'sites': 'icon-leaf',
-    #    'auth': 'icon-lock',
-    # },
+     'MENU_ICONS': {
+        'sites': 'icon-leaf',
+        'auth': 'icon-lock',
+     },
     # 'MENU_OPEN_FIRST_CHILD': True, # Default True
     # 'MENU_EXCLUDE': ('auth.group',),
      'MENU': (
          'sites',
-        {'app': 'zhengzihui_app', 'label': u'站点内容管理'},  
-         {'app': 'auth','label':u'认证系统', 'icon':'icon-lock', 'models': ('user', 'group')},
+        #{'app': 'zhengzihui_app', 'label': u'站点内容管理'},  
+        {'app': 'auth','label':u'认证系统', 'icon':'icon-lock', 'models': ('user', 'group')},
+        #{'model':'zhengzihui_app.tb_user','label':u'用户','icon':'icon-user'}, 
+        {'app':'zhengzihui_app','label': u'站点内容管理', 'models': (
+            
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_user', 'label': u'用户'},#中文化左侧管理表的代码
+            {'model': 'zhengzihui_app.tb_user_expand','label': u'用户扩展信息'},
+            {'model': 'zhengzihui_app.tb_service_provider','label': u'服务提供商'},
+            {'model': 'zhengzihui_app.tb_News_Class','label': u'新闻分类'},
+            {'model': 'zhengzihui_app.tb_News','label': u'新闻'},
+            {'model': 'zhengzihui_app.Tb_Notice','label': u'公告'},
+            '''
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+            '''#等待完成中
+        )},
     #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
     #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
      ),
 
     # misc
-    # 'LIST_PER_PAGE': 15
+     'LIST_PER_PAGE': 10 #分页，显示项目的条数应该有多少
 }
 
 #YZ add for filer Thumbnails :For easy_thumbnails to support retina displays (recent MacBooks, iOS) add to settings.py:
