@@ -191,7 +191,7 @@ def project_detail(request):
     
     return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'article2':article2,'a_pics':a_pics})
 
-
+#YZ 服务商详情页面
 def service_details(request):
     if request.GET['goodsid']:
  
