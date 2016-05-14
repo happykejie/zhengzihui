@@ -1,3 +1,4 @@
+
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
@@ -244,18 +245,14 @@ def service_details(request):
 
 	
 def service_list(request):
-    noservice = 1
-    noserviceinfo = "没有指定的服务商"
     id1 = request.GET.get('itemid')
     #print id1
-    id1 = int(id1)
-    tb_goods_list = tb_goods.objects.filter(item_id=1)
+    
+    tb_goods_list = tb_goods.objects.filter(item_id=id1)
     #for a in tb_goods_list: 
     #print (a.goods_id)
-    if tb_goods_list is None:
-        return render(request,'goods_list.html',{'noservice':noservice,'noserviceinfo':noserviceinfo})
-    else:
-        return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
+ 
+    return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
     
 
 
