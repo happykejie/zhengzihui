@@ -125,7 +125,7 @@ $(function(){
 					</ul>
 				
 			    <div class="declare">
-				   
+				    
 					<a href="/service_list/?itemid={{ article.affiliation_id }}"><button class="btn">我要申报</button></a><a class="project_src", href="#">查看原文</a>
 				
 				</div>

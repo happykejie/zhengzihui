@@ -16,6 +16,7 @@ def index(request):
 	return render_to_response('index.html',{})
 
 def Searchgoods(request):
+    allthebumen=['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     a_items = []
     selected = {}
     flag = False
@@ -26,7 +27,14 @@ def Searchgoods(request):
         #print (goodsname)
         #goodsname="精准医学研究"
         if goodsname is not None:
-        #分词
+	#fenleisousuo	
+	    if  goodsname.encode("utf-8") in allthebumen:
+		selected['bumen'] = goodsname.encode("utf-8")
+		#print selected['bumen']
+		request.session['bumen'] = goodsname.encode("utf-8")
+		return HttpResponseRedirect('/search_result/')
+	#xiangmusousuo        
+	#分词
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
@@ -36,6 +44,8 @@ def Searchgoods(request):
                 if i not in items:
                     items.append(i)
                     #print i.item_name
+            
+	    
             for item in items:
                 a_item = {}    
                 a_item['item_id'] = item.item_id#获取项目id
