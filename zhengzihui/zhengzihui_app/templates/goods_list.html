@@ -234,7 +234,7 @@
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="/search_result_sort_starttime/">
                     挂网时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -246,7 +246,7 @@
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="/search_result_sort_deadtime/">
                     截止时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -313,6 +313,38 @@
 
          <a class="btn btn-warning btn-lg btn-block ">提交申请</a>
 	 <br><br><br><br><p style="font-size:15px;color:Orange;">热点需求</p>
+
+<div id="myCarousel" class="carousel slide">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+   </ol>   
+   <!-- 轮播（Carousel）项目 -->
+   <div class="carousel-inner">
+      <div class="item active">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items1.pic_url }}" alt="First slide">
+                </a>
+	</div>
+	<div class="item">
+	        <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items2.pic_url }}" alt="Second slide">
+                </a>
+        </div>
+         <div class="item">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items3.pic_url }}" alt="Third slide">
+                </a>
+         </div>
+    </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#myCarousel" 
+      data-slide="prev">&lsaquo;</a>
+   <a class="carousel-control right" href="#myCarousel" 
+      data-slide="next">&rsaquo;</a>
+</div> 
 </form>
 
 </div>

@@ -118,6 +118,94 @@ def search_result(request):
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
+##############################排序by LJW
+#按发布时间
+sortflag=True
+def search_result_sort_starttime(request):
+    a_items = []
+    
+    
+    
+   
+    if(sortflag==True):
+    	items = tb_item.objects.order_by('item_publish')
+  	global sortflag
+	sortflag=False
+    else:
+    	items = tb_item.objects.order_by('-item_publish')
+  	global sortflag
+	sortflag=True
+    
+    for item in items:
+    	a_item = {}    
+        a_item['item_id'] = item.item_id#获取项目id
+        a_item['item_name'] = item.item_name#获取项目名字 
+        a_item['item_ga'] = item.item_ga
+        a_item['item_key'] = item.item_key
+        a_item['item_about'] = item.item_about
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
+        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
+        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(item.item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_item['item_consume_time'] = 100
+            a_item['item_key'] = "已结束"
+        else:
+            a_item['item_consume_time'] = int(consume_time)
+        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
+        a_items.append(a_item)
+    return render(request,'search_result.html',{'items':a_items})
+    
+
+#按截至时间
+sortflag1=True
+def search_result_sort_deadtime(request):
+    a_items = []
+    
+    
+    
+   
+    if(sortflag1==True):
+    	items = tb_item.objects.order_by('item_deadtime')
+  	global sortflag1
+	sortflag1=False
+    else:
+    	items = tb_item.objects.order_by('-item_deadtime')
+  	global sortflag1
+	sortflag1=True
+    
+    for item in items:
+    	a_item = {}    
+        a_item['item_id'] = item.item_id#获取项目id
+        a_item['item_name'] = item.item_name#获取项目名字 
+        a_item['item_ga'] = item.item_ga
+        a_item['item_key'] = item.item_key
+        a_item['item_about'] = item.item_about
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
+        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
+        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(item.item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_item['item_consume_time'] = 100
+            a_item['item_key'] = "已结束"
+        else:
+            a_item['item_consume_time'] = int(consume_time)
+        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
+        a_items.append(a_item)
+    return render(request,'search_result.html',{'items':a_items})
+##############################
 #zss项目信息滚动加载瀑布流
 def search_result_load(request):
     a_items = []
@@ -220,12 +308,20 @@ def service_details(request):
     album_id = album.album_id
     pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片                                                               #切片14是去除前缀zhengzihui_app 否则图片不能显示    
     for pic in pics:
-        a_pic = pic.pic_object.url[14:] # 切片14是去除前缀zhengzihui_app 否则图片
+        a_pic = pic.pic_object.url[14:] # 切片14是去除前缀zhengzihui_app 否则图片 ！！！部署时肯定还得修改
         pics_url.append(a_pic)
     
     
     #用于推荐其他服务商
-    allgoods_for_itemhere = tb_goods.objects.filter(item_id = item.item_id).order_by("goods_sort")#获取提供该项目支持的服务商，并按照他们的升序降序排列
+    allgoods_for_itemhere = tb_goods.objects.filter(item_id = item.item_id).order_by("goods_sort")#获取提供该项目支持的服务商，并按照他们的升序降序排列 排除自身！！
+    #从推荐服务商排除自己
+    goods_myself = tb_goods.objects.get(goods_id = goods.goods_id)
+    allgoods_for_itemhere = list(allgoods_for_itemhere)
+    for good in allgoods_for_itemhere:
+        if good.goods_id == goods_myself.goods_id:
+            allgoods_for_itemhere.remove(good)
+      
+    
     #获得排序最高的4个服务商
     if len(allgoods_for_itemhere)> 4:
         goods_recommend_display = allgoods_for_itemhere[0:4]
@@ -245,14 +341,30 @@ def service_details(request):
 
 	
 def service_list(request):
+    noservice = 1
+    noserviceinfo = "没有指定的服务商"
     id1 = request.GET.get('itemid')
     #print id1
-    
-    tb_goods_list = tb_goods.objects.filter(item_id=id1)
+
+    id1 = int(id1)
+    tb_goods_list = tb_goods.objects.filter(item_id=1)
     #for a in tb_goods_list: 
     #print (a.goods_id)
- 
-    return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list})
+
+    items = tb_item.objects.all()[:3]
+    a_items = []
+    for item in items:
+	a_item = {} 
+	a_item['item_key'] = item.item_key
+	album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+	album_id = album.album_id
+	a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+	a_items.append(a_item)
+    
+    if tb_goods_list is None:
+        return render(request,'goods_list.html',{'noservice':noservice,'noserviceinfo':noserviceinfo,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
+    else:
+        return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
     
 
 

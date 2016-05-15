@@ -24,6 +24,8 @@ urlpatterns = [
     
     #zss 二级页面
     url(r'^search_result/$','zhengzihui_app.views.search_result',name='search_result'),
+    url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),
+    url(r'^search_result_sort_deadtime/$','zhengzihui_app.views.search_result_sort_deadtime',name='search_result_sort_deadtime'),
     url(r'^search_result_load/$','zhengzihui_app.views.search_result_load',name='search_result_load'),#用来干嘛的？？
     url(r'^filter_labels/$','zhengzihui_app.views.filter_labels',name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
       
