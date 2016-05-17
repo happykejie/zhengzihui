@@ -18,32 +18,7 @@
     <script src="/static/js/citySet.js"></script>
 
  
-<!--附加导航-->
 
-<div class="row">
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#myNav").affix({
-        offset: { 
-            top: 125 
-     	}
-    });
-});
-</script>
-        
-	<div class="col-sm-2" id="myScrollspy1" style="margin-left:99%">
-            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
-                <li class="active"><a href="#">登录</a></li>
-                <li><a href="#">我的直通车</a></li>
-                <li><a href="#">我的资金</a></li>
-                <li><a href="#">我的关注</a></li>
-                <li><a href="#">我看过的</a></li>
-		<li><a href="#section-0">返回顶部</a></li>
-		<li><a href="#">用户反馈</a></li>
-            </ul>
-        </div>
-</div>
- 
 <nav class="navbar navbar-default" role="navigation">
    <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" 
@@ -356,5 +331,30 @@ $(document).ready(function(){
             </ul>
          </li>
         -->
+<!--附加导航-->
 
+<div class="row">
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#myNav").affix({
+        offset: { 
+            top: 125 
+     	}
+    });
+});
+</script>
+        
+	<div class="col-sm-2" id="myScrollspy1" style="margin-left:99%">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
+                <li class="active"><a href="#">登录</a></li>
+                <li><a href="#">我的直通车</a></li>
+                <li><a href="#">我的资金</a></li>
+                <li><a href="#">我的关注</a></li>
+                <li><a href="#">我看过的</a></li>
+		<li><a href="#section-0">返回顶部</a></li>
+		<li><a href="#">用户反馈</a></li>
+            </ul>
+        </div>
+</div>
+ 
 {% endblock %}
