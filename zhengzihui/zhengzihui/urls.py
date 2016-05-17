@@ -80,4 +80,8 @@ urlpatterns = [
     url(r'^zzh/not_evaluate/', "zhengzihui_app.views.not_evaluate",name="not_evaluate"),
         #已评论
     url(r'^zzh/evaluated/', "zhengzihui_app.views.evaluated",name="evaluated"),
+    
+    #主页底部链接页面部分 友情链接
+    url(r'^friend_link',"zhengzihui_app.views.friend_link",name="friend_link"),
+    url(r'^quanlification',"zhengzihui_app.views.quanlification",name="quanlification"),
 ]

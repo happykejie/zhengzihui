@@ -657,3 +657,12 @@ def not_evaluate(request):
 def evaluated(request):
     if request.session['user_id']:
         user_id = request.session['user_id']
+        
+        
+        
+        
+def friend_link(request):
+    return render(request,'link.html',{})
+    
+def quanlification(request):
+    return render(request,'quanlification.html',{})
