@@ -20,6 +20,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/$','zhengzihui_app.views.index',name='index'),
+    url(r'^hire/$','zhengzihui_app.views.newhire',name='newhire'),
     url(r'^search/$','zhengzihui_app.views.Searchgoods',name='Searchgoods'),
     
     #zss 二级页面
