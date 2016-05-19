@@ -13,6 +13,9 @@ from django.core import serializers #用来序列化model 传给js
 from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 # Create your views here.
 def index(request):
+	request.session['bumen']='全部'
+	request.session['jibie']='全部'
+	request.session['zhuangtai']='全部'
 	#print (123)
 	return render_to_response('index.html',{})
 
@@ -87,6 +90,7 @@ def search_result(request):
     if 'bumen' in request.session:
         value = request.session['bumen']
         selected['bumen'] = value
+        #print(selected['bumen'])
         flag = True
     else:
         selected['bumen'] = ''
@@ -122,6 +126,8 @@ def search_result(request):
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))
     else:
     	middle_items=tb_item.objects.all()
+    	'''for i in middle_items:
+    		print(i.item_status)'''
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
     	#print(type(items))
@@ -131,21 +137,22 @@ def search_result(request):
     			tmiddle_items.append(i)
     #if  (selected['zhuangtai'].encode("utf-8") != '全部'):
     else:
-    	for i in middle_items:
-    		tmiddle_items.append(i)
+    	tmiddle_items=middle_items
+    	#for i in tmiddle_items:
+    		#print (i.item_status)
     		
     if  (selected['bumen'].encode("utf-8") != '全部'):
+    	bumenlist = (selected['bumen'].encode("utf-8")).split(',')
     	for i in tmiddle_items:
-    		bumenlist = (selected['bumen'].encode("utf-8")).split(',')
-    		#print type(i.item_about)
     		for j in bumenlist:
-    			#print type(j)
     			if j in (i.item_about).encode("utf-8"):
-    				items.append(i)
-   	else:
-   		for i in tmiddle_items:
-   			items.append(i)			   
-    items = items[:10]
+    				items.append(i) 		
+    else:
+    	#print (222)
+    	items=tmiddle_items
+	   
+    
+    #items = items[:10]
     for item in items:
         a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
