@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>政资汇主页</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+</head>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+  <div class="row">
+    <div class="col-sm-4">
+      <center><img src="../static/images/logo.jpg"></img></center>
+    </div>
+	
+    <div class="col-sm-8">
+		<div class="row-fluid">
+			<div id="chosecity" >
+				<form action="">
+					<input type="text" id="city" value="切换城市"/>
+<script type="text/javascript">
+$("#city").click(function (e) {
+	SelCity(this,e);
+});
+</script>
+				</form>
+			</div>
+		</div>
+		<div class="search">
+			<form action="/search" method="GET" class="search">
+					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:10%">搜索</button>
+			</form>
+			<button type="button" class="btn btn-primary btn-lg" style="float:left;width:15%" onclick="javascript:window.location.href='#'">有偿申报</button>
+		</div>
+      
+  </div>
+</div>
+<div class="row">
+	<img class="img-responsive" style="width:100%" src = "../static/images/goodhire.jpg">
+</div>
+<hr style="border:3 double" width="80%" SIZE=3/>
+<!--底部的广告位2号-->
+<div class="row-fluid" align="center">
+	<img class="img-responsive" src = "../static/images/测试静态页面用img/diguanggao.png">
+</div>
+<div align="center" >
+<table width="1000px" text-align="center">
+<tr>
+<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇app</font></B></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">政资汇简介</font></a></td>
+<td><a href="#"><font color="black">商务合作</font></a></td>
+<td><a href="#"><font color="black">联系我们</font></a></td>
+<td><a href="#"><font color="black">政资宝</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">可信网站</font></a></td>
+<td><a href="#"><font color="black">网站联盟</font></a></td>
+<td><a href="#"><font color="black">投诉建议</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">法律声明</font></a></td>
+<td><a href="{% url 'friend_link' %}"><font color="black">友情链接</font></a></td>
+<td><a href="#"><font color="black">诚聘英才</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">网站地图</font></a></td>
+<td><a href="{% url 'quanlification' %}"><font color="black">业务资质</font></a></td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>	

@@ -19,6 +19,9 @@ def index(request):
 	#print (123)
 	return render_to_response('index.html',{})
 
+def newhire(request):
+	return render_to_response('hire.html',{})
+
 def Searchgoods(request):
     allthebumen=['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     a_items = []
@@ -32,11 +35,11 @@ def Searchgoods(request):
         #goodsname="精准医学研究"
         if goodsname is not None:
 	#fenleisousuo	
-	    if  goodsname.encode("utf-8") in allthebumen:
-		selected['bumen'] = goodsname.encode("utf-8")
+            if  goodsname.encode("utf-8") in allthebumen:
+                selected['bumen'] = goodsname.encode("utf-8")
 		#print selected['bumen']
-		request.session['bumen'] = goodsname.encode("utf-8")
-		return HttpResponseRedirect('/search_result/')
+                request.session['bumen'] = goodsname.encode("utf-8")
+                return HttpResponseRedirect('/search_result/')
 	#xiangmusousuo        
 	#分词
             seg_list = jieba.cut(goodsname,cut_all=False)
@@ -709,3 +712,12 @@ def not_evaluate(request):
 def evaluated(request):
     if request.session['user_id']:
         user_id = request.session['user_id']
+        
+        
+        
+        
+def friend_link(request):
+    return render(request,'link.html',{})
+    
+def quanlification(request):
+    return render(request,'quanlification.html',{})
