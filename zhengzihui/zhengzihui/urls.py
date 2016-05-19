@@ -85,4 +85,8 @@ urlpatterns = [
     #主页底部链接页面部分 友情链接
     url(r'^friend_link',"zhengzihui_app.views.friend_link",name="friend_link"),
     url(r'^quanlification',"zhengzihui_app.views.quanlification",name="quanlification"),
+    #人工申诉
+    url(r'^artificial_apeal',"zhengzihui_app.views.artificial_apeal",name="artificial_apeal"),
+    #联系我们
+    url(r'^contact_us',"zhengzihui_app.views.contact_us",name="contact_us"),
 ]

@@ -99,7 +99,7 @@
 		<div class="row-fluid">
 			<div id="chosecity" >
 				<form action="">
-					<input type="text" id="city" />
+					<input type="text" id="city" value="切换城市"/>
 <script type="text/javascript">
 $("#city").click(function (e) {
 	SelCity(this,e);
@@ -887,22 +887,22 @@ function show3F(obj){
 <tr>
 <td><a href="#"><font color="black">政资汇简介</font></a></td>
 <td><a href="#"><font color="black">商务合作</font></a></td>
-<td><a href="#"><font color="black">联系我们</font></a></td>
+<td><a href="{% url 'contact_us' %}"><font color="black">联系我们</font></a></td>
 <td><a href="#"><font color="black">政资宝</font></a></td>
 </tr>
 <tr>
 <td><a href="#"><font color="black">可信网站</font></a></td>
 <td><a href="#"><font color="black">网站联盟</font></a></td>
-<td><a href="#"><font color="black">投诉建议</font></a></td>
+<td><a href="{% url 'artificial_apeal' %}"><font color="black">投诉建议</font></a></td>
 </tr>
 <tr>
 <td><a href="#"><font color="black">法律声明</font></a></td>
-<td><a href="#"><font color="black">友情链接</font></a></td>
-<td><a href="#"><font color="black">诚聘英才</font></a></td>
+<td><a href="{% url 'friend_link' %}"><font color="black">友情链接</font></a></td>
+<td><a href="{% url 'newhire' %}"><font color="black">诚聘英才</font></a></td>
 </tr>
 <tr>
 <td><a href="#"><font color="black">网站地图</font></a></td>
-<td><a href="#"><font color="black">业务资质</font></a></td>
+<td><a href="{% url 'quanlification' %}"><font color="black">业务资质</font></a></td>
 </tr>
 </table>
 </div>

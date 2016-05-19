@@ -19,8 +19,6 @@ def index(request):
 	#print (123)
 	return render_to_response('index.html',{})
 
-def newhire(request):
-	return render_to_response('hire.html',{})
 
 def Searchgoods(request):
     allthebumen=['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
@@ -721,3 +719,19 @@ def friend_link(request):
     
 def quanlification(request):
     return render(request,'quanlification.html',{})
+  
+def newhire(request):
+	return render_to_response('hire.html',{})
+	
+def artificial_apeal(request):
+	return render_to_response('artificial_apeal.html',{})
+
+def contact_us(request):
+	return render_to_response('contact_us.html',{})
+	
+	
+	
+	
+	
+	
+
