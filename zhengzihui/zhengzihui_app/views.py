@@ -733,6 +733,8 @@ def contact_us(request):
 def business_cooperation(request):
     return render(request,'business_cooperation.html',{})
 
-	
+def union_website(request):
+    return render(request,'union_website.html',{})
+
 	
 

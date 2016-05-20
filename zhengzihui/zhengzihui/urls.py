@@ -91,4 +91,6 @@ urlpatterns = [
     url(r'^contact_us',"zhengzihui_app.views.contact_us",name="contact_us"),
     #商业合作
     url(r'^business_cooperation',"zhengzihui_app.views.business_cooperation",name="business_cooperation"),
+    #网站联盟
+    url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
 ]

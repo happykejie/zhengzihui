@@ -1,0 +1,120 @@
+nav.navbar{
+	background-color: white;
+	border:none;
+	
+}
+
+body{
+	padding: 0;
+	margin: 0 ;
+}
+
+div.titlepic{
+	width: 100%;
+	height: 60px;
+	background-size: 100%;
+	background-image: url(../images/2.png);
+	background-repeat:no-repeat; 
+}
+
+div.contentpic1{
+	width: 100%;
+	height: 200px;
+	background-size: 100%;
+	background-image: url(../images/5.png);
+	background-repeat:no-repeat; 
+	margin-top: 10px;
+}
+
+div.left{
+	position:relative; 
+	width: 700px;
+
+}
+hr.left{
+	position: absolute;
+	top: 10px;
+}
+img.left{
+	position: relative;
+	top: 15px;
+}
+
+p.left{
+	font: 20px cursive;
+	margin-top: 10px;
+}
+
+div.right{
+	width: 1500px;
+	position: relative;
+	top: -257px;
+
+}
+p.right{
+	margin-left: 700px;
+	font: 20px cursive;
+
+}
+
+hr.right{
+	position: absolute;
+	margin-left: 700px;
+	top: 7px;
+
+}
+
+p.notice{
+	margin-left: 700px;
+	font: 15px cursive;
+}
+
+div.bottom{
+	position: relative;
+	top: -180px;
+	font: 20px cursive;
+}
+
+hr.bottom{
+	position: absolute;
+	top: 10px;
+}
+div.footer{
+	position: relative;
+	top: -195px;
+
+}
+
+div.f_left{
+	position: absolute;
+	margin-left: 90px;
+	width: 300px;
+}
+p.f_left{
+	font: 18px cursive;
+}
+
+div.f_center{
+	position: absolute;
+	width: 300px;
+	margin-left: 490px;
+}
+
+p.f_center{
+	font: 18px cursive;
+}
+
+div.f_right{
+	position: absolute;
+	width: 300px;
+	margin-left: 790px;
+}
+
+p.f_right{
+	font: 18px cursive;
+}
+
+p.copyright{
+	position: relative;
+	left: 450px;
+}
