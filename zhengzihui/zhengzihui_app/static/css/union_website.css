@@ -9,23 +9,9 @@ body{
 	margin: 0 ;
 }
 
-div.titlepic{
-	width: 100%;
-	height: 60px;
-	background-size: 100%;
-	background-image: url(../images/2.png);
-	background-repeat:no-repeat; 
+div.1{
+	margin-left: 100px;
 }
-
-div.contentpic1{
-	width: 100%;
-	height: 200px;
-	background-size: 100%;
-	background-image: url(../images/5.png);
-	background-repeat:no-repeat; 
-	margin-top: 10px;
-}
-
 div.left{
 	position:relative; 
 	width: 700px;
@@ -46,7 +32,7 @@ p.left{
 }
 
 div.right{
-	width: 1500px;
+	width: 100px;
 	position: relative;
 	top: -257px;
 
@@ -106,7 +92,7 @@ p.f_center{
 
 div.f_right{
 	position: absolute;
-	width: 300px;
+	width: 100px;
 	margin-left: 790px;
 }
 
@@ -118,3 +104,4 @@ p.copyright{
 	position: relative;
 	left: 450px;
 }
+
