@@ -738,3 +738,224 @@ def union_website(request):
 
 	
 
+#个人注册
+def g_register(request):  
+    errors= []  
+    telephone=None  
+    password=None  
+    password2=None  
+    CompareFlag=False  
+  
+    if request.method == 'POST':  
+        if not request.POST.get('telephone'):  
+            errors.append('请输入手机号码')  
+        else:  
+            telephone = request.POST.get('telephone')  
+        if not request.POST.get('password'):  
+            errors.append('请输入密码')  
+        else:  
+            password= request.POST.get('password')  
+        if not request.POST.get('password2'):  
+            errors.append('请确认密码')  
+        else:  
+            password2= request.POST.get('password2')  
+  
+        if password is not None and password2 is not None:  
+            if password == password2:  
+                CompareFlag = True  
+            else:  
+                errors.append('两次输入密码不一致，请重新输入 ')   
+        if telephone is not None and password is not None and password2 is not None and CompareFlag :  
+            user=User.objects.create_user(telephone,password)  
+            user.is_active=True  
+            user.save  
+            return HttpResponseRedirect('register2.html')  
+    return render_to_response('g_register.html', {'errors': errors})  
+    
+#企业注册
+def q_register(request):  
+    errors= []  
+    account=None     
+    password=None  
+    password2=None  
+    CompareFlag=False
+    company=None
+    address=None
+    capital=None
+    name=None
+    telephone=None
+    email=None
+
+    if request.method == 'POST':  
+        if not request.POST.get('account'):  
+            errors.append('请输用户名')  
+        else:  
+            account = request.POST.get('account')  
+        if not request.POST.get('password'):  
+            errors.append('请输入密码')  
+        else:  
+            password= request.POST.get('password')  
+        if not request.POST.get('password2'):  
+            errors.append('请确认密码')  
+        else:  
+            password2= request.POST.get('password2')  
+  
+        if password is not None and password2 is not None:  
+            if password == password2:  
+                CompareFlag = True  
+            else :  
+                errors.append('两次输入密码不一致，请重新输入 ')  
+  
+        if not request.POST.get('company'):  
+            errors.append('请输入公司名称')  
+        else:  
+            company= request.POST.get('company')
+
+        if not request.POST.get('address'):  
+            errors.append('请输入公司注册地址')  
+        else:  
+            address= request.POST.get('address')
+
+        if not request.POST.get('capital'):  
+            errors.append('请输入公司注册资本')  
+        else:  
+            capital= request.POST.get('capital')
+
+        if not request.POST.get('name'):  
+            errors.append('请输入联系人姓名')  
+        else:  
+            name= request.POST.get('name')
+
+        if not request.POST.get('telephone'):  
+            errors.append('请输入联系人座机号码')  
+        else:  
+            telephone= request.POST.get('telephone')
+
+        if not request.POST.get('email'):  
+            errors.append('请输入联系人邮箱')  
+        else:  
+            email= request.POST.get('email') 
+        if account is not None and password is not None and password2 is not None and CompareFlag and company is not None and address is not None and capital is not None and name is not None and telephone is not None and email is not None :  
+            user=User.objects.create_user(account,telephone,company,address,capital,name,password,email)  
+            user.is_active=True  
+            user.save  
+            return HttpResponseRedirect('register2.html')    
+    return render_to_response('q_register.html', {'errors': errors}) 
+
+#验证
+def register2(request):  
+    errors= []  
+    code=None
+    if request.method == 'POST' :  
+        if not request.POST.get('code'):  
+            errors.append('请输入验证码')  
+        else:  
+            code = request.POST.get('code')
+        if code is not None:
+            user=User.objects.create_user(code)  
+            user.is_active=True  
+            user.save  
+        return HttpResponseRedirect('register3.html')
+    return render_to_response('register2.html', {'errors': errors})    
+
+#注册成功
+def register3(request):    
+    return render_to_response('denglu.html')  
+
+#登陆
+def login(request):
+    errors= []  
+    account=None  
+    password=None  
+    if request.method == 'POST' :  
+        if not request.POST.get('account'):  
+            errors.append('请输入用户名')  
+        else:  
+            account = request.POST.get('account')  
+        if not request.POST.get('password'):  
+            errors.append('请输入登陆密码')  
+        else:  
+            password= request.POST.get('password')  
+        if account is not None and password is not None :  
+             user = authenticate(username=account,password=password)  
+             if user is not None:  
+                 if user.is_active:  
+                     login(request,user)  
+                     return HttpResponseRedirect('index.html')  
+                 else:  
+                     errors.append('用户名不存在')  
+             else :  
+                  errors.append('用户名无效，请重新输入')  
+    return render_to_response('denglu.html', {'errors': errors})
+
+#找回密码步骤一
+def password1(request):
+    errors= []  
+    account=None
+    code=None
+    if request.method == 'POST' :  
+        if not request.POST.get('account'):  
+            errors.append('请输入用户名')  
+        else:  
+            account = request.POST.get('account')
+        if not request.POST.get('code'):  
+            errors.append('请输入图形验证码')  
+        else:  
+            code = request.POST.get('code')
+        if account is not None and code is not None:
+            user=User.objects.create_user(account,code)  
+            user.is_active=True  
+            user.save  
+        return HttpResponseRedirect('password2.html')
+    return render_to_response('password1.html', {'errors': errors})   
+
+#找回密码步骤二
+def password2(request):
+    errors= []  
+    code=None
+    if request.method == 'POST' :  
+        if not request.POST.get('code'):  
+            errors.append('请输入手机动态密码')  
+        else:  
+            code = request.POST.get('code')
+        if code is not None:
+            user=User.objects.create_user(account,code)  
+            user.is_active=True  
+            user.save  
+        return HttpResponseRedirect('password3.html',{})
+    return render_to_response('password2.html', {'errors': errors})  
+
+#找回密码步骤三
+def password3(request):
+    errors= []  
+    password=None  
+    password2=None
+    CompareFlag=False
+    if request.method == 'POST':
+        if not request.POST.get('password'):  
+            errors.append('请输入密码')  
+        else:  
+            password= request.POST.get('password')  
+        if not request.POST.get('password2'):  
+            errors.append('请确认密码')  
+        else:  
+            password2= request.POST.get('password2')  
+  
+        if password is not None and password2 is not None:  
+            if password == password2:  
+                CompareFlag = True  
+            else:  
+                errors.append('两次输入密码不一致，请重新输入 ')   
+        if password is not None and password2 is not None and CompareFlag :   
+            user=User.objects.create_user(password)  
+            user.is_active=True  
+            user.save  
+            return HttpResponseRedirect('password4.html',{})  
+    return render_to_response('password3.html', {'errors': errors})
+
+#找回密码步骤四
+def password4(request):   
+    return render_to_response('denglu.html',{})             
+         
+
+

@@ -93,4 +93,16 @@ urlpatterns = [
     url(r'^business_cooperation',"zhengzihui_app.views.business_cooperation",name="business_cooperation"),
     #网站联盟
     url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
+
+     #登陆注册
+    url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
+    url(r'^g_register/$', 'zhengzihui_app.views.g_register',name='g_register'),
+    url(r'^q_register/$', 'zhengzihui_app.views.q_register',name='q_register'),
+    url(r'^register2/$', 'zhengzihui_app.views.register2',name='register2'),
+    url(r'^register3/$', 'zhengzihui_app.views.register3',name='register3'),
+    url(r'^password1/$', 'zhengzihui_app.views.password1',name='password1'),
+    url(r'^password2/$', 'zhengzihui_app.views.password2',name='password2'),
+    url(r'^password3/$', 'zhengzihui_app.views.password3',name='password3'),
+    url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
+
 ]

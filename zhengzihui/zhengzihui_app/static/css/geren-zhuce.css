@@ -1,0 +1,49 @@
+*{
+	margin:0;padding:0;
+}
+
+.logo{
+	position: absolute;
+	left: 10%;
+    top: 10px;
+}
+
+.denglu{
+	position: absolute;
+    top: 50px;
+    left: 78%;
+}
+
+.anniu{
+	position: absolute;
+    top: 120px;
+    left: 25%;
+}	
+
+.jindu{
+	position: absolute;
+    top: 180px;
+}
+
+.table1 {
+	position: absolute;
+    top: 320px;
+	left: 31%;
+}
+.center table{
+	border-collapse:separate;  
+	border-spacing:20px;
+	
+}
+
+.checkbox{
+	position: absolute;
+    top: 560px;
+    left: 42.5%;
+}
+
+.footer p{
+	position:absolute;
+	top:750px;
+    left: 37%;
+}	
