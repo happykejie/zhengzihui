@@ -1,4 +1,3 @@
-
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
@@ -453,7 +452,7 @@ def pay(request):
 	#下面都是写死的
 	buyer_id=3
 	buyer_name=3
-	buyer_email=1@qq.com
+	buyer_email='1@qq.com'
 	add_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
 	order_state=1
 	payment_code=1
@@ -985,5 +984,6 @@ def password3(request):
 def password4(request):   
     return render_to_response('denglu.html',{})             
          
-
+def download(request):
+	return render(request,'download.html',{})
 
