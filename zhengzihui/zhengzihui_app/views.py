@@ -436,12 +436,40 @@ def pay(request):
 	the function of payment
 	"""
 	_goods_id = request.GET['goodsidtopay']
-	print _goods_id
+	order_id=len(tb_order.objects.all())+1
+	order_no=order_id
+	pay_no=order_id
+	#request.session['unpayedid']=order_id
+	#print length
 	#_goods_id = '0001'
 	goods = tb_goods.objects.get(goods_id = _goods_id)
 	_price = goods.goods_price
 	_discount = goods.goods_price_discouint
 	_total_price = _price * _discount
+	item_id=goods.item_id
+	items = tb_item.objects.get(item_id=item_id)
+	item_name=items.item_name
+	sp_id=good.sp_id
+	#下面都是写死的
+	buyer_id=3
+	buyer_name=3
+	buyer_email=1@qq.com
+	add_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+	order_state=1
+	payment_code=1
+	payment_time=add_time
+	final_time=add_time
+	good_amount=1
+	order_amount=1
+	eval_state=0
+	refund_state=0
+	lock_state=0
+	refund_amount=0
+	delay_time=0
+	order_from=1
+	express_id=0
+	express_no=0
+	express_state=1
     #total_price=0.01 这里是测试字段，根据实际属性变动
     #o_id = random.randint(1000001,9999999)
     #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
