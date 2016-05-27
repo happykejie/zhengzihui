@@ -429,7 +429,12 @@ def service_list(request):
     else:
         return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
     
-
+def Payback(request):
+	order_id=request.session['unpayedid']
+	u = tb_order.objects.get(order_id=order_id)
+	u['order_state']=2
+	u.save()
+	return HttpResponseRedirect('/zzh/user_center')
 
 def pay(request):
 	"""
@@ -439,7 +444,7 @@ def pay(request):
 	order_id=len(tb_order.objects.all())+1
 	order_no=order_id
 	pay_no=order_id
-	#request.session['unpayedid']=order_id
+	request.session['unpayedid']=order_id
 	#print length
 	#_goods_id = '0001'
 	goods = tb_goods.objects.get(goods_id = _goods_id)
@@ -455,7 +460,7 @@ def pay(request):
 	buyer_name=3
 	buyer_email="1@qq.com"
 	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-	print add_time
+	#print add_time
 	order_state=1
 	payment_code=1
 	payment_time=add_time
