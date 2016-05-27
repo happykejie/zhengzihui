@@ -1,0 +1,55 @@
+*{
+	margin:0;padding:0;
+}
+
+
+.denglu{
+	position: absolute;
+	left:450px;
+    height: 59px;
+    line-height: 59px;
+    margin: 50px auto;
+}
+.denglu span{
+    font-size: 26px;
+    color: darkred;
+}
+
+
+.dl{
+	  background-color:#b0c4de;
+}
+
+.dl h2{
+	  color:blue;
+}
+
+
+.footer p{
+	position:absolute;
+	top:670px;
+    left: 37%;
+}
+.g{
+	position:absolute;
+	top:630px;
+    left: 18%;
+}
+.l{
+	position:absolute;
+	top:630px;
+    left: 38%;
+}
+.b{
+	position:absolute;
+	top:630px;
+    left: 58%;
+}
+.f{
+	position:absolute;
+	top:630px;
+    left: 78%;
+}
+
+
+

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>个人 注册</title>
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+	<script type="application/javascript" src="../static/js/jquery-1.11.1.min.js"></script>
+	<script type="application/javascript" src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/q_register.css"/>
+	</head>
+	<body>
+		<div class="header">
+			<div class="logo">
+			<img  src="../static/images/denglu/zhuce-logo.jpg" />
+			</div>
+			<div class="denglu">
+			<p>已有政资汇账号？<a href="{% url 'login' %}">登陆</a></p>
+			</div>
+		</div>
+		<div class="center">
+				<div class="anniu">
+					 <a href="{% url 'g_register' %}" ><button type="button" class="btn btn-default btn-lg">&nbsp;&nbsp;个人用户&nbsp;&nbsp;</button></a>
+					 <button type="button" class="btn btn-default btn-lg">&nbsp;&nbsp;企业用户&nbsp;&nbsp;</button>
+					 <br>
+				</div>
+				<div style="text-align:center" class="jindu">
+					 <img  src="../static/images/denglu/zhuce1.png" />
+					 <br><br><br>
+				</div>
+				<div class="timu1"><h3>账户信息</h3></div>
+			   <div class="table1">
+				<table cellpadding="0" cellspacing="0" style="width:620px; border: none ">
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 用户名</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入用户名" style="width:320px;"></td>
+							
+						</tr>
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 请设置密码</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入6-18位密码" style="width:320px;"></td>
+							
+						</tr>
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 请确认密码</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入6-18位密码" style="width:320px;"></td>				
+						</tr>
+				</table>
+				</div>
+				 <div class="timu2"><h3>公司信息</h3></div>
+				 <div class="table2">
+					<table   cellpadding="0" cellspacing="0" style="width:620px; border: none ">
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 公司名称</td>
+								<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入公司名" style="width:320px;"></td>
+								
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 公司所在区县</td>
+								<td >
+									<div class="form-control1" width="120px">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>北京</option>
+									  <option>上海</option>
+									  <option>天津</option>
+									  <option>重庆</option>
+									  <option>黑龙江</option>
+									  <option>吉林</option>
+									  <option>辽宁</option>
+									  <option>内蒙古</option>
+									  <option>河北</option>
+									  <option>新疆</option>
+									  <option>甘肃</option>
+									  <option>青海</option>
+									  <option>陕西</option>
+									  <option>宁夏</option>
+									  <option>河南</option>
+									  <option>山东</option>
+									  <option>山西</option>
+									  <option>安徽</option>
+									  <option>湖南</option>
+									  <option>湖北</option>
+									  <option>江苏</option>
+									  <option>四川</option>
+									  <option>贵州</option>
+									  <option>广西</option>
+									  <option>云南</option>
+									  <option>西藏</option>
+									  <option>浙江</option>
+									  <option>江西</option>
+									  <option>广东</option>
+									  <option>福建</option>
+									  <option>台湾</option>
+									  <option>海南</option>
+									</select>
+									</div>
+								</td>
+								<td >
+									<div class="form-control2">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>成都市</option>
+									  <option>攀枝花市</option>
+									  <option>德阳市</option>
+									  <option>绵阳市</option>
+									  <option>广元市</option>
+									  <option>遂宁市</option>
+									  <option>内江市</option>
+									  <option>乐山市</option>
+									  <option>南充市</option>
+									  <option>眉山市</option>
+									  <option>宜宾市</option>
+									  <option>广安市</option>
+									  <option>达州市</option>
+									  <option>雅安市</option>
+									  <option>巴中市</option>
+									  <option>资阳市</option>
+									  <option>泸州市</option>
+									  <option>阿坝州</option>
+									  <option>甘孜州</option>
+									  <option>凉山州</option>
+									</select>
+									</div>
+								</td>
+								<td >
+									<div class="form-control3">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>锦江区</option>
+									  <option>青羊区</option>
+									  <option>金牛区</option>
+									  <option>武侯区</option>
+									  <option>成华区</option>
+									  <option>高新区</option>
+									  <option>天府新区</option>
+									  <option>龙泉驿区</option>
+									  <option>青白江区</option>
+									  <option>新都区</option>
+									  <option>温江区</option>
+									  <option>都江堰区</option>
+									  <option>邛崃市</option>
+									  <option>崇州市</option>
+									  <option>金堂县</option>
+									  <option>双流县</option>
+									  <option>郫   县</option>
+									  <option>大邑县</option>
+									  <option>蒲江县</option>
+									  <option>新津县</option>				  
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span>公司注册地址</td>
+								<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请填写公司营业执照地址" style="width:320px;"></td>
+								
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 公司注册资本</td>
+								<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请填写公司注册资本" style="width:320px;"></td>			
+							</tr>
+					</table>
+				  </div>
+				  <div class="table22">
+							<table  cellpadding="0" cellspacing="0" style="width:620px; border: none ">
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span>公司所属行业</td>
+								<td >
+									<div class="form-control4" width="120px">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>农、林、牧、渔业</option>
+									  <option>制造业</option>
+									  <option>电力、燃气及水的生产和供应业</option>
+									  <option>建筑业</option>
+									  <option>交通运输、仓储和邮政业</option>
+									  <option>信息传输、计算机服务和软件业</option>
+									  <option>批发和零售业</option>
+									  <option>住宿和餐饮业</option>
+									  <option>金融业</option>
+									  <option>房地产业</option>
+									  <option>租赁和商务服务业</option>
+									  <option>科学研究、技术服务和地质勘查业</option>
+									  <option>水利、环境和公共设施管理业</option>
+									  <option>居民服务和其他服务业</option>
+									  <option>教育</option>
+									  <option>卫生、社会保障和社会福利业</option>
+									  <option>文化、体育和娱乐业</option>
+									  <option>公共管理和社会组织</option>
+									  <option>国际组织</option>		
+									</select>
+									</div>
+								</td>
+								<td >
+									<div class="form-control5">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>农业</option>
+									  <option>林业</option>
+									  <option>畜牧业</option>
+									  <option>渔业</option>
+									  <option>农、林、牧、渔服务业</option>							  
+									</select>
+									</div>
+								</td>		
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span>公司人数</td>
+								<td >
+									<div class="form-control6" width="120px">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>1-10人</option>
+									  <option>10-50人</option>
+									  <option>50-100人</option>
+									  <option>100-300人</option>
+									  <option>300-1000人</option>
+									  <option>1000人以上</option>
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 公司性质</td>
+								<td >
+									<div class="form-control7" width="120px">
+									<select class="form-control">
+									  <option>请选择</option>
+									  <option>国营企业</option>
+									  <option>民营企业</option>
+									  <option>外资企业</option>
+									  <option>中外合资企业</option>
+									  <option>政府机关/事业单位</option>
+									  <option>高校、科研院所</option>
+									  <option>其它</option>
+									</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td width="120px"><span style="color:red"><strong><big>*</big></strong></span>验证码</td>
+								<td width="120px" colspan="2"><input type="text" class="form-control" placeholder="请输入验证码" style="width:120px;"></td>			
+							</tr>
+						</table>
+					</div>
+				<div class="timu3"><h3>联系人信息</h3></div>
+				<div class="table3">
+				<table  cellpadding="0" cellspacing="0" style="width:620px; border: none ">
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span>姓名</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入姓名" style="width:320px;"></td>
+							
+						</tr>
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 座机电话</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入6座机电话" style="width:320px;"></td>
+							
+						</tr>
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 短信验证码</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入验证码" style="width:120px;"></td>				
+						</tr>
+						<tr>
+							<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 联系人邮箱</td>
+							<td width="220px" colspan="2"><input type="text" class="form-control" placeholder="请输入联系人邮箱" style="width:320px;"></td>				
+						</tr>
+				</table>
+				</div>
+				<div class="checkbox">
+					<label>
+					   <input type="checkbox" align="center"> 我已阅读并同意《政资汇用户注册协议》
+					</label><br><br>
+					<a href="{% url 'register2' %}" ><button type="submit" style="width:250px;height:35px;" class="btn btn-primary">立即注册</button></a>
+				</div>
+		</div>
+
+		<div class="footer">  
+		  <p class="text-center">Copyright@2015-2025  成都融亿达科技有限公司版权所有</p>
+		</div>
+		
+		
+		
+		
+		
+	</body>
+</html>
