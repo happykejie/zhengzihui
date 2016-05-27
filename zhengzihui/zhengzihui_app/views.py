@@ -448,12 +448,18 @@ def pay(request):
 	item_id=goods.item_id
 	items = tb_item.objects.get(item_id=item_id)
 	item_name=items.item_name
-	sp_id=good.sp_id
+	sp_id=goods.sp_id
 	#下面都是写死的
 	buyer_id=3
 	buyer_name=3
+<<<<<<< HEAD
 	buyer_email='1@qq.com'
 	add_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+=======
+	buyer_email="1@qq.com"
+	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+	print add_time
+>>>>>>> cec27a9aaaadc2d5417d88c9cbb2b955c33e1fa9
 	order_state=1
 	payment_code=1
 	payment_time=add_time
@@ -464,11 +470,14 @@ def pay(request):
 	refund_state=0
 	lock_state=0
 	refund_amount=0
-	delay_time=0
+	delay_time=add_time
 	order_from=1
 	express_id=0
 	express_no=0
 	express_state=1
+    	u=tb_order(express_id=express_id,order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
+	u.save()
+
     #total_price=0.01 这里是测试字段，根据实际属性变动
     #o_id = random.randint(1000001,9999999)
     #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
