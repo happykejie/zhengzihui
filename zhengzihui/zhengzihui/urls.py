@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^hire/$','zhengzihui_app.views.newhire',name='newhire'),
     url(r'^search/$','zhengzihui_app.views.Searchgoods',name='Searchgoods'),
     
+    url(r'^payok/$','zhengzihui_app.views.Payback',name='payok'),
     #zss 二级页面
     url(r'^search_result/$','zhengzihui_app.views.search_result',name='search_result'),
     url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),

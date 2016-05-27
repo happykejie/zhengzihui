@@ -428,7 +428,12 @@ def service_list(request):
     else:
         return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
     
-
+def Payback(request):
+	order_id=request.session['unpayedid']
+	u = tb_order.objects.get(order_id=order_id)
+	u['order_state']=2
+	u.save()
+	return HttpResponseRedirect('/zzh/user_center')
 
 def pay(request):
 	"""
@@ -438,7 +443,7 @@ def pay(request):
 	order_id=len(tb_order.objects.all())+1
 	order_no=order_id
 	pay_no=order_id
-	#request.session['unpayedid']=order_id
+	request.session['unpayedid']=order_id
 	#print length
 	#_goods_id = '0001'
 	goods = tb_goods.objects.get(goods_id = _goods_id)
@@ -451,6 +456,7 @@ def pay(request):
 	sp_id=goods.sp_id
 	#下面都是写死的
 	buyer_id=3
+<<<<<<< HEAD
     buyer_name=3
 <<<<<<< HEAD
     buyer_email='1@qq.com'
@@ -477,6 +483,29 @@ def pay(request):
     express_state=1
         u=tb_order(express_id=express_id,order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
     u.save()
+=======
+	buyer_name=3
+	buyer_email="1@qq.com"
+	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+	order_state=1
+	payment_code=1
+	payment_time=add_time
+	final_time=add_time
+	good_amount=1
+	order_amount=1
+	eval_state=0
+	refund_state=0
+	lock_state=0
+	refund_amount=0
+	delay_time=add_time
+	order_from=1
+	express_id=0
+	express_no=0
+	express_state=1
+    	u=tb_order(express_id=express_id,order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
+	u.save()
+>>>>>>> 61da8ceb7202108a88354a1cf5d8d9c5aac0cac1
 
     #total_price=0.01 这里是测试字段，根据实际属性变动
     #o_id = random.randint(1000001,9999999)
