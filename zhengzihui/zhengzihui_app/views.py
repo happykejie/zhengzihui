@@ -1,4 +1,3 @@
-
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
@@ -458,9 +457,18 @@ def pay(request):
 	#下面都是写死的
 	buyer_id=3
 	buyer_name=3
+<<<<<<< HEAD
+	buyer_email='1@qq.com'
+	add_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+=======
 	buyer_email="1@qq.com"
 	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+<<<<<<< HEAD
 	#print add_time
+=======
+	print add_time
+>>>>>>> cec27a9aaaadc2d5417d88c9cbb2b955c33e1fa9
+>>>>>>> d325b40d9c8a16af4d67b389985c076d43d7029b
 	order_state=1
 	payment_code=1
 	payment_time=add_time
@@ -773,7 +781,10 @@ def business_cooperation(request):
 def union_website(request):
     return render(request,'union_website.html',{})
 
-	
+
+def representations(request):
+    return render(request,'representations.html',{})
+
 
 #个人注册
 def g_register(request):  
@@ -994,5 +1005,6 @@ def password3(request):
 def password4(request):   
     return render_to_response('denglu.html',{})             
          
-
+def download(request):
+	return render(request,'download.html',{})
 
