@@ -77,8 +77,8 @@
 		<div style="float:right">
 			<ul class="nav navbar-nav">
 			<li class="active"><a href="#">退出</a></li>
-			<li><a href="#">登录</a></li>
-			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'login' %}">登录</a></li>
+			<li><a href="{% url 'g_register' %}">注册</a></li>
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
 			<li><a href="#">我的订单</a></li>
 			<li><a href="#">手机政资汇</a></li>
@@ -886,13 +886,13 @@ function show3F(obj){
 </tr>
 <tr>
 <td><a href="#"><font color="black">政资汇简介</font></a></td>
-<td><a href="#"><font color="black">商务合作</font></a></td>
+<td><a href="{% url 'business_cooperation' %}"><font color="black">商务合作</font></a></td>
 <td><a href="{% url 'contact_us' %}"><font color="black">联系我们</font></a></td>
 <td><a href="#"><font color="black">政资宝</font></a></td>
 </tr>
 <tr>
 <td><a href="#"><font color="black">可信网站</font></a></td>
-<td><a href="#"><font color="black">网站联盟</font></a></td>
+<td><a href="{% url 'union_website' %}"><font color="black">网站联盟</font></a></td>
 <td><a href="{% url 'artificial_apeal' %}"><font color="black">投诉建议</font></a></td>
 </tr>
 <tr>
