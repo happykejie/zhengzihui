@@ -96,6 +96,7 @@ urlpatterns = [
     #帐号申述
     url(r'^representations',"zhengzihui_app.views.representations",name="representations"),
 
+
      #登陆注册
     url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
     url(r'^g_register/$', 'zhengzihui_app.views.g_register',name='g_register'),
