@@ -428,7 +428,7 @@ def service_list(request):
     else:
         return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
     
-def payback(request):
+def Payback(request):
 	order_id=request.session['unpayedid']
 	u = tb_order.objects.get(order_id=order_id)
 	u['order_state']=2
@@ -484,16 +484,9 @@ def pay(request):
 	express_id=0
 	express_no=0
 	express_state=1
-<<<<<<< HEAD
     	u=tb_order(express_id=express_id,order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
-=======
-<<<<<<< HEAD
-=======
-    	u=tb_order(order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
->>>>>>> d325b40d9c8a16af4d67b389985c076d43d7029b
 	u.save()
 
->>>>>>> cec27a9aaaadc2d5417d88c9cbb2b955c33e1fa9
     #total_price=0.01 这里是测试字段，根据实际属性变动
     #o_id = random.randint(1000001,9999999)
     #m_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
@@ -788,7 +781,10 @@ def business_cooperation(request):
 def union_website(request):
     return render(request,'union_website.html',{})
 
-	
+
+def representations(request):
+    return render(request,'representations.html',{})
+
 
 #个人注册
 def g_register(request):  
@@ -1010,5 +1006,5 @@ def password4(request):
     return render_to_response('denglu.html',{})             
          
 def download(request):
-	return render('download.html',{})
+	return render(request,'download.html',{})
 

@@ -457,18 +457,9 @@ def pay(request):
 	#下面都是写死的
 	buyer_id=3
 	buyer_name=3
-<<<<<<< HEAD
-	buyer_email='1@qq.com'
-	add_time=time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-=======
 	buyer_email="1@qq.com"
 	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-<<<<<<< HEAD
-	#print add_time
-=======
-	print add_time
->>>>>>> cec27a9aaaadc2d5417d88c9cbb2b955c33e1fa9
->>>>>>> d325b40d9c8a16af4d67b389985c076d43d7029b
+
 	order_state=1
 	payment_code=1
 	payment_time=add_time
