@@ -736,7 +736,10 @@ def business_cooperation(request):
 def union_website(request):
     return render(request,'union_website.html',{})
 
-	
+
+def representations(request):
+    return render(request,'representations.html',{})
+
 
 #个人注册
 def g_register(request):  

@@ -93,6 +93,7 @@ urlpatterns = [
     url(r'^business_cooperation',"zhengzihui_app.views.business_cooperation",name="business_cooperation"),
     #网站联盟
     url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
+    url(r'^representations',"zhengzihui_app.views.representations",name="representations"),
 
      #登陆注册
     url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
