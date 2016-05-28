@@ -268,6 +268,8 @@ def search_result_sort_deadtime(request):
         a_items.append(a_item)
     return render(request,'search_result.html',{'items':a_items})
 ##############################
+
+
 #zss项目信息滚动加载瀑布流
 def search_result_load(request):
     a_items = []
@@ -1000,4 +1002,13 @@ def password4(request):
          
 def download(request):
 	return render(request,'download.html',{})
+
+def selectpay(request):
+    if request.GET['goodsid']:
+ 
+        service_detail_goods_id = request.GET['goodsid']
+	goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+	return render(request,'selectpay.html', {'goods':goods})
+
+
 

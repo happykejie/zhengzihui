@@ -110,7 +110,8 @@ urlpatterns = [
     url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
     #app下载
     url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
-
+    #支付选择页面
+	url(r'^selectpay/$', 'zhengzihui_app.views.selectpay',name='selectpay'),
 
 
 ]

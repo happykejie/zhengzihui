@@ -124,7 +124,7 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <a href="#" class="btn btn-primary btn-lg active" role="button">联系我们</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <a href="#" class="btn btn-primary btn-lg active" role="button">联系我们</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}/?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
