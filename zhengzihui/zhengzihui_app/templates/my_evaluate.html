@@ -1,0 +1,151 @@
+<div>
+    <style>
+    #order{
+        width:100%;
+        margin-left:auto;
+        margin-right:auto;
+        background-color: #ffffff;
+    }
+
+    #order-list{
+        padding:0px 10px 10px 10px;
+        border-width:3px;
+        border-style:solid;
+        border-color: #B9BFC1;
+        font-size:100%;
+        background-color:#F5F5F5;
+        margin-top:20px;
+    }
+    #order-list .title a{
+        text-decoration:none;
+        color: #595959;
+    }
+    #order-list .list-content{
+        position:relative;
+        margin:10px 0px 0px 0px;
+        height:150px;
+        overflow:hidden;
+        background-color:white;
+    }
+    #order-list  .text{
+        margin-left:230px;
+        margin-top:10px;
+        float:left;
+        margin-right:220px;
+        max-width: 600px;
+    }
+    #order-list a img{
+        position:absolute;
+        left:10px;
+        top:10px;
+        width:200px;
+        height:130px;
+    }
+    
+    
+    #order-list .title {
+        font-weight:bold;
+    }
+    #order-list .list-content > span{
+        position:absolute;
+        left:10px;
+        top:10px;
+        background-color:#50B400;
+        color:white;
+        font-size:75%;
+        padding:3px 5px;
+
+    }
+    #order-list .agency{
+        font-size:85%;
+        color:#50B400;
+    }
+    #order-list .order-status,#order-list .glyphicon-send{
+        font-size:85%;
+    }
+    #order-list .order-status-title{
+        background-color:#1E2B33;
+        border-radius:5px;
+        padding:2px 8px 2px 5px;
+        color:white;
+    }
+    #order-list .order-status-text{
+        margin-left:5px;
+        font-weight:bold;
+        color: #19574c;
+        margin-top:10px;
+    }
+	#order-list .content{
+    position:absolute;
+    right:10px;
+    top:30px;
+    width:500px;
+    font-size:75%;
+    color: #929292;
+    padding:10px;
+    overflow: hidden;
+}
+#order-list .content >span >img{
+    width:15%;
+    height:auto;
+}
+</style>
+    <div id="order">
+        <p>我的评价</p>
+        <div id="order-button">
+            <button type="button" class="btn btn-success">全选</button>
+            <button type="button" class="btn btn-default">反选</button>
+            <button type="button" class="btn btn-default">全部确认</button>
+            <button type="button" class="btn btn-default">排序</button>
+        </div>
+        <div id="order-list">
+        {% for evaluation in evaluations %}
+            <div class="list-content">
+                <a href="{% url 'service_details' %}?goodsid={{ evaluation.goods_id }}">
+                    <img src="{{ evaluation.pic_url }}" />
+                </a>
+                <span>
+                    科技项目
+                </span>
+                <div class="text">
+                    <p class="title">
+                        <a href="{% url 'service_details' %}?goodsid={{ evaluation.goods_id }}">{{ evaluation.goods_name }}</a>
+                    </p>
+                    <p class="agency">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <span>{{ evaluation.is_anonymous }}</span>
+                    </p>
+                    <p class="order-status">
+                        <span class="order-status-title">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span>发表日期:</span>
+                        </span>
+                        </br>
+                        <span class="order-status-text">
+                            {{ evaluation.create_time }}
+                        </span>
+                    </p>
+                </div>
+                <div class="content">
+                    <span style="font-weight:600;color:black;">服务评级：<img src="/static/images/star/g{{ evaluation.goev_servicecredit }}.jpg"/></span>
+                    </br>
+                    <span style="font-weight:600;color:black;">描述评级：<img src="/static/images/star/y{{ evaluation.goev_desccredit }}.jpg"/></span>
+                    <p>
+                        {{ evaluation.goev_content }}
+                    </p>
+                    
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+<script>
+    $(document).ready(function(){
+        $(".list-content").hover(function(){
+            $(this).css("box-shadow","1px 2px 3px #c0c0c0");
+        },function(){
+            $(this).css("box-shadow","0px 0px 0px");
+        });       
+    })
+</script>
+</div>

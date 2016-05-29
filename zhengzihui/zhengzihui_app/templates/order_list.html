@@ -7,12 +7,9 @@
         background-color: #ffffff;
     }
     .btn{
-        color:white;
         font-weight:600;
     }
-    .btn-default{
-        background-color: #2B2F3E;
-    }
+    
     #order-list{
         padding:0px 10px 10px 10px;
         border-width:3px;
@@ -45,19 +42,6 @@
         top:10px;
         width:200px;
         height:130px;
-    }
-    #order-list .real-pay{
-        text-align:center;
-        position:absolute;
-        right:0px;
-        top:10px;
-        width:200px;
-        font-size:75%;
-        color: #929292;
-        padding:25px;
-    }
-    #order-list .real-pay > p{
-        margin:10px -25px;
     }
     #order-list .line{
         position:absolute;
@@ -103,6 +87,40 @@
         font-weight:bold;
         color: #19574c;
     }
+    #order-list .benefit,#list .glyphicon-usd{
+    	font-size:85%;
+	}
+	#order-list .benefit-text{
+    	background-color:#1E2B33;
+    	border-radius:5px;
+    	padding:2px 8px 2px 5px;
+    	color:white;
+	}
+	#order-list .benefit-num{
+    	margin-left:15px;
+    	font-weight:bold;
+    	color:#FF8213;
+        font-size:150%;
+	}
+	#order-list .opration{
+    text-align:center;
+    position:absolute;
+    right:0;
+    top:0;
+    width:200px;
+    font-size:75%;
+    color: #929292;
+    padding:25px;
+}
+#order-list .opration > p{
+    font-size:150%;
+    line-height: 2;
+}
+#order-list .opration > a{
+    width:75%;
+    margin-left:auto;
+    margin-right:auto;
+}
 </style>
     <div id="order">
         <p>我的订单</p>
@@ -115,7 +133,7 @@
         <div id="order-list">
         {% for order in a_order_list %}
             <div class="list-content">
-                <a href="{% url 'project_detail' %}?id={{ order.item_id }}">
+                <a href="{% url 'service_details' %}?goodsid={{ order.goods_id }}">
                     <img src="{{ order.pic_url }}" />
                 </a>
                 <span>
@@ -123,7 +141,7 @@
                 </span>
                 <div class="text">
                     <p class="title">
-                        <a href="{% url 'project_detail' %}?id={{ order.item_id }}">{{ order.item_name }}</a>
+                        <a href="{% url 'service_details' %}?goodsid={{ order.goods_id }}">{{ order.goods_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
@@ -138,12 +156,28 @@
                             {{ order.order_state }}
                         </span>
                     </p>
-                </div>
-                <div class="real-pay">
-                    <p>实付款：</p>
-                    <p>
-                        <span class="sum">{{ order.order_amount }}</span>
+                    <p class="commit-status">
+                        {{ order.eval_state }}
                     </p>
+                    <p class="benefit">
+                        <span class="benefit-text">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <span>实付款：</span>
+                        </span>
+                        <span class="benefit-num">
+                            {{ order.order_amount }}
+                        </span>
+                    </p>
+                </div>
+                <div class="opration">
+                    <a id="enter" title="{% url 'order_enter' %}?id={{ order.order_id }}" class="btn btn-default btn-block opration-a">确认完成</a>
+                    <a id="give_up" title="{% url 'order_giveup' %}?id={{ order.order_id }}" class="btn btn-default btn-lg btn-block opration-a">申请关闭</a>
+                    <a id="pay" href="{% url 'pay' %}?goodsidtopay={{ order.goods_id }}" class="btn btn-default btn-block ">去支付</a>
+                    <a id="delete" title="{% url 'order_delete' %}?id={{ order.order_id }}" class="btn btn-default btn-block opration-a">删除订单</a>
+                    <a id="commit" href="{% url 'order_commit' %}?id={{ order.order_id }}" class="btn btn-default btn-block ">去评论</a>
+                    <p id="lock1">申请正在处理中</p>
+                    <p id="lock2">(现在不可操作)</p>
+                    <p id="commited">已评价</p>
                 </div>
                 <div class="line"></div>
             </div>
@@ -157,6 +191,63 @@
         },function(){
             $(this).css("box-shadow","0px 0px 0px");
         });
+        $(".opration").children("a").hide();//先隐藏所有操作按钮
+        $(".opration").children("p").hide();//先隐藏所有操作按钮
+        $(".list-content").each(function(){
+        	var text = $(this).find(".order-status-text").text().trim();
+            var commit = $(this).find(".commit-status").text().trim();
+        	if(text === "未付款" || text === "已取消"){
+        		$(this).find("#pay").show();
+        		$(this).find("#delete").show();
+        	}
+            if(text ==="已付款" || text === "已发货"){
+        		$(this).find("#enter").show();
+        		$(this).find("#give_up").show();
+        	}
+        	if(text ==="已验收"){
+        		$(this).find("#delete").show();
+                if(commit === "未评价"){
+                    $(this).find("#commit").show();
+                }else{
+                    $(this).find("#commited").show();
+                }
+        		
+        	}
+        	if(text ==="申请处理中"){
+        		$(this).find("#lock1").show();
+        		$(this).find("#lock2").show();
+        	}
+        	
+        });
+        
+
+       
+    	$("#order-list").find(".opration").each(function(){
+    		$(this).children(".opration-a").each(function(){
+                $(this).click(function(){
+                	if (window.confirm("您确定执行此操作？")) {
+            			var hide = $(this).parent().parent();   //注意要在ajax的外面使用this，否则this的上下文指的是ajax对象
+            			var url = $(this).attr("title");
+                		$.ajax({method:"GET",url:url,dataType:"text",success:function(text){
+                    		if(text === '0'){  
+                        		hide.animate({height:"0px",opacity:"0"},500).fadeOut("fast",function(){
+                        		});
+                   	 		}
+                   	 		if(text === '1'){
+                        		alert("操作失败!")
+                    		}
+                		},error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    		$("#load").hide();
+                    		//$("#load").after("<p>数据请求出错，请稍后重试！</p>");
+                    		console.log(XMLHttpRequest.status);
+                    		console.log(XMLHttpRequest.readyState);
+                    		console.log(textStatus);
+                		}})
+                	}
+    		    })
+    	
+        	});
+    	});
     })
 </script>
 </div>

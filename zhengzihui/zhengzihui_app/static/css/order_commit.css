@@ -1,0 +1,130 @@
+body{
+    margin:0px;
+    padding:0px;
+    background-color:white;
+    font-family:"Microsoft YaHei UI";
+}
+h2,h3{
+    color:gray;
+}
+.top{
+    position:fixed;
+    width:100%;
+    height:65px;
+    top:0px;
+    background-color: #1f1a17;
+    /* font-weight:bold;*/
+    z-index:1;
+}
+.top > span{
+    color:white;
+    float:left;
+    font-size:200%;
+    font-weight:600;
+    padding:10px 0px 10px 100px;
+}
+.top ul{
+    list-style-type: none;
+}
+
+.top li{
+    float:right;
+    margin:20px 25px;
+
+}
+li a{
+    text-decoration:none;
+    color:white;
+    font-size:150%;
+    font-weight:600;
+}
+
+
+.mainbox{
+    background-color: #F1F2F3;
+    margin-top:150px;
+    margin-bottom:150px;
+    margin-right:auto;
+    margin-left:auto;
+    padding:20px 100px 20px 100px;
+    width:1000px;
+
+}
+.mainbox > p{
+    font-size:150%;
+    font-weight:600;
+}
+.list-content{
+        position:relative;
+        margin:40px 0px 40px 0px;
+        height:150px;
+        overflow:hidden;
+        background-color:white;
+    }
+.text{
+        margin-left:230px;
+        margin-top:40px;
+        float:left;
+        margin-right:220px;
+    }
+.list-content a img{
+        position:absolute;
+        left:10px;
+        top:10px;
+        width:200px;
+        height:130px;
+    }
+
+.list-content > span{
+        position:absolute;
+        left:10px;
+        top:10px;
+        background-color:#50B400;
+        color:white;
+        font-size:75%;
+        padding:3px 5px;
+
+    }
+.list-content .agency{
+        font-size:85%;
+        color:#50B400;
+    }
+.list-content .benefit,#list .glyphicon-usd{
+        font-size:85%;
+    }
+.list-content .benefit-text{
+        background-color:#1E2B33;
+        border-radius:5px;
+        padding:2px 8px 2px 5px;
+        color:white;
+    }
+.list-content .benefit-num{
+        margin-left:15px;
+        font-weight:bold;
+        color:#FF8213;
+        font-size:150%;
+    }
+
+.form-group{
+    margin-top:30px;
+}
+.bottom{
+    margin-top:100px;
+    padding-top:10px;
+    padding-bottom:10px;
+    width:100%;
+    height:50px;
+    background-color: #212121;
+    font-weight:bold;
+    text-align:center;
+    font-size:150%;
+    color:white;
+}
+@media all and (max-width:1000px){
+    .top{
+        width:1000px;
+    }
+    .bottom{
+        width:1000px;
+    }
+}

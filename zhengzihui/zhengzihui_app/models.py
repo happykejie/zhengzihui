@@ -647,7 +647,7 @@ class tb_goods_evaluation(models.Model):
     goods_name = models.CharField("服务商品的名称",max_length = 100, null = False)
     user_id = models.IntegerField("评价对应的购买者id",null = False)
     user_name = models.CharField("评价对应的购买者name",max_length = 100, null = False)
-    create_time = models.DateTimeField("评价日期",null=False)
+    create_time = models.DateTimeField("评价日期",auto_now =True,null=False)
     goev_desccredit = models.IntegerField("描述相符评分",null = False)
     goev_servicecredit = models.IntegerField("服务态度评分",null = False)
     goev_content = models.TextField("评价内容",null=False)
@@ -682,7 +682,7 @@ class tb_goods_evaluation(models.Model):
 
 class tb_order(models.Model):
     order_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
-    order_no = models.IntegerField("订单号",null = False)
+    goods_id = models.IntegerField("商品id",null = False)
     pay_no = models.IntegerField("支付单号",null = False)
     item_id = models.IntegerField("项目id",null = False)
     item_name = models.CharField("项目名称",max_length = 40, null = False)

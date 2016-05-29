@@ -598,20 +598,29 @@ def all_orders(request):
         order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['goods_id'] = order.goods_id#获取商品id     
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        if order.order_state == 0:
-            a_order['order_state'] = '已取消'
-        if order.order_state == 1:
-            a_order['order_state'] = '未付款'
-        if order.order_state == 2:
-            a_order['order_state'] = '已付款'
-        if order.order_state == 3:
-            a_order['order_state'] = '已发货' 
-        if order.order_state == 4:
-            a_order['order_state'] = '已收货'
+        if order.lock_state == 0:
+            if order.order_state == 0:
+                a_order['order_state'] = '已取消'
+            if order.order_state == 1:
+                a_order['order_state'] = '未付款'
+            if order.order_state == 2:
+                a_order['order_state'] = '已付款'
+            if order.order_state == 3:
+                a_order['order_state'] = '已发货' 
+            if order.order_state == 4:
+                a_order['order_state'] = '已验收'
+        else:
+            a_order['order_state'] = '申请处理中'
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -629,11 +638,20 @@ def not_pay(request):
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=1).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id 
+        a_order['goods_id'] = order.goods_id#获取商品id     
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        a_order['order_state'] = '未付款'
+        if order.lock_state == 0: 
+            a_order['order_state'] = '未付款'
+        else:
+            a_order['order_state'] = '申请处理中'
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -651,11 +669,20 @@ def payed(request):
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=2).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['goods_id'] = order.goods_id#获取商品id      
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        a_order['order_state'] = '已支付'
+        if order.lock_state == 0: 
+            a_order['order_state'] = '已付款'
+        else:
+            a_order['order_state'] = '申请处理中'
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -674,11 +701,20 @@ def delivered(request):
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['goods_id'] = order.goods_id#获取商品id   
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        a_order['order_state'] = '已发货'
+        if order.lock_state == 0: 
+            a_order['order_state'] = '已发货'
+        else:
+            a_order['order_state'] = '申请处理中'
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -697,11 +733,20 @@ def checked(request):
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=4).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['goods_id'] = order.goods_id#获取商品id      
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        a_order['order_state'] = '已验收'
+        if order.lock_state == 0: 
+            a_order['order_state'] = '已验收'
+        else:
+            a_order['order_state'] = '申请处理中'
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -719,11 +764,20 @@ def delete(request):
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=0).order_by('-add_time')
 
     for order in order_list:
-        a_order = {}    
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['goods_id'] = order.goods_id#获取商品id      
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
-        a_order['item_name'] = order.item_name#获取项目名字
-        a_order['order_state'] = '已取消'
+        if order.lock_state == 0: 
+            a_order['order_state'] = '已取消'
+        else:
+            a_order['order_state'] = '申请处理中'    
         a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
         ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
         a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
         album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
@@ -732,23 +786,153 @@ def delete(request):
         a_order_list.append(a_order)
     return render(request,'order_list.html',{'a_order_list':a_order_list})
 
-#评价管理
-    #全部评价
-def all_evaluations(request):
-    if request.session['user_id']:
-        user_id = request.session['user_id']
 
-    #未评论
-def not_evaluate(request):
+    #确认订单
+def order_enter(request):
     if request.session['user_id']:
         user_id = request.session['user_id']
-        
-    #已评论
-def evaluated(request):
+        order_id = request.GET['id']
+        order = tb_order.objects.get(order_id=order_id)
+        if order.buyer_id == user_id:
+            order.order_state = 4
+            order.save()
+            return HttpResponse("0")
+        else:
+            return HttpResponse("1")
+
+    #申请关闭
+def order_giveup(request):
     if request.session['user_id']:
         user_id = request.session['user_id']
+        order_id = request.GET['id']
+        order = tb_order.objects.get(order_id=order_id)
+        if order.buyer_id == user_id:
+            order.lock_state = 1
+            order.save()
+            return HttpResponse("0")
+        else:
+            return HttpResponse("1")
+
         
+    #删除订单
+def order_delete(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        order_id = request.GET['id']
+        order = tb_order.objects.get(order_id=order_id)
+        if order.buyer_id == user_id:
+            order.delete()
+            return HttpResponse("0")
+        else:
+            return HttpResponse("1")
+
+    #去评价
+def order_commit(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        order_id = request.GET['id']
+        order = tb_order.objects.get(order_id=order_id)
+        if order.buyer_id == user_id:
+            a_order = {}
+            a_order['order_id'] = order.order_id#获取订单id
+            a_order['goods_id'] = order.goods_id#获取商品id    
+            a_order['item_id'] = order.item_id#获取项目id
+            a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         
+            a_order['order_amount'] = order.order_amount
+            ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+            a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+            album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+            album_id = album.album_id
+            a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示    
+            return render(request,'order_commit.html',{'order':a_order})
+    #添加评价
+def order_add_commit(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        order_id = request.POST['order_id']
+        order = tb_order.objects.get(order_id=order_id)
+        goods_id = order.goods_id
+        user_name = order.buyer_name
+        goods = tb_goods.objects.get(goods_id=goods_id)
+        goods_name = goods.goods_name
+        if order.buyer_id == user_id:
+            if tb_goods_evaluation.objects.all().order_by('-goev_id'):
+                goev_id = tb_goods_evaluation.objects.all().order_by('-goev_id')[0].goev_id + 1 #id自增
+            else:
+                goev_id = 0
+            goev_desccredit = int(request.POST['complete'])
+            goev_servicecredit = int(request.POST['service'])
+            goev_content = request.POST['content']
+            is_anonymous = int(request.POST['is_anonymous'])
+            tb_goods_evaluation.objects.create(goev_id=goev_id,order_id=order_id,goods_id=goods_id,goods_name=goods_name,user_id=user_id,user_name=user_name,goev_desccredit=goev_desccredit,goev_servicecredit=goev_servicecredit,goev_content=goev_content,is_anonymous=is_anonymous)
+            order.eval_state = 1
+            order.save()
+            return render(request,'commit_complete.html',{})
+
+#评价管理
+
+    #我的评价
+def my_evaluate(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        a_evaluations = []
+        evaluations = tb_goods_evaluation.objects.filter(user_id=user_id).order_by('-create_time')
+        for evaluation in evaluations:
+            a_evaluation = {}
+            goods_id = evaluation.goods_id
+            a_evaluation['goods_id'] = goods_id
+            a_evaluation['goods_name'] = evaluation.goods_name
+            a_evaluation['create_time'] = evaluation.create_time.strftime('%Y.%m.%d')
+            a_evaluation['goev_desccredit'] = evaluation.goev_desccredit
+            a_evaluation['goev_servicecredit'] = evaluation.goev_servicecredit
+            a_evaluation['goev_content'] = evaluation.goev_content
+            
+            if evaluation.is_anonymous == 0:
+                a_evaluation['is_anonymous'] = '不匿名'
+            else:
+                a_evaluation['is_anonymous'] = '匿名'
+            item_id = tb_goods.objects.get(goods_id=goods_id).item_id
+            album = tb_album.objects.filter(album_type=0,affiliation_id=item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+            album_id = album.album_id
+            a_evaluation['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            a_evaluations.append(a_evaluation)
+            
+        return render(request,'my_evaluate.html',{'evaluations':a_evaluations})
+
+
+    #评价统计
+def statistics(request):
+    if request.session['user_id']:
+        user_id = request.session['user_id']
+        all_orders = len(tb_order.objects.filter(buyer_id=user_id))
+        all_commit = len(tb_goods_evaluation.objects.filter(user_id=user_id))
+        not_commit = all_orders - all_commit
+        desccredit_1 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_desccredit=1))
+        desccredit_2 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_desccredit=2))
+        desccredit_3 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_desccredit=3))
+        desccredit_4 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_desccredit=4))
+        desccredit_5 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_desccredit=5))
+
+        servicecredit_1 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_servicecredit=1))
+        servicecredit_2 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_servicecredit=2))
+        servicecredit_3 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_servicecredit=3))
+        servicecredit_4 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_servicecredit=4))
+        servicecredit_5 = len(tb_goods_evaluation.objects.filter(user_id=user_id,goev_servicecredit=5))
+        json.dumps('all_orders',all_orders)
+        json.dumps('all_commit',all_commit)
+        json.dumps('not_commit',not_commit)
+        json.dumps('desccredit_1',desccredit_1)
+        json.dumps('desccredit_2',desccredit_2)
+        json.dumps('desccredit_3',desccredit_3)
+        json.dumps('desccredit_4',desccredit_4)
+        json.dumps('desccredit_5',desccredit_5)
+        json.dumps('servicecredit_1',servicecredit_1)
+        json.dumps('servicecredit_2',servicecredit_2)
+        json.dumps('servicecredit_3',servicecredit_3)
+        json.dumps('servicecredit_4',servicecredit_4)
+        json.dumps('servicecredit_5',servicecredit_5)
+        return render(request,'statistics.html',{'al_or':all_orders,'al_co':all_commit,'no_co':not_commit,'d1':desccredit_1,'d2':desccredit_2,'d3':desccredit_3,'d4':desccredit_4,'d5':desccredit_5,'s1':servicecredit_1,'s1':servicecredit_1,'s2':servicecredit_2,'s3':servicecredit_3,'s4':servicecredit_4,'s5':servicecredit_5})
         
         
 def friend_link(request):
@@ -780,58 +964,63 @@ def representations(request):
 def safe_center(request):
     return render(request,'safe_center.html',{})
 
+def introduce(request):
+    return render(request,'zhengzihui.html',{})
+
+def trustedwebsite(request):
+    return render(request,'trustedwebsite.html',{})
 
 #个人注册by cyf
 def g_register(request):
-	errors = []
-	user_name = None
-	user_password = None
-	user_password2 = None
-	user_telephone = None
-	user_email = None
-	falg = False
-	add = []
-	if request.method == 'POST':
-		if not request.POST.get('_username'):
-			errors.append('请输用户名')
-		else:
-			user_name = request.POST.get('_username')
-		if not request.POST.get('_email'):
-			errors.append('请输入邮箱')
-		else:
-			user_email = request.POST.get('_email')
-		if not request.POST.get('password'):
-			errors.append('请输入密码')
-		else:
-			user_password = request.POST.get('password')
-		if not request.POST.get('password2'):
-			errors.append('请重复输入密码')
-		else:
-			user_password2 = request.POST.get('password2')
-		if user_password is not None and user_password2 is not None:
-			if user_password == user_password2:
-				falg = True
-			else:
-				errors.append('两次密码输入不一致')
-		if not request.POST.get('_telephone'):
-			errors.append('请输入电话号码')
-		else:
-			user_telephone = request.POST.get('_telephone')
-		
-		if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
-			'''print(user_name)
-			print(user_password)
-			print(user_password2)
-			print(user_telephone)
-			print(user_email)'''
-			add = tb_user()
-			add.user_name = user_name
-			add.user_password = user_password
-			add.user_telephone = user_telephone
-			add.user_email = user_email
-			add.save()
-			return HttpResponseRedirect('/register2')  
-	return render_to_response('g_register.html',{'errors':errors})  
+    errors = []
+    user_name = None
+    user_password = None
+    user_password2 = None
+    user_telephone = None
+    user_email = None
+    falg = False
+    add = []
+    if request.method == 'POST':
+        if not request.POST.get('_username'):
+            errors.append('请输用户名')
+        else:
+            user_name = request.POST.get('_username')
+        if not request.POST.get('_email'):
+            errors.append('请输入邮箱')
+        else:
+            user_email = request.POST.get('_email')
+        if not request.POST.get('password'):
+            errors.append('请输入密码')
+        else:
+            user_password = request.POST.get('password')
+        if not request.POST.get('password2'):
+            errors.append('请重复输入密码')
+        else:
+            user_password2 = request.POST.get('password2')
+        if user_password is not None and user_password2 is not None:
+            if user_password == user_password2:
+                falg = True
+            else:
+                errors.append('两次密码输入不一致')
+        if not request.POST.get('_telephone'):
+            errors.append('请输入电话号码')
+        else:
+            user_telephone = request.POST.get('_telephone')
+        
+        if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
+            '''print(user_name)
+            print(user_password)
+            print(user_password2)
+            print(user_telephone)
+            print(user_email)'''
+            add = tb_user()
+            add.user_name = user_name
+            add.user_password = user_password
+            add.user_telephone = user_telephone
+            add.user_email = user_email
+            add.save()
+            return HttpResponseRedirect('/register2')  
+    return render_to_response('g_register.html',{'errors':errors})  
     
 #企业注册
 def q_register(request):  
@@ -939,15 +1128,15 @@ def login(request):
         else:  
             password= request.POST.get('password')  
         if user_name is not None and password is not None:
-			try:
-				user = tb_user.objects.get(user_name = user_name)
-			except tb_user.DoesNotExist:
-				errors.append('用户名不存在')
-			if password == user.user_password:
-				return render_to_response('index.html',{'user_name':user_name})
-				#return HttpResponseRedirect('/index')
-			else:
-				errors.append('密码错误')
+            try:
+                user = tb_user.objects.get(user_name = user_name)
+            except tb_user.DoesNotExist:
+                errors.append('用户名不存在')
+            if password == user.user_password:
+                return render_to_response('index.html',{'user_name':user_name})
+                #return HttpResponseRedirect('/index')
+            else:
+                errors.append('密码错误')
     return render_to_response('denglu.html', {'errors': errors})
 
 #找回密码步骤一
@@ -1020,16 +1209,18 @@ def password4(request):
     return render_to_response('denglu.html',{})             
          
 def download(request):
-	return render(request,'download.html',{})
+    return render(request,'download.html',{})
 
 def selectpay(request):
     if request.GET['goodsid']:
  
         service_detail_goods_id = request.GET['goodsid']
-	goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
-	return render(request,'selectpay.html', {'goods':goods})
+    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+    return render(request,'selectpay.html', {'goods':goods})
 
 #logout by cyf
 #def logout(request):
-	#return render_to_response('index.html',{})
+    #return render_to_response('index.html',{})
+
+
 
