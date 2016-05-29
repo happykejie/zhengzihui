@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^hire/$','zhengzihui_app.views.newhire',name='newhire'),
     url(r'^search/$','zhengzihui_app.views.Searchgoods',name='Searchgoods'),
     
+    url(r'^payok/$','zhengzihui_app.views.Payback',name='payok'),
     #zss 二级页面
     url(r'^search_result/$','zhengzihui_app.views.search_result',name='search_result'),
     url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),
@@ -93,6 +94,9 @@ urlpatterns = [
     url(r'^business_cooperation',"zhengzihui_app.views.business_cooperation",name="business_cooperation"),
     #网站联盟
     url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
+    #帐号申述
+    url(r'^representations',"zhengzihui_app.views.representations",name="representations"),
+
 
      #登陆注册
     url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
@@ -104,5 +108,10 @@ urlpatterns = [
     url(r'^password2/$', 'zhengzihui_app.views.password2',name='password2'),
     url(r'^password3/$', 'zhengzihui_app.views.password3',name='password3'),
     url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
+    #app下载
+    url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
+    #支付选择页面
+	url(r'^selectpay/$', 'zhengzihui_app.views.selectpay',name='selectpay'),
+
 
 ]

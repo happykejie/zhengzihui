@@ -102,7 +102,11 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
+<<<<<<< HEAD
      'PASSWORD':'123456',#password of mysql user
+=======
+     'PASSWORD':'ljw5401',#password of mysql user
+>>>>>>> cfb7982030a0cca25f4ed42aad312529735b1f09
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }
@@ -159,47 +163,62 @@ SUIT_CONFIG = {
         'sites': 'icon-leaf',
         'auth': 'icon-lock',
      },
-    # 'MENU_OPEN_FIRST_CHILD': True, # Default True
+    #'MENU_OPEN_FIRST_CHILD': False, # Default True
     # 'MENU_EXCLUDE': ('auth.group',),
      'MENU': (
          'sites',
         #{'app': 'zhengzihui_app', 'label': u'站点内容管理'},  
         {'app': 'auth','label':u'认证系统', 'icon':'icon-lock', 'models': ('user', 'group')},
+        {'label': u'关于用户','models': ('zhengzihui_app.tb_user', 'zhengzihui_app.tb_user_expand')},
+        {'label': u'关于新闻和公告','models': ('zhengzihui_app.tb_pic', 'zhengzihui_app.tb_album','zhengzihui_app.tb_area','zhengzihui_app.tb_article','zhengzihui_app.tb_accessory')},
+        {'label': u'关于服务信息','models': ('zhengzihui_app.tb_goods', 'zhengzihui_app.tb_goods_class','zhengzihui_app.tb_goods_click','label','zhengzihui_app.tb_goods_evaluation','zhengzihui_app.tb_service_provider')},
+        {'label': u'附件相关','models': ('zhengzihui_app.tb_pic', 'zhengzihui_app.tb_album','zhengzihui_app.tb_area','zhengzihui_app.tb_article','zhengzihui_app.tb_accessory')},
+        {'label': u'关于站内消息','models': ('zhengzihui_app.tb_Message', 'zhengzihui_app.tb_MessageText','zhengzihui_app.tb_SysMessage')},
+        {'label': u'关于订单','models': ('zhengzihui_app.tb_order', 'zhengzihui_app.tb_Artificial_Representations')},
+        {'label': u'关于项目','models': ('zhengzihui_app.tb_item', 'zhengzihui_app.tb_item_class','zhengzihui_app.tb_item_click','zhengzihui_app.tb_item_pa')},
         #{'model':'zhengzihui_app.tb_user','label':u'用户','icon':'icon-user'}, 
-        {'app':'zhengzihui_app','label': u'站点内容管理', 'models': (
+        {'app':'zhengzihui_app','label': u'所有站点内容管理', 'models': (
             
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
+
             {'model': 'zhengzihui_app.tb_user', 'label': u'用户'},#中文化左侧管理表的代码
             {'model': 'zhengzihui_app.tb_user_expand','label': u'用户扩展信息'},
-            {'model': 'zhengzihui_app.tb_service_provider','label': u'服务提供商'},
+            
+
+            {'model': 'zhengzihui_app.tb_pic','label': u'图片表'},
+            {'model': 'zhengzihui_app.tb_album','label': u'相册表'},
+            {'model': 'zhengzihui_app.tb_area','label': u'地区表'},
+            {'model': 'zhengzihui_app.tb_article','label': u'文章表'},
+            {'model': 'zhengzihui_app.tb_accessory','label': u'其他附件表'},
+            
+            
+            {'model': 'zhengzihui_app.Tb_Apage','label': u'单页表'},
+            {'model': 'zhengzihui_app.Tb_Apage_Class','label': u'单页分类表'},
             {'model': 'zhengzihui_app.tb_News_Class','label': u'新闻分类'},
             {'model': 'zhengzihui_app.tb_News','label': u'新闻'},
             {'model': 'zhengzihui_app.Tb_Notice','label': u'公告'},
-            '''
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            {'model': 'zhengzihui_app.tb_item','label': u'项目'},
-            '''#等待完成中
+            {'model': 'zhengzihui_app.Tb_Notice_Class','label': u'公告分类表'},
+            
+            {'model': 'zhengzihui_app.tb_goods','label': u'服务信息表'},
+            {'model': 'zhengzihui_app.tb_goods_class','label': u'服务分类表'},
+            {'model': 'zhengzihui_app.tb_goods_click','label': u'服务点击表'},
+            {'model': 'zhengzihui_app.tb_goods_evaluation','label': u'服务评价表'},
+            {'model': 'zhengzihui_app.tb_service_provider','label': u'服务提供商'},
+            
+         
+            
+            {'model': 'zhengzihui_app.tb_Message','label': u'站内短信表'},
+            {'model': 'zhengzihui_app.tb_MessageText','label': u'站内短信内容表'},
+            {'model': 'zhengzihui_app.tb_SysMessage','label': u'系统信息表'},
+            
+            {'model': 'zhengzihui_app.tb_item','label': u'项目详情表'},
+            {'model': 'zhengzihui_app.tb_item_class','label': u'项目分类表'},
+            {'model': 'zhengzihui_app.tb_item_click','label': u'项目点击表'},
+            {'model': 'zhengzihui_app.tb_item_pa','label': u'项目发布机构表'},
+            
+            {'model': 'zhengzihui_app.tb_order','label': u'订单表'},
+            {'model': 'zhengzihui_app.tb_Artificial_Representations','label': u'人工申诉表'},
+            
+            #等待完成中
         )},
     #     {'label': 'Settings', 'icon':'icon-cog', 'models': ('auth.user', 'auth.group')},
     #     {'label': 'Support', 'icon':'icon-question-sign', 'url': '/support/'},
