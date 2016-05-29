@@ -63,7 +63,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -105,7 +105,7 @@ DATABASES = {
 <<<<<<< HEAD
      'PASSWORD':'123456',#password of mysql user
 =======
-     'PASSWORD':'ljw5401',#password of mysql user
+     'PASSWORD':'123654',#password of mysql user
 >>>>>>> cfb7982030a0cca25f4ed42aad312529735b1f09
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql

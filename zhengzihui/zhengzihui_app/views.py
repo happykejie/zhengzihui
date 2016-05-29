@@ -781,7 +781,7 @@ def safe_center(request):
     return render(request,'safe_center.html',{})
 
 
-#个人注册
+#个人注册by cyf
 def g_register(request):
 	errors = []
 	user_name = None
@@ -923,7 +923,7 @@ def register2(request):
 def register3(request):    
     return render_to_response('denglu.html')  
 
-#登陆
+#登陆 by cyf
 def login(request):
     errors= []  
     user_name=None  
@@ -944,7 +944,8 @@ def login(request):
 			except tb_user.DoesNotExist:
 				errors.append('用户名不存在')
 			if password == user.user_password:
-				return HttpResponseRedirect('/index')
+				return render_to_response('index.html',{'user_name':user_name})
+				#return HttpResponseRedirect('/index')
 			else:
 				errors.append('密码错误')
     return render_to_response('denglu.html', {'errors': errors})
@@ -1028,5 +1029,7 @@ def selectpay(request):
 	goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
 	return render(request,'selectpay.html', {'goods':goods})
 
-
+#logout by cyf
+#def logout(request):
+	#return render_to_response('index.html',{})
 
