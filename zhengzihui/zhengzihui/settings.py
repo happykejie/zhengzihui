@@ -63,7 +63,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -102,7 +102,7 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-     'PASSWORD':'5102398',#password of mysql user
+     'PASSWORD':'123456',#password of mysql user
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }

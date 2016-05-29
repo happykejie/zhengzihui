@@ -739,38 +739,56 @@ def union_website(request):
 	
 
 #个人注册
-def g_register(request):  
-    errors= []  
-    telephone=None  
-    password=None  
-    password2=None  
-    CompareFlag=False  
-  
-    if request.method == 'POST':  
-        if not request.POST.get('telephone'):  
-            errors.append('请输入手机号码')  
-        else:  
-            telephone = request.POST.get('telephone')  
-        if not request.POST.get('password'):  
-            errors.append('请输入密码')  
-        else:  
-            password= request.POST.get('password')  
-        if not request.POST.get('password2'):  
-            errors.append('请确认密码')  
-        else:  
-            password2= request.POST.get('password2')  
-  
-        if password is not None and password2 is not None:  
-            if password == password2:  
-                CompareFlag = True  
-            else:  
-                errors.append('两次输入密码不一致，请重新输入 ')   
-        if telephone is not None and password is not None and password2 is not None and CompareFlag :  
-            user=User.objects.create_user(telephone,password)  
-            user.is_active=True  
-            user.save  
-            return HttpResponseRedirect('register2.html')  
-    return render_to_response('g_register.html', {'errors': errors})  
+def g_register(request):
+	errors = []
+	user_name = None
+	user_password = None
+	user_password2 = None
+	user_telephone = None
+	user_email = None
+	falg = False
+	add = []
+	if request.method == 'POST':
+		if not request.POST.get('_username'):
+			errors.append('请输用户名')
+		else:
+			user_name = request.POST.get('_username')
+		if not request.POST.get('_email'):
+			errors.append('请输入邮箱')
+		else:
+			user_email = request.POST.get('_email')
+		if not request.POST.get('password'):
+			errors.append('请输入密码')
+		else:
+			user_password = request.POST.get('password')
+		if not request.POST.get('password2'):
+			errors.append('请重复输入密码')
+		else:
+			user_password2 = request.POST.get('password2')
+		if user_password is not None and user_password2 is not None:
+			if user_password == user_password2:
+				falg = True
+			else:
+				errors.append('两次密码输入不一致')
+		if not request.POST.get('_telephone'):
+			errors.append('请输入电话号码')
+		else:
+			user_telephone = request.POST.get('_telephone')
+		
+		if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
+			'''print(user_name)
+			print(user_password)
+			print(user_password2)
+			print(user_telephone)
+			print(user_email)'''
+			add = tb_user()
+			add.user_name = user_name
+			add.user_password = user_password
+			add.user_telephone = user_telephone
+			add.user_email = user_email
+			add.save()
+			return HttpResponseRedirect('/register2')  
+	return render_to_response('g_register.html',{'errors':errors})  
     
 #企业注册
 def q_register(request):  
@@ -865,27 +883,27 @@ def register3(request):
 #登陆
 def login(request):
     errors= []  
-    account=None  
-    password=None  
+    user_name=None  
+    password=None
+    user = tb_user()
     if request.method == 'POST' :  
-        if not request.POST.get('account'):  
+        if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
         else:  
-            account = request.POST.get('account')  
+            user_name = request.POST.get('_username')  
         if not request.POST.get('password'):  
             errors.append('请输入登陆密码')  
         else:  
             password= request.POST.get('password')  
-        if account is not None and password is not None :  
-             user = authenticate(username=account,password=password)  
-             if user is not None:  
-                 if user.is_active:  
-                     login(request,user)  
-                     return HttpResponseRedirect('index.html')  
-                 else:  
-                     errors.append('用户名不存在')  
-             else :  
-                  errors.append('用户名无效，请重新输入')  
+        if user_name is not None and password is not None:
+			try:
+				user = tb_user.objects.get(user_name = user_name)
+			except tb_user.DoesNotExist:
+				errors.append('用户名不存在')
+			if password == user.user_password:
+				return HttpResponseRedirect('/index')
+			else:
+				errors.append('密码错误')
     return render_to_response('denglu.html', {'errors': errors})
 
 #找回密码步骤一

@@ -3,7 +3,7 @@
 <head lang="en">
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>个人 注册</title>
+    <title>政资汇注册</title>
 	<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
 	<script type="application/javascript" src="../static/js/jquery-1.11.1.min.js"></script>
 	<script type="application/javascript" src="../static/js/bootstrap.min.js"></script>
@@ -22,11 +22,7 @@
 			</div>
 		</div>
 		<div class="center">
-			<div class="anniu">
-				 <button type="button" class="btn btn-default btn-lg">&nbsp;&nbsp;个人用户&nbsp;&nbsp;</button>
-				 <a href="{% url 'q_register' %}" ><button type="button" class="btn btn-default btn-lg">&nbsp;&nbsp;企业用户&nbsp;&nbsp;</button></a>
-		         <br>
-		    </div>
+			
 		    <div style="text-align:center" class="jindu">
 		         <img  src="../static/images/denglu/zhuce1.png" />
 		         <br><br><br>
@@ -34,83 +30,51 @@
           
 			<div class="table1">
 		        <table cellpadding="0" cellspacing="0" style="width:620px; border: none;">
-				  <form action="{% url 'modify_user' %}" method="get" id="signupForm">
-				  {% csrf_token %}
+				  <form action="" method="post">
+				  
+				  <tr >
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_username">用户名</label></td>
+						<td width="220px"><input type='_username' class="form-control" id="_username"  name='_username'   placeholder="请输入用户名" style="width:320px;"></td>
+					</tr>
 					<tr >
-						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="phonenumber">手机号码</label></td>
-						<td width="220px"><input type="text" class="form-control" id="phonenumber"  name="phonenumber"   placeholder="请输入手机号码" style="width:320px;"></td>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_email">登陆邮箱</label></td>
+						<td width="220px"><input type='_email' class="form-control" id="_email"  name='_email'   placeholder="请输入邮箱" style="width:320px;"></td>
 					</tr>
 					<tr>
 						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="password"> 登陆密码</label></td>
-						<td width="220px"><input type="text" class="form-control"  id="Password" name="password"  placeholder="请输入6-18位密码" style="width:320px;"></td>
+						<td width="220px"><input type='password' class="form-control"  id="password" name='password'  placeholder="请输入6-18位密码" style="width:320px;"></td>
 						
 					</tr>
 					<tr>
-						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="confirm_password">  确认密码</label></td>
-						<td width="220px"><input type="text" class="form-control"  id="confirm_password" name="confirm_password"  placeholder="请输入确认密码" style="width:320px;"></td>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="password2"> 确认登陆密码</label></td>
+						<td width="220px"><input type='password' class="form-control"  id="password2" name='password2'  placeholder="请确认密码" style="width:320px;"></td>
 						
 					</tr>
 					<tr>
-						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> 图形验证码</td>
-						<td width="220px"><input type="text" class="form-control" placeholder="请输入验证码" style="width:120px;"></td>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_telephone">  手机号</label></td>
+						<td width="220px"><input type='_telephone' class="form-control"  id="_telephone" name='_telephone'  placeholder="请输入手机号" style="width:320px;"></td>
+						
 					</tr>
+				<div class="checkbox">
+				 <button type='submit' style="width:250px;height:35px;" class="btn btn-primary">同意服务条款并注册</button>
+                  </div>
 					</form>
 		        </table>
+		         {% if errors %}
+        <li>
+
+            {% for error in errors %}
+             <p style="color: red;">
+                出错啦: {{error}} .
+             </p>
+              {% endfor %}
+        </li>
+    {% endif %}
 			</div>
+  
+</div>
 
-		    <div class="checkbox">
-				<label>
-				   <input type="checkbox" align="center"> 我已阅读并同意
-				</label><br><br>
-				 <a href="{% url 'register2' %}" ><button type="submit" style="width:250px;height:35px;" class="btn btn-primary">同意服务条款并注册</button></a>
-		    </div>
-		
-        </div>
-		<div class="footer">  
-		  <p class="text-center">Copyright@2015-2025  成都融亿达科技有限公司版权所有</p>
-		</div>
-		
-		
-<script src="../static/js/jquery.validate.js"></script>
-<script type="text/javascript">
-<script>
 
-$().ready(function() {
-  $("#signupForm").validate({
-    rules: {
-        phonenumber: {
-        required: true,
-      },
-      password: {
-        required: true,
-        minlength: 5
-      },
-      confirm_password: {
-        required: true,
-        minlength: 5,
-        equalTo: "#password"
-      },
-    },
-    messages: {
-
-        phonenumber: {
-        required: "请输入电话号码",
-      },
-      password: {
-        required: "请输入密码",
-        minlength: "密码长度不能小于 5 个字母"
-      },
-      confirm_password: {
-        required: "请输入密码",
-        minlength: "密码长度不能小于 5 个字母",
-        equalTo: "两次密码输入不一致"
-      },
-    }
-});
-});
-</script>
-</script>
-		
 	</body>
 </html>
 
