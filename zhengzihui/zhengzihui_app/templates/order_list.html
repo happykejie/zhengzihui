@@ -171,7 +171,7 @@
                 </div>
                 <div class="opration">
                     <a id="enter" title="{% url 'order_enter' %}?id={{ order.order_id }}" class="btn btn-default btn-block opration-a">确认完成</a>
-                    <a id="give_up" title="{% url 'order_giveup' %}?id={{ order.order_id }}" class="btn btn-default btn-lg btn-block opration-a">申请关闭</a>
+                    <a id="give_up" title="{% url 'order_giveup' %}?id={{ order.order_id }}" class="btn btn-default btn-block opration-a">申请关闭</a>
                     <a id="pay" href="{% url 'pay' %}?goodsidtopay={{ order.goods_id }}" class="btn btn-default btn-block ">去支付</a>
                     <a id="delete" title="{% url 'order_delete' %}?id={{ order.order_id }}" class="btn btn-default btn-block opration-a">删除订单</a>
                     <a id="commit" href="{% url 'order_commit' %}?id={{ order.order_id }}" class="btn btn-default btn-block ">去评论</a>

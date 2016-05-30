@@ -443,12 +443,12 @@ def pay(request):
 	"""
 	_goods_id = request.GET['goodsidtopay']
 	order_id=len(tb_order.objects.all())+1
-	order_no=order_id
-	pay_no=order_id
+	#order_no=order_id     order_no这个字段我替换成了goods_id
 	request.session['unpayedid']=order_id
 	#print length
 	#_goods_id = '0001'
 	goods = tb_goods.objects.get(goods_id = _goods_id)
+	goods_name = goods.goods_name
 	_price = goods.goods_price
 	_discount = goods.goods_price_discouint
 	_total_price = _price * _discount
@@ -459,8 +459,7 @@ def pay(request):
 	#下面都是写死的
 	buyer_id=3
 	add_time=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
-
+	pay_no = 0
 	order_state=1
 	payment_code=1
 	payment_time=add_time
@@ -476,7 +475,7 @@ def pay(request):
 	express_id=0
 	express_no=0
 	express_state=1
-    	u=tb_order(express_id=express_id,order_id=order_id,order_no=order_no,pay_no=pay_no,item_id=item_id,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
+	u=tb_order(express_id=express_id,order_id=order_id,goods_id=_goods_id,pay_no=pay_no,item_id=item_id,item_name=goods_name,sp_id=sp_id,buyer_id=buyer_id,add_time=add_time,payment_time=payment_time,final_time=final_time,good_amount=good_amount,refund_amount=refund_amount,delay_time=delay_time)
 	u.save()
 
     #total_price=0.01 这里是测试字段，根据实际属性变动
@@ -501,12 +500,12 @@ def declare(request):
 #zss
 #用户中心
 def user_center(request):
-    request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
+    #request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
     user = []
     a_click_items = []
     a_recommend_items = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         user = tb_user.objects.get(user_id=user_id)
 
     click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
@@ -538,7 +537,7 @@ def my_info(request):
     company = []
     usertype = False
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         user = tb_user.objects.get(user_id=user_id)
         if user.user_type == 1:
             company = tb_user_expand.objects.get(user_id=user_id)
@@ -550,7 +549,7 @@ def modify_user(request):
     user = []
     user_expand = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         user = tb_user.objects.get(user_id=user_id)
     user.user_name = request.POST['name']
     user.user_email = request.POST['email']
@@ -575,17 +574,17 @@ def modify_user(request):
     #安全中心
 def safe_center(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
 
     #支付绑定
 def pay_combine(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
 
     #等级与成长
 def grade_grow(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
 
 
 #订单管理 zss
@@ -594,7 +593,7 @@ def all_orders(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
 
     for order in order_list:
@@ -634,7 +633,7 @@ def not_pay(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=1).order_by('-add_time')
 
     for order in order_list:
@@ -665,7 +664,7 @@ def payed(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=2).order_by('-add_time')
 
     for order in order_list:
@@ -697,7 +696,7 @@ def delivered(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
@@ -729,7 +728,7 @@ def checked(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=4).order_by('-add_time')
 
     for order in order_list:
@@ -760,7 +759,7 @@ def delete(request):
     order_list = []
     a_order_list = []
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=0).order_by('-add_time')
 
     for order in order_list:
@@ -790,7 +789,7 @@ def delete(request):
     #确认订单
 def order_enter(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -803,7 +802,7 @@ def order_enter(request):
     #申请关闭
 def order_giveup(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -817,7 +816,7 @@ def order_giveup(request):
     #删除订单
 def order_delete(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -829,7 +828,7 @@ def order_delete(request):
     #去评价
 def order_commit(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -849,7 +848,7 @@ def order_commit(request):
     #添加评价
 def order_add_commit(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         order_id = request.POST['order_id']
         order = tb_order.objects.get(order_id=order_id)
         goods_id = order.goods_id
@@ -875,7 +874,7 @@ def order_add_commit(request):
     #我的评价
 def my_evaluate(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         a_evaluations = []
         evaluations = tb_goods_evaluation.objects.filter(user_id=user_id).order_by('-create_time')
         for evaluation in evaluations:
@@ -904,7 +903,7 @@ def my_evaluate(request):
     #评价统计
 def statistics(request):
     if request.session['user_id']:
-        user_id = request.session['user_id']
+        user_id = int(request.session['user_id'])
         all_orders = len(tb_order.objects.filter(buyer_id=user_id))
         all_commit = len(tb_goods_evaluation.objects.filter(user_id=user_id))
         not_commit = all_orders - all_commit
@@ -1133,6 +1132,7 @@ def login(request):
             except tb_user.DoesNotExist:
                 errors.append('用户名不存在')
             if password == user.user_password:
+                request.session['user_id'] = user.user_id #记录用户的id
                 return render_to_response('index.html',{'user_name':user_name})
                 #return HttpResponseRedirect('/index')
             else:
