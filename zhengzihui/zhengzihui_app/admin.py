@@ -164,17 +164,17 @@ class tb_goods_class_Admin(admin.ModelAdmin):
 
 class tb_goods_evaluation_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加商品评价',{'fields':['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']}),
+            ('添加商品评价',{'fields':['goev_id','order_id','goods_id','goods_name','user_id','user_name','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']}),
     
     ]
-    list_display =['goev_id','order_id','goods_id','goods_name','user_id','user_name','create_time','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']
+    list_display =['goev_id','order_id','goods_id','goods_name','user_id','user_name','goev_desccredit','goev_servicecredit','goev_content','is_anonymous','goev_show','goev_status']
 
 class tb_order_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加商品',{'fields':['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']}),
+            ('添加商品',{'fields':['order_id','goods_id','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']}),
     
     ]
-    list_display =['order_id','order_no','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']
+    list_display =['order_id','goods_id','pay_no','item_id','item_name','sp_id','sp_name','buyer_id','buyer_name','buyer_email','add_time','payment_code','payment_time','final_time','good_amount','order_amount','refund_amount','delay_time','order_from','express_id','express_no','eval_state','order_state','refund_state','lock_state','express_state']
 
 
 

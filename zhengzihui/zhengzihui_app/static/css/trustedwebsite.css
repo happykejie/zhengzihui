@@ -1,0 +1,65 @@
+@media all and (max-width:1000px){
+    .bigcontainer{
+        width:1000px;
+    }
+}
+body{
+    font-family:"Microsoft YaHei UI";
+    font-weight:bold;
+    margin:0px;
+    padding:0px;
+}
+.bigcontainer{
+    position:relative;/*祖先*/
+    background-color: white;
+    height:800px;
+    padding:20px;
+}
+.team-info{
+    position:absolute;/*父级元素*/
+    background-color: #F5F5F5;
+    color:gray;
+    width:350px;
+    float:left;
+    padding:20px;
+    font-size:15px;
+    line-height:1.5;
+}
+.content{
+    background-color: #BE342B;
+    margin-left: 410px;
+    margin-right: 270px;
+    height:auto;
+    color:white;
+}
+.content img{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width:100%;
+    height:auto;
+}
+.content > ul >li > a {
+    color:white;
+}
+.list-vertical{
+    background-color: #F5F5F5;
+    position:absolute;
+    right:20px;
+    top:20px;
+    width:250px;
+    height:auto;
+    text-align: center;
+}
+.list-vertical img{
+    display: block;
+    width:230px;
+    height:120px;
+    margin-left:auto;
+    margin-right:auto;
+    padding:10px 0px;
+}
+.list-vertical > p{
+    color:gray;
+    margin:10px 0px;
+}

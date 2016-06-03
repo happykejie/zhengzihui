@@ -10,7 +10,16 @@
     <link rel="stylesheet" href="../static/css/denglu.css"/>
 </head>
 	<body>
+{% if errors %}
+        <li>
 
+            {% for error in errors %}
+             <p style="color: red;">
+                出错啦: {{error}} below.
+             </p>
+              {% endfor %}
+        </li>
+    {% endif %}
 
 		<table width="100% align="center" border="0" cellpadding="0" cellspacing="0">
 		 	<tr align="center" bgcolor="white" height="100">
@@ -21,18 +30,18 @@
 		 	<tr bgcolor="#F5F5F5">
 			<td width="100%">
 				<table height="500" border="0" width="65%" align="left" bgcolor="#F5F5F5">
-					<tr><td align="center"><img  src="../static/images/denglu/guanggao.jpg" /></td></tr>
+					<tr><td align="center"><img  src="../static/images/denglu/guanggao.JPG" /></td></tr>
 				</table>
 			
 				<table height="500" border="0"  width="35%" bgcolor="#F5F5F5">
 					<tr><td >
 						<h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;欢迎登陆</h2>
 						<br>
-						   <form id="user-form" action="{% url 'modify_user' %}" method="post">	
+						   <form id="user-form" action="" method="post">	
 						           {% csrf_token %}
 							  <div class="input-group">
 								 <span class="input-group-addon">用户名</span>
-								 <input type="text" class="form-control"  id="name" name="username"  placeholder="手机号/邮箱" style="width:220px;">
+								 <input type="text" class="form-control"  id="name" name="_username"  placeholder="手机号/邮箱" style="width:220px;">
 							  </div>
 							  <br>
 							  <div class="input-group">
@@ -47,10 +56,10 @@
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a href="{%url 'password1' %}">忘记密码?</a>
 							</div>
-							<a href="{% url 'index' %}" ><button type="submit" style="width:300px;height:50px;" class="btn btn-primary"><h4><big>登&nbsp;&nbsp;&nbsp;陆</big></h4></button></a>
+							<button type="submit" style="width:300px;height:50px;" class="btn btn-primary"><h4><big>登&nbsp;&nbsp;&nbsp;陆</big></h4></button>
 							<br>
 							<br>
-							<p><a href="{% url 'g_register' %}">立即注册</a>,享受积分换礼、返现等会员优惠！</p>
+							<p><a href="{% url 'g_register' %}">立即注册</a></p>
 							<br>
 							<p>使用合作网站帐号登录：</p>
 							<button type="button" class="btn btn-default">&nbsp;&nbsp;QQ&nbsp;&nbsp;</button>
@@ -75,34 +84,13 @@
 				<span class="f">
 					<a href="">法津声明</a> 
 				</span>
-				<p class="text-center">Copyright@2015-2025  成都融亿达科技有限公司版权所有</p>	
+				
 			</div>
 		</td></tr>
 		</table>
 		
 		
 <script src="../static/js/jquery.validate.js"></script>
-<script type="text/javascript">
-    $().ready(function(){
-        $("#user-form").validate({
-            rules:{
-                username: {
-                    required:true
-                },
-                password:{
-                    required:true
-                }
-            },
-            messages:{
-                username: {
-                    required: "请输入用户名"
-                },
-                password:{
-                    required: "请输入密码"
-                }
-            }
-        });
-    });
-</script>
+
 	</body>
 </html>

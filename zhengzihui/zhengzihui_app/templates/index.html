@@ -72,11 +72,11 @@
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
 		<div class="navbar-header" id="section-0">
-			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{user_name}} 欢迎来到政资汇！</a>
 		</div>
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			<li class="active"><a href="#">退出</a></li>
+			<li class="active"><a href="{% url 'index' %}">退出</a></li>
 			<li><a href="{% url 'login' %}">登录</a></li>
 			<li><a href="{% url 'g_register' %}">注册</a></li>
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
@@ -885,13 +885,13 @@ function show3F(obj){
 <td width="200px"><a href="{% url 'download' %}"><B><font color="black">政资汇app</font></B></a></td>
 </tr>
 <tr>
-<td><a href="#"><font color="black">政资汇简介</font></a></td>
+<td><a href="{% url 'introduce' %}" target="_blank"><font color="black">政资汇简介</font></a></td>
 <td><a href="{% url 'business_cooperation' %}"><font color="black">商务合作</font></a></td>
 <td><a href="{% url 'contact_us' %}"><font color="black">联系我们</font></a></td>
 <td><a href="#"><font color="black">政资宝</font></a></td>
 </tr>
 <tr>
-<td><a href="#"><font color="black">可信网站</font></a></td>
+<td><a href="{% url 'trustedwebsite' %}" target="_blank"><font color="black">可信网站</font></a></td>
 <td><a href="{% url 'union_website' %}"><font color="black">网站联盟</font></a></td>
 <td><a href="{% url 'artificial_apeal' %}"><font color="black">投诉建议</font></a></td>
 </tr>
