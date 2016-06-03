@@ -5,13 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
     <title>政资汇-政府资助信息一站式服务平台</title>
-    <script src="/static/jQuery-2.14/jquery.js" type="text/javascript"></script>
-    <link href="/static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/css/search_result.css" rel="stylesheet" type="text/css"/>
-    <script src="/static/js/search_result.js" type="text/javascript"></script>
-    <script src="/static/js/Popt.js"></script>
-    <script src="/static/js/cityJson.js"></script>
-    <script src="/static/js/citySet.js"></script>
+    <script src="../static/jQuery-2.14/jquery.js" type="text/javascript"></script>
+    <link href="../static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../static/css/search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="../static/js/search_result.js" type="text/javascript"></script>
     <script>
 	
     $.ajaxSetup({
@@ -22,137 +19,61 @@
 	</script>
 </head>
 <body>
-
-<!--导航部分-->
 <div class="container">
-<style type="text/css"><!--附加导航样式-->
-    /* Custom Styles */
-    ul.nav-tabs{
-        z-index:1;
-        width: 140px;
-        margin-top: 20px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-    }
-    ul.nav-tabs li{
-        margin: 0;
-        border-top: 1px solid #ddd;
-    }
-    ul.nav-tabs li:first-child{
-        border-top: none;
-    }
-    ul.nav-tabs li a{
-        margin: 0;
-        padding: 8px 16px;
-        border-radius: 0;
-    }
-    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
-        color: #fff;
-        background: #0088cc;
-        border: 1px solid #0088cc;
-    }
-    ul.nav-tabs li:first-child a{
-        border-radius: 4px 4px 0 0;
-    }
-    ul.nav-tabs li:last-child a{
-        border-radius: 0 0 4px 4px;
-    }
-    ul.nav-tabs.affix{
-        top: 30px; /* Set the top position of pinned element */
-    }
-    
-    
-    
-._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative;background-color: white; }
-._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
-._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
-._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
-.citySel { background-color: #56b4f8; color: #fff !important; }
-._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
-._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
-._citys1 a:hover { color: #fff; background-color: #56b4f8; }
-.AreaS { background-color: #56b4f8 !important; color: #fff !important; }
-	
-
-
-
-
-
-    .image{height:250px;width:200px;background: #ffffff}
-</style>
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
-        <div class="navbar-header">
-             <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
-        </div>
-        <div style="float:right">
-            <ul class="nav navbar-nav">
-            <li class="active"><a href="#">退出</a></li>
-            <li><a href="#">登录</a></li>
-            <li><a href="#">注册</a></li>
-            <li><a href="{% url 'user_center'%}">我的政资汇</a></li>
-            <li><a href="#">我的订单</a></li>
-            <li><a href="#">手机政资汇</a></li>
-            <li><a href="#">申请加盟</a></li>
-            <li><a href="#">人工申诉</a></li>
-            <li><a href="#">网站导航</a></li>
-         </ul>
-        </div>
-    </nav>  
-        <!--div class="jumbotron"> </div -->
+		<div class="navbar-header">
+			 <a class="navbar-brand" href="#">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="#">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>	
+		<!--div class="jumbotron"> </div -->
 <!--网站图标+搜索栏-->
   <div class="row">
     <div class="col-sm-4">
-      <center><img src="/static/images/logo.jpg"></img></center>
+      <center><img src="../static/images/logo.jpg"></img></center>
     </div>
-    
+	
     <div class="col-sm-8">
-        	<div class="row-fluid">
+		<div class="row-fluid">
 			<div id="chosecity" >
 				<form action="">
-					<input type="text" id="city" value="切换城市"/>
-<script type="text/javascript">
-$("#city").click(function (e) {
-	SelCity(this,e);
-});
-</script>
+					<select name="切换城市" style="height:30px;width:100px">
+						<option value="chengdu" selected>成都</option>
+						<option value="shanghai">上海</option>
+						<option value="beijing">北京</option>
+						<option value="guangzhou">广州</option>
+					</select>
 				</form>
 			</div>
 		</div>
-        <div class="search">
-            <form action="/search" method="GET" class="search">
-                    <input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
-                    <button type="submit" class="btn btn-primary btn-lg" style="float:left;width:15%">搜索</button>
-            </form>
-        </div>
+		<div class="search">
+			<form action="/search" method="GET" class="search">
+					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:15%">搜索</button>
+			</form>
+		</div>
       
   </div>
 </div>
-<br>
-<br>
-<!--导航栏-->
-<!--div class="jumbotron" --> 
-    <script>
-            function show(object){
-                id=object.id;
-                div="div"+id;
-                document.getElementById(div).style.display="block";
-            }
-            function hide(object){
-                id=object.id;
-                div="div"+id;
-                document.getElementById(div).style.display="none";
-            }
-        
-    </script>
 
 
-
-<!--内容部分-->
-
-    <div class="content">
-        <div class="path">
+<div class="row">
+<div class="col-sm-10">
+    
+    <div class="path">
         <span>
             您所在的位置：
         </span>
@@ -216,8 +137,7 @@ $("#city").click(function (e) {
                 <li><a href="javascript:void(0);">安监</a></li>
             </ul>
                 <div class="multiple-btn">
-                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
-                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:;" target="_blank" ><span>确定</span></a></span>
                     <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
                 </div>
             </div>
@@ -240,7 +160,6 @@ $("#city").click(function (e) {
                     <li><a href="javascript:void(0);">县级财政资金</a></li>
             </ul>
                 <div class="multiple-btn">
-                   
                     <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
                     <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
                 </div>
@@ -284,16 +203,38 @@ $("#city").click(function (e) {
 			</p>
 		</div>
 		{% endif %}
+	<div class="path" style="font-size:20px;">
+        <span>
+            详情：
+        </span>
+
+        <span>
+            <a href="#">
+                国家星火假计划
+            </a>
+        </span>
+    </div>
+	<div>
+<button type="button" class="btn btn-warning">进行中</button>
+<button type="button" class="btn btn-success">我的关注</button>
+
+	</div>	
+		<div class="search" style="margin-top:20px;">
+			<form action="/search" method="GET" class="search">
+			<button type="submit" style="float:right;width:4%">搜索</button>
+					<input  type="text" id="inputitem" name="inputitem" style="float:right;weight:5%;">
+					
+			</form>
+		</div>
         <div class="sort">
             <span>
                 <a href="#">
-                <!--<input type="hidden" name="bumen" value="{{ selected.bumen }}">-->
                     综合
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="/search_result_sort_starttime/">
                     挂网时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -305,103 +246,115 @@ $("#city").click(function (e) {
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="/search_result_sort_deadtime/">
                     截止时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
         </div>
 		
+		
+		
         <div id="list">
-            {% for item in items %}
+            {% for goods in tb_goods_list %}
             <div class="list-content">
-                <a href="/project_detail/?id={{ item.item_id }}">
-                    <img src="{{ item.pic_url }}" />
-                </a>
-                <span>
-                    {{ item.item_key }}
-                </span>
-                <div class="text">
-                    <p class="title">
-                        <label>{{ item.item_about }}</label>
-                        <a href="/project_detail/?id={{ item.item_id }}">{{ item.item_name }}</a>
-                    </p>
+			<br><br><br>
+                <div class="row">                  
+                        <div class="col-sm-4"><a href="/item_details/?id={{ goods.goods_name }}">{{ goods.goods_name }}</a>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <span>{{ item.pa }}</span>
+                        <span>{{ goods.sp_id }}</span>
                     </p>
                     <p class="benefit">
                         <span class="benefit-text">
                             <span class="glyphicon glyphicon-usd"></span>
-                            <span>额度</span>
+                            <span>服务报价</span>
                         </span>
                         <span class="benefit-num">
-                            {{ item.item_ga }}
+                           {{ goods_market_price }} 
                         </span>
                     </p>
+					</div>
+					<div class="col-sm-6">
                     <div class="progress">
                         <div class="progress-bar"></div>
-                        <div class="info" style="left:{{ item.item_consume_time }}%;">{{ item.item_consume_time }}%</div>
+                        <div class="info" style="left:{{ goods.successrate }};">{{ goods.goods_successrate }}</div>
                     </div>
                     <diV class="date">
-                        <span class="start">
-                            {{ item.item_publish }}
-                        </span>
-                         <span class="stop">
-                           {{ item.item_deadtime }}
-                        </span>
+                        成功率
                     </diV>
-
-                </div>
-                <div class="watch">
-                    <p>
-                        已经有<span class="sum">{{ item.order_num }}</span>人参与
-                    </p>
-                    <a href="/project_detail/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
-                </div>
-                <div class="line"></div>
+					</div>
+                <div class="col-sm-2">
+                    <a href="/service_details?goodsid={{goods.goods_id}}" ><button class="btn btn-warning">查看详情</button></a>
+				</div>
+				</div>
             </div>
             {% endfor %}
         </div>    
         <div id="load">
             <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
-    </div>
-
-    <!--底部的广告位2号-->
-<div class="row-fluid" align="center">
-    <img class="img-responsive" src = "../static/images/测试静态页面用img/diguanggao.png">
+    
 </div>
-<div align="center" >
-<table width="1000px" text-align="center">
-<tr>
-<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">政资汇app</font></B></a></td>
-</tr>
-<tr>
-<td><a href="#"><font color="black">政资汇简介</font></a></td>
-<td><a href="#"><font color="black">商务合作</font></a></td>
-<td><a href="#"><font color="black">联系我们</font></a></td>
-<td><a href="#"><font color="black">政资宝</font></a></td>
-</tr>
-<tr>
-<td><a href="#"><font color="black">可信网站</font></a></td>
-<td><a href="#"><font color="black">网站联盟</font></a></td>
-<td><a href="#"><font color="black">投诉建议</font></a></td>
-</tr>
-<tr>
-<td><a href="#"><font color="black">法律声明</font></a></td>
-<td><a href="#"><font color="black">友情链接</font></a></td>
-<td><a href="#"><font color="black">诚聘英才</font></a></td>
-</tr>
-<tr>
-<td><a href="#"><font color="black">网站地图</font></a></td>
-<td><a href="#"><font color="black">业务资质</font></a></td>
-</tr>
-</table>
+
+
+
+<div class="col-sm-2">
+
+<form class="form-horizontal" role="form">
+			<br><br><br>
+		<p style="font-size:20px;color:Orange;">	免费顾问服务</p>
+         <input type="text" class="form-control" id="firstname" 
+            placeholder="您的手机"><br>
+         <input type="text" class="form-control" id="lastname" 
+            placeholder="您的称呼"><br>
+		 <input type="text" class="form-control" id="lastname" 
+            placeholder="您需要什么"><br>
+
+         <a class="btn btn-warning btn-lg btn-block ">提交申请</a>
+	 <br><br><br><br><p style="font-size:15px;color:Orange;">热点需求</p>
+
+<div id="myCarousel" class="carousel slide">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+   </ol>   
+   <!-- 轮播（Carousel）项目 -->
+   <div class="carousel-inner">
+      <div class="item active">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items1.pic_url }}" alt="First slide">
+                </a>
+	</div>
+	<div class="item">
+	        <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items2.pic_url }}" alt="Second slide">
+                </a>
+        </div>
+         <div class="item">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items3.pic_url }}" alt="Third slide">
+                </a>
+         </div>
+    </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#myCarousel" 
+      data-slide="prev">&lsaquo;</a>
+   <a class="carousel-control right" href="#myCarousel" 
+      data-slide="next">&rsaquo;</a>
+</div> 
+</form>
+
+</div>
+
+
+</div>
+
+
+<!--等着完善-->
+
 </div>
 
 </body>

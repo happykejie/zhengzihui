@@ -180,15 +180,12 @@ def search_result(request):
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
-##############################排序by LJW
+##############################服务商排序by LJW
 #按发布时间
 sortflag=True
 def search_result_sort_starttime(request):
     a_items = []
-    
-    
-    
-   
+
     if(sortflag==True):
     	items = tb_item.objects.order_by('item_publish')
   	global sortflag
@@ -229,10 +226,7 @@ def search_result_sort_starttime(request):
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
-    
-    
-    
-   
+
     if(sortflag1==True):
     	items = tb_item.objects.order_by('item_deadtime')
   	global sortflag1
