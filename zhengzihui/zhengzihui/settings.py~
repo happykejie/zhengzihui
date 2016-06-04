@@ -105,8 +105,10 @@ DATABASES = {
 <<<<<<< HEAD
      'PASSWORD':'123456',#password of mysql user
 =======
+
      'PASSWORD':'123654',#password of mysql user
->>>>>>> cfb7982030a0cca25f4ed42aad312529735b1f09
+
+>>>>>>> 811e0c929dcae9d94c3de9f3d610cb4ab88b0c4d
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }

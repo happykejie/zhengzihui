@@ -8,8 +8,12 @@ import datetime
 import time
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
+from token import Token
+from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
 from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
+token_confirm = Token(SECRET_KEY)
 # Create your views here.
 def index(request):
 	request.session['bumen']='全部'
@@ -1011,6 +1015,7 @@ def g_register(request):
             add.user_password = user_password
             add.user_telephone = user_telephone
             add.user_email = user_email
+            add.user_auth = 0
             add.save()
             return HttpResponseRedirect('/register2')  
     return render_to_response('g_register.html',{'errors':errors})  
@@ -1114,7 +1119,7 @@ def login(request):
     if request.method == 'POST' :  
         if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
-        else:  
+        else:
             user_name = request.POST.get('_username')  
         if not request.POST.get('password'):  
             errors.append('请输入登陆密码')  
@@ -1128,7 +1133,6 @@ def login(request):
             if password == user.user_password:
                 request.session['user_id'] = user.user_id #记录用户的id
                 return render_to_response('index.html',{'user_name':user_name})
-                #return HttpResponseRedirect('/index')
             else:
                 errors.append('密码错误')
     return render_to_response('denglu.html', {'errors': errors})
