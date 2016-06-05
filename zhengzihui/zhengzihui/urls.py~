@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
 
     
+
 #用户中心
     url(r'^zzh/user_center/', "zhengzihui_app.views.user_center",name="user_center"),
     
@@ -74,14 +75,25 @@ urlpatterns = [
        #已取消
     url(r'^zzh/delete/', "zhengzihui_app.views.delete",name="delete"),
 
+       #确认订单
+    url(r'^order_enter/', "zhengzihui_app.views.order_enter",name="order_enter"),
+       #取消订单
+    url(r'^order_giveup/', "zhengzihui_app.views.order_giveup",name="order_giveup"),
+       #删除订单
+    url(r'^order_delete/', "zhengzihui_app.views.order_delete",name="order_delete"),
+       #点击评论按钮
+    url(r'^order_commit/', "zhengzihui_app.views.order_commit",name="order_commit"),
+       #添加评论
+    url(r'^order_add_commit/', "zhengzihui_app.views.order_add_commit",name="order_add_commit"),
+
+
 
     #评价管理
-        #全部评价
-    url(r'^zzh/all_evaluations/', "zhengzihui_app.views.all_evaluations",name="all_evaluations"),
-        #未评论
-    url(r'^zzh/not_evaluate/', "zhengzihui_app.views.not_evaluate",name="not_evaluate"),
-        #已评论
-    url(r'^zzh/evaluated/', "zhengzihui_app.views.evaluated",name="evaluated"),
+        #我的评价
+    url(r'^zzh/my_evaluate/', "zhengzihui_app.views.my_evaluate",name="my_evaluate"),
+        #评价统计
+    url(r'^zzh/statistics/', "zhengzihui_app.views.statistics",name="statistics"),
+    
     
     #主页底部链接页面部分 友情链接
     url(r'^friend_link',"zhengzihui_app.views.friend_link",name="friend_link"),
@@ -96,6 +108,10 @@ urlpatterns = [
     url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
     #帐号申述
     url(r'^representations',"zhengzihui_app.views.representations",name="representations"),
+    #政资汇简介
+    url(r'^introduce',"zhengzihui_app.views.introduce",name="introduce"),
+    #可信网站
+    url(r'^trustedwebsite',"zhengzihui_app.views.trustedwebsite",name="trustedwebsite"),
 
 
      #登陆注册
@@ -108,6 +124,7 @@ urlpatterns = [
     url(r'^password2/$', 'zhengzihui_app.views.password2',name='password2'),
     url(r'^password3/$', 'zhengzihui_app.views.password3',name='password3'),
     url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
+    
     #app下载
     url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
     #支付选择页面

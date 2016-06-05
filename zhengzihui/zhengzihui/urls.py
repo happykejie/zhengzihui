@@ -129,6 +129,6 @@ urlpatterns = [
     url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
     #支付选择页面
 	url(r'^selectpay/$', 'zhengzihui_app.views.selectpay',name='selectpay'),
-
-
+	#邮箱验证页
+	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$','zhengzihui_app.views.active_user',name='active_user')
 ]
