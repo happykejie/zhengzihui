@@ -1,0 +1,192 @@
+{% extends 'my_base.html' %}
+ 
+{% block title %}服务详情{% endblock %}
+
+{% block content %}
+
+
+<!-- assets -->
+    <link rel="stylesheet" type="text/css" href="/static/css/jcarousel.connected-carousels.css">
+
+    <script type="text/javascript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.jcarousel.min.js"></script>
+
+    <script type="text/javascript" src="/static/js/jcarousel.connected-carousels.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/recommend_item.css">
+    <script src="/static/js/Popt.js"></script>
+    <script src="/static/js/cityJson.js"></script>
+    <script src="/static/js/citySet.js"></script>
+<!--用到的Style不多，所以就不单独写CSS了-->   
+   <style>
+    .linksfl { margin-bottom:1em; padding-bottom:1em; border-bottom:1px dashed #e3e1e1}
+    .linksfl ul li{ width:120px; margin-right:10px; float:left; height:30px; line-height:30px;}
+    .linksfl li a { color:#009ff2}
+    
+.clearfix {
+  *zoom: 1;
+}
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.clearfix:after {
+  clear: both;
+}
+.fl {
+  float: left;
+  display: inline;
+}
+.ml10 {
+  margin-left: 10px;
+}
+.mt10 {
+  margin-top: 10px;
+}
+.mt15 {
+  margin-top: 15px;
+}
+.ml15 {
+  margin-left: 15px;
+    </style>
+        
+<div class="row"  align="center" >
+<div class="col-lg-4 col-md-4">
+<ul class="nav nav-tabs nav-stacked">
+
+<li><a href="#"><h3>公司简介</h3></a></li>
+<li><a href="#"><h3>企业文化</h3> </a></li> 
+<li><a href="#"><h3>发展历程</h3></a></li> 
+<li><a href="#"><h3>支付方式</h3></a></li> 
+<li><a href="#"><h3>联系我们</h3></a></li> 
+<li><a href="#"><h3>合作渠道</h3></a></li> 
+<li><a href="#"><h3>分支机构</h3></a></li> 
+<li class="active"><a href="#"><h3>友情链接</h3></a></li> 
+</ul>
+</div>
+<div class="col-lg-8 col-md-8">
+
+
+<div class="linksfl clearfix">
+        <h3 style=" margin:20px 0 10px;color:#333; font-size:24px; font-family: \5FAE\8F6F\96C5\9ED1; font-weight:normal">热门推荐</h3>
+            <ul class="list-unstyled">
+                                <li><a href="http://www.zbj.com/fzsj/" title="服饰设计" target="_blank">服饰设计</a></li>
+                                <li><a href="http://www.zbj.com/uisheji/" title="UI设计" target="_blank">UI设计</a></li>
+                                <li><a href="http://www.zbj.com/wzkf/" title="网站建设" target="_blank">网站建设</a></li>
+                                <li><a href="http://www.zbj.com/bzsj/" title="包装设计" target="_blank">包装设计</a></li>
+                                <li><a href="http://www.zbj.com/xcpsj/" title="宣传品设计" target="_blank">宣传品设计</a></li>
+                                <li><a href="http://wj.zbj.com/" title="企业网站建设" target="_blank">企业网站建设</a></li>
+                                <li><a href="http://edu.zbj.com/" title="政资会大学" target="_blank">政资会大学</a></li>
+                                <li><a href="http://zt.zbj.com/ztoper/wqindex" title="重庆市微企网上孵化园" target="_blank">重庆市微企网上孵化园</a></li>
+                                <li><a href="http://ipr.zbj.com/" title="八戒知识产权" target="_blank">八戒知识产权</a></li>
+                                <li><a href="http://www.tianpeng.com/" title="天蓬网" target="_blank">天蓬网</a></li>
+                                <li><a href="http://gc.zbj.com/" title="八戒工程" target="_blank">八戒工程</a></li>
+                                <li><a href="http://bang.zbj.com/" title="八戒众帮" target="_blank">八戒众帮</a></li>
+                                <li><a href="http://shang.zbj.com/" title="八戒悬赏" target="_blank">八戒悬赏</a></li>
+                                <li><a href="http://www.zbj.com/wdtg/" title="网店推广" target="_blank">网店推广</a></li>
+                                <li><a href="http://www.zbj.com/cyqm/" title="起名取名" target="_blank">起名取名</a></li>
+                                <li><a href="http://www.zbj.com/logo/" title="logo设计" target="_blank">logo设计</a></li>
+                                <li><a href="http://www.zbj.com/vi/" title="vi设计" target="_blank">vi设计</a></li>
+                                <li><a href="http://www.zbj.com/ggsj/" title="广告设计" target="_blank">广告设计</a></li>
+                                <li><a href="http://www.zbj.com/yxtg/" title="营销推广" target="_blank">营销推广</a></li>
+                                <li><a href="http://www.zbj.com/xiezuo/" title="文案策划" target="_blank">文案策划</a></li>
+                                <li><a href="http://www.zbj.com/fy/" title="翻译服务" target="_blank">翻译服务</a></li>
+                                <li><a href="http://www.zbj.com/wzkf/" title="网站开发" target="_blank">网站开发</a></li>
+                                <li><a href="http://www.zbj.com/rjkf/" title="软件开发" target="_blank">软件开发</a></li>
+                                <li><a href="http://www.zbj.com/ydyykf/" title="APP开发" target="_blank">APP开发</a></li>
+                                <li><a href="http://www.zbj.com/wxptkf/" title="微信开发" target="_blank">微信开发</a></li>
+                                <li><a href="http://www.zbj.com/mhsj/" title="漫画设计" target="_blank">漫画设计</a></li>
+                                <li><a href="http://www.zbj.com/dhsj/" title="动画设计" target="_blank">动画设计</a></li>
+                                <li><a href="http://www.zbj.com/xcpzz/" title="影视制作" target="_blank">影视制作</a></li>
+                                <li><a href="http://www.zbj.com/syzxiu/" title="商业装修" target="_blank">商业装修</a></li>
+                                <li><a href="http://www.zbj.com/jjzx/" title="家居装修" target="_blank">家居装修</a></li>
+                                <li><a href="http://www.zbj.com/cpwgsj/" title="工业设计" target="_blank">工业设计</a></li>
+                                <li><a href="http://www.zbj.com/game/sb1.html" title="游戏开发" target="_blank">游戏开发</a></li>
+                            </ul>
+    </div>
+    
+<div class="linksfl clearfix">
+            <h3 style=" margin:20px 0 10px;color:#333; font-size:24px; font-family: \5FAE\8F6F\96C5\9ED1; font-weight:normal">友情链接</h3>
+            <ul class="list-unstyled">
+                                <li><a href="http://h.meitianhui.com/" title="慧顾家特卖" target="_blank">慧顾家特卖</a></li>
+                                <li><a href="http://www.jd.com/" title="京东商城" target="_blank">京东商城</a></li>
+                                <li><a href="http://tech.163.com/" title="网易科技" target="_blank">网易科技</a></li>
+                                <li><a href="http://www.bobaow.com/" title="博报网" target="_blank">博报网</a></li>
+                                <li><a href="http://www.gome.com.cn/" title="国美电器网上商城" target="_blank">国美电器网上商城</a></li>
+                                <li><a href="http://www.newegg.com.cn/" title="新蛋网" target="_blank">新蛋网</a></li>
+                                <li><a href="http://www.200.net/" title="200网址大全" target="_blank">200网址大全</a></li>
+                                <li><a href="http://www.1633.com/" title="科易网" target="_blank">科易网</a></li>
+                                <li><a href="http://www.nbd.com.cn/" title="每经网" target="_blank">每经网</a></li>
+                                <li><a href="http://www.fengniao.com/" title="蜂鸟网" target="_blank">蜂鸟网</a></li>
+                                <li><a href="http://www.meguo.com/" title="米果特卖" target="_blank">米果特卖</a></li>
+                                <li><a href="http://www.eelly.com/" title="服装批发" target="_blank">服装批发</a></li>
+                                <li><a href="http://cd.a963.com/" title="成都室内设计网" target="_blank">成都室内设计网</a></li>
+                                <li><a href="http://www.ebrun.com/" title="亿邦动力网" target="_blank">亿邦动力网</a></li>
+                                <li><a href="http://www.chinagwy.org.cn/haerbin/" title="哈尔滨公务员考试网" target="_blank">哈尔滨公务员考试网</a></li>
+                                <li><a href="http://www.chinagwy.org.cn/qingdao/" title="青岛公务员考试网" target="_blank">青岛公务员考试网</a></li>
+                                <li><a href="http://www.3456.tv/nongjizhaoshang/" title="农机招商" target="_blank">农机招商</a></li>
+                                <li><a href="http://www.chinagwy.org.cn/nanjing/" title="南京公务员考试网" target="_blank">南京公务员考试网</a></li>
+                                <li><a href="http://www.3456.tv/feiliaozhaoshang/" title="肥料招商" target="_blank">肥料招商</a></li>
+                                <li><a href="http://www.loho88.com/" title="配眼镜" target="_blank">配眼镜</a></li>
+                                <li><a href="http://www.kuaidi.com/" title="快递单号查询" target="_blank">快递单号查询</a></li>
+                                <li><a href="http://www.jcang.com.cn/" title="九藏天下网" target="_blank">九藏天下网</a></li>
+                                <li><a href="http://www.s.cn/list/nike" title="耐克" target="_blank">耐克</a></li>
+                                <li><a href="http://www.ad618.com/" title="广告易作网" target="_blank">广告易作网</a></li>
+                            </ul>
+    </div>
+    
+    
+    <div class=" row linksfl clearfix">
+      <h4><strong style="color:#a2a2a2; font-size:36px; font-family: \5FAE\8F6F\96C5\9ED1; font-weight:normal">友情链接申请</strong></h4>
+      <div class="clearfix">
+        <div class="fl" style="width:440px;">
+          <h4 class="mt10"><strong>图片代码链接:</strong></h4>
+          <textarea id="copytext1" class="mt10" style="width:410px; padding-top:10px; padding-left:5px;  height:70px; font-size:12px;">&lt;a href="http://119.29.226.132/index" target="_blank" &gt;&lt;img src="" alt="政资会" /&gt;&lt;/a&gt;</textarea>
+          <input type="button" value="复制" class="mt10" style="width:50px;" name="copy">
+        </div>
+        <div class="fl ml15" style="width:220px; height:120;">
+          <h4 class="mt10"><strong>预览效果</strong></h4>
+          <a href="http://119.29.226.132/index" target="_blank" class="mt10" style="display:block; border:1px solid #999; height:70px; width:218px; text-align:center; padding-top:10px;"><img class="img-responsive" src="../static/images/logo.jpg" alt="政资会"></a></div>
+      </div>
+      <div class="clearfix mt15">
+        <div class="fl" style="width:440px; ">
+          <h4 class="mt10"><strong>文字代码链接:</strong></h4>
+          <textarea id="copytext1" class="mt10" style="width:410px; height:25px; padding-top:10px; padding-left:5px; font-size:12px;">&lt;a href="119.29.226.132/index" target="_blank"&gt;政资会&lt;/a&gt;</textarea>
+          <input type="button" value="复制" class="mt10" style="width:50px;" name="copy">
+        </div>
+        <div class="fl ml15" style="width:220px;">
+          <h4 class="mt10"><strong>预览效果</strong></h4>
+          <a href="http://119.29.226.132/index" target="_blank" class="mt10" style="display:block; border:1px solid #999; height:35px; width:220px; line-height:35px; text-align:center;">政资会</a></div>
+      </div>
+      
+      <div class="clearfix mt15" style="margin-bottom:70px;" align="left">
+       <h4 class="mt10"><strong>申请步骤:</strong></h4>
+        <p style="color:#0080c8">
+        1.请先在贵站做好政资会网的友情链接，要求：<br>
+		 ·内容健康、未被百度、google等搜索引擎封杀的网站<br>
+		 ·首页百度权重≥6,收录大于100万的网站<br>
+		 ·网站内容相关<br>
+		 ·只接受直接文字链接和图片链接，下拉框、脚本、页面跳转、嵌入页、翻页等均不换<br>
+		2.做好链接后，请通过以下方式联系我们：邮箱：duanrenren@zbj.com   QQ：2078018874<br>
+		3.已经开通我站友情链接并且符合本站友情链接要求的网站，经政资会网管理员审核后，可在我方相关页面上显示。<br>
+        </p>
+        
+      </div>
+      
+      
+    </div>
+
+</div>
+
+
+      
+
+
+
+
+</div>
+
+
+
+{% endblock %}

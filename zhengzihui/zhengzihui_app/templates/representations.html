@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>帐号申诉</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <link href="../static/css/representations.css" rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+
+</div>
+	<div>
+		<img class="h" src="../static/images/2.png" alt="placeholder+image">
+	</div>
+	<div class="center">
+		<h3>帐号申诉<span class="a" >内容必填</span> <span class="b" >*</span></h3>
+		<hr width="100%">
+		<div class="data">
+			<p class="data">资料验证</p>
+		</div>
+	</div>
+	<table>
+		<tbody>
+			<tr>
+				<td class="left"><span class = "c">*</span>你的真实姓名：</td>
+				<td><input class="short"></input></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="left"><span class = "c">*</span>填写原手机号：</td>
+				<td><input class="short"></input></td>
+
+			</tr>
+			<tr>
+				<td class="left_text"><span class = "c">*</span>购买记录描述：</td>
+				<td><textarea>您可以描述曾经购买过物品的名称，评价等</textarea></td>
+			</tr>
+			<tr style="height: 10px;"></tr>
+		</tbody>
+	</table>
+<div class="center">
+		<div class="data">
+			<p class="data">资料验证</p>
+		</div>
+</div>
+<table>
+		<tbody>
+			<tr>
+				<td class="left"><span class = "c">*</span>设置新手机号：</td>
+				<td><input class="short"></input></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="left"><span class = "c">*</span>图形证码：</td>
+				<td><input class="short"></input><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="../static/images/8.png" alt="placeholder+image"><a style="text-decoration:none;" href="#">&nbsp;&nbsp;&nbsp;&nbsp;换一张</a></span></td>
+			</tr>
+			<tr>
+				<td class="left"><span class = "c">*</span>短信验证码：</td>
+				<td><input class="short"></input><span><a style="text-decoration:none;" href="#">&nbsp;&nbsp;&nbsp;&nbsp;获取短信验证码</a></span></td>
+
+			</tr>
+			<tr>
+				<td></td>
+				<td><a class="sub" href="">提交</a></td>
+			<tr style="height: 10px;"></tr>
+		 </tbody>
+</table>
+ <div class="footer">
+		
+		<hr width="100%">
+		
+			<p class="footer">Copyright © 2002-2016  版权所有  政资汇科技有限公司   苏ICP证B2-20100204  [乙测资字32005078]   </p>
+		
+	</div>
+</body>
+</html>	

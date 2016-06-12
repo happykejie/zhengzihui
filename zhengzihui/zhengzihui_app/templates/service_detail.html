@@ -17,7 +17,8 @@
     <script src="/static/js/cityJson.js"></script>
     <script src="/static/js/citySet.js"></script>
 
-        
+ 
+
 <nav class="navbar navbar-default" role="navigation">
    <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" 
@@ -82,7 +83,7 @@
                             {% for pic_url in pics_url %}
                                 <li><img src="{{pic_url}}" width="600" height="400" alt=""></li>
                             {% empty %}
-                                <li>抱歉，列表为空</li>
+                                <li>抱歉，还没有相关项目图片</li>
                             {% endfor%}
                         </ul>
                     </div>
@@ -98,7 +99,7 @@
                             {% for pic_url in pics_url %}
                                 <li><img src="{{pic_url}}" width="50" height="50" alt=""></li>
                             {% empty %}
-                                <li>抱歉，列表为空</li>
+                                <li>抱歉，还没有相关图片</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -123,7 +124,7 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <a href="#" class="btn btn-primary btn-lg active" role="button">联系我们</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="/pay?goodsidtopay={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <a href="#" class="btn btn-primary btn-lg active" role="button">联系我们</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
@@ -139,8 +140,12 @@
 <div class="progress progress-striped active">
    <div class="progress-bar progress-bar-success" role="progressbar" 
       aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+
       style="width:{{finish_percentage}}%;">
-      <span>{{finish_percentage}}% 完成</span>
+      <span>{{finish_percentage}}%完成</span>
+
+      
+
    </div>
 </div>
 <span>开始时间：{{ publish_time_format}}</span><span style="float:right">截止时间：{{ datetime_format}}</span>
@@ -294,7 +299,7 @@
         {% for good in goods_recommend_display %}
             <div class = "col-lg-3 col-md-3 col-sm-3">
                 <div class="single-sale">
-                <a href="#">
+                <a href="/service_details?goodsid={{good.goods_id}}">
                     <img class="img-responsive" src="/static/images/测试静态页面用img/1.jpg" />
                     <h3>{{good.goods_name}}</h3>
                 </a>
@@ -303,7 +308,7 @@
                 </div>
             </div>
             {% empty %}
-            <li>抱歉，列表为空</li>
+            <li>抱歉，还没有相关的其他推荐</li>
             {% endfor%}
         
         
@@ -326,5 +331,30 @@
             </ul>
          </li>
         -->
+<!--附加导航-->
 
+<div class="row">
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#myNav").affix({
+        offset: { 
+            top: 125 
+     	}
+    });
+});
+</script>
+        
+	<div class="col-sm-2" id="myScrollspy1" style="margin-left:99%">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
+                <li class="active"><a href="#">登录</a></li>
+                <li><a href="#">我的直通车</a></li>
+                <li><a href="#">我的资金</a></li>
+                <li><a href="#">我的关注</a></li>
+                <li><a href="#">我看过的</a></li>
+		<li><a href="#section-0">返回顶部</a></li>
+		<li><a href="#">用户反馈</a></li>
+            </ul>
+        </div>
+</div>
+ 
 {% endblock %}

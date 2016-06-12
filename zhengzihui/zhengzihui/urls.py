@@ -20,10 +20,14 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^index/$','zhengzihui_app.views.index',name='index'),
+    url(r'^hire/$','zhengzihui_app.views.newhire',name='newhire'),
     url(r'^search/$','zhengzihui_app.views.Searchgoods',name='Searchgoods'),
     
+    url(r'^payok/$','zhengzihui_app.views.Payback',name='payok'),
     #zss 二级页面
     url(r'^search_result/$','zhengzihui_app.views.search_result',name='search_result'),
+    url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),
+    url(r'^search_result_sort_deadtime/$','zhengzihui_app.views.search_result_sort_deadtime',name='search_result_sort_deadtime'),
     url(r'^search_result_load/$','zhengzihui_app.views.search_result_load',name='search_result_load'),#用来干嘛的？？
     url(r'^filter_labels/$','zhengzihui_app.views.filter_labels',name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
       
@@ -40,6 +44,7 @@ urlpatterns = [
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
 
     
+
 #用户中心
     url(r'^zzh/user_center/', "zhengzihui_app.views.user_center",name="user_center"),
     
@@ -70,12 +75,60 @@ urlpatterns = [
        #已取消
     url(r'^zzh/delete/', "zhengzihui_app.views.delete",name="delete"),
 
+       #确认订单
+    url(r'^order_enter/', "zhengzihui_app.views.order_enter",name="order_enter"),
+       #取消订单
+    url(r'^order_giveup/', "zhengzihui_app.views.order_giveup",name="order_giveup"),
+       #删除订单
+    url(r'^order_delete/', "zhengzihui_app.views.order_delete",name="order_delete"),
+       #点击评论按钮
+    url(r'^order_commit/', "zhengzihui_app.views.order_commit",name="order_commit"),
+       #添加评论
+    url(r'^order_add_commit/', "zhengzihui_app.views.order_add_commit",name="order_add_commit"),
+
+
 
     #评价管理
-        #全部评价
-    url(r'^zzh/all_evaluations/', "zhengzihui_app.views.all_evaluations",name="all_evaluations"),
-        #未评论
-    url(r'^zzh/not_evaluate/', "zhengzihui_app.views.not_evaluate",name="not_evaluate"),
-        #已评论
-    url(r'^zzh/evaluated/', "zhengzihui_app.views.evaluated",name="evaluated"),
+        #我的评价
+    url(r'^zzh/my_evaluate/', "zhengzihui_app.views.my_evaluate",name="my_evaluate"),
+        #评价统计
+    url(r'^zzh/statistics/', "zhengzihui_app.views.statistics",name="statistics"),
+    
+    
+    #主页底部链接页面部分 友情链接
+    url(r'^friend_link',"zhengzihui_app.views.friend_link",name="friend_link"),
+    url(r'^quanlification',"zhengzihui_app.views.quanlification",name="quanlification"),
+    #人工申诉
+    url(r'^artificial_apeal',"zhengzihui_app.views.artificial_apeal",name="artificial_apeal"),
+    #联系我们
+    url(r'^contact_us',"zhengzihui_app.views.contact_us",name="contact_us"),
+    #商业合作
+    url(r'^business_cooperation',"zhengzihui_app.views.business_cooperation",name="business_cooperation"),
+    #网站联盟
+    url(r'^union_website',"zhengzihui_app.views.union_website",name="union_website"),
+    #帐号申述
+    url(r'^representations',"zhengzihui_app.views.representations",name="representations"),
+    #政资汇简介
+    url(r'^introduce',"zhengzihui_app.views.introduce",name="introduce"),
+    #可信网站
+    url(r'^trustedwebsite',"zhengzihui_app.views.trustedwebsite",name="trustedwebsite"),
+
+
+     #登陆注册
+    url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
+    url(r'^g_register/$', 'zhengzihui_app.views.g_register',name='g_register'),
+    url(r'^q_register/$', 'zhengzihui_app.views.q_register',name='q_register'),
+    url(r'^register2/$', 'zhengzihui_app.views.register2',name='register2'),
+    url(r'^register3/$', 'zhengzihui_app.views.register3',name='register3'),
+    url(r'^password1/$', 'zhengzihui_app.views.password1',name='password1'),
+    url(r'^password2/$', 'zhengzihui_app.views.password2',name='password2'),
+    url(r'^password3/$', 'zhengzihui_app.views.password3',name='password3'),
+    url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
+    
+    #app下载
+    url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
+    #支付选择页面
+	url(r'^selectpay/$', 'zhengzihui_app.views.selectpay',name='selectpay'),
+	#邮箱验证页
+	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$','zhengzihui_app.views.active_user',name='active_user')
 ]

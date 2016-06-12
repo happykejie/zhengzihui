@@ -254,7 +254,7 @@
         </div>
 		
 		
-		
+		{% if service %}
         <div id="list">
             {% for goods in tb_goods_list %}
             <div class="list-content">
@@ -290,7 +290,15 @@
 				</div>
             </div>
             {% endfor %}
-        </div>    
+        </div> 
+        
+        {% endif %}
+        
+        {% if noservice  %}
+        <div class="row-fluid col-md-12 col-lg-12">
+        <h1><center>还没有相关服务商，敬请期待!</h1></h1>
+        </div>
+        {% endif %}
         <div id="load">
             <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
@@ -313,6 +321,38 @@
 
          <a class="btn btn-warning btn-lg btn-block ">提交申请</a>
 	 <br><br><br><br><p style="font-size:15px;color:Orange;">热点需求</p>
+
+<div id="myCarousel" class="carousel slide">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+   </ol>   
+   <!-- 轮播（Carousel）项目 -->
+   <div class="carousel-inner">
+      <div class="item active">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items1.pic_url }}" alt="First slide">
+                </a>
+	</div>
+	<div class="item">
+	        <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items2.pic_url }}" alt="Second slide">
+                </a>
+        </div>
+         <div class="item">
+                <a href="/project_detail/?id={{ testitem.item_id }}">
+                    <img src="{{ items3.pic_url }}" alt="Third slide">
+                </a>
+         </div>
+    </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#myCarousel" 
+      data-slide="prev">&lsaquo;</a>
+   <a class="carousel-control right" href="#myCarousel" 
+      data-slide="next">&rsaquo;</a>
+</div> 
 </form>
 
 </div>
@@ -322,11 +362,6 @@
 
 
 <!--等着完善-->
-{% if 'noservice' in dic %}
-<div>
-<h2>23333333333{{noserviceinfo}}</h2>
-</div>
-{% endif %}
 
 </div>
 

@@ -35,7 +35,9 @@ class tb_user(models.Model):
     (Enterprise,'企业用户'),
     )
     user_type = models.IntegerField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
-
+    class Meta:
+        verbose_name = '用户'
+        verbose_name_plural = '用户' 
 
     def __unicode__(self):
         return self.user_name
@@ -63,7 +65,10 @@ class tb_user_expand(models.Model):
     company_industry = models.CharField("公司所属行业",max_length=30,null=False,blank=False)
     company_stuff_no = models.IntegerField("公司人数",null=False,blank=False)
     company_nature = models.CharField("公司性质",max_length=30,null=False,blank=False)
-
+    
+    class Meta:
+        verbose_name = '用户扩展信息'
+        verbose_name_plural = '用户扩展信息' 
     def __unicode__(self):
         return self.company_name
 
@@ -98,7 +103,7 @@ class  tb_service_provider(models.Model):
     organization_id = models.IntegerField("机构代码",null=False,blank=False)
     organization_assets = models.IntegerField("机构资产",null=False,blank=False)
     organization_profile = models.CharField("机构简介",max_length=100,null=False,blank=False)
-    
+ 
         
     PASSAUTH = 1
     NOTPASSAUTH = 0
@@ -120,7 +125,9 @@ class  tb_service_provider(models.Model):
     (NOTRECOMMED,'不优先推荐'),
     )
     is_recommend = models.IntegerField("是否优先推荐",max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
-    
+    class Meta:
+        verbose_name = '服务提供商'
+        verbose_name_plural = '服务提供商' 
     def __str__(self):
         return self.sp_name
 
@@ -135,7 +142,9 @@ class tb_News_Class(models.Model):
     necl_name = models.CharField("分类名称",max_length=100,null=False,blank=False)
     necl_parent_id = models.IntegerField("父类ID",null=False,blank=False)#估计是之后需要添加的外键
     necl_sort = models.IntegerField("排序",null=False,blank=False)
-
+    class Meta:
+        verbose_name = '新闻类别'
+        verbose_name_plural = '新闻类别' 
     def __str__(self):
         return self.necl_name
 
@@ -184,7 +193,9 @@ class tb_News(models.Model):
     
     )
     new_is_display =  models.IntegerField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
-
+    class Meta:
+        verbose_name = '新闻'
+        verbose_name_plural = '新闻' 
     def __str__(self):
         return str(self.news_id)
     def __str__(self):
@@ -206,7 +217,9 @@ class Tb_Notice(models.Model):
     Notice_sort = models.IntegerField('排序',null =False)
     Notice_is_display= models.IntegerField('是否显示',null =False)
     Notice_top = models.IntegerField('强制置顶',null =False)
-    
+    class Meta:
+        verbose_name = '公告 '
+        verbose_name_plural = '公告'     
     def __str__(self):
         return self.Notice_title
     def __str__(self):
@@ -220,7 +233,9 @@ class Tb_Notice_Class(models.Model):
     Nocl_des = models.CharField('分类描述',max_length=100,null =False)
     Nocl_parent_id = models.IntegerField('父类ID')
     Notice_sort = models.IntegerField('排序',null =False)
-    
+    class Meta:
+        verbose_name = '公告类别'
+        verbose_name_plural = '公告类别'     
     def __str__(self):
         return self.Nocl_name
     def __str__(self):
@@ -236,6 +251,9 @@ class Tb_Apage(models.Model):
      Apcl_id = models.IntegerField('分类ID',null =False)
      Apage_sort = models.IntegerField('排序',null =False)
      Apage_is_display = models.IntegerField('是否显示',null =False)
+     class Meta:
+        verbose_name = '单页表'
+        verbose_name_plural = '单页表' 
      def __str__(self):
         return self.Apage_source
     
@@ -245,6 +263,9 @@ class Tb_Apage_Class(models.Model):
      Apcl_name = models.CharField('分类名称',max_length=100,null =False)
      Apcl_parent_id = models.IntegerField('父类ID')
      Apcl_sort = models.IntegerField('排序',null =False)
+     class Meta:
+        verbose_name = '单页分类表'
+        verbose_name_plural = '单页分类表' 
      def __str__(self):
         return self.Apcl_name
     
@@ -313,6 +334,9 @@ class tb_item(models.Model):
     
     )
     is_recommend = models.IntegerField('是否推荐',choices=IS_RECOMMEND,default=NOTRECOMMED,null=False,blank=False)
+    class Meta:
+        verbose_name = '项目详情表'
+        verbose_name_plural = '项目详情表' 
     def __unicode__(self):   #python 2 
         return self.item_name
 
@@ -322,16 +346,21 @@ class tb_item_pa(models.Model):
     ipa_parent_id = models.IntegerField('所属上级机构的id',null=False)
     ipa_sort = models.IntegerField('排序',null=False)
     area_id = models.IntegerField('机构对应地区的id',null=False)
+    class Meta:
+        verbose_name = '项目发布机构表'
+        verbose_name_plural = '项目发布机构表'
     def __unicode__(self):   #python 2 
         return self.ipa_name
-
+    
 class tb_area(models.Model):
     area_id = models.IntegerField("地区id",primary_key=True,null=False)
     area_name = models.CharField("地区名称",max_length =100, null = False)
     area_parent_id = models.IntegerField("地区上一级id",null = False)
     area_sort = models.IntegerField("地区排序",null = False,default=0)
     area_deep = models.IntegerField("地区深度",null = False,default=0)
-    
+    class Meta:
+        verbose_name = '地区表'
+        verbose_name_plural = '地区表'
     def __unicode__(self):
         return self.area_name
 
@@ -340,7 +369,9 @@ class tb_item_click(models.Model):
     item_name = models.CharField("项目名称",max_length =100, null = False)
     itcl_id = models.IntegerField("项目分类id",null = False)
     click_counter = models.IntegerField("点击率",null = False,default=0)
-    
+    class Meta:
+        verbose_name = '项目点击表'
+        verbose_name_plural = '项目点击表'
     def __unicode__(self):
         return self.item_name
 
@@ -351,6 +382,9 @@ class tb_item_class(models.Model):
     itcl_des = models.CharField('分类描述',max_length=100,null=False)
     necl_parent_id = models.IntegerField('父类ID',null=False)
     necl_sort = models.IntegerField('排序',null=False)
+    class Meta:
+        verbose_name = '项目分类'
+        verbose_name_plural = '项目分类'
     def __unicode__(self):   #python 2 
         return self.itcl_name
 
@@ -394,6 +428,9 @@ class tb_article(models.Model):
     )
     is_default = models.IntegerField('是否为默认文章',choices=IS_DEFAULT,default=ISDEFAULT,null=False,blank=False)
     article_click = models.IntegerField('文章点击数',null=False)
+    class Meta:
+        verbose_name = '文章表'
+        verbose_name_plural = '文章表'
     def __unicode__(self):   #python 2 
         return self.article_name
   
@@ -432,6 +469,9 @@ class tb_album(models.Model):
     )
 
     is_default = models.IntegerField('是否为默认相册',choices=IS_DEFAULT,default=ISDEFAULT,null=False,blank=False)
+    class Meta:
+        verbose_name = '相册表'
+        verbose_name_plural = '相册表'
     def __unicode__(self):   #python 2 
         return self.album_name
 
@@ -444,6 +484,9 @@ class tb_pic(models.Model):
     pic_object = models.ImageField('图片文件',upload_to='img_for_items/%Y/%m/%d',null = False,default="img_for_items/none/no_img.jpg")   
     pic_size = models.IntegerField('项目ID',null=False,default=0)
     upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
+    class Meta:
+        verbose_name = '图片表'
+        verbose_name_plural = '图片表'
     def __unicode__(self):   #python 2 
         return self.pic_name
 
@@ -455,6 +498,9 @@ class tb_accessory(models.Model):
     apublisher = models.CharField('附件上传者',max_length=2,null =False)
     aposition= models.CharField('附件位置',max_length=10,null =False)
     aaddtion= models.CharField('备注',max_length=50)
+    class Meta:
+        verbose_name = '其他附件表'
+        verbose_name_plural = '其他附件表'
     def __unicode__(self):   #python 2 
         return self.apublisher
 
@@ -477,6 +523,9 @@ class tb_Artificial_Representations(models.Model):
     )
     arre_state = models.IntegerField('申述状态',choices=ARRE_STATE,default=NOTACCEPT,null=False,blank=False)#申述状态0：未受理  1：已受理   2：已解决
     create_time = models.DateTimeField('提交申请时间')
+    class Meta:
+        verbose_name = '人工申述表'
+        verbose_name_plural = '人工申述表'
     def __unicode__(self):   #python 2 
         return self.arre_title
 
@@ -486,7 +535,9 @@ class tb_Message(models.Model):
     rec_id = models.IntegerField(null = False)#接受方ID
     text_id = models.IntegerField(null = False)#文本ID
     status = models.IntegerField(null = False)#消息状态
-
+    class Meta:
+        verbose_name = '站内短信表'
+        verbose_name_plural = '站内短信表'
 
     
 class tb_MessageText(models.Model):
@@ -494,6 +545,9 @@ class tb_MessageText(models.Model):
     mete_title = models.CharField(max_length = 10, null = False)#短信标题
     mete_content = models.CharField(max_length = 300, null = False)#短信内容
     mete_time = models.DateTimeField('消息发送时间')
+    class Meta:
+        verbose_name = '站内短信内容表'
+        verbose_name_plural = '站内短信内容表'
     def __unicode__(self):
         return self.mete_title  
     
@@ -502,7 +556,9 @@ class tb_SysMessage(models.Model):
     cust_id = models.IntegerField(null = False)#客户ID
     mess_id = models.IntegerField(null = False)#短信ID
     sys_status = models.IntegerField(null = False)#消息状态，0/1：已读/未读    
-
+    class Meta:
+        verbose_name = '系统信息表'
+        verbose_name_plural = '系统信息表'
 
 class tb_goods(models.Model):
     goods_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
@@ -546,7 +602,9 @@ class tb_goods(models.Model):
     (TEMPORARY,"暂时不可服务"),
     )
     goods_status = models.IntegerField("服务提供商服务状态",choices=GOODS_STATUS_CHOICES,default=NOTSERVE,null=False,blank=False)
-
+    class Meta:
+        verbose_name = '服务商信息表'
+        verbose_name_plural = '服务商信息表'
     
     def __unicode__(self):
         return self.goods_name
@@ -558,7 +616,9 @@ class tb_goods_click(models.Model):
     goods_name = models.CharField("服务商品名称",max_length =100, null = False)
     gocl_id = models.IntegerField("服务商品分类id",null = False)
     gocl_num = models.IntegerField("点击率状态",null = False,default=0)
-    
+    class Meta:
+        verbose_name = '服务商点击表'
+        verbose_name_plural = '服务商点击表'
     def __unicode__(self):
         return self.goods_name
 
@@ -570,7 +630,9 @@ class tb_goods_class(models.Model):
     gocl_des = models.CharField("分类描述",max_length =100, null = False)
     gocl_sort = models.IntegerField("排序",null = False)
     gocl_parent_id = models.IntegerField("父分类id",null = False)
-
+    class Meta:
+        verbose_name = '服务商分类表'
+        verbose_name_plural = '服务商分类表'
     def __unicode__(self):
         return self.gocl_name
 
@@ -585,7 +647,7 @@ class tb_goods_evaluation(models.Model):
     goods_name = models.CharField("服务商品的名称",max_length = 100, null = False)
     user_id = models.IntegerField("评价对应的购买者id",null = False)
     user_name = models.CharField("评价对应的购买者name",max_length = 100, null = False)
-    create_time = models.DateTimeField("评价日期",null=False)
+    create_time = models.DateTimeField("评价日期",auto_now =True,null=False)
     goev_desccredit = models.IntegerField("描述相符评分",null = False)
     goev_servicecredit = models.IntegerField("服务态度评分",null = False)
     goev_content = models.TextField("评价内容",null=False)
@@ -609,7 +671,9 @@ class tb_goods_evaluation(models.Model):
     (OTHER,"其他"),
     )
     goev_status = models.IntegerField("评价状态",choices= GOEV_STATUS_CHOICES,default=MALICE,null=False,blank=False)
-    
+    class Meta:
+        verbose_name = '服务商评价表'
+        verbose_name_plural = '服务商评价表'
     def __unicode__(self):
         return self.goods_name
 
@@ -618,7 +682,7 @@ class tb_goods_evaluation(models.Model):
 
 class tb_order(models.Model):
     order_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
-    order_no = models.IntegerField("订单号",null = False)
+    goods_id = models.IntegerField("商品id",null = False)
     pay_no = models.IntegerField("支付单号",null = False)
     item_id = models.IntegerField("项目id",null = False)
     item_name = models.CharField("项目名称",max_length = 40, null = False)
@@ -702,8 +766,13 @@ class tb_order(models.Model):
     (HAVERECEIPT,"已发货"),
     )
     express_state = models.IntegerField("物流状态",choices=EXPRESS_STATE_CHOICES,default= DELIVER,null=False,blank=False)
+    class Meta:
+        verbose_name = '订单表'
+        verbose_name_plural = '订单表'
+    
     def __unicode__(self):
         return self.item_name
+      
     
     
     
