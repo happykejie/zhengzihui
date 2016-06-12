@@ -102,9 +102,7 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-
      'PASSWORD':'123654',#password of mysql user
-
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }
@@ -236,3 +234,9 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
+
+#email config
+EMAIL_HOST='smtp.qq.com'
+EMAIL_HOST_USER='changyifan123@qq.com'
+EMAIL_HOST_PASSWORD='yxvourocuizwbjbh'
+EMAIL_USE_TLS = True

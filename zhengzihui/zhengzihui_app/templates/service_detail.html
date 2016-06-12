@@ -83,7 +83,7 @@
                             {% for pic_url in pics_url %}
                                 <li><img src="{{pic_url}}" width="600" height="400" alt=""></li>
                             {% empty %}
-                                <li>抱歉，列表为空</li>
+                                <li>抱歉，还没有相关项目图片</li>
                             {% endfor%}
                         </ul>
                     </div>
@@ -99,7 +99,7 @@
                             {% for pic_url in pics_url %}
                                 <li><img src="{{pic_url}}" width="50" height="50" alt=""></li>
                             {% empty %}
-                                <li>抱歉，列表为空</li>
+                                <li>抱歉，还没有相关图片</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -142,9 +142,9 @@
       aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
 
       style="width:{{finish_percentage}}%;">
-      <span>{{finish_percentage}}% 完成</span>
+      <span>{{finish_percentage}}%完成</span>
 
-      <span class="sr-only">40% 完成</span>
+      
 
    </div>
 </div>
@@ -308,7 +308,7 @@
                 </div>
             </div>
             {% empty %}
-            <li>抱歉，列表为空</li>
+            <li>抱歉，还没有相关的其他推荐</li>
             {% endfor%}
         
         

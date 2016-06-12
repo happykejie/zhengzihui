@@ -8,8 +8,12 @@ import datetime
 import time
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
+from token import Token
+from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
 from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
+token_confirm = Token(SECRET_KEY)
 # Create your views here.
 def index(request):
 	request.session['bumen']='全部'
@@ -180,15 +184,12 @@ def search_result(request):
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
-##############################排序by LJW
+##############################服务商排序by LJW
 #按发布时间
 sortflag=True
 def search_result_sort_starttime(request):
     a_items = []
-    
-    
-    
-   
+
     if(sortflag==True):
     	items = tb_item.objects.order_by('item_publish')
   	global sortflag
@@ -229,10 +230,7 @@ def search_result_sort_starttime(request):
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
-    
-    
-    
-   
+
     if(sortflag1==True):
     	items = tb_item.objects.order_by('item_deadtime')
   	global sortflag1
@@ -329,21 +327,88 @@ def project_detail(request):
     item = tb_item.objects.get(item_id = project_detail_item_id)
     
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
-    article0 = article[0]
-    article1 = article[1]
-    article2 = article[2]
-
+    article0 = None
+    article1 = None
     a_pics = []
+    if (len(article)>=2):
+        article0 = article[0]
+        article1 = article[1]
+    if (len(article)==1):
+        article0 = article[0]
+        article1 = None
+    if (len(article)==0):
+        pass
+    #article2 = article[2]
+    if ((article0 == None)and(article1==None)):
+        
+        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
+    else:
+       
 
-    album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-    album_id = album.album_id
-    pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
-    for pic in pics:
-        a_pic = pic.pic_object.url[14:]
-        a_pics.append(a_pic)
+        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+        for pic in pics:
+            a_pic = pic.pic_object.url[14:]
+            a_pics.append(a_pic)
     
-    return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'article2':article2,'a_pics':a_pics})
+        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
 
+        
+
+    
+def service_list(request):
+    service = 1
+    noservice = 0
+    noserviceinfo = "没有指定的服务商"
+    id1 = request.GET['itemid']
+    
+    
+    #未完！！
+    #按项目点击率降序获得前最多前三个热门项目
+    HotClick = tb_item_click.objects.all()[0:2]
+    HotClickDis =HotClick
+    #得到相关的项目
+    HotItemDis = []
+    a_pics = []
+    for hotclick in HotClickDis:
+        album = tb_album.objects.filter(album_type=0,affiliation_id=hotclick.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0]#获取第一张张图片
+        a_pic = pics.pic_object.url[14:]
+        a_pics.append(a_pic)
+
+        
+        
+        
+        
+        
+    if (id1==''):
+        service = 0
+        noservice =1
+        return render_to_response('goods_list.html',{'service':service,'noservice':noservice,})
+    else:
+        #print id1
+        id1 = int(id1)
+        tb_goods_list = tb_goods.objects.filter(item_id = id1)
+        #for a in tb_goods_list: 
+        #print (a.goods_id)
+
+        items = tb_item.objects.all()[:3]
+        a_items = []
+        for item in items:
+            a_item = {} 
+            a_item['item_key'] = item.item_key
+            album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+            album_id = album.album_id
+            a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            a_items.append(a_item)
+    
+        
+        else:
+            return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'service':service,'noservice':noservice,})        
+        
+        
 #YZ 服务商详情页面
 def service_details(request):
     if request.GET['goodsid']:
@@ -361,11 +426,15 @@ def service_details(request):
     days_total = (endtime - starttime).days
     
     days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+    # print(days_remain)
+    #print(days_total)
+    #print(starttime)
+    #print(endtime)
     if days_remain <= 0:
         finish_percentage = 100
     else:
-        finish_percentage = int((days_remain/days_total)*100)
-        
+        finish_percentage = int((float(days_remain)/float(days_total))*100)
+    #
     #取项目对应的图片，赋值相册空间
     pics_url = []
     album = tb_album.objects.filter(affiliation_id=item.item_id)[0]#获取项目对应的相册id
@@ -404,31 +473,7 @@ def service_details(request):
     
 
 	
-def service_list(request):
-    noservice = 1
-    noserviceinfo = "没有指定的服务商"
-    id1 = request.GET.get('itemid')
-    #print id1
 
-    id1 = int(id1)
-    tb_goods_list = tb_goods.objects.filter(item_id=1)
-    #for a in tb_goods_list: 
-    #print (a.goods_id)
-
-    items = tb_item.objects.all()[:3]
-    a_items = []
-    for item in items:
-	a_item = {} 
-	a_item['item_key'] = item.item_key
-	album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-	album_id = album.album_id
-	a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-	a_items.append(a_item)
-    
-    if tb_goods_list is None:
-        return render(request,'goods_list.html',{'noservice':noservice,'noserviceinfo':noserviceinfo,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
-    else:
-        return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'items1':a_items[0],'items2':a_items[1],'items3':a_items[2]})
     
 def Payback(request):
 	order_id=request.session['unpayedid']
@@ -1005,21 +1050,29 @@ def g_register(request):
             errors.append('请输入电话号码')
         else:
             user_telephone = request.POST.get('_telephone')
-        
+
         if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
-            '''print(user_name)
-            print(user_password)
-            print(user_password2)
-            print(user_telephone)
-            print(user_email)'''
+            '''自我评价：写的真特么蠢'''
+            try:
+                user = tb_user.objects.get(user_name = user_name)
+                errors.append('用户名已存在')
+                return render_to_response('g_register.html',{'errors':errors})
+            except tb_user.DoesNotExist:
+                pass
             add = tb_user()
             add.user_name = user_name
             add.user_password = user_password
             add.user_telephone = user_telephone
             add.user_email = user_email
+            add.user_auth = 0
             add.save()
+            token = token_confirm.generate_validate_token(user_name)
+            print(token)
+            message = "\n".join([u'{0},欢迎注册政资汇'.format(user_name),u'请访问该链接，完成用户验证(链接1小时内有效):','/'.join(['127.0.0.1:8000','register2',token])])
+            #message = '/'.join(['127.0.0.1:8000','register2',token])
+            send_mail(u'注册用户验证信息', message, 'changyifan123@qq.com', [user_email])
             return HttpResponseRedirect('/register2')  
-    return render_to_response('g_register.html',{'errors':errors})  
+    return render_to_response('g_register.html',{'errors':errors})
     
 #企业注册
 def q_register(request):  
@@ -1120,7 +1173,7 @@ def login(request):
     if request.method == 'POST' :  
         if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
-        else:  
+        else:
             user_name = request.POST.get('_username')  
         if not request.POST.get('password'):  
             errors.append('请输入登陆密码')  
@@ -1131,10 +1184,12 @@ def login(request):
                 user = tb_user.objects.get(user_name = user_name)
             except tb_user.DoesNotExist:
                 errors.append('用户名不存在')
+            if user.user_auth == 0:
+            	errors.append('请查看邮件完成用户认证')
+            	return render_to_response('denglu.html', {'errors': errors})
             if password == user.user_password:
                 request.session['user_id'] = user.user_id #记录用户的id
                 return render_to_response('index.html',{'user_name':user_name})
-                #return HttpResponseRedirect('/index')
             else:
                 errors.append('密码错误')
     return render_to_response('denglu.html', {'errors': errors})
@@ -1222,5 +1277,35 @@ def selectpay(request):
 #def logout(request):
     #return render_to_response('index.html',{})
 
-
+#激活账户 by cyf
+def active_user(request, token):
+	errors=[]
+	try:
+		user_name = token_confirm.confirm_validate_token(token)
+	except:
+		errors.append('对不起，验证链接已经过期')
+		return render_to_response('auth.html',{'errors':errors})
+	try:
+		user = tb_user.objects.get(user_name = user_name)
+	except tb_user.DoesNotExist:
+		errors.append('对不起，您所验证的用户不存在，请重新注册')
+		return render_to_response('auth.html',{'errors':errors})
+	user.user_auth = 1
+	user.save()
+	return HttpResponseRedirect('/login',{})
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 

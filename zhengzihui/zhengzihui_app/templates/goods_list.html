@@ -234,7 +234,7 @@
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="/search_result_sort_starttime/">
+                <a href="#">
                     挂网时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -246,7 +246,7 @@
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="/search_result_sort_deadtime/">
+                <a href="#">
                     截止时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -254,7 +254,7 @@
         </div>
 		
 		
-		
+		{% if service %}
         <div id="list">
             {% for goods in tb_goods_list %}
             <div class="list-content">
@@ -290,7 +290,15 @@
 				</div>
             </div>
             {% endfor %}
-        </div>    
+        </div> 
+        
+        {% endif %}
+        
+        {% if noservice  %}
+        <div class="row-fluid col-md-12 col-lg-12">
+        <h1><center>还没有相关服务商，敬请期待!</h1></h1>
+        </div>
+        {% endif %}
         <div id="load">
             <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
