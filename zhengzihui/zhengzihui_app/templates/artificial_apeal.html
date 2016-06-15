@@ -36,7 +36,7 @@ var _hmt = _hmt || [];
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
 		<div class="navbar-header" id="section-0">
-			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{user_name}} 欢迎来到政资汇！</a>
 		</div>
 		<div style="float:right">
 			<ul class="nav navbar-nav">
@@ -54,7 +54,7 @@ var _hmt = _hmt || [];
 	</nav>
   <div class="row">
     <div class="col-sm-4">
-      <center><img src="../static/images/logo.jpg"></img></center>
+      <center><a href="{% url 'index' %}"><img src="../static/images/logo.jpg"></img></a></center>
     </div>
 	
     <div class="col-sm-8">

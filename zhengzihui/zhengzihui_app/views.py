@@ -30,8 +30,11 @@ def Searchgoods(request):
     flag = False
     ads=[]
     items=[]
+    
     if (request.method=="GET"):	
         goodsname=request.GET.get("inputitem")
+        #后面取值用
+        goodsnametmp = goodsname
         #print (goodsname)
         #goodsname="精准医学研究"
         if goodsname is not None:
@@ -78,8 +81,13 @@ def Searchgoods(request):
                 a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
                 a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
                 a_items.append(a_item)
-
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
+    #有待完善，当输入'科技'等 关键词时无法显示
+    search_content = "全部"
+    if goodsnametmp!='':
+        search_content = goodsnametmp
+        if search_content =='':
+            search_content = selected
+    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'search_content':search_content})
 
 
 #zss 点击搜索的下一级
@@ -226,7 +234,8 @@ def search_result_sort_starttime(request):
     return render(request,'search_result.html',{'items':a_items})
     
 
-#按截至时间
+#按截至时间 排序存在的问题估计是因为 瀑布流每次只能取得10个所以 当超过10个之后再取的8 个 就出现了 重新排序，但是还是按顺序排列
+
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
@@ -318,6 +327,45 @@ def filter_labels(request):
 
 #lzh项目项目详情加载
 def project_detail(request):
+    
+    if request.GET['id']:
+ 
+        project_detail_item_id = request.GET['id']
+        
+       
+    item = tb_item.objects.get(item_id = project_detail_item_id)
+    
+    article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
+    article0 = None
+    article1 = None
+    a_pics = []
+    if (len(article)>=2):
+        article0 = article[0]
+        article1 = article[1]
+    if (len(article)==1):
+        article0 = article[0]
+        article1 = None
+    if (len(article)==0):
+        pass
+    #article2 = article[2]
+    if ((article0 == None)and(article1==None)):
+        
+        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
+    else:
+       
+
+        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+        for pic in pics:
+            a_pic = pic.pic_object.url[14:]
+            a_pics.append(a_pic)
+    
+        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
+        
+        
+#修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了        
+def item_details(request):
     
     if request.GET['id']:
  
@@ -549,9 +597,11 @@ def user_center(request):
     user = []
     a_click_items = []
     a_recommend_items = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if 'user_id' in request.COOKIES:
+        user_id = int(request.COOKIES['user_id'])
         user = tb_user.objects.get(user_id=user_id)
+    else:
+        return HttpResponse("请先登录账号;请返回到上级页面登录或者注册")
 
     click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
     for click_item in click_items:
@@ -1061,17 +1111,21 @@ def g_register(request):
                 pass
             add = tb_user()
             add.user_name = user_name
+            
             add.user_password = user_password
             add.user_telephone = user_telephone
             add.user_email = user_email
             add.user_auth = 0
+           
             add.save()
+            user_id = add.user_id
             token = token_confirm.generate_validate_token(user_name)
             print(token)
             message = "\n".join([u'{0},欢迎注册政资汇'.format(user_name),u'请访问该链接，完成用户验证(链接1小时内有效):','/'.join(['127.0.0.1:8000','register2',token])])
             #message = '/'.join(['127.0.0.1:8000','register2',token])
             send_mail(u'注册用户验证信息', message, 'changyifan123@qq.com', [user_email])
-            return HttpResponseRedirect('/register2')  
+            
+            return render_to_response('register2.html')
     return render_to_response('g_register.html',{'errors':errors})
     
 #企业注册
@@ -1157,12 +1211,32 @@ def register2(request):
             user=User.objects.create_user(code)  
             user.is_active=True  
             user.save  
-        return HttpResponseRedirect('register3.html')
+        
+        return render_to_response('register3.html')
     return render_to_response('register2.html', {'errors': errors})    
 
-#注册成功
-def register3(request):    
-    return render_to_response('denglu.html')  
+#注册成功 暂时没用到
+def register3(request):  
+    username = '未定义'
+    userid = '0'
+    if 'user_name_r3' in request.GET:
+        username = request.GET['user_name_r3']
+    if 'user_name' in request.session:
+        del request.session['user_name']
+    request.session['user_name'] = username
+    if 'user_id_r3' in request.GET:
+        userid = request.GET['user_id_r3']
+    
+    request.session['user_id'] = userid
+    print(request.session['user_id'])
+    print(request.session['user_name_s'])
+    if 'unregist_tobepay_goodsid' in request.session:
+        goodsid =request.session['unregist_tobepay_goodsid']
+        return HttpResponseRedirect('/selectpay')
+    else:
+        return render_to_response('denglu.html')  
+
+        
 
 #登陆 by cyf
 def login(request):
@@ -1170,6 +1244,10 @@ def login(request):
     user_name=None  
     password=None
     user = tb_user()
+    if 'user_name' in request.COOKIES:
+        response = render_to_response('index.html',{'user_name':request.COOKIES['user_name']})
+        return response
+        
     if request.method == 'POST' :  
         if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
@@ -1188,11 +1266,58 @@ def login(request):
             	errors.append('请查看邮件完成用户认证')
             	return render_to_response('denglu.html', {'errors': errors})
             if password == user.user_password:
-                request.session['user_id'] = user.user_id #记录用户的id
-                return render_to_response('index.html',{'user_name':user_name})
+                
+                response = render_to_response('index.html',{'user_name':user.user_name})
+                
+                response.set_cookie('user_name',user_name,3600)
+                response.set_cookie('user_id',user.user_id,3600)
+                
+                
+                if 'unregist_tobepay_goodsid' in request.COOKIES:
+                    goodsid = request.COOKIES['unregist_tobepay_goodsid']
+                    responsenotpay = HttpResponseRedirect('/service_details/?goodsid='+str(goodsid))
+                    responsenotpay.set_cookie('user_name',user_name,3600)
+                    responsenotpay.set_cookie('user_id',user.user_id,3600)
+                    return responsenotpay
+                return response
             else:
                 errors.append('密码错误')
-    return render_to_response('denglu.html', {'errors': errors})
+    return render_to_response('denglu.html', {'errors': errors})        
+    
+def logout(request):
+        response = HttpResponseRedirect('/index/')
+        response.delete_cookie('user_name')
+        response.delete_cookie('user_id')
+        return response
+def selectpay(request):
+    if 'user_id' in request.COOKIES:
+        #先删除session 以免一登录就跳到service详情
+        
+             
+        #goodsid 肯定存在的
+        if request.GET['goodsid']:
+            service_detail_goods_id = request.GET['goodsid']
+            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            response = render(request,'selectpay.html', {'goods':goods})
+            if 'unregist_tobepay_goodsid' in request.COOKIES:
+                response.delete_cookie('unregist_tobepay_goodsid') 
+            return response
+       
+        
+
+    else:
+        if request.GET['goodsid']:
+            service_detail_goods_id = request.GET['goodsid']
+            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            response =  HttpResponseRedirect("/g_register")
+            if 'unregist_tobepay_goodsid' in request.COOKIES:
+                response.delete_cookie('unregist_tobepay_goodsid') 
+            response.set_cookie('unregist_tobepay_goodsid',goods.goods_id,3600)
+            #print(request.COOKIES['unregist_tobepay_goodsid'])
+        return response
+
+        
+
 
 #找回密码步骤一
 def password1(request):
@@ -1266,12 +1391,7 @@ def password4(request):
 def download(request):
     return render(request,'download.html',{})
 
-def selectpay(request):
-    if request.GET['goodsid']:
- 
-        service_detail_goods_id = request.GET['goodsid']
-    goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
-    return render(request,'selectpay.html', {'goods':goods})
+
 
 #logout by cyf
 #def logout(request):

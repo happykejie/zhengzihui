@@ -104,7 +104,7 @@
 <!--网站图标+搜索栏-->
   <div class="row">
     <div class="col-sm-4">
-      <center><img src="/static/images/logo.jpg"></img></center>
+      <center><a href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
     </div>
     
     <div class="col-sm-8">
@@ -157,13 +157,13 @@ $("#city").click(function (e) {
             您所在的位置：
         </span>
         <span>
-            <a href="#">
+            <a href="/index/">
                 首页
             </a>
         </span>
         <span>
-            <a href="#">
-                2016星火假计划
+            <a href="">
+                搜索 "{{search_content}}" 的结果
             </a>
         </span>
     </div>
@@ -293,7 +293,7 @@ $("#city").click(function (e) {
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'search_result_sort_starttime'%}">
                     挂网时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
@@ -305,7 +305,7 @@ $("#city").click(function (e) {
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
+                <a href="{% url 'search_result_sort_deadtime'%}">
                     截止时间
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>

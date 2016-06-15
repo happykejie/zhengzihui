@@ -72,11 +72,13 @@
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
 		<div class="navbar-header" id="section-0">
-			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{user_name}} 欢迎来到政资汇！</a>
-		</div>
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi, {{ user_name }}欢迎来到政资汇！</a>
+            
+        </div>
+         
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			<li class="active"><a href="{% url 'index' %}">退出</a></li>
+			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
 			<li><a href="{% url 'login' %}">登录</a></li>
 			<li><a href="{% url 'g_register' %}">注册</a></li>
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
@@ -92,7 +94,7 @@
 <!--网站图标+搜索栏-->
   <div class="row">
     <div class="col-sm-4">
-      <center><img src="../static/images/logo.jpg"></img></center>
+      <center><a href="{% url 'index' %}"><img src="../static/images/logo.jpg"></img></a></center>
     </div>
 	
     <div class="col-sm-8">
@@ -366,22 +368,22 @@ function ToWhite(obj){
 <table align="center" style="width:1000px;">
 <tr>
 <td	 onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}"> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=1"> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg" width="95%"></a><center>
 </td>
 <td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=2"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg" width="95%"></a><center>
 </td>
 <td  onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=3"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg" width="95%"></a><center>
 </td>
 </tr>
 <tr>
 <td  onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}" > <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=4" > <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg" width="95%"></a><center>
 <td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=5"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg" width="95%"></a><center>
 <td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "{% url 'search_result' %}" > <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg" width="95%"></a><center>
+<center><a href = "/project_detail/?id=6" > <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg" width="95%"></a><center>
 </tr>
 </table>
 </div>

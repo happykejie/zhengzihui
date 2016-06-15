@@ -30,8 +30,8 @@ urlpatterns = [
     url(r'^search_result_sort_deadtime/$','zhengzihui_app.views.search_result_sort_deadtime',name='search_result_sort_deadtime'),
     url(r'^search_result_load/$','zhengzihui_app.views.search_result_load',name='search_result_load'),#用来干嘛的？？
     url(r'^filter_labels/$','zhengzihui_app.views.filter_labels',name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
-      
-    
+    #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了      
+    url(r'^item_details/$','zhengzihui_app.views.item_details',name='item_details'),#当有id传入，可显示项目的相关信息
     url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),#当有id传入，可显示项目的相关信息
     
     #url(r'^zhengzihui_app/', include('zhengzihui_app.urls')),
@@ -116,6 +116,7 @@ urlpatterns = [
 
      #登陆注册
     url(r'^login/$', 'zhengzihui_app.views.login',name='login'),
+    url(r'^logout/$','zhengzihui_app.views.logout',name='logout'),
     url(r'^g_register/$', 'zhengzihui_app.views.g_register',name='g_register'),
     url(r'^q_register/$', 'zhengzihui_app.views.q_register',name='q_register'),
     url(r'^register2/$', 'zhengzihui_app.views.register2',name='register2'),
