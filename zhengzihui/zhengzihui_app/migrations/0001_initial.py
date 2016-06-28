@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -21,6 +21,10 @@ class Migration(migrations.Migration):
                 ('aposition', models.CharField(max_length=10, verbose_name=b'\xe9\x99\x84\xe4\xbb\xb6\xe4\xbd\x8d\xe7\xbd\xae')),
                 ('aaddtion', models.CharField(max_length=50, verbose_name=b'\xe5\xa4\x87\xe6\xb3\xa8')),
             ],
+            options={
+                'verbose_name': '\u5176\u4ed6\u9644\u4ef6\u8868',
+                'verbose_name_plural': '\u5176\u4ed6\u9644\u4ef6\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_album',
@@ -34,6 +38,10 @@ class Migration(migrations.Migration):
                 ('upload_time', models.DateTimeField(auto_now=True, verbose_name=b'\xe7\x9b\xb8\xe5\x86\x8c\xe5\xbb\xba\xe7\xab\x8b\xe6\x97\xb6\xe9\x97\xb4')),
                 ('is_default', models.IntegerField(default=1, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe4\xb8\xba\xe9\xbb\x98\xe8\xae\xa4\xe7\x9b\xb8\xe5\x86\x8c', choices=[(1, b'\xe9\xbb\x98\xe8\xae\xa4'), (0, b'\xe9\x9d\x9e\xe9\xbb\x98\xe8\xae\xa4')])),
             ],
+            options={
+                'verbose_name': '\u76f8\u518c\u8868',
+                'verbose_name_plural': '\u76f8\u518c\u8868',
+            },
         ),
         migrations.CreateModel(
             name='Tb_Apage',
@@ -47,6 +55,10 @@ class Migration(migrations.Migration):
                 ('Apage_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
                 ('Apage_is_display', models.IntegerField(verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe6\x98\xbe\xe7\xa4\xba')),
             ],
+            options={
+                'verbose_name': '\u5355\u9875\u8868',
+                'verbose_name_plural': '\u5355\u9875\u8868',
+            },
         ),
         migrations.CreateModel(
             name='Tb_Apage_Class',
@@ -57,6 +69,10 @@ class Migration(migrations.Migration):
                 ('Apcl_parent_id', models.IntegerField(verbose_name=b'\xe7\x88\xb6\xe7\xb1\xbbID')),
                 ('Apcl_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
             ],
+            options={
+                'verbose_name': '\u5355\u9875\u5206\u7c7b\u8868',
+                'verbose_name_plural': '\u5355\u9875\u5206\u7c7b\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_area',
@@ -67,6 +83,10 @@ class Migration(migrations.Migration):
                 ('area_sort', models.IntegerField(default=0, verbose_name=b'\xe5\x9c\xb0\xe5\x8c\xba\xe6\x8e\x92\xe5\xba\x8f')),
                 ('area_deep', models.IntegerField(default=0, verbose_name=b'\xe5\x9c\xb0\xe5\x8c\xba\xe6\xb7\xb1\xe5\xba\xa6')),
             ],
+            options={
+                'verbose_name': '\u5730\u533a\u8868',
+                'verbose_name_plural': '\u5730\u533a\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_article',
@@ -86,6 +106,10 @@ class Migration(migrations.Migration):
                 ('is_default', models.IntegerField(default=1, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe4\xb8\xba\xe9\xbb\x98\xe8\xae\xa4\xe6\x96\x87\xe7\xab\xa0', choices=[(1, b'\xe9\xbb\x98\xe8\xae\xa4'), (0, b'\xe9\x9d\x9e\xe9\xbb\x98\xe8\xae\xa4')])),
                 ('article_click', models.IntegerField(verbose_name=b'\xe6\x96\x87\xe7\xab\xa0\xe7\x82\xb9\xe5\x87\xbb\xe6\x95\xb0')),
             ],
+            options={
+                'verbose_name': '\u6587\u7ae0\u8868',
+                'verbose_name_plural': '\u6587\u7ae0\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_Artificial_Representations',
@@ -98,6 +122,10 @@ class Migration(migrations.Migration):
                 ('arre_state', models.IntegerField(default=0, verbose_name=b'\xe7\x94\xb3\xe8\xbf\xb0\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\x9c\xaa\xe5\x8f\x97\xe7\x90\x86'), (1, b'\xe5\xb7\xb2\xe5\x8f\x97\xe7\x90\x86'), (2, b'\xe5\xb7\xb2\xe8\xa7\xa3\xe5\x86\xb3')])),
                 ('create_time', models.DateTimeField(verbose_name=b'\xe6\x8f\x90\xe4\xba\xa4\xe7\x94\xb3\xe8\xaf\xb7\xe6\x97\xb6\xe9\x97\xb4')),
             ],
+            options={
+                'verbose_name': '\u4eba\u5de5\u7533\u8ff0\u8868',
+                'verbose_name_plural': '\u4eba\u5de5\u7533\u8ff0\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_goods',
@@ -118,6 +146,10 @@ class Migration(migrations.Migration):
                 ('goods_show', models.IntegerField(default=1, verbose_name=b'\xe5\x95\x86\xe5\x93\x81\xe6\x98\xbe\xe7\xa4\xba\xe7\x8a\xb6\xe6\x80\x81', choices=[(1, b'\xe6\x98\xbe\xe7\xa4\xba'), (0, b'\xe4\xb8\x8d\xe6\x98\xbe\xe7\xa4\xba')])),
                 ('goods_status', models.IntegerField(default=0, verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe6\x8f\x90\xe4\xbe\x9b\xe5\x95\x86\xe6\x9c\x8d\xe5\x8a\xa1\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe4\xb8\x8d\xe5\x8f\xaf\xe6\x9c\x8d\xe5\x8a\xa1'), (1, b'\xe5\x8f\xaf\xe6\x9c\x8d\xe5\x8a\xa1'), (2, b'\xe6\x9a\x82\xe6\x97\xb6\xe4\xb8\x8d\xe5\x8f\xaf\xe6\x9c\x8d\xe5\x8a\xa1')])),
             ],
+            options={
+                'verbose_name': '\u670d\u52a1\u5546\u4fe1\u606f\u8868',
+                'verbose_name_plural': '\u670d\u52a1\u5546\u4fe1\u606f\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_goods_class',
@@ -129,6 +161,10 @@ class Migration(migrations.Migration):
                 ('gocl_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
                 ('gocl_parent_id', models.IntegerField(verbose_name=b'\xe7\x88\xb6\xe5\x88\x86\xe7\xb1\xbbid')),
             ],
+            options={
+                'verbose_name': '\u670d\u52a1\u5546\u5206\u7c7b\u8868',
+                'verbose_name_plural': '\u670d\u52a1\u5546\u5206\u7c7b\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_goods_click',
@@ -139,6 +175,10 @@ class Migration(migrations.Migration):
                 ('gocl_id', models.IntegerField(verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x95\x86\xe5\x93\x81\xe5\x88\x86\xe7\xb1\xbbid')),
                 ('gocl_num', models.IntegerField(default=0, verbose_name=b'\xe7\x82\xb9\xe5\x87\xbb\xe7\x8e\x87\xe7\x8a\xb6\xe6\x80\x81')),
             ],
+            options={
+                'verbose_name': '\u670d\u52a1\u5546\u70b9\u51fb\u8868',
+                'verbose_name_plural': '\u670d\u52a1\u5546\u70b9\u51fb\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_goods_evaluation',
@@ -149,7 +189,7 @@ class Migration(migrations.Migration):
                 ('goods_name', models.CharField(max_length=100, verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x95\x86\xe5\x93\x81\xe7\x9a\x84\xe5\x90\x8d\xe7\xa7\xb0')),
                 ('user_id', models.IntegerField(verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe5\xaf\xb9\xe5\xba\x94\xe7\x9a\x84\xe8\xb4\xad\xe4\xb9\xb0\xe8\x80\x85id')),
                 ('user_name', models.CharField(max_length=100, verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe5\xaf\xb9\xe5\xba\x94\xe7\x9a\x84\xe8\xb4\xad\xe4\xb9\xb0\xe8\x80\x85name')),
-                ('create_time', models.DateTimeField(verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe6\x97\xa5\xe6\x9c\x9f')),
+                ('create_time', models.DateTimeField(auto_now=True, verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe6\x97\xa5\xe6\x9c\x9f')),
                 ('goev_desccredit', models.IntegerField(verbose_name=b'\xe6\x8f\x8f\xe8\xbf\xb0\xe7\x9b\xb8\xe7\xac\xa6\xe8\xaf\x84\xe5\x88\x86')),
                 ('goev_servicecredit', models.IntegerField(verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe6\x80\x81\xe5\xba\xa6\xe8\xaf\x84\xe5\x88\x86')),
                 ('goev_content', models.TextField(verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe5\x86\x85\xe5\xae\xb9')),
@@ -157,6 +197,10 @@ class Migration(migrations.Migration):
                 ('goev_show', models.IntegerField(default=0, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe6\x98\xbe\xe7\xa4\xba', choices=[(1, b'\xe6\x98\xbe\xe7\xa4\xba'), (0, b'\xe4\xb8\x8d\xe6\x98\xbe\xe7\xa4\xba')])),
                 ('goev_status', models.IntegerField(default=0, verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\x81\xb6\xe6\x84\x8f\xe8\xaf\x84\xe4\xbb\xb7'), (1, b'\xe6\xad\xa3\xe5\xb8\xb8'), (2, b'\xe5\x85\xb6\xe4\xbb\x96')])),
             ],
+            options={
+                'verbose_name': '\u670d\u52a1\u5546\u8bc4\u4ef7\u8868',
+                'verbose_name_plural': '\u670d\u52a1\u5546\u8bc4\u4ef7\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_item',
@@ -178,6 +222,10 @@ class Migration(migrations.Migration):
                 ('item_from', models.IntegerField(default=0, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe4\xbf\xa1\xe6\x81\xaf\xe6\x9d\xa5\xe6\xba\x90', choices=[(0, b'\xe6\x9c\xac\xe7\xb3\xbb\xe7\xbb\x9f\xe7\x88\xac\xe8\x99\xab\xe8\x8e\xb7\xe5\x8f\x96'), (1, b'\xe4\xbb\x8e\xe5\x8f\x91\xe5\xb8\x83\xe4\xbf\xa1\xe6\x81\xaf\xe8\x8e\xb7\xe5\x8f\x96')])),
                 ('is_recommend', models.IntegerField(default=0, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe6\x8e\xa8\xe8\x8d\x90', choices=[(1, b'\xe6\x8e\xa8\xe8\x8d\x90'), (0, b'\xe4\xb8\x8d\xe6\x8e\xa8\xe8\x8d\x90')])),
             ],
+            options={
+                'verbose_name': '\u9879\u76ee\u8be6\u60c5\u8868',
+                'verbose_name_plural': '\u9879\u76ee\u8be6\u60c5\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_item_class',
@@ -189,6 +237,10 @@ class Migration(migrations.Migration):
                 ('necl_parent_id', models.IntegerField(verbose_name=b'\xe7\x88\xb6\xe7\xb1\xbbID')),
                 ('necl_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
             ],
+            options={
+                'verbose_name': '\u9879\u76ee\u5206\u7c7b',
+                'verbose_name_plural': '\u9879\u76ee\u5206\u7c7b',
+            },
         ),
         migrations.CreateModel(
             name='tb_item_click',
@@ -199,6 +251,10 @@ class Migration(migrations.Migration):
                 ('itcl_id', models.IntegerField(verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe5\x88\x86\xe7\xb1\xbbid')),
                 ('click_counter', models.IntegerField(default=0, verbose_name=b'\xe7\x82\xb9\xe5\x87\xbb\xe7\x8e\x87')),
             ],
+            options={
+                'verbose_name': '\u9879\u76ee\u70b9\u51fb\u8868',
+                'verbose_name_plural': '\u9879\u76ee\u70b9\u51fb\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_item_pa',
@@ -209,6 +265,10 @@ class Migration(migrations.Migration):
                 ('ipa_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
                 ('area_id', models.IntegerField(verbose_name=b'\xe6\x9c\xba\xe6\x9e\x84\xe5\xaf\xb9\xe5\xba\x94\xe5\x9c\xb0\xe5\x8c\xba\xe7\x9a\x84id')),
             ],
+            options={
+                'verbose_name': '\u9879\u76ee\u53d1\u5e03\u673a\u6784\u8868',
+                'verbose_name_plural': '\u9879\u76ee\u53d1\u5e03\u673a\u6784\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_Message',
@@ -219,6 +279,10 @@ class Migration(migrations.Migration):
                 ('text_id', models.IntegerField()),
                 ('status', models.IntegerField()),
             ],
+            options={
+                'verbose_name': '\u7ad9\u5185\u77ed\u4fe1\u8868',
+                'verbose_name_plural': '\u7ad9\u5185\u77ed\u4fe1\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_MessageText',
@@ -228,6 +292,10 @@ class Migration(migrations.Migration):
                 ('mete_content', models.CharField(max_length=300)),
                 ('mete_time', models.DateTimeField(verbose_name=b'\xe6\xb6\x88\xe6\x81\xaf\xe5\x8f\x91\xe9\x80\x81\xe6\x97\xb6\xe9\x97\xb4')),
             ],
+            options={
+                'verbose_name': '\u7ad9\u5185\u77ed\u4fe1\u5185\u5bb9\u8868',
+                'verbose_name_plural': '\u7ad9\u5185\u77ed\u4fe1\u5185\u5bb9\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_News',
@@ -244,6 +312,10 @@ class Migration(migrations.Migration):
                 ('new_top', models.IntegerField(default=0, max_length=20, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe4\xb8\xba\xe7\xbd\xae\xe9\xa1\xb6\xe6\x96\xb0\xe9\x97\xbb', choices=[(1, b'\xe7\xbd\xae\xe9\xa1\xb6\xe6\x96\xb0\xe9\x97\xbb'), (0, b'\xe9\x9d\x9e\xe7\xbd\xae\xe9\xa1\xb6\xe6\x96\xb0\xe9\x97\xbb')])),
                 ('new_is_display', models.IntegerField(default=0, max_length=20, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe4\xb8\xba\xe5\x89\x8d\xe7\xab\xaf\xe5\xb1\x95\xe7\xa4\xba\xe6\x96\xb0\xe9\x97\xbb', choices=[(1, b'\xe5\x89\x8d\xe7\xab\xaf\xe5\xb1\x95\xe7\xa4\xba\xe6\x96\xb0\xe9\x97\xbb'), (0, b'\xe9\x9d\x9e\xe5\x89\x8d\xe7\xab\xaf\xe5\xb1\x95\xe7\xa4\xba\xe6\x96\xb0\xe9\x97\xbb')])),
             ],
+            options={
+                'verbose_name': '\u65b0\u95fb',
+                'verbose_name_plural': '\u65b0\u95fb',
+            },
         ),
         migrations.CreateModel(
             name='tb_News_Class',
@@ -254,6 +326,10 @@ class Migration(migrations.Migration):
                 ('necl_parent_id', models.IntegerField(verbose_name=b'\xe7\x88\xb6\xe7\xb1\xbbID')),
                 ('necl_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
             ],
+            options={
+                'verbose_name': '\u65b0\u95fb\u7c7b\u522b',
+                'verbose_name_plural': '\u65b0\u95fb\u7c7b\u522b',
+            },
         ),
         migrations.CreateModel(
             name='Tb_Notice',
@@ -268,6 +344,10 @@ class Migration(migrations.Migration):
                 ('Notice_is_display', models.IntegerField(verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe6\x98\xbe\xe7\xa4\xba')),
                 ('Notice_top', models.IntegerField(verbose_name=b'\xe5\xbc\xba\xe5\x88\xb6\xe7\xbd\xae\xe9\xa1\xb6')),
             ],
+            options={
+                'verbose_name': '\u516c\u544a ',
+                'verbose_name_plural': '\u516c\u544a',
+            },
         ),
         migrations.CreateModel(
             name='Tb_Notice_Class',
@@ -279,12 +359,16 @@ class Migration(migrations.Migration):
                 ('Nocl_parent_id', models.IntegerField(verbose_name=b'\xe7\x88\xb6\xe7\xb1\xbbID')),
                 ('Notice_sort', models.IntegerField(verbose_name=b'\xe6\x8e\x92\xe5\xba\x8f')),
             ],
+            options={
+                'verbose_name': '\u516c\u544a\u7c7b\u522b',
+                'verbose_name_plural': '\u516c\u544a\u7c7b\u522b',
+            },
         ),
         migrations.CreateModel(
             name='tb_order',
             fields=[
                 ('order_id', models.IntegerField(serialize=False, verbose_name=b'\xe8\x87\xaa\xe5\xa2\x9e\xe7\xb4\xa2\xe5\xbc\x95id\xe4\xb8\xbb\xe9\x94\xae', primary_key=True)),
-                ('order_no', models.IntegerField(verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe5\x8f\xb7')),
+                ('goods_id', models.IntegerField(verbose_name=b'\xe5\x95\x86\xe5\x93\x81id')),
                 ('pay_no', models.IntegerField(verbose_name=b'\xe6\x94\xaf\xe4\xbb\x98\xe5\x8d\x95\xe5\x8f\xb7')),
                 ('item_id', models.IntegerField(verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xaeid')),
                 ('item_name', models.CharField(max_length=40, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe5\x90\x8d\xe7\xa7\xb0')),
@@ -310,6 +394,10 @@ class Migration(migrations.Migration):
                 ('lock_state', models.IntegerField(default=0, verbose_name=b'\xe9\x94\x81\xe5\xae\x9a\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\xad\xa3\xe5\xb8\xb8'), (1, b'\xe9\x94\x81\xe5\xae\x9a')])),
                 ('express_state', models.IntegerField(default=1, verbose_name=b'\xe7\x89\xa9\xe6\xb5\x81\xe7\x8a\xb6\xe6\x80\x81', choices=[(1, b'\xe5\xbe\x85\xe5\x8f\x91\xe8\xb4\xa7'), (2, b'\xe5\xbe\x85\xe6\x94\xb6\xe8\xb4\xa7'), (3, b'\xe5\xb7\xb2\xe4\xbb\x98\xe6\xac\xbe'), (4, b'\xe5\xb7\xb2\xe5\x8f\x91\xe8\xb4\xa7')])),
             ],
+            options={
+                'verbose_name': '\u8ba2\u5355\u8868',
+                'verbose_name_plural': '\u8ba2\u5355\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_pic',
@@ -322,6 +410,10 @@ class Migration(migrations.Migration):
                 ('pic_size', models.IntegerField(default=0, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xaeID')),
                 ('upload_time', models.DateTimeField(auto_now=True, verbose_name=b'\xe5\x9b\xbe\xe7\x89\x87\xe4\xb8\x8a\xe4\xbc\xa0\xe6\x97\xb6\xe9\x97\xb4')),
             ],
+            options={
+                'verbose_name': '\u56fe\u7247\u8868',
+                'verbose_name_plural': '\u56fe\u7247\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_service_provider',
@@ -348,6 +440,10 @@ class Migration(migrations.Migration):
                 ('sp_auth', models.IntegerField(default=0, max_length=20, verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x95\x86\xe8\xae\xa4\xe8\xaf\x81\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\x9c\xaa\xe9\x80\x9a\xe8\xbf\x87\xe8\xae\xa4\xe8\xaf\x81'), (1, b'\xe9\x80\x9a\xe8\xbf\x87\xe8\xae\xa4\xe8\xaf\x81'), (2, b'\xe7\xad\x89\xe5\xbe\x85\xe8\xa2\xab\xe8\xae\xa4\xe8\xaf\x81'), (3, b'\xe6\xad\xa3\xe5\x9c\xa8\xe8\xae\xa4\xe8\xaf\x81')])),
                 ('is_recommend', models.IntegerField(default=1, max_length=20, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe4\xbc\x98\xe5\x85\x88\xe6\x8e\xa8\xe8\x8d\x90', choices=[(1, b'\xe4\xbc\x98\xe5\x85\x88\xe6\x8e\xa8\xe8\x8d\x90(\xe5\xbd\x93\xe6\x9c\x89\xe7\x9b\xb8\xe5\x90\x8c\xe6\x8a\xa5\xe4\xbb\xb7\xe7\x9a\x84\xe6\x9c\x8d\xe5\x8a\xa1\xe5\x95\x86\xef\xbc\x8c\xe6\x98\xaf\xe5\x90\xa6\xe4\xbc\x98\xe5\x85\x88\xe8\x80\x83\xe8\x99\x91\xe6\x8e\xa8\xe8\x8d\x90)'), (0, b'\xe4\xb8\x8d\xe4\xbc\x98\xe5\x85\x88\xe6\x8e\xa8\xe8\x8d\x90')])),
             ],
+            options={
+                'verbose_name': '\u670d\u52a1\u63d0\u4f9b\u5546',
+                'verbose_name_plural': '\u670d\u52a1\u63d0\u4f9b\u5546',
+            },
         ),
         migrations.CreateModel(
             name='tb_SysMessage',
@@ -357,6 +453,10 @@ class Migration(migrations.Migration):
                 ('mess_id', models.IntegerField()),
                 ('sys_status', models.IntegerField()),
             ],
+            options={
+                'verbose_name': '\u7cfb\u7edf\u4fe1\u606f\u8868',
+                'verbose_name_plural': '\u7cfb\u7edf\u4fe1\u606f\u8868',
+            },
         ),
         migrations.CreateModel(
             name='tb_user',
@@ -369,6 +469,10 @@ class Migration(migrations.Migration):
                 ('user_auth', models.IntegerField(default=0, max_length=20, verbose_name=b'\xe7\x94\xa8\xe6\x88\xb7\xe9\xaa\x8c\xe8\xaf\x81\xe7\x8a\xb6\xe6\x80\x81', choices=[(1, b'\xe9\x80\x9a\xe8\xbf\x87\xe9\xaa\x8c\xe8\xaf\x81'), (0, b'\xe9\xaa\x8c\xe8\xaf\x81\xe6\xb2\xa1\xe6\x9c\x89\xe9\x80\x9a\xe8\xbf\x87\xe6\x88\x96\xe8\x80\x85\xe6\xb2\xa1\xe6\x9c\x89\xe9\xaa\x8c\xe8\xaf\x81')])),
                 ('user_type', models.IntegerField(default=0, max_length=20, verbose_name=b'\xe6\xb3\xa8\xe5\x86\x8c\xe7\x94\xa8\xe6\x88\xb7\xe7\xb1\xbb\xe5\x9e\x8b', choices=[(0, b'\xe4\xb8\xaa\xe4\xba\xba\xe7\x94\xa8\xe6\x88\xb7'), (1, b'\xe4\xbc\x81\xe4\xb8\x9a\xe7\x94\xa8\xe6\x88\xb7')])),
             ],
+            options={
+                'verbose_name': '\u7528\u6237',
+                'verbose_name_plural': '\u7528\u6237',
+            },
         ),
         migrations.CreateModel(
             name='tb_user_expand',
@@ -384,5 +488,9 @@ class Migration(migrations.Migration):
                 ('company_stuff_no', models.IntegerField(verbose_name=b'\xe5\x85\xac\xe5\x8f\xb8\xe4\xba\xba\xe6\x95\xb0')),
                 ('company_nature', models.CharField(max_length=30, verbose_name=b'\xe5\x85\xac\xe5\x8f\xb8\xe6\x80\xa7\xe8\xb4\xa8')),
             ],
+            options={
+                'verbose_name': '\u7528\u6237\u6269\u5c55\u4fe1\u606f',
+                'verbose_name_plural': '\u7528\u6237\u6269\u5c55\u4fe1\u606f',
+            },
         ),
     ]

@@ -18,13 +18,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 #YZ addfor suit
-'''
+
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
-TEMPLATE_CONTEXT_PROCESSORS = TCP + (
+TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
 )
-'''
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    
 )
 
 ROOT_URLCONF = 'zhengzihui.urls'
@@ -240,3 +241,5 @@ EMAIL_HOST='smtp.qq.com'
 EMAIL_HOST_USER='changyifan123@qq.com'
 EMAIL_HOST_PASSWORD='yxvourocuizwbjbh'
 EMAIL_USE_TLS = True
+#SESSION浏览器关闭后失效
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True 
