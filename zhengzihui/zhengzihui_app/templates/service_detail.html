@@ -7,6 +7,7 @@
 
 <!-- assets -->
     <link rel="stylesheet" type="text/css" href="/static/css/jcarousel.connected-carousels.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/jquery-confirm.min.css">
 
     <script type="text/javascript" src="/static/js/jquery.js"></script>
     <script type="text/javascript" src="/static/js/jquery.jcarousel.min.js"></script>
@@ -16,6 +17,7 @@
     <script src="/static/js/Popt.js"></script>
     <script src="/static/js/cityJson.js"></script>
     <script src="/static/js/citySet.js"></script>
+	<script src="/static/js/jquery-confirm.min.js"></script>
 
  
 
@@ -343,7 +345,24 @@ $(document).ready(function(){
     });
 });
 </script>
-        
+{% if showDialogflag %}
+<script>
+	
+    $.confirm({
+        title: '未支付的订单!',
+        content: '你有一个浏览过但未支付的订单!',
+		confirmButton: '继续支付',
+    	cancelButton: '回到主页',
+        confirm: function(){
+            
+        },
+        cancel: function(){
+            window.location.assign("http://127.0.0.1:8000/index")
+        }
+    });
+</script>
+{% endif %}
+    
 	<div class="col-sm-2" id="myScrollspy1" style="margin-left:99%">
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
                 <li class="active"><a href="#">登录</a></li>

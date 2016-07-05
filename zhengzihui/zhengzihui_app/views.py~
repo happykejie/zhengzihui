@@ -162,7 +162,7 @@ def search_result(request):
     else:
     	#print (222)
     	items=tmiddle_items
-    print(len(items))
+    #print(len(items))
     if (len(items)>10):
     	items = items[:10]#不够10条报错
     for item in items:
@@ -528,11 +528,9 @@ def service_list(request):
         
 #YZ 服务商详情页面
 def service_details(request):
+    
     if request.GET['goodsid']:
- 
-        service_detail_goods_id = request.GET['goodsid']
-        
-     
+	    service_detail_goods_id = request.GET['goodsid']
     goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的服务商
     service_detail_item_id = goods.item_id
     item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
@@ -583,7 +581,13 @@ def service_details(request):
     #格式化日期
     publish_time_format = item.item_publish.strftime("%Y-%m-%d %H:%I:%S")
     datetime_format = item.item_deadtime.strftime("%Y-%m-%d %H:%I:%S")
-    return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display})
+    #判断是否是来自未登录用户的支付浏览
+    showDialogflag = 0
+    response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
+    if 'unregist_tobepay_goodsid' in request.COOKIES:
+	    response.delete_cookie('unregist_tobepay_goodsid')
+	    showDialogflag = 1
+    return response
     
     
     
@@ -1359,10 +1363,8 @@ def logout(request):
         response.delete_cookie('user_id')
         return response
 def selectpay(request):
+	#用户已经登陆，跳到选择支付这一步时自动删除为支付的订单标志
     if 'user_id' in request.COOKIES:
-        #先删除session 以免一登录就跳到service详情
-        
-             
         #goodsid 肯定存在的
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
@@ -1371,9 +1373,7 @@ def selectpay(request):
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
             return response
-       
-        
-
+	#若未登陆，计入未支付的商品ID号，跳到注册
     else:
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
