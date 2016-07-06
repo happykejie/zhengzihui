@@ -585,10 +585,14 @@ def service_details(request):
     showDialogflag = 0
     
     if 'unregist_tobepay_goodsid' in request.COOKIES:
-	    response.delete_cookie('unregist_tobepay_goodsid')
-	    showDialogflag = 1
-    response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
-    return response
+        showDialogflag = 1
+        response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
+        response.delete_cookie('unregist_tobepay_goodsid')
+        return response
+        
+    
+    print showDialogflag 
+    return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
     
     
     

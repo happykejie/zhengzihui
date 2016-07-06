@@ -583,10 +583,14 @@ def service_details(request):
     datetime_format = item.item_deadtime.strftime("%Y-%m-%d %H:%I:%S")
     #判断是否是来自未登录用户的支付浏览
     showDialogflag = 0
-    response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
+    
     if 'unregist_tobepay_goodsid' in request.COOKIES:
-	    response.delete_cookie('unregist_tobepay_goodsid')
-	    showDialogflag = 1
+        showDialogflag = 1
+        response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
+        response.delete_cookie('unregist_tobepay_goodsid')
+        
+    
+    print showDialogflag 
     return response
     
     
