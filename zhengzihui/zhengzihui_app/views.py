@@ -37,15 +37,21 @@ def Searchgoods(request):
         goodsnametmp = goodsname
         #print (goodsname)
         #goodsname="精准医学研究"
+        
+        search_content = "全部"#用于显示网站路径
         if goodsname is not None:
 	#fenleisousuo	
             if  goodsname.encode("utf-8") in allthebumen:
                 selected['bumen'] = goodsname.encode("utf-8")
 		#print selected['bumen']
                 request.session['bumen'] = goodsname.encode("utf-8")
+                request.session['search_content'] = goodsname.encode("utf_8")
                 return HttpResponseRedirect('/search_result/')
+                #return render(,'/search_result/')
 	#xiangmusousuo        
 	#分词
+            #一样更新session中的'bumen'值
+            request.session['bumen']=goodsname.encode("utf-8")
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
@@ -81,12 +87,14 @@ def Searchgoods(request):
                 a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
                 a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
                 a_items.append(a_item)
-    #有待完善，当输入'科技'等 关键词时无法显示
-    search_content = "全部"
+    #已经完善
+    
+    
     if goodsnametmp!='':
         search_content = goodsnametmp
-        if search_content =='':
-            search_content = selected
+        if 'search_content' in request.session:
+            del request.session['search_content']
+    
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'search_content':search_content})
 
 
@@ -197,7 +205,7 @@ def search_result(request):
 sortflag=True
 def search_result_sort_starttime(request):
     a_items = []
-
+    
     if(sortflag==True):
     	items = tb_item.objects.order_by('item_publish')
   	global sortflag
@@ -208,7 +216,7 @@ def search_result_sort_starttime(request):
 	sortflag=True
     
     for item in items:
-    	a_item = {}    
+        a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
         a_item['item_name'] = item.item_name#获取项目名字 
         a_item['item_ga'] = item.item_ga
@@ -250,7 +258,7 @@ def search_result_sort_deadtime(request):
 	sortflag1=True
     
     for item in items:
-    	a_item = {}    
+        a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
         a_item['item_name'] = item.item_name#获取项目名字 
         a_item['item_ga'] = item.item_ga
@@ -591,7 +599,7 @@ def service_details(request):
         return response
         
     
-    print showDialogflag 
+    #print showDialogflag 
     return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
     
     

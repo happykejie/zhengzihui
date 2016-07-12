@@ -18,12 +18,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 #YZ addfor suit
-
+'''
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
-)
+)'''
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -103,7 +104,7 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-     'PASSWORD':'123456',#password of mysql user
+     'PASSWORD':'123654',#password of mysql user
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }
