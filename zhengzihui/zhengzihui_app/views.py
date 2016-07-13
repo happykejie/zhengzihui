@@ -96,8 +96,12 @@ def Searchgoods(request):
         search_content = goodsnametmp
         if 'search_content' in request.session:
             del request.session['search_content']
-    
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'search_content':search_content})
+
+    #获得热门推荐的项目
+    recommendtemp = get_the_hotrecommend()
+    recommend = get_and_set_info(recommendtemp)
+    context = {'selected':selected,'flag':flag,'items':a_items,'search_content':search_content,'recommend':recommend,}
+    return render(request,'search_result.html',context)
 
 
 #zss 点击搜索的下一级
@@ -174,33 +178,13 @@ def search_result(request):
     	items=tmiddle_items
     #print(len(items))
     if (len(items)>10):
-    	items = items[:10]#不够10条报错
-    for item in items:
-        a_item = {}    
-        a_item['item_id'] = item.item_id#获取项目id
-        a_item['item_name'] = item.item_name#获取项目名字 
-        a_item['item_ga'] = item.item_ga
-        a_item['item_key'] = item.item_key
-        a_item['item_about'] = item.item_about
-        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
-        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
-        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
-        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
-        end_seconds = time.mktime(item.item_deadtime.timetuple())
-        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
-        if consume_time > 100:
-            a_item['item_consume_time'] = 100
-            a_item['item_key'] = "已结束"
-        else:
-            a_item['item_consume_time'] = int(consume_time)
-        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-        album_id = album.album_id
-        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
-        a_items.append(a_item)
-
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
+    	items = items[:10]#不够10条报错   ################被袁志注释了，原因是发生了bug，bug为
+    a_items = get_and_set_info(items)
+    #获得热门推荐的项目
+    recommend = []
+    recommendtemp = get_the_hotrecommend()
+    recommend = get_and_set_info(recommendtemp)
+    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'recommend':recommend,})
 
 ##############################
 #排序部分
@@ -211,12 +195,16 @@ def search_result(request):
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+def get_the_hotrecommend():
+    recommenditem = tb_item.objects.filter(is_recommend=1)
+    return recommenditem[:4]
+
 def get_and_set_info(items):
     a_items = []
     for item in items:
-        a_item = {}    
+        a_item = {}
         a_item['item_id'] = item.item_id#获取项目id
-        a_item['item_name'] = item.item_name#获取项目名字 
+        a_item['item_name'] = item.item_name#获取项目名字
         a_item['item_ga'] = item.item_ga
         a_item['item_key'] = item.item_key
         a_item['item_about'] = item.item_about
@@ -237,26 +225,29 @@ def get_and_set_info(items):
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
-    return a_items    
+    return a_items
 
 
-    
+
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
     a_items = []
-    
+
     if (sortbyLevelFlag==True):
         items = tb_item.objects.order_by('item_level')
-        global sortbyLevelFlag 
+        global sortbyLevelFlag
         sortbyLevelFlag= False
     else:
         items = tb_item.objects.order_by('-item_level')
-        global sortbyLevelFlag 
+        global sortbyLevelFlag
         sortbyLevelFlag= True
 
     a_items = get_and_set_info(items)
-    return render(request,'search_result.html',{'items':a_items})   
-        
+    #获得热门推荐的项目
+    recommendtemp = get_the_hotrecommend()
+    recommend = get_and_set_info(recommendtemp)
+    return render(request,'search_result.html',{'items':a_items,'recommend':recommend,})
+
 #按截至时间 排序存在的问题估计是因为 瀑布流每次只能取得10个所以 当超过10个之后再取的8 个 就出现了 重新排序，但是还是按顺序排列
 
 
@@ -273,13 +264,25 @@ def search_result_sort_deadtime(request):
     	items = tb_item.objects.order_by('-item_deadtime')
         global sortflag1
         sortflag1=True
-    
+
     a_items = get_and_set_info(items)
-    return render(request,'search_result.html',{'items':a_items})
-    
+    #获得热门推荐的项目
+    recommendtemp = get_the_hotrecommend()
+    recommend = get_and_set_info(recommendtemp)
+    return render(request,'search_result.html',{'items':a_items,'recommend':recommend,})
+
 #综合排序 现在仅靠点击率来排序
 def item_sortbyComprihensive(request):
-    pass
+    itemsinclick = tb_item_click.objects.order_by('-click_counter')
+    items = []
+    for thing in itemsinclick:
+        willappend = tb_item.objects.get(item_id=thing.item.item_id)
+        items.append(willappend)
+    a_items = get_and_set_info(items)
+    #获得热门推荐的项目
+    recommendtemp = get_the_hotrecommend()
+    recommend = get_and_set_info(recommendtemp)
+    return render(request,'search_result.html',{'items':a_items,'recommend':recommend,})
     
 
 ##############################
@@ -411,7 +414,9 @@ def project_detail(request):
         
        
     item = tb_item.objects.get(item_id = project_detail_item_id)
-    
+    item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name
+    #print item.item_pa_name
+    #print item.item_pa_name
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
     article0 = None
     article1 = None
@@ -426,8 +431,13 @@ def project_detail(request):
         pass
     #article2 = article[2]
     if ((article0 == None)and(article1==None)):
+        #获得热门推荐的项目
+        recommendtemp = get_the_hotrecommend()
+        recommend = get_and_set_info(recommendtemp)
+        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,}
+        return render(request,'project_detail.html',context)
         
-        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
+
     else:
        
 
@@ -437,8 +447,11 @@ def project_detail(request):
         for pic in pics:
             a_pic = pic.pic_object.url[14:]
             a_pics.append(a_pic)
-    
-        return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
+        #获得热门推荐的项目
+        recommendtemp = get_the_hotrecommend()
+        recommend = get_and_set_info(recommendtemp)
+        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,}
+        return render(request,'project_detail.html',context)
         
         
 #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了        

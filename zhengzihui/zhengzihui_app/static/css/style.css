@@ -5,7 +5,7 @@ p {margin: 0;}
 html, body{
    font-family:  cursive;
    font-size: 100%;
-   background:#f8f8f8; 
+   background:#f8f8f8;
 }
 body a{
 	transition:0.5s all;
@@ -105,7 +105,7 @@ ul.subproject li a {
 	padding: 5px 10px;
 }
 
-button.btn {
+button.product_btn {
   margin: 30px 20px;
   padding: 15px 20px;
   border-radius: 10px;
@@ -122,16 +122,16 @@ button.btn {
 
 
 /* btn-9 */
-button.btn {
+button.product_btn {
   color: #000000;
   border-color: none;
   overflow: hidden;
   position: relative;
   background-color: #FFE4F3;
-  
+
 }
 
-button.btn:hover {
+button.product_btn:hover {
   color: #ffffff;
   background-color: #FD235D;
 
@@ -347,17 +347,7 @@ ul.tab_list li a:hover {
 
 
 button {
-  margin: 30px 20px;
-  padding: 15px 20px;
-  border-radius: 10px;
-  border: 2px solid;
-  font: 18px cursive;
-  text-transform: uppercase;
-  background: none;
-  outline: none;
-  cursor: pointer;
-  -webkit-transition: all .5s;
-  transition: all .5s;
+
 }
 
 
