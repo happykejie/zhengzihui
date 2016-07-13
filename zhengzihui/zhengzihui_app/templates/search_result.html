@@ -283,20 +283,15 @@ $("#city").click(function (e) {
         
         <div class="sort">
             <span>
-                <a href="#">
+                <a href="{% url 'item_sortbyComprihensive'%}">
                 <!--<input type="hidden" name="bumen" value="{{ selected.bumen }}">-->
                     综合
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
+            
             <span>
-                <a href="{% url 'search_result_sort_starttime'%}">
-                    挂网时间
-                </a>
-                <span class="glyphicon glyphicon-triangle-bottom"></span>
-            </span>
-            <span>
-                <a href="#">
+                <a href="{% url 'item_sortbyLevel' %}">
                     级别
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>

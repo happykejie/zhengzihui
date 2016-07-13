@@ -200,21 +200,17 @@ def search_result(request):
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
-##############################服务商排序by LJW
-#按发布时间
-sortflag=True
-def search_result_sort_starttime(request):
+##############################
+#排序部分
+##############################
+#By 袁志
+#按资金级别排序，顺序为中央、省级、市级、县级或者反序
+
+'''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
+    输入项目对象列表；输出一个列表，包含所有序列化的项目
+'''
+def get_and_set_info(items):
     a_items = []
-    
-    if(sortflag==True):
-    	items = tb_item.objects.order_by('item_publish')
-  	global sortflag
-	sortflag=False
-    else:
-    	items = tb_item.objects.order_by('-item_publish')
-  	global sortflag
-	sortflag=True
-    
     for item in items:
         a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
@@ -239,49 +235,51 @@ def search_result_sort_starttime(request):
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
-    return render(request,'search_result.html',{'items':a_items})
-    
+    return a_items    
 
+
+    
+sortbyLevelFlag = True
+def item_sortbyLevel(request):
+    a_items = []
+    
+    if (sortbyLevelFlag==True):
+        items = tb_item.objects.order_by('item_level')
+        global sortbyLevelFlag 
+        sortbyLevelFlag= False
+    else:
+        items = tb_item.objects.order_by('-item_level')
+        global sortbyLevelFlag 
+        sortbyLevelFlag= True
+
+    a_items = get_and_set_info(items)
+    return render(request,'search_result.html',{'items':a_items})   
+        
 #按截至时间 排序存在的问题估计是因为 瀑布流每次只能取得10个所以 当超过10个之后再取的8 个 就出现了 重新排序，但是还是按顺序排列
 
+
+###服务商排序by LJW
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
 
     if(sortflag1==True):
     	items = tb_item.objects.order_by('item_deadtime')
-  	global sortflag1
-	sortflag1=False
+        global sortflag1
+        sortflag1=False
     else:
     	items = tb_item.objects.order_by('-item_deadtime')
-  	global sortflag1
-	sortflag1=True
+        global sortflag1
+        sortflag1=True
     
-    for item in items:
-        a_item = {}    
-        a_item['item_id'] = item.item_id#获取项目id
-        a_item['item_name'] = item.item_name#获取项目名字 
-        a_item['item_ga'] = item.item_ga
-        a_item['item_key'] = item.item_key
-        a_item['item_about'] = item.item_about
-        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
-        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
-        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
-        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
-        end_seconds = time.mktime(item.item_deadtime.timetuple())
-        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
-        if consume_time > 100:
-            a_item['item_consume_time'] = 100
-            a_item['item_key'] = "已结束"
-        else:
-            a_item['item_consume_time'] = int(consume_time)
-        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-        album_id = album.album_id
-        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
-        a_items.append(a_item)
+    a_items = get_and_set_info(items)
     return render(request,'search_result.html',{'items':a_items})
+    
+#综合排序 现在仅靠点击率来排序
+def item_sortbyComprihensive(request):
+    pass
+    
+
 ##############################
 
 

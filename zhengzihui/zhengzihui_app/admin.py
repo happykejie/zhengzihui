@@ -105,13 +105,13 @@ class tb_item_Admin(admin.ModelAdmin):
     list_display = ['item_id', 'item_code', 'item_name','itcl_id', 'item_level', 'item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']
 
 
-class tb_item_click_Admin(admin.ModelAdmin):
+'''class tb_item_click_Admin(admin.ModelAdmin):
     fieldsets = [
-            ('添加项目点击率',{'fields':['item_id','item_name','itcl_id','click_counter']}),
+            ('添加项目点击率',{'fields':['itcl_id','click_counter']}),
     
     ]
-    list_display =['item_id','item_name','itcl_id','click_counter']
-
+    list_display =['itcl_id','click_counter']
+'''
 class tb_item_class_Admin(admin.ModelAdmin):
     fieldsets = [
             ('添加项目分类',{'fields':['itcl_id','itcl_code','itcl_name','itcl_des','necl_parent_id','necl_sort']}),
@@ -212,7 +212,7 @@ admin.site.register(tb_album,tb_album_Admin)
 admin.site.register(tb_pic,tb_pic_Admin)
 admin.site.register(tb_accessory)
 admin.site.register(tb_item,tb_item_Admin)
-admin.site.register(tb_item_click,tb_item_click_Admin)
+admin.site.register(tb_item_click)
 admin.site.register(tb_item_pa,tb_item_pa_Admin)
 admin.site.register(tb_area,tb_area_Admin)
 admin.site.register(tb_item_class,tb_item_class_Admin)
