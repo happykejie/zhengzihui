@@ -18,12 +18,13 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 import os
 #YZ addfor suit
-
+'''
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
-)
+)'''
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

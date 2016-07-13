@@ -23,7 +23,7 @@ def index(request):
 	#print (123)
 	return render_to_response('index.html',{})
 
-
+#xcz 搜索
 def Searchgoods(request):
     allthebumen=['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     a_items = []
@@ -39,15 +39,21 @@ def Searchgoods(request):
         goodsnametmp = goodsname
         #print (goodsname)
         #goodsname="精准医学研究"
+        
+        search_content = "全部"#用于显示网站路径
         if goodsname is not None:
 	#fenleisousuo	
             if  ((typefsearch.encode("utf-8") )=="发布部门"):
                 selected['bumen'] = goodsname.encode("utf-8")
 		#print selected['bumen']
                 request.session['bumen'] = goodsname.encode("utf-8")
+                request.session['search_content'] = goodsname.encode("utf_8")
                 return HttpResponseRedirect('/search_result/')
+                #return render(,'/search_result/')
 	#xiangmusousuo        
 	#分词
+            #一样更新session中的'bumen'值
+            request.session['bumen']=goodsname.encode("utf-8")
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
@@ -83,12 +89,14 @@ def Searchgoods(request):
                 a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
                 a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
                 a_items.append(a_item)
-    #有待完善，当输入'科技'等 关键词时无法显示
-    search_content = "全部"
+    #已经完善
+    
+    
     if goodsnametmp!='':
         search_content = goodsnametmp
-        if search_content =='':
-            search_content = selected
+        if 'search_content' in request.session:
+            del request.session['search_content']
+    
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'search_content':search_content})
 
 
@@ -194,23 +202,19 @@ def search_result(request):
 
     return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items})
 
-##############################服务商排序by LJW
-#按发布时间
-sortflag=True
-def search_result_sort_starttime(request):
-    a_items = []
+##############################
+#排序部分
+##############################
+#By 袁志
+#按资金级别排序，顺序为中央、省级、市级、县级或者反序
 
-    if(sortflag==True):
-    	items = tb_item.objects.order_by('item_publish')
-  	global sortflag
-	sortflag=False
-    else:
-    	items = tb_item.objects.order_by('-item_publish')
-  	global sortflag
-	sortflag=True
-    
+'''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
+    输入项目对象列表；输出一个列表，包含所有序列化的项目
+'''
+def get_and_set_info(items):
+    a_items = []
     for item in items:
-    	a_item = {}    
+        a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
         a_item['item_name'] = item.item_name#获取项目名字 
         a_item['item_ga'] = item.item_ga
@@ -233,53 +237,55 @@ def search_result_sort_starttime(request):
         a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
-    return render(request,'search_result.html',{'items':a_items})
-    
+    return a_items    
 
+
+    
+sortbyLevelFlag = True
+def item_sortbyLevel(request):
+    a_items = []
+    
+    if (sortbyLevelFlag==True):
+        items = tb_item.objects.order_by('item_level')
+        global sortbyLevelFlag 
+        sortbyLevelFlag= False
+    else:
+        items = tb_item.objects.order_by('-item_level')
+        global sortbyLevelFlag 
+        sortbyLevelFlag= True
+
+    a_items = get_and_set_info(items)
+    return render(request,'search_result.html',{'items':a_items})   
+        
 #按截至时间 排序存在的问题估计是因为 瀑布流每次只能取得10个所以 当超过10个之后再取的8 个 就出现了 重新排序，但是还是按顺序排列
 
+
+###服务商排序by LJW
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
 
     if(sortflag1==True):
     	items = tb_item.objects.order_by('item_deadtime')
-  	global sortflag1
-	sortflag1=False
+        global sortflag1
+        sortflag1=False
     else:
     	items = tb_item.objects.order_by('-item_deadtime')
-  	global sortflag1
-	sortflag1=True
+        global sortflag1
+        sortflag1=True
     
-    for item in items:
-    	a_item = {}    
-        a_item['item_id'] = item.item_id#获取项目id
-        a_item['item_name'] = item.item_name#获取项目名字 
-        a_item['item_ga'] = item.item_ga
-        a_item['item_key'] = item.item_key
-        a_item['item_about'] = item.item_about
-        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
-        a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
-        a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
-        start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
-        end_seconds = time.mktime(item.item_deadtime.timetuple())
-        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
-        if consume_time > 100:
-            a_item['item_consume_time'] = 100
-            a_item['item_key'] = "已结束"
-        else:
-            a_item['item_consume_time'] = int(consume_time)
-        a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-        album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-        album_id = album.album_id
-        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
-        a_items.append(a_item)
+    a_items = get_and_set_info(items)
     return render(request,'search_result.html',{'items':a_items})
+    
+#综合排序 现在仅靠点击率来排序
+def item_sortbyComprihensive(request):
+    pass
+    
+
 ##############################
 
 
-#zss项目信息滚动加载瀑布流
+#xcz项目信息滚动加载瀑布流
 def search_result_load(request):
     a_items = []
     last_times = request.GET['times']
@@ -593,7 +599,7 @@ def service_details(request):
         return response
         
     
-    print showDialogflag 
+    #print showDialogflag 
     return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
     
     
@@ -602,14 +608,14 @@ def service_details(request):
 
 	
 
-    
+#xcz    
 def Payback(request):
 	order_id=request.session['unpayedid']
 	u = tb_order.objects.get(order_id=order_id)
 	u['order_state']=2
 	u.save()
 	return HttpResponseRedirect('/zzh/user_center')
-
+#xcz
 def pay(request):
 	"""
 	the function of payment
@@ -1208,7 +1214,7 @@ def g_register(request):
             return render_to_response('register2.html')
     return render_to_response('g_register.html',{'errors':errors})
     
-#企业注册
+#不正经的企业注册 by gj
 def q_register(request):  
     errors= []  
     account=None     
@@ -1491,7 +1497,8 @@ def active_user(request, token):
 	return HttpResponseRedirect('/login',{})
 		
 	
-#自动提示	
+
+#自动提示xcz	
 def  tag_autocomplete(request):  
         if request.GET.has_key("term"):
             tags = tb_item.objects.filter(item_name__icontains = request.GET["term"])[:10]
@@ -1505,6 +1512,84 @@ def  tag_autocomplete(request):
         return  HR()  
 	
 	
+
+	
+	
+#正儿八经的企业注册 by cyf ing……
+
+''''def companyRegister(request):
+    errors = []
+    companyUserName = None
+    companyUserPassword = None
+    user_password2 = None
+    companyUserCompanyName = None
+    companyUserCompanyLocation = None
+    companyUserCompanyAddress = None
+    companyUserCompanyNumberOfPeople = None
+    companyUserCompanyIndustry = None
+    companyUserCompanyNature = None
+    companyUserContactName = None
+    companyUserContactsDepartment = None
+    companyUserPhone = None
+    companyUserTelephone = None
+    companyUserEmail= None
+    falg = False
+    add = []
+    if request.method == 'POST':
+        if not request.POST.get('_username'):
+            errors.append('请输用户名')
+        else:
+            user_name = request.POST.get('_username')
+        if not request.POST.get('_email'):
+            errors.append('请输入邮箱')
+        else:
+            user_email = request.POST.get('_email')
+        if not request.POST.get('password'):
+            errors.append('请输入密码')
+        else:
+            user_password = request.POST.get('password')
+        if not request.POST.get('password2'):
+            errors.append('请重复输入密码')
+        else:
+            user_password2 = request.POST.get('password2')
+        if user_password is not None and user_password2 is not None:
+            if user_password == user_password2:
+                falg = True
+            else:
+                errors.append('两次密码输入不一致')
+        if not request.POST.get('_telephone'):
+            errors.append('请输入电话号码')
+        else:
+            user_telephone = request.POST.get('_telephone')
+
+        if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
+            ''''自我评价：写的真特么蠢''''
+            try:
+                user = tb_user.objects.get(user_name=user_name)
+                errors.append('用户名已存在')
+                return render_to_response('g_register.html', {'errors': errors})
+            except tb_user.DoesNotExist:
+                pass
+            add = tb_user()
+            add.user_name = user_name
+
+            add.user_password = user_password
+            add.user_telephone = user_telephone
+            add.user_email = user_email
+            add.user_auth = 0
+
+            add.save()
+            user_id = add.user_id
+            token = token_confirm.generate_validate_token(user_name)
+            print(token)
+            message = "\n".join([u'{0},欢迎注册政资汇'.format(user_name), u'请访问该链接，完成用户验证(链接1小时内有效):',
+                                 '/'.join(['127.0.0.1:8000', 'register2', token])])
+            # message = '/'.join(['127.0.0.1:8000','register2',token])
+            send_mail(u'注册用户验证信息', message, 'changyifan123@qq.com', [user_email])
+
+            return render_to_response('register2.html')
+    return render_to_response('g_register.html', {'errors': errors})'''''
+
 	
 	
 	

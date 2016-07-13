@@ -25,7 +25,7 @@ class tb_user(models.Model):
     (NOTPASSAUTH,"验证没有通过或者没有验证"),
     
     )
-    user_auth = models.IntegerField("用户验证状态",max_length=20,choices=USER_AUTH_CHOICES,default=NOTPASSAUTH)#用户验证状态0：验证没有通过或者没有验证1：验证通过
+    user_auth = models.IntegerField("用户验证状态",choices=USER_AUTH_CHOICES,default=NOTPASSAUTH)#用户验证状态0：验证没有通过或者没有验证1：验证通过
     
     
     Enterprise = 1
@@ -34,7 +34,7 @@ class tb_user(models.Model):
     (Personal,'个人用户'),
     (Enterprise,'企业用户'),
     )
-    user_type = models.IntegerField("注册用户类型",max_length=20,choices=User_Type_CHOICES,default=Personal)
+    user_type = models.IntegerField("注册用户类型",choices=User_Type_CHOICES,default=Personal)
     class Meta:
         verbose_name = '用户'
         verbose_name_plural = '用户' 
@@ -116,7 +116,7 @@ class  tb_service_provider(models.Model):
     (AUTHING,"正在认证"),
     )
     
-    sp_auth = models.IntegerField("服务商认证状态",max_length=20,choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
+    sp_auth = models.IntegerField("服务商认证状态",choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
     
     RECOMMEND = 1
     NOTRECOMMED = 0
@@ -165,7 +165,7 @@ class tb_News(models.Model):
     (NOTHASALBUM,'没有相册'),
     )
     
-    has_album =  models.IntegerField("是否拥有自己的相册",max_length=20,choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False)
+    has_album =  models.IntegerField("是否拥有自己的相册",choices=HAS_ALBUM_CHOICES,default=NOTHASALBUM,null=False,blank=False)
     
     HOT = 1
     NOTHOT = 0
@@ -183,7 +183,7 @@ class tb_News(models.Model):
     (NOTTOP,'非置顶新闻'),
     
     )
-    new_top = models.IntegerField("是否为置顶新闻",max_length=20,choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False)
+    new_top = models.IntegerField("是否为置顶新闻",choices=NEWS_TOP_CHOICES,default=NOTTOP,null=False,blank=False)
     
     DISPLAY = 1
     NOTDISPLAY = 0
@@ -192,7 +192,7 @@ class tb_News(models.Model):
     (NOTDISPLAY,'非前端展示新闻'),
     
     )
-    new_is_display =  models.IntegerField("是否为前端展示新闻",max_length=20,choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
+    new_is_display =  models.IntegerField("是否为前端展示新闻",choices=NEWS_IS_DISPLAY_CHOICES,default=NOTDISPLAY,null=False,blank=False)
     class Meta:
         verbose_name = '新闻'
         verbose_name_plural = '新闻' 
@@ -340,6 +340,19 @@ class tb_item(models.Model):
     def __unicode__(self):   #python 2 
         return self.item_name
 
+        
+class tb_item_click(models.Model):
+    item = models.ForeignKey(tb_item,verbose_name="项目id",null=False)
+    
+    itcl_id = models.IntegerField("项目分类id",null = False)
+    click_counter = models.IntegerField("点击率",null = False,default=0)
+    class Meta:
+        verbose_name = '项目点击表'
+        verbose_name_plural = '项目点击表'
+    def __unicode__(self):
+        return self.item_name
+        
+        
 class tb_item_pa(models.Model):
     ipa_id = models.IntegerField('ID', primary_key=True,null=False)
     ipa_name = models.CharField('机构名称',max_length=100,null=False)
@@ -364,16 +377,7 @@ class tb_area(models.Model):
     def __unicode__(self):
         return self.area_name
 
-class tb_item_click(models.Model):
-    item_id = models.IntegerField("项目id",null=False)
-    item_name = models.CharField("项目名称",max_length =100, null = False)
-    itcl_id = models.IntegerField("项目分类id",null = False)
-    click_counter = models.IntegerField("点击率",null = False,default=0)
-    class Meta:
-        verbose_name = '项目点击表'
-        verbose_name_plural = '项目点击表'
-    def __unicode__(self):
-        return self.item_name
+
 
 class tb_item_class(models.Model):
     itcl_id = models.IntegerField('ID', primary_key=True,null=False)
@@ -682,6 +686,7 @@ class tb_goods_evaluation(models.Model):
 
 class tb_order(models.Model):
     order_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
+    order_no = models.IntegerField('订单编号',null=False)
     goods_id = models.IntegerField("商品id",null = False)
     pay_no = models.IntegerField("支付单号",null = False)
     item_id = models.IntegerField("项目id",null = False)
@@ -774,8 +779,28 @@ class tb_order(models.Model):
         return self.item_name
       
     
-    
-    
-    
-    
-    
+#还未激活的代码
+'''class tb_companyUser(models.Model):
+    companyUserId = models.AutoField("用户id",primary_key = True)
+    companyUserName = models.CharField("用户名",max_length=100,null=False,blank=False)
+    companyUserPassword = models.CharField("密码",max_length=100,null=False,blank=False)
+    #companyUserTelephone = models.CharField("电话",max_length=40,null=False,blank=False)
+    #companyUserEmail = models.EmailField("用户邮箱",null=False,blank=False)
+    companyUserCompanyName = models.CharField("公司名称",max_length=100,null=False,blank=False)
+    companyUserCompanyLocation = models.CharField("公司位置",max_length=100,null=False,blank=False)#省市县
+    companyUserCompanyAddress = models.CharField("公司地址",max_length=100,null=False,blank=False)
+    companyUserCompanyNumberOfPeople = models.CharField("公司人数",max_length=100,null=False,blank=False)
+    companyUserCompanyIndustry = models.CharField("公司行业",max_length=100,null=False,blank=False)
+    companyUserCompanyNature = models.CharField("公司性质",max_length=100,null=False,blank=False)
+    companyUserContactName = models.CharField("联系人姓名",max_length=40,null=False,blank=False)
+    companyUserContactsDepartment = models.CharField("联系人所在部门",max_length=40,null=False,blank=False)
+    companyUserPhone = models.CharField("固话", max_length=40, null=False, blank=False)#固话
+    companyUserTelephone = models.CharField("手机", max_length=40, null=False, blank=False)#手机
+    companyUserEmail = models.EmailField("用户邮箱", null=False, blank=False)
+
+    def __unicode__(self):
+        return self.companyUserName
+    def __unicode__(self):
+        return self.companyUserCompanyName
+    def __unicode__(self):
+        return self.companyUserContactName'''

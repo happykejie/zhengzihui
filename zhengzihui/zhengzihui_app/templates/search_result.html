@@ -163,7 +163,7 @@ $("#city").click(function (e) {
         </span>
         <span>
             <a href="">
-                搜索 "{{search_content}}" 的结果
+                搜索 "{{search_content}}{{request.session.search_content}}" 的结果
             </a>
         </span>
     </div>
@@ -225,6 +225,10 @@ $("#city").click(function (e) {
             <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
 
         </div>
+        
+        
+        
+        
         <div class="f-row clearfix">
             <div class="f-head">
                 <span id="jibie">
@@ -269,37 +273,25 @@ $("#city").click(function (e) {
             <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
         </div>
     </div>
+        
 		{% if flag %}
 		<div>
-			<p>您已经选择：</p>
-				
-			<p>
-			{{ selected.bumen }}
-			</p>
-			<p>
-			{{ selected.jibie }}
-			</p>
-			<p>
-			{{ selected.zhuangtai }}
-			</p>
+			<p>您已经选择：{{ selected.bumen }};{{ selected.jibie }};{{ selected.zhuangtai }}</p>
+            <p></p>
 		</div>
 		{% endif %}
+        
         <div class="sort">
             <span>
-                <a href="#">
+                <a href="{% url 'item_sortbyComprihensive'%}">
                 <!--<input type="hidden" name="bumen" value="{{ selected.bumen }}">-->
                     综合
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
+            
             <span>
-                <a href="{% url 'search_result_sort_starttime'%}">
-                    挂网时间
-                </a>
-                <span class="glyphicon glyphicon-triangle-bottom"></span>
-            </span>
-            <span>
-                <a href="#">
+                <a href="{% url 'item_sortbyLevel' %}">
                     级别
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
