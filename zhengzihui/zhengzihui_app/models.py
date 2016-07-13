@@ -779,8 +779,28 @@ class tb_order(models.Model):
         return self.item_name
       
     
-    
-    
-    
-    
-    
+#还未激活的代码
+'''class tb_companyUser(models.Model):
+    companyUserId = models.AutoField("用户id",primary_key = True)
+    companyUserName = models.CharField("用户名",max_length=100,null=False,blank=False)
+    companyUserPassword = models.CharField("密码",max_length=100,null=False,blank=False)
+    #companyUserTelephone = models.CharField("电话",max_length=40,null=False,blank=False)
+    #companyUserEmail = models.EmailField("用户邮箱",null=False,blank=False)
+    companyUserCompanyName = models.CharField("公司名称",max_length=100,null=False,blank=False)
+    companyUserCompanyLocation = models.CharField("公司位置",max_length=100,null=False,blank=False)#省市县
+    companyUserCompanyAddress = models.CharField("公司地址",max_length=100,null=False,blank=False)
+    companyUserCompanyNumberOfPeople = models.CharField("公司人数",max_length=100,null=False,blank=False)
+    companyUserCompanyIndustry = models.CharField("公司行业",max_length=100,null=False,blank=False)
+    companyUserCompanyNature = models.CharField("公司性质",max_length=100,null=False,blank=False)
+    companyUserContactName = models.CharField("联系人姓名",max_length=40,null=False,blank=False)
+    companyUserContactsDepartment = models.CharField("联系人所在部门",max_length=40,null=False,blank=False)
+    companyUserPhone = models.CharField("固话", max_length=40, null=False, blank=False)#固话
+    companyUserTelephone = models.CharField("手机", max_length=40, null=False, blank=False)#手机
+    companyUserEmail = models.EmailField("用户邮箱", null=False, blank=False)
+
+    def __unicode__(self):
+        return self.companyUserName
+    def __unicode__(self):
+        return self.companyUserCompanyName
+    def __unicode__(self):
+        return self.companyUserContactName'''
