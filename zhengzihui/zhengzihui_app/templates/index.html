@@ -4,12 +4,31 @@
   <title>政资汇主页</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+
   <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
+  <script src="../static/jquery-2.14/jquery.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.core.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script> 
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.position.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.menu.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.autocomplete.js"></script>
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/demos/demos.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">   
   <script src="../static/js/Popt.js"></script>
   <script src="../static/js/cityJson.js"></script>
   <script src="../static/js/citySet.js"></script>
+  	<script >
+
+	  $(document).ready(function () {  
+	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
+	});
+	</script>
+   <!--$( "#inputitem" ).autocomplete('/searchforc/', {multiple: true, multipleSeparator: ' '});-->
+  
   <style type="text/css"><!--附加导航样式-->
     /* Custom Styles */
     ul.nav-tabs{
@@ -111,12 +130,25 @@ $("#city").click(function (e) {
 			</div>
 		</div>
 		<div class="search">
-			<form action="/search" method="GET" class="search">
-					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
-					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:10%">搜索</button>
-			</form>
-			<button type="button" class="btn btn-primary btn-lg" style="float:left;width:15%" onclick="javascript:window.location.href='#'">有偿申报</button>
+			<div class="row">
+				<form action="/search" method="GET" class="search">
+					<div class="col-md-2" style="float:left;padding:0px">
+					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px"> 
+    						  <option>全部</option>
+   						  <option>发布部门</option>		 
+    					  </select>
+    					  </div>
+    					<div class="col-sm-6" style="float:left;padding:0px">
+					<input class="input input-lg"  id="inputitem" name="inputitem" style="float:left;width:80%;">
+					<button type="submit" class="btn btn-primary btn-lg btn-block" style="float:left;width:20%">搜索</button>
+					</div>
+				</form>
+			<div class="col-sm-2" style="float:left;padding:0px">
+			<button type="button" class="btn btn-primary btn-lg btn-block" style="float:left;" onclick="javascript:window.location.href='#'">有偿申报</button>
+			</div>
+			</div>
 		</div>
+      
       
   </div>
 </div>

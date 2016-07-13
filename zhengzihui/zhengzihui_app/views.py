@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse as HR
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from itertools import chain
@@ -32,6 +33,7 @@ def Searchgoods(request):
     items=[]
     
     if (request.method=="GET"):	
+        typefsearch=request.GET.get("Typeforsearch")
         goodsname=request.GET.get("inputitem")
         #后面取值用
         goodsnametmp = goodsname
@@ -39,7 +41,7 @@ def Searchgoods(request):
         #goodsname="精准医学研究"
         if goodsname is not None:
 	#fenleisousuo	
-            if  goodsname.encode("utf-8") in allthebumen:
+            if  ((typefsearch.encode("utf-8") )=="发布部门"):
                 selected['bumen'] = goodsname.encode("utf-8")
 		#print selected['bumen']
                 request.session['bumen'] = goodsname.encode("utf-8")
@@ -1489,9 +1491,18 @@ def active_user(request, token):
 	return HttpResponseRedirect('/login',{})
 		
 	
-	
-	
-	
+#自动提示	
+def  tag_autocomplete(request):  
+        if request.GET.has_key("term"):
+            tags = tb_item.objects.filter(item_name__icontains = request.GET["term"])[:10]
+            results = [ x.item_name for x in tags ]
+            es = json.dumps(results)
+            #print(es)
+           #i='\n'.join(tag.item_name for tag in tags)
+            #j=i.encode("utf-8")
+            #print(j)
+            return  HR(es)
+        return  HR()  
 	
 	
 	

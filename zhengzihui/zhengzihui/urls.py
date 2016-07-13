@@ -43,6 +43,7 @@ urlpatterns = [
     
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
 
+    url(r'^searchforc/', 'zhengzihui_app.views.tag_autocomplete',name='auto'),  
     
 
 #用户中心
