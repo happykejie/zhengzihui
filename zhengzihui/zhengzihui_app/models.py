@@ -124,7 +124,7 @@ class  tb_service_provider(models.Model):
     (RECOMMEND,'优先推荐(当有相同报价的服务商，是否优先考虑推荐)'),
     (NOTRECOMMED,'不优先推荐'),
     )
-    is_recommend = models.IntegerField("是否优先推荐",max_length=20,choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
+    is_recommend = models.IntegerField("是否优先推荐",choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
     class Meta:
         verbose_name = '服务提供商'
         verbose_name_plural = '服务提供商' 
@@ -174,7 +174,7 @@ class tb_News(models.Model):
     (NOTHOT,'非热点新闻'),
     
     )
-    news_hot = models.IntegerField("是否为热点新闻",max_length=20,choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False)
+    news_hot = models.IntegerField("是否为热点新闻",choices=NEWS_HOT_CHOICES,default=NOTHOT,null=False,blank=False)
     
     TOP = 1
     NOTTOP = 0
@@ -780,20 +780,18 @@ class tb_order(models.Model):
       
     
 #还未激活的代码
-'''class tb_companyUser(models.Model):
+class tb_companyuser(models.Model):
     companyUserId = models.AutoField("用户id",primary_key = True)
     companyUserName = models.CharField("用户名",max_length=100,null=False,blank=False)
     companyUserPassword = models.CharField("密码",max_length=100,null=False,blank=False)
-    #companyUserTelephone = models.CharField("电话",max_length=40,null=False,blank=False)
-    #companyUserEmail = models.EmailField("用户邮箱",null=False,blank=False)
     companyUserCompanyName = models.CharField("公司名称",max_length=100,null=False,blank=False)
     companyUserCompanyLocation = models.CharField("公司位置",max_length=100,null=False,blank=False)#省市县
     companyUserCompanyAddress = models.CharField("公司地址",max_length=100,null=False,blank=False)
-    companyUserCompanyNumberOfPeople = models.CharField("公司人数",max_length=100,null=False,blank=False)
+    companyUserCompanyCapital = models.CharField("注册资本",max_length=100,null=False,blank=False)
+    companyUserCompanyPeople = models.CharField("公司人数",max_length=100,null=False,blank=False)
     companyUserCompanyIndustry = models.CharField("公司行业",max_length=100,null=False,blank=False)
     companyUserCompanyNature = models.CharField("公司性质",max_length=100,null=False,blank=False)
     companyUserContactName = models.CharField("联系人姓名",max_length=40,null=False,blank=False)
-    companyUserContactsDepartment = models.CharField("联系人所在部门",max_length=40,null=False,blank=False)
     companyUserPhone = models.CharField("固话", max_length=40, null=False, blank=False)#固话
     companyUserTelephone = models.CharField("手机", max_length=40, null=False, blank=False)#手机
     companyUserEmail = models.EmailField("用户邮箱", null=False, blank=False)
@@ -803,4 +801,4 @@ class tb_order(models.Model):
     def __unicode__(self):
         return self.companyUserCompanyName
     def __unicode__(self):
-        return self.companyUserContactName'''
+        return self.companyUserContactName

@@ -1227,75 +1227,8 @@ def g_register(request):
             return render_to_response('register2.html')
     return render_to_response('g_register.html',{'errors':errors})
     
-#不正经的企业注册 by gj
-def q_register(request):  
-    errors= []  
-    account=None     
-    password=None  
-    password2=None  
-    CompareFlag=False
-    company=None
-    address=None
-    capital=None
-    name=None
-    telephone=None
-    email=None
 
-    if request.method == 'POST':  
-        if not request.POST.get('account'):  
-            errors.append('请输用户名')  
-        else:  
-            account = request.POST.get('account')  
-        if not request.POST.get('password'):  
-            errors.append('请输入密码')  
-        else:  
-            password= request.POST.get('password')  
-        if not request.POST.get('password2'):  
-            errors.append('请确认密码')  
-        else:  
-            password2= request.POST.get('password2')  
-  
-        if password is not None and password2 is not None:  
-            if password == password2:  
-                CompareFlag = True  
-            else :  
-                errors.append('两次输入密码不一致，请重新输入 ')  
-  
-        if not request.POST.get('company'):  
-            errors.append('请输入公司名称')  
-        else:  
-            company= request.POST.get('company')
 
-        if not request.POST.get('address'):  
-            errors.append('请输入公司注册地址')  
-        else:  
-            address= request.POST.get('address')
-
-        if not request.POST.get('capital'):  
-            errors.append('请输入公司注册资本')  
-        else:  
-            capital= request.POST.get('capital')
-
-        if not request.POST.get('name'):  
-            errors.append('请输入联系人姓名')  
-        else:  
-            name= request.POST.get('name')
-
-        if not request.POST.get('telephone'):  
-            errors.append('请输入联系人座机号码')  
-        else:  
-            telephone= request.POST.get('telephone')
-
-        if not request.POST.get('email'):  
-            errors.append('请输入联系人邮箱')  
-        else:  
-            email= request.POST.get('email') 
-        if account is not None and password is not None and password2 is not None and CompareFlag and company is not None and address is not None and capital is not None and name is not None and telephone is not None and email is not None :  
-            user=User.objects.create_user(account,telephone,company,address,capital,name,password,email)  
-            user.is_active=True  
-            user.save  
-            return HttpResponseRedirect('register2.html')    
-    return render_to_response('q_register.html', {'errors': errors}) 
 
 #验证
 def register2(request):  
@@ -1524,86 +1457,84 @@ def  tag_autocomplete(request):
             return  HR(es)
         return  HR()  
 	
-	
-
+'''	#for test
+def regCompany(request):
+    return render_to_response("regCompany.html")'''
 	
 	
 #正儿八经的企业注册 by cyf ing……
 
-''''def companyRegister(request):
-    errors = []
-    companyUserName = None
+def regCompany(request):
+    '''companyUserName = None
     companyUserPassword = None
-    user_password2 = None
+    companyUserPassword2 = None
     companyUserCompanyName = None
     companyUserCompanyLocation = None
     companyUserCompanyAddress = None
-    companyUserCompanyNumberOfPeople = None
+    companyUserCompanyCapital = None
+    companyUserCompanyPeople = None
     companyUserCompanyIndustry = None
     companyUserCompanyNature = None
     companyUserContactName = None
-    companyUserContactsDepartment = None
+
     companyUserPhone = None
     companyUserTelephone = None
     companyUserEmail= None
-    falg = False
+    falg = False'''
     add = []
     if request.method == 'POST':
-        if not request.POST.get('_username'):
-            errors.append('请输用户名')
-        else:
-            user_name = request.POST.get('_username')
-        if not request.POST.get('_email'):
-            errors.append('请输入邮箱')
-        else:
-            user_email = request.POST.get('_email')
-        if not request.POST.get('password'):
-            errors.append('请输入密码')
-        else:
-            user_password = request.POST.get('password')
-        if not request.POST.get('password2'):
-            errors.append('请重复输入密码')
-        else:
-            user_password2 = request.POST.get('password2')
-        if user_password is not None and user_password2 is not None:
-            if user_password == user_password2:
-                falg = True
-            else:
-                errors.append('两次密码输入不一致')
-        if not request.POST.get('_telephone'):
-            errors.append('请输入电话号码')
-        else:
-            user_telephone = request.POST.get('_telephone')
+        companyUserName = regname
+        '''companyUserPassword = password
+        companyUserPassword2 = password2
+        companyUserCompanyName = companyName
+        companyUserCompanyLocation = companyLocation
+        companyUserCompanyAddress = companyAddress
+        companyUserCompanyCapital = companyCapital
+        companyUserCompanyPeople = companyPeople
+        companyUserCompanyIndustry = companyIndustry
+        companyUserCompanyNature = companyNature
+        companyUserContactName = contactName
+        companyUserPhone = phone
+        companyUserTelephone = telphone
+        companyUserEmail = email'''
+        try:
+            user1 = tb_companyUser.objects.get(companyUserName = companyUserName)
+            #user2 = tb_companyUser.objects.get(companyUserCompanyName = companyUserCompanyName)
+            #user3 = tb_companyUser.objects.get(companyUserPhone = companyUserPhone)
+            return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("用户名重复");</script>'})
+        except tb_companyUser.DoesNotExist:
+            pass
+        add = tb_companyuser()
+        add.companyUserName = regname
+        add.companyUserPassword = password
+        add.companyUserPassword2 = password2
+        add.companyUserCompanyName = companyName
+        add.companyUserCompanyLocation = companyLocation
+        add.companyUserCompanyAddress = companyAddress
+        add.companyUserCompanyCapital = companyCapital
+        add.companyUserCompanyPeople = companyPeople
+        add.companyUserCompanyIndustry = companyIndustry
+        add.companyUserCompanyNature = companyNature
+        add.companyUserContactName = contactName
+        add.companyUserPhone = phone
+        add.companyUserTelephone = telphone
+        add.companyUserEmail = email
+        add.save()
+        return render_to_response("../index", {})
+    return render_to_response("regCompany.html")
 
-        if user_name is not None and user_password is not None and user_telephone is not None and user_email is not None and falg:
-            ''''自我评价：写的真特么蠢''''
-            try:
-                user = tb_user.objects.get(user_name=user_name)
-                errors.append('用户名已存在')
-                return render_to_response('g_register.html', {'errors': errors})
-            except tb_user.DoesNotExist:
-                pass
-            add = tb_user()
-            add.user_name = user_name
 
-            add.user_password = user_password
-            add.user_telephone = user_telephone
-            add.user_email = user_email
-            add.user_auth = 0
 
-            add.save()
-            user_id = add.user_id
-            token = token_confirm.generate_validate_token(user_name)
-            print(token)
-            message = "\n".join([u'{0},欢迎注册政资汇'.format(user_name), u'请访问该链接，完成用户验证(链接1小时内有效):',
-                                 '/'.join(['127.0.0.1:8000', 'register2', token])])
-            # message = '/'.join(['127.0.0.1:8000','register2',token])
-            send_mail(u'注册用户验证信息', message, 'changyifan123@qq.com', [user_email])
 
-            return render_to_response('register2.html')
-    return render_to_response('g_register.html', {'errors': errors})'''''
 
-	
+
+
+
+
+
+
+
+  
 	
 	
 	
