@@ -1,0 +1,483 @@
+{% extends 'my_base.html' %}
+ 
+{% block title %}政资汇企业注册{% endblock %}
+
+{% block content %}
+
+<ul class="nav nav-tabs">
+   <li class="active"><a href="#">企业注册</a></li>
+   <li><a href="#">个人注册</a></li>
+</ul>
+<p>{{message|safe}}</p>
+<form class="form-horizontal" role="form" method="post" action="" id="regCompanyForm">
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+         账户信息
+      </h3>
+   </div>
+   <div class="panel-body">
+   <div class="col-xs-12 col-md-offset-2">
+
+   <div class="form-group">
+      <label for="regName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>用户名：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="regName" name="regName" onblur="checkRegName();" placeholder="请输入4-20位用户名" style="display:inline;">        
+      </div>
+      <span class="label label-success" id="regNameSuccess"></span>
+ 	  <span class="label label-danger" id="regNameDanger"></span>
+   </div>
+   
+   
+   <div class="form-group">
+      <label for="password" class="col-sm-2 control-label"><font color="#FF0000" >*</font>请设置密码：</label>
+      <div class="col-sm-3">
+         <input type="password" class="form-control" id="password" name="password" onblur="checkPassword();"placeholder="6-20位字符" style="display:inline;">
+      </div>
+      <span class="label label-success" id="passwordSuccess"></span>
+ 	  <span class="label label-danger" id="passwordDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="password2" class="col-sm-2 control-label"><font color="#FF0000" >*</font>请再次输入密码：</label>
+      <div class="col-sm-3">
+         <input type="password" class="form-control" id="password2" name="password2" onblur="checkPassword2();"placeholder="请重复输入密码" style="display:inline;">
+      </div>
+      <span class="label label-success" id="password2Success"></span>
+ 	  <span class="label label-danger" id="password2Danger"></span>
+   </div>
+      </div>
+      </div>
+   </div>
+
+
+
+
+   <div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+         公司信息
+      </h3>
+   </div>
+   <div class="panel-body">
+   <div class="col-xs-12 col-md-offset-2">
+
+
+   <div class="form-group">
+      <label for="companyName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司名称：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请输入公司全称" style="display:inline;">
+      </div>
+      <span class="label label-success" id="companyNameSuccess"></span>
+ 	  <span class="label label-danger" id="companyNameDanger"></span>
+   </div>
+
+
+
+   <div class="form-group">
+      <label for="companyLocation" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司地域：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="companyLocation" name="companyLocation" onblur="checkCompanyLocation();" placeholder="请输入公司所处省市" style="display:inline;">
+      </div>
+      <span class="label label-success" id="companyLocationSuccess"></span>
+ 	  <span class="label label-danger" id="companyLocationDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="companyAddress" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册地址：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="companyAddress" name="companyAddress" onblur="checkCompanyAddress();" placeholder="如：大慈寺路28号B座8楼5号" style="display:inline;">
+      </div>
+      <span class="label label-success" id="companyAddressSuccess"></span>
+ 	  <span class="label label-danger" id="companyAddressDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="companyCapital" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册资本：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="companyCapital" name="companyCapital" onblur="checkCompanyCapital();" placeholder="单位（元）" style="display:inline;">
+      </div>
+      <span class="label label-success" id="companyCapitalSuccess"></span>
+ 	  <span class="label label-danger" id="companyCapitalDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="companyPeople" class="col-sm-2 control-label">公司人数：</label>
+      <div class="col-sm-3">
+      <select class="form-control" id="companyPeople" name="companyPeople" style="display:inline;">
+         <option>请选择</option>
+         <option>1-49</option>
+         <option>50-99</option>
+         <option>100-499</option>
+         <option>500-999</option>
+         <option>1000以上</option>
+      </select>
+      </div>
+      </div>
+
+
+   <div class="form-group">
+      <label for="companyIndustry" class="col-sm-2 control-label">公司行业：</label>
+      <div class="col-sm-3">
+      <select class="form-control" id="companyIndustry" name="companyIndustry" style="display:inline;">
+         <option>请选择</option>
+         <option>互联网</option>
+         <option>金融</option>
+         <option>教育</option>
+         <option>农业</option>
+         <option>畜牧业</option>
+      </select>
+      </div>
+      </div>
+
+   <div class="form-group">
+      <label for="companyNature" class="col-sm-2 control-label">公司性质：</label>
+      <div class="col-sm-3">
+      <select class="form-control" id="companyNature" name="companyNature" style="display:inline;">
+         <option>请选择</option>
+         <option>政府机关/事业单位</option>
+         <option>国营</option>
+         <option>私营</option>
+         <option>中外合资</option>
+         <option>外资</option>
+         <option>其他</option>
+      </select>
+      </div>
+      </div>
+
+
+
+   </div>
+      </div>
+</div>
+
+
+
+   <div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+         联系人信息
+      </h3>
+   </div>
+   <div class="panel-body">
+   <div class="col-xs-12 col-md-offset-2">
+
+
+   <div class="form-group">
+      <label for="contactName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>联系人姓名：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="contactName" name="contactName" onblur="checkContactName();" placeholder="请输入联系人姓名" style="display:inline;">
+      </div>
+      <span class="label label-success" id="contactNameSuccess"></span>
+ 	  <span class="label label-danger" id="contactNameDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="phone" class="col-sm-2 control-label"><font color="#FF0000" >*</font>固定电话：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="phone" name="phone" onblur="checkPhone();" placeholder="请输入座机号码" style="display:inline;">
+      </div>
+      <span class="label label-success" id="phoneSuccess"></span>
+ 	  <span class="label label-danger" id="phoneDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="telphone" class="col-sm-2 control-label"><font color="#FF0000" >*</font>手机：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="telphone" name="telphone" onblur="checkTelphone();" placeholder="请输入手机号码" style="display:inline;">
+      </div>
+         <div class="btn-group">
+     <button type="button" class="btn btn-default" onclick="getSecurityCode();">获取短信验证码</button>
+   </div>
+      <span class="label label-success" id="telphoneSuccess"></span>
+ 	  <span class="label label-danger" id="telphoneDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="securityCode" class="col-sm-2 control-label"><font color="#FF0000" >*</font>短信验证码：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="securityCode" name="securityCode" onblur="checkSecurityCode();" placeholder="请输入您收到短信中的验证码" style="display:inline;">
+      </div>
+  		<span class="label label-success" id="securityCodeSuccess"></span>
+ 	    <span class="label label-danger" id="securityCodeDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <label for="email" class="col-sm-2 control-label"><font color="#FF0000" >*</font>邮箱地址：</label>
+      <div class="col-sm-3">
+         <input type="text" class="form-control" id="email" name="email" onblur="checkEmail();" placeholder="请输入邮箱" style="display:inline;">
+      </div>
+      <span class="label label-success" id="emailSuccess"></span>
+ 	  <span class="label label-danger" id="emailDanger"></span>
+   </div>
+
+
+   <div class="form-group">
+      <div class="col-sm-offset-0 col-sm-10">
+         <button type="button" id="sub" class="btn btn-default" style="width: 800px; height: 40px;" onclick="regCompanySub();">注册</button>
+
+   </div>
+
+
+
+
+
+</div>
+   </div>
+   </div>
+
+
+</form>
+
+
+
+<script>
+function checkRegName(){
+var _regName=document.getElementById("regName").value;
+if(_regName==""){
+//document.getElementById("regNameMessage").style.color="red";
+//document.getElementById("regNameMessage").style.size="16px";
+	document.getElementById("regNameDanger").style.visibility="visible";
+	document.getElementById("regNameSuccess").style.visibility="hidden";
+	document.getElementById("regNameDanger").innerHTML="用户名不能为空";
+}
+else{
+	if(_regName.length>20||_regName.length<4){
+		document.getElementById("regNameDanger").style.visibility="visible";
+		document.getElementById("regNameSuccess").style.visibility="hidden";
+		document.getElementById("regNameDanger").innerHTML="请输入正确长度的用户名";
+	}
+	else{
+		document.getElementById("regNameSuccess").style.visibility="visible";
+		document.getElementById("regNameDanger").style.visibility="hidden";
+		document.getElementById("regNameSuccess").innerHTML="√";
+	}
+}
+}
+
+
+function checkPassword(){
+	var _password=document.getElementById("password").value;
+	if(_password==""){
+		document.getElementById("passwordDanger").style.visibility="visible";
+		document.getElementById("passwordSuccess").style.visibility="hidden";
+		document.getElementById("passwordDanger").innerHTML="密码不能为空";
+	}
+	else{
+		if(_password.length>20||_password.length<6){
+			document.getElementById("passwordDanger").style.visibility="visible";
+			document.getElementById("passwordSuccess").style.visibility="hidden";
+			document.getElementById("passwordDanger").innerHTML="请输入正确长度的密码";
+		}
+		else{
+			document.getElementById("passwordSuccess").style.visibility="visible";
+			document.getElementById("passwordDanger").style.visibility="hidden";
+			document.getElementById("passwordSuccess").innerHTML="√";
+		}
+	}
+}
+
+
+function checkPassword2(){
+	var _password=document.getElementById("password").value;
+	var _password2=document.getElementById("password2").value;
+	if(_password2==""){
+		document.getElementById("password2Danger").style.visibility="visible";
+		document.getElementById("password2Success").style.visibility="hidden";
+		document.getElementById("password2Danger").innerHTML="请再次输入密码";
+	}
+	else{
+		if(_password2!=_password){
+			document.getElementById("password2Danger").style.visibility="visible";
+			document.getElementById("password2Success").style.visibility="hidden";
+			document.getElementById("password2Danger").innerHTML="两次输入密码不一致";
+		}
+		else{
+			document.getElementById("password2Success").style.visibility="visible";
+			document.getElementById("password2Danger").style.visibility="hidden";
+			document.getElementById("password2Success").innerHTML="√";
+		}
+	}
+}
+
+
+function checkCompanyName(){
+	var _companyName=document.getElementById("companyName").value;
+	if(_companyName==""){
+	
+		document.getElementById("companyNameDanger").style.visibility="visible";
+		document.getElementById("companyNameSuccess").style.visibility="hidden";
+		document.getElementById("companyNameDanger").innerHTML="公司全称不能为空";
+	}
+	else{
+		document.getElementById("companyNameSuccess").style.visibility="visible";
+		document.getElementById("companyNameDanger").style.visibility="hidden";
+		document.getElementById("companyNameSuccess").innerHTML="√";
+	}
+}
+
+
+
+function checkCompanyLocation(){
+	var _companyLocation=document.getElementById("companyLocation").value;
+	if(_companyLocation==""){
+		document.getElementById("companyLocationDanger").style.visibility="visible";
+		document.getElementById("companyLocationSuccess").style.visibility="hidden";
+		document.getElementById("companyLocationDanger").innerHTML="公司所处省市不能为空";
+	}
+	else{
+		document.getElementById("companyLocationSuccess").style.visibility="visible";
+		document.getElementById("companyLocationDanger").style.visibility="hidden";
+		document.getElementById("companyLocationSuccess").innerHTML="√";
+	}
+}
+
+function checkCompanyAddress(){
+	var _companyAddress=document.getElementById("companyAddress").value;
+	if(_companyAddress==""){
+		document.getElementById("companyAddressDanger").style.visibility="visible";
+		document.getElementById("companyAddressSuccess").style.visibility="hidden";
+		document.getElementById("companyAddressDanger").innerHTML="公司详细地址不能为空";
+	}
+	else{
+		document.getElementById("companyAddressSuccess").style.visibility="visible";
+		document.getElementById("companyAddressDanger").style.visibility="hidden";
+		document.getElementById("companyAddressSuccess").innerHTML="√";
+	}
+}
+
+
+function checkCompanyCapital(){
+	var _companyCapital=document.getElementById("companyCapital").value;
+	if(_companyCapital==""){
+		document.getElementById("companyCapitalDanger").style.visibility="visible";
+		document.getElementById("companyCapitalSuccess").style.visibility="hidden";
+		document.getElementById("companyCapitalDanger").innerHTML="公司注册资金不能为空";
+	}
+	else{
+		document.getElementById("companyCapitalSuccess").style.visibility="visible";
+		document.getElementById("companyCapitalDanger").style.visibility="hidden";
+		document.getElementById("companyCapitalSuccess").innerHTML="√";
+	}
+}
+
+
+function checkContactName(){
+	var _contactName=document.getElementById("contactName").value;
+	if(_contactName==""){
+		document.getElementById("contactNameDanger").style.visibility="visible";
+		document.getElementById("contactNameSuccess").style.visibility="hidden";
+		document.getElementById("contactNameDanger").innerHTML="联系人姓名不能为空";
+	}
+	else{
+		document.getElementById("contactNameSuccess").style.visibility="visible";
+		document.getElementById("contactNameDanger").style.visibility="hidden";
+		document.getElementById("contactNameSuccess").innerHTML="√";
+	}
+}
+
+
+function checkPhone(){
+	var _phone=document.getElementById("phone").value;
+	if(_phone==""){
+		document.getElementById("phoneDanger").style.visibility="visible";
+		document.getElementById("phoneSuccess").style.visibility="hidden";
+		document.getElementById("phoneDanger").innerHTML="联系人固定电话不能为空";
+	}
+	else{
+		document.getElementById("phoneSuccess").style.visibility="visible";
+		document.getElementById("phoneDanger").style.visibility="hidden";
+		document.getElementById("phoneSuccess").innerHTML="√";
+	}
+}
+
+
+
+function checkTelphone(){
+	var _telphone=document.getElementById("telphone").value;
+	if(_telphone==""){
+		document.getElementById("telphoneDanger").style.visibility="visible";
+		document.getElementById("telphoneSuccess").style.visibility="hidden";
+		document.getElementById("telphoneDanger").innerHTML="联系人手机号码不能为空";
+	}
+	else{
+		document.getElementById("telphoneSuccess").style.visibility="visible";
+		document.getElementById("telphoneDanger").style.visibility="hidden";
+		document.getElementById("telphoneSuccess").innerHTML="√";
+	}
+}
+
+
+function checkSecurityCode(){
+	var _securityCode=document.getElementById("securityCode").value;
+	if(_securityCode==""){
+		document.getElementById("securityCodeDanger").style.visibility="visible";
+		document.getElementById("securityCodeSuccess").style.visibility="hidden";
+		document.getElementById("securityCodeDanger").innerHTML="短信验证码不能为空";
+	}
+	else{
+		document.getElementById("securityCodeSuccess").style.visibility="visible";
+		document.getElementById("securityCodeDanger").style.visibility="hidden";
+		document.getElementById("securityCodeSuccess").innerHTML="√";
+	}
+}
+
+function checkEmail(){
+	var _email=document.getElementById("email").value;
+	if(_email==""){
+		document.getElementById("emailDanger").style.visibility="visible";
+		document.getElementById("emailSuccess").style.visibility="hidden";
+		document.getElementById("emailDanger").innerHTML="短信验证码不能为空";
+	}
+	else{
+		document.getElementById("emailSuccess").style.visibility="visible";
+		document.getElementById("emailDanger").style.visibility="hidden";
+		document.getElementById("emailSuccess").innerHTML="√";
+	}
+}
+
+
+
+function getSecurityCode(){
+
+
+}
+
+function regCompanySub(){
+	var _regName=document.getElementById("regName").value;
+	var _password=document.getElementById("password").value;
+	var _password2=document.getElementById("password2").value;
+	var _companyName=document.getElementById("companyName").value;
+	var _companyLocation=document.getElementById("companyLocation").value;
+	var _companyAddress=document.getElementById("companyAddress").value;
+	var _companyCapital=document.getElementById("companyCapital").value;
+	var _email=document.getElementById("email").value;
+	var _contactName=document.getElementById("contactName").value;
+	var _phone=document.getElementById("phone").value;
+	var _telphone=document.getElementById("telphone").value;
+	var _securityCode=document.getElementById("securityCode").value;
+	if(document.getElementById("regNameDanger").style.visibility=="visible" || document.getElementById("passwordDanger").style.visibility=="visible" || document.getElementById("password2Danger").style.visibility=="visible" || document.getElementById("companyNameDanger").style.visibility=="visible" || document.getElementById("companyLocationDanger").style.visibility=="visible" || document.getElementById("companyAddressDanger").style.visibility=="visible" || document.getElementById("companyCapitalDanger").style.visibility=="visible" || _regName=="" || _password=="" || _password2=="" || _companyName=="" || _companyLocation=='' || _companyAddress=='' || _companyCapital=="" || document.getElementById("emailDanger").style.visibility=="visible" || _email=="" || document.getElementById("securityCodeDanger").style.visibility=="visible" || _securityCode=="" || document.getElementById("telphoneDanger").style.visibility=="visible" || _telphone=="" || document.getElementById("phoneDanger").style.visibility=="visible" ||  _phone=="" || document.getElementById("contactNameDanger").style.visibility=="visible" || _contactName==""){
+		alert("请核对所填信息！")
+	}
+	else{
+		var _sub=document.getElementById("regCompanyForm");
+		_sub.submit();
+	}
+}
+
+
+
+
+
+
+</script>
+
+{% endblock %}
