@@ -12,7 +12,7 @@ import jieba,p_alipay.alipay
 from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
-from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+from models import tb_companyuser,tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
 # Create your views here.
@@ -1465,62 +1465,39 @@ def regCompany(request):
 #正儿八经的企业注册 by cyf ing……
 
 def regCompany(request):
-    '''companyUserName = None
-    companyUserPassword = None
-    companyUserPassword2 = None
-    companyUserCompanyName = None
-    companyUserCompanyLocation = None
-    companyUserCompanyAddress = None
-    companyUserCompanyCapital = None
-    companyUserCompanyPeople = None
-    companyUserCompanyIndustry = None
-    companyUserCompanyNature = None
-    companyUserContactName = None
-
-    companyUserPhone = None
-    companyUserTelephone = None
-    companyUserEmail= None
-    falg = False'''
     add = []
     if request.method == 'POST':
-        companyUserName = regname
-        '''companyUserPassword = password
-        companyUserPassword2 = password2
-        companyUserCompanyName = companyName
-        companyUserCompanyLocation = companyLocation
-        companyUserCompanyAddress = companyAddress
-        companyUserCompanyCapital = companyCapital
-        companyUserCompanyPeople = companyPeople
-        companyUserCompanyIndustry = companyIndustry
-        companyUserCompanyNature = companyNature
-        companyUserContactName = contactName
-        companyUserPhone = phone
-        companyUserTelephone = telphone
-        companyUserEmail = email'''
+        companyUserName = request.POST.get("regName")
+        companyUserCompanyName = request.POST.get("companyName")
         try:
-            user1 = tb_companyUser.objects.get(companyUserName = companyUserName)
+            user1 = tb_companyuser.objects.get(companyUserName = companyUserName)
             #user2 = tb_companyUser.objects.get(companyUserCompanyName = companyUserCompanyName)
             #user3 = tb_companyUser.objects.get(companyUserPhone = companyUserPhone)
             return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("用户名重复");</script>'})
-        except tb_companyUser.DoesNotExist:
+        except tb_companyuser.DoesNotExist:
+            pass
+        try:
+            user2 = tb_companyuser.objects.get(companyUserCompanyName = companyUserCompanyName)
+            return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("该公司已被注册");</script>'})
+        except tb_companyuser.DoesNotExist:
             pass
         add = tb_companyuser()
-        add.companyUserName = regname
-        add.companyUserPassword = password
-        add.companyUserPassword2 = password2
-        add.companyUserCompanyName = companyName
-        add.companyUserCompanyLocation = companyLocation
-        add.companyUserCompanyAddress = companyAddress
-        add.companyUserCompanyCapital = companyCapital
-        add.companyUserCompanyPeople = companyPeople
-        add.companyUserCompanyIndustry = companyIndustry
-        add.companyUserCompanyNature = companyNature
-        add.companyUserContactName = contactName
-        add.companyUserPhone = phone
-        add.companyUserTelephone = telphone
-        add.companyUserEmail = email
+        add.companyUserName = request.POST.get("regName")
+        add.companyUserPassword = request.POST.get("password")
+        add.companyUserPassword2 = request.POST.get("password2")
+        add.companyUserCompanyName = request.POST.get("companyName")
+        add.companyUserCompanyLocation = request.POST.get("companyLocation")
+        add.companyUserCompanyAddress = request.POST.get("companyAddress")
+        add.companyUserCompanyCapital = request.POST.get("companyCapital")
+        add.companyUserCompanyPeople = request.POST.get("companyPeople")
+        add.companyUserCompanyIndustry = request.POST.get("companyIndustry")
+        add.companyUserCompanyNature = request.POST.get("companyNature")
+        add.companyUserContactName = request.POST.get("contactName")
+        add.companyUserPhone = request.POST.get("phone")
+        add.companyUserTelephone = request.POST.get("telphone")
+        add.companyUserEmail = request.POST.get("email")
         add.save()
-        return render_to_response("../index", {})
+        return render_to_response("index.html", {})
     return render_to_response("regCompany.html")
 
 
