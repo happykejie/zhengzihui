@@ -24,6 +24,7 @@ def index(request):
 	return render_to_response('index.html',{})
 
 #xcz 搜索
+#为了显示当前路径，袁志修改，现在还有一些BUG
 def Searchgoods(request):
     allthebumen=['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     a_items = []
@@ -35,69 +36,43 @@ def Searchgoods(request):
     if (request.method=="GET"):	
         typefsearch=request.GET.get("Typeforsearch")
         goodsname=request.GET.get("inputitem")
-        #后面取值用
+
+        #后面取值用YZ
         goodsnametmp = goodsname
-        #print (goodsname)
-        #goodsname="精准医学研究"
-        
-        search_content = "全部"#用于显示网站路径
+        #用于显示网站路径YZ
+        search_content = "全部"
         if goodsname is not None:
 	#fenleisousuo	
             if  ((typefsearch.encode("utf-8") )=="发布部门"):
                 selected['bumen'] = goodsname.encode("utf-8")
-		#print selected['bumen']
                 request.session['bumen'] = goodsname.encode("utf-8")
                 request.session['search_content'] = goodsname.encode("utf_8")
                 return HttpResponseRedirect('/search_result/')
-                #return render(,'/search_result/')
+
 	#xiangmusousuo        
 	#分词
-            #一样更新session中的'bumen'值
+            #一样更新session中的'bumen'值YZ
             request.session['bumen']=goodsname.encode("utf-8")
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
-                ads+=tb_item.objects.filter(item_name__contains = gname) #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有object
+                #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
+                ads+=tb_item.objects.filter(item_name__contains = gname)
         #去重复
             for i in ads: 
                 if i not in items:
                     items.append(i)
-                    #print i.item_name
-            
-	    
-            for item in items:
-                a_item = {}    
-                a_item['item_id'] = item.item_id#获取项目id
-                a_item['item_name'] = item.item_name#获取项目名字 
-                a_item['item_ga'] = item.item_ga
-                a_item['item_key'] = item.item_key
-                a_item['item_about'] = item.item_about
-                now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
-                a_item['item_publish'] = item.item_publish.strftime('%Y.%m.%d')
-                a_item['item_deadtime'] = item.item_deadtime.strftime('%Y.%m.%d')
-                start_seconds = time.mktime(item.item_publish.timetuple())  #utc 0时区
-                end_seconds = time.mktime(item.item_deadtime.timetuple())
-                consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
-                if consume_time > 100:
-                    a_item['item_consume_time'] = 100
-                    a_item['item_key'] = "已结束"
-                else:
-                    a_item['item_consume_time'] = int(consume_time)
-                a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-                album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-                album_id = album.album_id
-                a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-                a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
-                a_items.append(a_item)
-    #已经完善
+
+            a_items = get_and_set_info(items)
+            #这里考虑把所有的获取到的
     
-    
+    #YZ
     if goodsnametmp!='':
         search_content = goodsnametmp
         if 'search_content' in request.session:
             del request.session['search_content']
 
-    #获得热门推荐的项目
+    #获得热门推荐的项目YZ
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
     context = {'selected':selected,'flag':flag,'items':a_items,'search_content':search_content,'recommend':recommend,}
@@ -116,7 +91,7 @@ def search_result(request):
     if 'bumen' in request.session:
         value = request.session['bumen']
         selected['bumen'] = value
-        #print(selected['bumen'])
+
         flag = True
     else:
         selected['bumen'] = ''
@@ -133,40 +108,28 @@ def search_result(request):
     else:
         selected['zhuangtai'] = ''
 	
-	#bumenstr = selected['bumen'].encode("utf-8")
-    #print(selected['bumen'])
-    #jibiestr = selected['jibie'].encode("utf-8")
-    #zhuangtaistr = selected['zhuangtai'].encode("utf-8")   
+
     allthebumen = ['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     allthejibie = ['县级财政资金','市级财政资金','省级财政资金','中央财政资金']
     allthezhuangtai = ['正在申报','截止申报']
-    #items = tb_item.objects.all()
-    #if  (selected['bumen'].encode("utf-8") is not '全部'):
-    	#middle_items = items.objects.filter(item_about__contains = bumenstr)
+
     if  (selected['jibie'].encode("utf-8") != '全部'):
-    	#print selected['jibie'].encode("utf-8")
-    	#print list(selected['jibie'])
+
     	jibielist = (selected['jibie'].encode("utf-8")).split(',')
-    	#print jibielist
+
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))
     else:
     	middle_items=tb_item.objects.all()
-    	'''for i in middle_items:
-    		print(i.item_status)'''
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
-    	#print(type(items))
-    	#items = items(item_status = (allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))))
+
     	for i in middle_items:
     		if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
     			tmiddle_items.append(i)
-    #if  (selected['zhuangtai'].encode("utf-8") != '全部'):
     else:
     	tmiddle_items=middle_items
-    	#for i in tmiddle_items:
-    		#print (i.item_status)
-    		
+
     if  (selected['bumen'].encode("utf-8") != '全部'):
     	bumenlist = (selected['bumen'].encode("utf-8")).split(',')
     	for i in tmiddle_items:
@@ -174,13 +137,13 @@ def search_result(request):
     			if j in (i.item_about).encode("utf-8"):
     				items.append(i) 		
     else:
-    	#print (222)
+
     	items=tmiddle_items
-    #print(len(items))
+
     if (len(items)>10):
-    	items = items[:10]#不够10条报错   ################被袁志注释了，原因是发生了bug，bug为
+    	items = items[:10]#不够10条报错
     a_items = get_and_set_info(items)
-    #获得热门推荐的项目
+    #获得热门推荐的项目YZ
     recommend = []
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
@@ -227,8 +190,6 @@ def get_and_set_info(items):
         a_items.append(a_item)
     return a_items
 
-
-
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
     a_items = []
@@ -250,8 +211,7 @@ def item_sortbyLevel(request):
 
 #按截至时间 排序存在的问题估计是因为 瀑布流每次只能取得10个所以 当超过10个之后再取的8 个 就出现了 重新排序，但是还是按顺序排列
 
-
-###服务商排序by LJW
+###服务商排序
 sortflag1=True
 def search_result_sort_deadtime(request):
     a_items = []
@@ -272,20 +232,97 @@ def search_result_sort_deadtime(request):
     return render(request,'search_result.html',{'items':a_items,'recommend':recommend,})
 
 #综合排序 现在仅靠点击率来排序
+sortbyComprihensiveFlag=True
 def item_sortbyComprihensive(request):
-    itemsinclick = tb_item_click.objects.order_by('-click_counter')
     items = []
-    for thing in itemsinclick:
-        willappend = tb_item.objects.get(item_id=thing.item.item_id)
-        items.append(willappend)
+    if (sortbyComprihensiveFlag==True):
+
+        itemsinclick = tb_item_click.objects.order_by('-click_counter')
+
+        for thing in itemsinclick:
+            willappend = tb_item.objects.get(item_id=thing.item.item_id)
+            items.append(willappend)
+        global sortbyComprihensiveFlag
+        sortbyComprihensiveFlag=False
+    else:
+        itemsinclick = tb_item_click.objects.order_by('click_counter')
+        for thing in itemsinclick:
+            willappend = tb_item.objects.get(item_id=thing.item.item_id)
+            items.append(willappend)
+        global sortbyComprihensiveFlag
+        sortbyComprihensiveFlag=True
     a_items = get_and_set_info(items)
     #获得热门推荐的项目
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
     return render(request,'search_result.html',{'items':a_items,'recommend':recommend,})
-    
 
 ##############################
+#排序部分结束
+##############################
+#项目项目详情加载YZ
+def project_detail(request):
+    project_detail_item_id = 1#取一个默认值
+    if request.GET['id']:
+        #能保证取到吗
+        project_detail_item_id = request.GET['id']
+
+
+    item = tb_item.objects.get(item_id = project_detail_item_id)
+    item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name #扩展对象属性，直接填写即可YZ
+    item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
+    #print item.item_pa_name
+    #print item.item_pa_name
+    article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
+    article0 = None
+    article1 = None
+    a_pics = []
+    if (len(article)>=2):
+        article0 = article[0]
+        article1 = article[1]
+    if (len(article)==1):
+        article0 = article[0]
+        article1 = None
+    if (len(article)==0):
+        pass
+    #article2 = article[2]
+    if ((article0 == None)and(article1==None)):
+        #获取项目起止时间
+        gettimeInstance = tb_item.objects.get(item_id = project_detail_item_id)
+        #获得热门推荐的项目
+        recommendtemp = get_the_hotrecommend()
+        recommend = get_and_set_info(recommendtemp)
+        if not a_pics  :
+            pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
+            a_pics.append(pic_url)
+
+        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        #print item.item_pa_address
+
+        return render(request,'project_detail.html',context)
+
+    else:
+
+        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+        for pic in pics:
+            a_pic = pic.pic_object.url[14:]
+            #print a_pic
+            a_pics.append(a_pic)
+
+
+        #获取项目起止时间
+        gettimeInstance = tb_item.objects.get(item_id = project_detail_item_id)
+
+        #获得热门推荐的项目
+        recommendtemp = get_the_hotrecommend()
+        recommend = get_and_set_info(recommendtemp)
+        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        return render(request,'project_detail.html',context)
+
+
+
 
 
 #xcz项目信息滚动加载瀑布流
@@ -405,53 +442,7 @@ def filter_labels(request):
         request.session['zhuangtai'] = keys
     return HttpResponseRedirect('/search_result/')
 
-#lzh项目项目详情加载
-def project_detail(request):
-    
-    if request.GET['id']:
- 
-        project_detail_item_id = request.GET['id']
-        
-       
-    item = tb_item.objects.get(item_id = project_detail_item_id)
-    item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name
-    #print item.item_pa_name
-    #print item.item_pa_name
-    article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
-    article0 = None
-    article1 = None
-    a_pics = []
-    if (len(article)>=2):
-        article0 = article[0]
-        article1 = article[1]
-    if (len(article)==1):
-        article0 = article[0]
-        article1 = None
-    if (len(article)==0):
-        pass
-    #article2 = article[2]
-    if ((article0 == None)and(article1==None)):
-        #获得热门推荐的项目
-        recommendtemp = get_the_hotrecommend()
-        recommend = get_and_set_info(recommendtemp)
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,}
-        return render(request,'project_detail.html',context)
-        
 
-    else:
-       
-
-        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-        album_id = album.album_id
-        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
-        for pic in pics:
-            a_pic = pic.pic_object.url[14:]
-            a_pics.append(a_pic)
-        #获得热门推荐的项目
-        recommendtemp = get_the_hotrecommend()
-        recommend = get_and_set_info(recommendtemp)
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,}
-        return render(request,'project_detail.html',context)
         
         
 #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了        
@@ -1374,7 +1365,7 @@ def login(request):
                 
                 if 'unregist_tobepay_goodsid' in request.COOKIES:
                     goodsid = request.COOKIES['unregist_tobepay_goodsid']
-                    responsenotpay = HttpResponseRedirect('/service_details/?goodsid='+str(goodsid))
+                    responsenotpay = HttpResponseRedirect('/service_list/?itemid='+str(goodsid))
                     responsenotpay.set_cookie('user_name',user_name,3600)
                     responsenotpay.set_cookie('user_id',user.user_id,3600)
                     return responsenotpay
