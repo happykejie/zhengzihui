@@ -64,6 +64,9 @@ def Searchgoods(request):
                     items.append(i)
 
             a_items = get_and_set_info(items)
+            ''' request.session['yz_search_result_temp'] = items
+            test1 = request.session['yz_search_result_temp']
+            print type(test1)'''
             #这里考虑把所有的获取到的
     
     #YZ
@@ -111,21 +114,22 @@ def search_result(request):
 
     allthebumen = ['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
     allthejibie = ['县级财政资金','市级财政资金','省级财政资金','中央财政资金']
-    allthezhuangtai = ['正在申报','截止申报']
+    allthezhuangtai = ['截止申报','正在申报']
 
     if  (selected['jibie'].encode("utf-8") != '全部'):
 
     	jibielist = (selected['jibie'].encode("utf-8")).split(',')
 
     	for i in jibielist:
-    		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))
+    		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
     else:
     	middle_items=tb_item.objects.all()
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
 
     	for i in middle_items:
-    		if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
+            print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
+            if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
     			tmiddle_items.append(i)
     else:
     	tmiddle_items=middle_items
@@ -192,6 +196,8 @@ def get_and_set_info(items):
 
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
+    #if request.session[] != None:
+
     a_items = []
 
     if (sortbyLevelFlag==True):
@@ -382,6 +388,7 @@ def search_result_load(request):
     	#print(type(items))
     	#items = items(item_status = (allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))))
     	for i in middle_items:
+
     		if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
     			tmiddle_items.append(i)
     #if  (selected['zhuangtai'].encode("utf-8") != '全部'):
@@ -400,7 +407,7 @@ def search_result_load(request):
     	#print (222)
     	items=tmiddle_items
 
-    items = items[last:now]
+    items = items[last:now]#YZ
     for item in items:
         a_item = {}    
         a_item['item_id'] = item.item_id#获取项目id
