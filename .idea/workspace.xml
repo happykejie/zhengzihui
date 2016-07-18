@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8cf9cbd1-9b9a-4915-bb91-56059ecdc492" name="默认的" comment="">
+    <list default="true" id="8cf9cbd1-9b9a-4915-bb91-56059ecdc492" name="默认的" comment="企业注册添加短信验证功能">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/zhengzihui/urls.py" afterPath="$PROJECT_DIR$/zhengzihui/zhengzihui/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/zhengzihui_app/templates/regCompany.html" afterPath="$PROJECT_DIR$/zhengzihui/zhengzihui_app/templates/regCompany.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/zhengzihui_app/views.py" afterPath="$PROJECT_DIR$/zhengzihui/zhengzihui_app/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/__init__.py" afterPath="$PROJECT_DIR$/zhengzihui/top/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/__init__.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/__init__.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/base.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/base.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcSmsNumQueryRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcSmsNumQueryRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcSmsNumSendRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcSmsNumSendRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcTtsNumSinglecallRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcTtsNumSinglecallRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcVoiceNumDoublecallRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcVoiceNumDoublecallRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcVoiceNumSinglecallRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaAliqinFcVoiceNumSinglecallRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaGeoipGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AlibabaGeoipGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AppipGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AppipGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/AreasGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/AreasGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/HttpdnsGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/HttpdnsGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/KfcKeywordSearchRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/KfcKeywordSearchRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TimeGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TimeGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopAuthTokenCreateRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopAuthTokenCreateRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopAuthTokenRefreshRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopAuthTokenRefreshRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopIpoutGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopIpoutGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopatsResultGetRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopatsResultGetRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopatsTaskDeleteRequest.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/TopatsTaskDeleteRequest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/zhengzihui/top/api/rest/__init__.py" afterPath="$PROJECT_DIR$/zhengzihui/top/api/rest/__init__.py" />
     </list>
     <ignored path="zhengzihui.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,8 +50,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zhengzihui/zhengzihui_app/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="1496" column="73" selection-start-line="1496" selection-start-column="73" selection-end-line="1496" selection-end-column="73" />
+            <state relative-caret-position="174">
+              <caret line="1532" column="31" selection-start-line="1532" selection-start-column="31" selection-end-line="1532" selection-end-column="31" />
               <folding>
                 <element signature="e#15#50#0" expanded="true" />
                 <element signature="e#11728#16119#0" expanded="false" />
@@ -166,7 +183,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
     <option name="y" value="24" />
-    <option name="width" value="1215" />
+    <option name="width" value="1301" />
     <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -408,11 +425,25 @@
       <option name="project" value="LOCAL" />
       <updated>1468686727034</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="企业注册添加短信验证功能">
+      <created>1468839466383</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1468839466383</updated>
+    </task>
+    <task id="LOCAL-00003" summary="企业注册添加短信验证功能">
+      <created>1468854922408</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1468854922408</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1215" height="744" extended-state="6" />
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -441,7 +472,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="企业注册功能、页面，还差短信验证" />
-    <option name="LAST_COMMIT_MESSAGE" value="企业注册功能、页面，还差短信验证" />
+    <MESSAGE value="企业注册添加短信验证功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="企业注册添加短信验证功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -927,8 +959,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zhengzihui/zhengzihui_app/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="1496" column="73" selection-start-line="1496" selection-start-column="73" selection-end-line="1496" selection-end-column="73" />
+        <state relative-caret-position="174">
+          <caret line="1532" column="31" selection-start-line="1532" selection-start-column="31" selection-end-line="1532" selection-end-column="31" />
           <folding>
             <element signature="e#15#50#0" expanded="true" />
             <element signature="e#11728#16119#0" expanded="false" />
