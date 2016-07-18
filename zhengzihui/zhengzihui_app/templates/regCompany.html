@@ -9,7 +9,7 @@
    <li><a href="#">个人注册</a></li>
 </ul>
 <p>{{message|safe}}</p>
-<form class="form-horizontal" role="form" method="post" action="" id="regCompanyForm">
+<form class="form-horizontal" role="form" method="post" action="{% url 'regCompany' %}" id="regCompanyForm" name="regCompanyForm">
 <div class="panel panel-default">
    <div class="panel-heading">
       <h3 class="panel-title">
@@ -22,7 +22,7 @@
    <div class="form-group">
       <label for="regName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>用户名：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="regName" name="regName" onblur="checkRegName();" placeholder="请输入4-20位用户名" style="display:inline;">        
+         <input type="text" class="form-control" id="regName" name="regName" onblur="checkRegName();" placeholder="请输入4-20位用户名" style="display:inline;" value="{{regName}}">
       </div>
       <span class="label label-success" id="regNameSuccess"></span>
  	  <span class="label label-danger" id="regNameDanger"></span>
@@ -32,7 +32,7 @@
    <div class="form-group">
       <label for="password" class="col-sm-2 control-label"><font color="#FF0000" >*</font>请设置密码：</label>
       <div class="col-sm-3">
-         <input type="password" class="form-control" id="password" name="password" onblur="checkPassword();"placeholder="6-20位字符" style="display:inline;">
+         <input type="password" class="form-control" id="password" name="password" onblur="checkPassword();"placeholder="6-20位字符" style="display:inline;" value="{{password}}">
       </div>
       <span class="label label-success" id="passwordSuccess"></span>
  	  <span class="label label-danger" id="passwordDanger"></span>
@@ -42,7 +42,7 @@
    <div class="form-group">
       <label for="password2" class="col-sm-2 control-label"><font color="#FF0000" >*</font>请再次输入密码：</label>
       <div class="col-sm-3">
-         <input type="password" class="form-control" id="password2" name="password2" onblur="checkPassword2();"placeholder="请重复输入密码" style="display:inline;">
+         <input type="password" class="form-control" id="password2" name="password2" onblur="checkPassword2();"placeholder="请重复输入密码" style="display:inline;" value="{{password2}}">
       </div>
       <span class="label label-success" id="password2Success"></span>
  	  <span class="label label-danger" id="password2Danger"></span>
@@ -67,7 +67,7 @@
    <div class="form-group">
       <label for="companyName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司名称：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请输入公司全称" style="display:inline;">
+         <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请输入公司全称" style="display:inline;" value="{{companyName}}">
       </div>
       <span class="label label-success" id="companyNameSuccess"></span>
  	  <span class="label label-danger" id="companyNameDanger"></span>
@@ -78,7 +78,7 @@
    <div class="form-group">
       <label for="companyLocation" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司地域：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyLocation" name="companyLocation" onblur="checkCompanyLocation();" placeholder="请输入公司所处省市" style="display:inline;">
+         <input type="text" class="form-control" id="companyLocation" name="companyLocation" onblur="checkCompanyLocation();" placeholder="请输入公司所处省市" style="display:inline;" value="{{companyLocation}}">
       </div>
       <span class="label label-success" id="companyLocationSuccess"></span>
  	  <span class="label label-danger" id="companyLocationDanger"></span>
@@ -88,7 +88,7 @@
    <div class="form-group">
       <label for="companyAddress" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册地址：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyAddress" name="companyAddress" onblur="checkCompanyAddress();" placeholder="如：大慈寺路28号B座8楼5号" style="display:inline;">
+         <input type="text" class="form-control" id="companyAddress" name="companyAddress" onblur="checkCompanyAddress();" placeholder="如：大慈寺路28号B座8楼5号" style="display:inline;" value="{{companyAddress}}">
       </div>
       <span class="label label-success" id="companyAddressSuccess"></span>
  	  <span class="label label-danger" id="companyAddressDanger"></span>
@@ -98,7 +98,7 @@
    <div class="form-group">
       <label for="companyCapital" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册资本：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyCapital" name="companyCapital" onblur="checkCompanyCapital();" placeholder="单位（元）" style="display:inline;">
+         <input type="text" class="form-control" id="companyCapital" name="companyCapital" onblur="checkCompanyCapital();" placeholder="单位（元）" style="display:inline;" value="{{companyCapital}}">
       </div>
       <span class="label label-success" id="companyCapitalSuccess"></span>
  	  <span class="label label-danger" id="companyCapitalDanger"></span>
@@ -108,7 +108,7 @@
    <div class="form-group">
       <label for="companyPeople" class="col-sm-2 control-label">公司人数：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyPeople" name="companyPeople" style="display:inline;">
+      <select class="form-control" id="companyPeople" name="companyPeople" style="display:inline;" value="{{companyPeople}}">
          <option>请选择</option>
          <option>1-49</option>
          <option>50-99</option>
@@ -123,7 +123,7 @@
    <div class="form-group">
       <label for="companyIndustry" class="col-sm-2 control-label">公司行业：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyIndustry" name="companyIndustry" style="display:inline;">
+      <select class="form-control" id="companyIndustry" name="companyIndustry" style="display:inline;" value="{{companyIndustry}}">
          <option>请选择</option>
          <option>互联网</option>
          <option>金融</option>
@@ -137,7 +137,7 @@
    <div class="form-group">
       <label for="companyNature" class="col-sm-2 control-label">公司性质：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyNature" name="companyNature" style="display:inline;">
+      <select class="form-control" id="companyNature" name="companyNature" style="display:inline;" value="{{companyNature}}">
          <option>请选择</option>
          <option>政府机关/事业单位</option>
          <option>国营</option>
@@ -170,7 +170,7 @@
    <div class="form-group">
       <label for="contactName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>联系人姓名：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="contactName" name="contactName" onblur="checkContactName();" placeholder="请输入联系人姓名" style="display:inline;">
+         <input type="text" class="form-control" id="contactName" name="contactName" onblur="checkContactName();" placeholder="请输入联系人姓名" style="display:inline;" value="{{contactName}}">
       </div>
       <span class="label label-success" id="contactNameSuccess"></span>
  	  <span class="label label-danger" id="contactNameDanger"></span>
@@ -180,7 +180,7 @@
    <div class="form-group">
       <label for="phone" class="col-sm-2 control-label"><font color="#FF0000" >*</font>固定电话：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="phone" name="phone" onblur="checkPhone();" placeholder="请输入座机号码" style="display:inline;">
+         <input type="text" class="form-control" id="phone" name="phone" onblur="checkPhone();" placeholder="请输入座机号码" style="display:inline;" value="{{phone}}">
       </div>
       <span class="label label-success" id="phoneSuccess"></span>
  	  <span class="label label-danger" id="phoneDanger"></span>
@@ -190,30 +190,32 @@
    <div class="form-group">
       <label for="telphone" class="col-sm-2 control-label"><font color="#FF0000" >*</font>手机：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="telphone" name="telphone" onblur="checkTelphone();" placeholder="请输入手机号码" style="display:inline;">
+         <input type="text" class="form-control" id="telphone" name="telphone" onblur="checkTelphone();" placeholder="请输入手机号码" style="display:inline;" value="{{telphone}}">
       </div>
          <div class="btn-group">
      <button type="button" class="btn btn-default" onclick="getSecurityCode();">获取短信验证码</button>
    </div>
       <span class="label label-success" id="telphoneSuccess"></span>
  	  <span class="label label-danger" id="telphoneDanger"></span>
+
    </div>
 
 
    <div class="form-group">
       <label for="securityCode" class="col-sm-2 control-label"><font color="#FF0000" >*</font>短信验证码：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="securityCode" name="securityCode" onblur="checkSecurityCode();" placeholder="请输入您收到短信中的验证码" style="display:inline;">
+         <input type="text" class="form-control" id="securityCode" name="securityCode" onblur="checkSecurityCode();" placeholder="请输入您收到短信中的验证码" style="display:inline;" >
       </div>
   		<span class="label label-success" id="securityCodeSuccess"></span>
  	    <span class="label label-danger" id="securityCodeDanger"></span>
+        <input type="hidden" name="securityCode2" value="{{securityCode2}}" />
    </div>
 
 
    <div class="form-group">
       <label for="email" class="col-sm-2 control-label"><font color="#FF0000" >*</font>邮箱地址：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="email" name="email" onblur="checkEmail();" placeholder="请输入邮箱" style="display:inline;">
+         <input type="text" class="form-control" id="email" name="email" onblur="checkEmail();" placeholder="请输入邮箱" style="display:inline;" value="{{email}}">
       </div>
       <span class="label label-success" id="emailSuccess"></span>
  	  <span class="label label-danger" id="emailDanger"></span>
@@ -234,7 +236,7 @@
    </div>
    </div>
 
-
+</div>
 </form>
 
 
@@ -447,7 +449,9 @@ function checkEmail(){
 
 
 function getSecurityCode(){
-
+   var form=document.forms['regCompanyForm'];
+   form.action="{% url 'register_sms' %}";
+   form.submit();
 
 }
 

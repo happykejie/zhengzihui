@@ -5,7 +5,11 @@ from django.http import HttpResponse as HR
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from itertools import chain
-import datetime 
+
+import random
+import top.api
+import sys
+import datetime
 import time
 import json #用来将字典类型的数据序列化，然后传给模板以及js,不能序列化model实例
 import jieba,p_alipay.alipay
@@ -15,6 +19,11 @@ from django.core import serializers #用来序列化model 传给js
 from models import tb_companyuser,tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
+appkey='23297047'
+secret='45af9457a7d64b7ff5d04162f01d804a'
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
 	request.session['bumen']='全部'
@@ -1462,13 +1471,27 @@ def regCompany(request):
     return render_to_response("regCompany.html")'''
 	
 	
-#正儿八经的企业注册 by cyf ing……
+#正儿八经的企业注册 by cyf
 
 def regCompany(request):
     add = []
     if request.method == 'POST':
         companyUserName = request.POST.get("regName")
+        companyUserPassword = request.POST.get("password")
+        companyUserPassword2 = request.POST.get("password2")
         companyUserCompanyName = request.POST.get("companyName")
+        companyUserCompanyLocation = request.POST.get("companyLocation")
+        companyUserCompanyAddress = request.POST.get("companyAddress")
+        companyUserCompanyCapital = request.POST.get("companyCapital")
+        companyUserCompanyPeople = request.POST.get("companyPeople")
+        companyUserCompanyIndustry = request.POST.get("companyIndustry")
+        companyUserCompanyNature = request.POST.get("companyNature")
+        companyUserContactName = request.POST.get("contactName")
+        companyUserPhone = request.POST.get("phone")
+        companyUserTelephone = request.POST.get("telphone")
+        companyUserEmail = request.POST.get("email")
+        securityCode = request.POST.get("securityCode")
+        securityCode2 = request.POST.get("securityCode2")
         try:
             user1 = tb_companyuser.objects.get(companyUserName = companyUserName)
             #user2 = tb_companyUser.objects.get(companyUserCompanyName = companyUserCompanyName)
@@ -1481,6 +1504,20 @@ def regCompany(request):
             return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("该公司已被注册");</script>'})
         except tb_companyuser.DoesNotExist:
             pass
+        if securityCode != securityCode2:
+            return render(request, 'regCompany.html', {'regName': companyUserName, 'password': companyUserPassword,
+                                                       'password2': companyUserPassword2,
+                                                       'companyName': companyUserCompanyName,
+                                                       'companyLocation': companyUserCompanyLocation,
+                                                       'companyAddress': companyUserCompanyAddress,
+                                                       'companyCapital': companyUserCompanyCapital,
+                                                       'companyPeople': companyUserCompanyPeople,
+                                                       'companyIndustry': companyUserCompanyIndustry,
+                                                       'companyNature': companyUserCompanyNature,
+                                                       'contactName': companyUserContactName, 'phone': companyUserPhone,
+                                                       'telphone': companyUserTelephone, 'email': companyUserEmail,
+                                                       'securityCode2': securityCode,
+                                                       'message': '<script type="text/javascript">alert("短信验证码错误！");</script>'})
         add = tb_companyuser()
         add.companyUserName = request.POST.get("regName")
         add.companyUserPassword = request.POST.get("password")
@@ -1501,8 +1538,40 @@ def regCompany(request):
     return render_to_response("regCompany.html")
 
 
+#雅致的手机验证，for test，by cyf
+def register_sms(request):
+    companyUserName = request.POST.get("regName")
+    companyUserPassword = request.POST.get("password")
+    companyUserPassword2 = request.POST.get("password2")
+    companyUserCompanyName = request.POST.get("companyName")
+    companyUserCompanyLocation = request.POST.get("companyLocation")
+    companyUserCompanyAddress = request.POST.get("companyAddress")
+    companyUserCompanyCapital = request.POST.get("companyCapital")
+    companyUserCompanyPeople = request.POST.get("companyPeople")
+    companyUserCompanyIndustry = request.POST.get("companyIndustry")
+    companyUserCompanyNature = request.POST.get("companyNature")
+    companyUserContactName = request.POST.get("contactName")
+    companyUserPhone = request.POST.get("phone")
+    companyUserTelephone = request.POST.get("telphone")
+    companyUserEmail = request.POST.get("email")
+    securityCode=random.randint(1000, 9999)
+    req=top.api.AlibabaAliqinFcSmsNumSendRequest()
+    req.set_app_info(top.appinfo(appkey,secret))
 
-
+    req.extend="123456"
+    req.sms_type="normal"
+    req.sms_free_sign_name="身份验证"
+    req.sms_param='{"code":"%d","product":"雅峙"}'%(securityCode)
+    req.rec_num=companyUserTelephone
+    req.sms_template_code="SMS_4465526"
+    try:
+	    resp= req.getResponse()
+	    print(resp)
+    except Exception,e:
+	    print(e)
+	    return HttpResponse("sms error!")
+    finally:
+	    return render(request,'regCompany.html',{'regName':companyUserName, 'password':companyUserPassword, 'password2':companyUserPassword2, 'companyName':companyUserCompanyName, 'companyLocation':companyUserCompanyLocation, 'companyAddress':companyUserCompanyAddress, 'companyCapital':companyUserCompanyCapital, 'companyPeople':companyUserCompanyPeople, 'companyIndustry':companyUserCompanyIndustry, 'companyNature':companyUserCompanyNature, 'contactName':companyUserContactName, 'phone':companyUserPhone, 'telphone':companyUserTelephone, 'email':companyUserEmail, 'securityCode2':securityCode, 'message':'<script type="text/javascript">alert("验证码已发送！");</script>'})
 
 
 

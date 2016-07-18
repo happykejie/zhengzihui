@@ -133,7 +133,11 @@ urlpatterns = [
     url(r'^password2/$', 'zhengzihui_app.views.password2',name='password2'),
     url(r'^password3/$', 'zhengzihui_app.views.password3',name='password3'),
     url(r'^password4/$', 'zhengzihui_app.views.password4',name='password4'),
-    
+
+    #短信验证页
+    url(r'^register_sms/$', 'zhengzihui_app.views.register_sms', name='register_sms'),
+
+
     #app下载
     url(r'^download/$', 'zhengzihui_app.views.download',name='download'),
     #支付选择页面
@@ -141,3 +145,5 @@ urlpatterns = [
 	#邮箱验证页
 	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$','zhengzihui_app.views.active_user',name='active_user')
 ]
+
+
