@@ -1,5 +1,5 @@
 ﻿#coding:utf-8
-import datetime
+import datetime,time
 
 from django.db import models
 from django.utils import timezone#引入datetime 和 timezone 为了was_published_recently函数
@@ -103,7 +103,7 @@ class  tb_service_provider(models.Model):
     organization_id = models.IntegerField("机构代码",null=False,blank=False)
     organization_assets = models.IntegerField("机构资产",null=False,blank=False)
     organization_profile = models.CharField("机构简介",max_length=100,null=False,blank=False)
- 
+    is_recommend = models.IntegerField('推荐指数',null=False)
         
     PASSAUTH = 1
     NOTPASSAUTH = 0
@@ -157,7 +157,8 @@ class tb_News(models.Model):
     necl_id = models.IntegerField("分类ID",null=False,blank=False)#之后需要添加的外键
     news_sort = models.IntegerField("新闻排序",null=False,blank=False)
     click_counter = models.IntegerField("总点击量",null=False,blank=False)
-    
+    news_hot = models.IntegerField('热门细纹',null=False)
+
     HASALBUM = 1
     NOTHASALBUM = 0
     HAS_ALBUM_CHOICES = (
@@ -339,6 +340,16 @@ class tb_item(models.Model):
         verbose_name_plural = '项目详情表' 
     def __unicode__(self):   #python 2 
         return self.item_name
+    def get_remain_time(self):
+        remain_time = '0'
+        #time.time()是一个时间戳，相对一某个国际固定时间
+        #将datatime类型转化了时间戳类型，用time.mktime(self.item_deadtime.timetuple())即可
+        if (time.time() - time.mktime(self.item_deadtime.timetuple()))>0:
+            return remain_time
+        else:
+            remain_time = str((time.mktime(self.item_deadtime.timetuple()) - time.time() ))
+            #为什么不用int类型呢？好像是因为不能返回，暂时不清楚
+            return remain_time
 
         
 class tb_item_click(models.Model):
@@ -359,6 +370,7 @@ class tb_item_pa(models.Model):
     ipa_parent_id = models.IntegerField('所属上级机构的id',null=False)
     ipa_sort = models.IntegerField('排序',null=False)
     area_id = models.IntegerField('机构对应地区的id',null=False)
+    ipa_address = models.CharField('发布机构地址',max_length=1000,null=False,default='默认地址')#为了导航到该机构添加
     class Meta:
         verbose_name = '项目发布机构表'
         verbose_name_plural = '项目发布机构表'

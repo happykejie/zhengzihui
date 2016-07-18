@@ -250,10 +250,11 @@ $(document).ready(function(){
     var times = 10  //定义全局请求数据的初始条数
     $(window).scroll(function(){
         if($("#load").is(":hidden")){ //用load的隐藏或者显示来标示一次请求是否在进行或者结束
-            var $last = $(".list-content").last();
+            var $last = $(".list-content").last();//取得 class = list-content的最后一个元素，也就是最后一个项目详情方块。div YZ
 			var bottom=$last.offset().top+$last.outerHeight();//最后一个元素底部距离浏览器窗口顶部的距离
 			var scrollTop=document.documentElement.scrollTop||document.body.scrollTop||0;//滚动条距离
 		    var windowHeight=document.documentElement.clientHeight||document.body.clientHeight||0;//窗口高度
+            //上面算距离和，下面的判断是为什么，猜想是为了判断load这个div时候出现了吧？？
             if(scrollTop>=bottom-windowHeight){
                 //console.log(bottom);
                 //console.log(scrollTop);
