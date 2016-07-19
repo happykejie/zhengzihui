@@ -176,9 +176,18 @@ $(function(){
 					</ul>
 				
 			    <div class="declare">
-				    
-					<a href="{% url 'selectpay' %}?goodsid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
-				    <a href="{% url 'selectpay' %}?goodsid={{article0.affiliation_id}} "><button class="product_btn">我要收藏</button></a>
+					{% if request.COOKIES.user_name %}
+			            <a href="{% url 'service_list' %}?itemid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
+			        {% else %}
+						<a href="{% url 'selectpay' %}?goodsid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
+			        {% endif %}
+
+				    {% if request.COOKIES.user_name %}
+				        <a href="#"><button class="product_btn">我要收藏</button></a>
+					{% else %}
+					    <a href="{% url 'g_register' %} "><button class="product_btn">我要收藏</button></a>
+				    {% endif %}
+
 				    <a class="project_src", href="#">查看原文</a>
 				
 				</div>
