@@ -507,8 +507,8 @@ def service_list(request):
     noservice = 0
     noserviceinfo = "没有指定的服务商"
     id1 = request.GET['itemid']
-    
-    
+
+
     #未完！！
     #按项目点击率降序获得前最多前三个热门项目
     HotClick = tb_item_click.objects.all()[0:2]
@@ -523,26 +523,42 @@ def service_list(request):
         a_pic = pics.pic_object.url[14:]
         a_pics.append(a_pic)
 
+
         
-        
-        
-        
+
+
         
     if (id1==''):
         service = 0
         noservice =1
-        return render_to_response('goods_list.html',{'service':service,'noservice':noservice,})
+        return render('request','goods_list.html',{'service':service,'noservice':noservice,})
     else:
         #print id1
         id1 = int(id1)
+        request.session['for_sort_itemid'] = id1
         tb_goods_list = tb_goods.objects.filter(item_id = id1)
         #for a in tb_goods_list: 
         #print (a.goods_id)
+        for goods in tb_goods_list:
+            starttime = goods.goods_accept_starttime
+            endtime = goods.goods_accept_endtime
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+            print starttime
+            print endtime
+            print days_remain
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+            goods.goods_remaintime = finish_percentage#完成百分比为对象添加的属性
 
         items = tb_item.objects.all()[:3]
         a_items = []
         for item in items:
-            a_item = {} 
+            a_item = {}
             a_item['item_key'] = item.item_key
             album = tb_album.objects.filter(album_type=0,affiliation_id=item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
             album_id = album.album_id
@@ -551,78 +567,150 @@ def service_list(request):
     
         
         else:
-            return render_to_response('goods_list.html',{'tb_goods_list':tb_goods_list,'service':service,'noservice':noservice,})        
+            return render(request,'goods_list.html',{'tb_goods_list':tb_goods_list,'service':service,'noservice':noservice,})
         
         
 #YZ 服务商详情页面
 def service_details(request):
-    
+
     if request.GET['goodsid']:
 	    service_detail_goods_id = request.GET['goodsid']
     goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的服务商
-    service_detail_item_id = goods.item_id
-    item = tb_item.objects.get(item_id = service_detail_item_id)#获得需要购买的项目的id对应的对象
-    
+
+
     #计算日期百分比用于赋值进度条
-    starttime = item.item_publish
-    endtime = item.item_deadtime
+    starttime = goods.goods_accept_starttime
+    endtime = goods.goods_accept_endtime
     days_total = (endtime - starttime).days
-    
+
     days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
-    # print(days_remain)
-    #print(days_total)
-    #print(starttime)
-    #print(endtime)
+
     if days_remain <= 0:
         finish_percentage = 100
     else:
-        finish_percentage = int((float(days_remain)/float(days_total))*100)
+        finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+
     #
-    #取项目对应的图片，赋值相册空间
+    #取服务对应的图片，赋值相册空间暂时还没有写，
+    '''
     pics_url = []
     album = tb_album.objects.filter(affiliation_id=item.item_id)[0]#获取项目对应的相册id
     album_id = album.album_id
-    pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片                                                               #切片14是去除前缀zhengzihui_app 否则图片不能显示    
+    pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片                                                               #切片14是去除前缀zhengzihui_app 否则图片不能显示
     for pic in pics:
         a_pic = pic.pic_object.url[14:] # 切片14是去除前缀zhengzihui_app 否则图片 ！！！部署时肯定还得修改
         pics_url.append(a_pic)
-    
-    
+    '''
+    pics_url = []
+    pics_url.append('/static/zhengzihui_app/img_for_items/default.jpg')
+
     #用于推荐其他服务商
-    allgoods_for_itemhere = tb_goods.objects.filter(item_id = item.item_id).order_by("goods_sort")#获取提供该项目支持的服务商，并按照他们的升序降序排列 排除自身！！
+    allgoods_for_itemhere = tb_goods.objects.filter(item_id = goods.item_id).order_by("-goods_evaluation_good_star")#获取提供该项目支持的服务商，并按照他们的升序降序排列 排除自身！！根据评价的星星数为准
     #从推荐服务商排除自己
     goods_myself = tb_goods.objects.get(goods_id = goods.goods_id)
     allgoods_for_itemhere = list(allgoods_for_itemhere)
     for good in allgoods_for_itemhere:
         if good.goods_id == goods_myself.goods_id:
             allgoods_for_itemhere.remove(good)
-      
-    
+
+
     #获得排序最高的4个服务商
     if len(allgoods_for_itemhere)> 4:
         goods_recommend_display = allgoods_for_itemhere[0:4]
     else:
         goods_recommend_display = allgoods_for_itemhere
-    
-    
-    
+
+
+
     #格式化日期
-    publish_time_format = item.item_publish.strftime("%Y-%m-%d %H:%I:%S")
-    datetime_format = item.item_deadtime.strftime("%Y-%m-%d %H:%I:%S")
+    publish_time_format = starttime.strftime("%Y-%m-%d %H:%I:%S")
+    datetime_format = endtime.strftime("%Y-%m-%d %H:%I:%S")
     #判断是否是来自未登录用户的支付浏览
     showDialogflag = 0
-    
+
     if 'unregist_tobepay_goodsid' in request.COOKIES:
         showDialogflag = 1
-        response = render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
+        response = render(request,'service_detail.html',{'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
         response.delete_cookie('unregist_tobepay_goodsid')
         return response
-        
-    
-    #print showDialogflag 
-    return render(request,'service_detail.html',{'item':item,'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})         
-    
-    
+
+
+    #print showDialogflag
+    return render(request,'service_detail.html',{'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
+
+def sortServByComp(request):
+    if request.session['for_sort_itemid']:
+        itemid = request.session['for_sort_itemid']
+
+        print "在排序当中"
+        tb_goods_list = tb_goods.objects.order_by('-goods_sort').filter(item_id=itemid)#我们默认goods_sort代表点击率
+
+        print tb_goods_list[0].goods_sort
+        for goods in tb_goods_list:
+            starttime = goods.goods_accept_starttime
+            endtime = goods.goods_accept_endtime
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+            goods.goods_remaintime = finish_percentage#完成百分比为对象添加的属性
+        return render(request,'goods_list.html',{'tb_goods_list':tb_goods_list,'service':True,'noservice':False,})
+    else:
+        return HttpResponse("没有选择相应的项目")
+
+
+
+def sortServBypayahead(request):
+    if request.session['for_sort_itemid']:
+        itemid = request.session['for_sort_itemid']
+
+        tb_goods_list = tb_goods.objects.order_by('goods_payahead').filter(item_id=itemid)#我们默认goods_sort代表点击率
+
+        for goods in tb_goods_list:
+            starttime = goods.goods_accept_starttime
+            endtime = goods.goods_accept_endtime
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+            goods.goods_remaintime = finish_percentage#完成百分比为对象添加的属性
+        return render(request,'goods_list.html',{'tb_goods_list':tb_goods_list,'service':True,'noservice':False,})
+    else:
+        return HttpResponse("没有选择相应的项目")
+
+def sortServByaward(request):
+    if request.session['for_sort_itemid']:
+        itemid = request.session['for_sort_itemid']
+
+        tb_goods_list = tb_goods.objects.order_by('goods_awardafter').filter(item_id=itemid)#我们默认goods_sort代表点击率
+
+        for goods in tb_goods_list:
+            starttime = goods.goods_accept_starttime
+            endtime = goods.goods_accept_endtime
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+            goods.goods_remaintime = finish_percentage#完成百分比为对象添加的属性
+        return render(request,'goods_list.html',{'tb_goods_list':tb_goods_list,'service':True,'noservice':False,})
+    else:
+        return HttpResponse("没有选择相应的项目")
+
     
     
 
@@ -713,7 +801,7 @@ def user_center(request):
     for click_item in click_items:
         a_click_item = {}    
         a_click_item['id'] = click_item.item_id#获取项目id
-        a_click_item['name'] = click_item.item_name#获取项目名字
+        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
         album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
         a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
@@ -737,8 +825,8 @@ def my_info(request):
     user = []
     company = []
     usertype = False
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         user = tb_user.objects.get(user_id=user_id)
         if user.user_type == 1:
             company = tb_user_expand.objects.get(user_id=user_id)

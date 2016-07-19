@@ -114,8 +114,8 @@
 <div class="row-fluid col-md-offset-1 col-lg-offset-1 col-md-4 col-lg-4">
 <!--这里还有好评率、成功率和服务特色没有添加相应逻辑；对应的缺少tb_goods表单和成功率字段-->
 <h4>{{item.item_name}}</h4>
-<p><strong>参考价格： ￥ {{goods.goods_market_price}}</strong></p>
-<p>产品编号：{{item.item_code}}    &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp好评率：{{service_provider_rank}} &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp&nbsp &nbsp &nbsp  成功率：{{goods.goods_successrate}}</p>
+<p><strong>收费标准： ￥ {{goods.goods_market_price}}</strong></p>
+
 <hr></hr>
 
 <p>服务特色： {{goods.goods_guarantee}}</p>
@@ -126,7 +126,7 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <a href="#" class="btn btn-primary btn-lg active" role="button">联系我们</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <a href="#" class="btn btn-primary btn-lg active" role="button">我要收藏</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
@@ -192,13 +192,13 @@
    </div>
    <div class="collapse navbar-collapse" id="example-navbar-collapse">
       <ul class="nav navbar-nav">
-         <li style="width:100px"><a href="#">预定须知</a></li>
+
          <li style="width:100px"><a href="#">服务内容</a></li>
          <li style="width:100px"><a href="#">服务流程</a></li>
-         <li style="width:100px"><a href="#">收费模式</a></li>
+
          <li style="width:100px"><a href="#">成功案例</a></li>
          <li style="width:100px"><a href="#">客户点评</a></li>
-         <li style="width:300px"><a href="#">衍生服务</a></li>
+
 
          
          <p class="navbar-text navbar-right">联系我们：400XXXXXX </p>

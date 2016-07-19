@@ -1,14 +1,14 @@
 {% extends 'my_base.html' %}
 
-{% block title %}服务详情{% endblock %}
+{% block title %}服务列表{% endblock %}
 
 {% block content %}
 
 
-    <script src="../static/jQuery-2.14/jquery.js" type="text/javascript"></script>
-    <link href="../static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <link href="../static/css/search_result.css" rel="stylesheet" type="text/css"/>
-    <script src="../static/js/search_result.js" type="text/javascript"></script>
+    <script src="/static/jQuery-2.14/jquery.js" type="text/javascript"></script>
+    <link href="/static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/search_result.js" type="text/javascript"></script>
     <script>
 	
     $.ajaxSetup({
@@ -161,100 +161,102 @@
         </span>
 
         <span>
-            <a href="#">
-                国家星火假计划
-            </a>
+
+                {{ goods.goods_name }}
+
         </span>
     </div>
 	<div>
-<button type="button" class="btn btn-warning">进行中</button>
-<button type="button" class="btn btn-success">我的关注</button>
+
 
 	</div>	
-		<div class="search" style="margin-top:20px;">
-			<form action="/search" method="GET" class="search">
-			<button type="submit" style="float:right;width:4%">搜索</button>
-					<input  type="text" id="inputitem" name="inputitem" style="float:right;weight:5%;">
-					
-			</form>
-		</div>
+
         <div class="sort">
             <span>
-                <a href="#">
+                <a href="{% url 'sortServByComp' %}">
                     综合
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
-                    挂网时间
+                <a href="{% url 'sortServBypayahead' %}">
+                    按首付最低
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
-                <a href="#">
-                    级别
+                <a href="{% url 'sortServByaward' %}">
+                    按奖金最低
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
-            <span>
-                <a href="#">
-                    截止时间
-                </a>
-                <span class="glyphicon glyphicon-triangle-bottom"></span>
-            </span>
+
         </div>
 		
 		
 		{% if service %}
-        <div id="list">
+		<div id="list">
             {% for goods in tb_goods_list %}
             <div class="list-content">
-			<br><br><br>
-                <div class="row">                  
-                        <div class="col-sm-4"><a href="/item_details/?id={{ goods.goods_name }}">{{ goods.goods_name }}</a>
-                    <p class="agency">
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                        <span>{{ goods.sp_id }}</span>
+				<a href="/service_details/?goodsid={{ goods.goods_id }}">
+                    <img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /><!--需要后期替换的图片页-->
+				</a>
+
+                <div class="text">
+                    <p class="title">
+                        <a href="/service_details/?goodsid={{ goods.goods_id }}">
+	                        {{ goods.goods_name }}+服务编号：{{ goods.goods_code }}
+	                    </a>
                     </p>
+
                     <p class="benefit">
                         <span class="benefit-text">
                             <span class="glyphicon glyphicon-usd"></span>
-                            <span>服务报价</span>
+                            <span>收费标准</span>
                         </span>
                         <span class="benefit-num">
-                           {{ goods_market_price }} 
+                            首付：{{ goods.goods_payahead }}+申报成功应付奖金{{ goods.goods_awardafter }}
                         </span>
                     </p>
-					</div>
-					<div class="col-sm-6">
                     <div class="progress">
                         <div class="progress-bar"></div>
-                        <div class="info" style="left:{{ goods.successrate }};">{{ goods.goods_successrate }}</div>
+                        <div class="info" style="left:{{ goods.goods_remaintime }}%;">{{ goods.goods_remaintime }}%</div>
                     </div>
-                    <diV class="date">
-                        成功率
-                    </diV>
-					</div>
-                <div class="col-sm-2">
-                    <a href="/service_details?goodsid={{goods.goods_id}}" ><button class="btn btn-warning">查看详情</button></a>
-				</div>
-				</div>
+                    <div class="date">
+                        <span class="start">
+                            {{ goods.goods_accept_starttime }}
+                        </span>
+                         <span class="stop">
+                           {{ goods.goods_accept_endtime }}
+                        </span>
+                    </div>
+
+                </div>
+                <div class="watch">
+
+                    <a href="/service_details/?goodsid={{ goods.goods_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                </div>
+                <div class="line"></div>
             </div>
             {% endfor %}
-        </div> 
+
+        </div>
+
+
+
         
         {% endif %}
         
         {% if noservice  %}
         <div class="row-fluid col-md-12 col-lg-12">
-        <h1><center>还没有相关服务商，敬请期待!</h1></h1>
+        <h1 align="center">还没有相关服务商，敬请期待!</h1>
         </div>
         {% endif %}
+<!--
         <div id="load">
             <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
-    
+  -->
 </div>
 
 

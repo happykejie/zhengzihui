@@ -582,11 +582,18 @@ class tb_goods(models.Model):
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
     goods_name = models.CharField("服务名称",max_length = 40, null = False)
     goods_market_price = models.IntegerField("服务价格",null = False)
+    #Addby YZ为了服务列表的数据呈现
+    goods_code = models.IntegerField("服务编号",null=True)
+    goods_payahead = models.IntegerField("首付金额",null=False,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=False,default=100)
+    goods_accept_starttime = models.DateTimeField("开始接单时间",null=True)
+    goods_accept_endtime = models.DateTimeField("最后接单时间",null=True)
+
     goods_price = models.IntegerField("服务未打折扣报价(标价)",null = False)
     goods_price_discouint = models.FloatField("折扣（标价乘以折扣等于实际成交价）",null = False)
     goods_pay = models.IntegerField("该服务支持的支付方式",null = False)
     goods_guarantee = models.CharField("商家保证",max_length = 100, null = False)
-    goods_sort = models.IntegerField("排序",null = False)
+    goods_sort = models.IntegerField("排序",null = False)#用来排序
     
     NOTCOMMEND = 0
     COMMEND = 1

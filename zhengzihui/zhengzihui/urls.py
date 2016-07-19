@@ -41,11 +41,12 @@ urlpatterns = [
     url(r'^item_details/$','zhengzihui_app.views.item_details',name='item_details'),#当有id传入，可显示项目的相关信息
     url(r'^project_detail/$','zhengzihui_app.views.project_detail',name='project_detail'),#当有id传入，可显示项目的相关信息
     
-    #url(r'^zhengzihui_app/', include('zhengzihui_app.urls')),
-    
+
+    #下面是服务商的三种排序方式
+    url(r'^sortServByComp/$','zhengzihui_app.views.sortServByComp',name="sortServByComp"),
+    url(r'^sortServBypayahead/$','zhengzihui_app.views.sortServBypayahead',name="sortServBypayahead"),
+    url(r'^sortServByaward/$','zhengzihui_app.views.sortServByaward',name="sortServByaward"),
     url(r'^service_details/$','zhengzihui_app.views.service_details',name="service_details"),
-    
-    
     url(r'^service_list/$','zhengzihui_app.views.service_list',name="service_list"),
     
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
