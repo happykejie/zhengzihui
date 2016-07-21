@@ -64,8 +64,7 @@
     }
     ul.nav-tabs.affix{
         top: 30px; /* Set the top position of pinned element */
-    }
-	
+    
 	
 	.image{height:250px;width:200px;background: #ffffff}
 
@@ -90,22 +89,42 @@
 <div class="container">
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
-		<div class="navbar-header" id="section-0">
-			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi, {{ user_name }}欢迎来到政资汇！</a>
+		<div style="float:left">
+			 <ul class="nav navbar-nav">
+			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}</a></li>
+			 <li><a href="{% url 'login' %}">登录</a></li>
+			 <li><a href="{% url 'g_register' %}">注册</a></li>
+			 <li><a href="{% url 'logout' %}">退出</a></li>
+			 </ul>
             
         </div>
          
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
-			<li><a href="{% url 'login' %}">登录</a></li>
-			<li><a href="{% url 'g_register' %}">注册</a></li>
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
-			<li><a href="#">我的订单</a></li>
 			<li><a href="#">手机政资汇</a></li>
-			<li><a href="#">申请加盟</a></li>
-			<li><a href="{% url 'representations' %}">帐号申诉</a></li>
-			<li><a href="#">网站导航</a></li>
+			<li><a href="#">微信</a></li>
+			<li><a href="#">客服电话</a></li>
+			<li class="dropdown">
+							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="black">合作中心</font><strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									 <a href="#">申报合作</a>
+								</li>
+								<li>
+									 <a href="#">配套合作</a>
+								</li>
+								<li>
+									 <a href="#">融资合作</a>
+								</li>
+								<li>
+									 <a href="#">网站联</a>
+								</li>
+							</ul>
+			</li>
+			
+			<li><a href="{% url 'representations' %}">融资广场</a></li>
+			<li><a href="#">配套中心</a></li>
 		 </ul>
 		</div>
 	</nav>	
@@ -134,8 +153,9 @@ $("#city").click(function (e) {
 				<form action="/search" method="GET" class="search">
 					<div class="col-md-2" style="float:left;padding:0px">
 					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px"> 
-    						  <option>全部</option>
-   						  <option>发布部门</option>		 
+    						  <option>所属行业</option>
+   						  <option>领域或产品</option>	
+							<option>归口部门受理人员</option>	 
     					  </select>
     					  </div>
     					<div class="col-sm-6" style="float:left;padding:0px">
@@ -144,7 +164,7 @@ $("#city").click(function (e) {
 					</div>
 				</form>
 			<div class="col-sm-2" style="float:left;padding:0px">
-			<button type="button" class="btn btn-primary btn-lg btn-block" style="float:left;" onclick="javascript:window.location.href='#'">有偿申报</button>
+			<button type="button" class="btn btn-primary btn-lg btn-block" style="float:left;" onclick="javascript:window.location.href='#'">共享</button>
 			</div>
 			</div>
 		</div>
@@ -170,28 +190,125 @@ $("#city").click(function (e) {
 		
 	</script>
 	<div class="row-fluid">
-		<div class="col-sm-2" style="margin:0px; padding:0px;background-color:#87CEEB;">
-				<ul class="nav">
-					<li id="111" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>热点领域</B></font></a></li>
-					<li id="112" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>经信汇</B></font></a></li>
-					<li id="113" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>科教汇</B></font></a></li>
-					<li id="114" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>农林汇</B></font></a></li>
-					<li id="115" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>基建汇</B></font></a></li>
-					<li id="116" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>商务汇</B></font></a></li>
-					<li id="117" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>民生汇</B></font></a></li>
-					<li id="118" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>监管汇</B></font></a></li>
-					<li id="119" onmouseover="show(this)" onmouseout="hide(this)"><a href="#"><font color="white"><B>服务汇</B></font></a></li>
+		<div class="category-type">
+        <div class="text" style="background-color:#87CEEB;"><font color="white"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中央资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;省级资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市级资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;县级资金</B></font></div>
+		</div>
+		<div class="col-sm-2" style="margin:0px; padding:0px;background-color:gray;">
+				<ul class="list-inline">
+					<li id="111" onmouseover="show(this)" onmouseout="hide(this)" >
+						    <a href="#"><font color="white"><small>政府部门/</small></font></a>
+							<a href="#"><font color="white"><small>直属机构/</small></font></a>
+							<a href="#"><font color="white"><small>管理机构</small></font></a>
+					</li>
+				</ul>
+				<br>
+				<br>
+				<br>
+				<ul class="list-inline">
+					<li id="112" onmouseover="show(this)" onmouseout="hide(this)">
+						<a href="#"><font color="white"><small>党派/</small></font></a>
+						<a href="#"><font color="white"><small>人民团体/</small></font></a>
+						<a href="#"><font color="white"><small>公益性组织</small></font></a>
+					</li>
+					</ul>
+					<br>
+					<br>
+					<br>
+				<ul class="list-inline">
+					<li id="113" onmouseover="show(this)" onmouseout="hide(this)">
+						<a href="#"><font color="white"><small>科研院所/</small></font></a>
+						<a href="#"><font color="white"><small>高等院校</small></font></a>
+					</li>
+					</ul>
+					<br>
+					<br>
+					<br>
+				<ul class="list-inline">
+					<li id="114" onmouseover="show(this)" onmouseout="hide(this)">
+						<a href="#"><font color="white"><small>国有企业/</small></font></a>
+						<a href="#"><font color="white"><small>事业单位</small></font></a>
+					</li>
+					<br>
+					<br>
+					<br>
+					<br>
 				</ul>
 		</div>
 
 		<div class="col-sm-6" style="margin:0px; padding:0px;">
 			<div id="div111"  style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
-				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>热点领域</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>发展改革</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>财政和信息化</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+				<div class="col-sm-8" style="margin:0px; padding:0px;">
+					<p><span>
+						<a ><font color="black"><small>经信汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>发展改革 </small></font></a>
+						/<a href="#"><font color="black"><small>经济和信息化</small></font></a>
+						/<a href="#"><font color="black"><small>财政</small></font></a>
+						/<a href="#"><font color="black"><small>国资</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a ><font color="black"><small>科教汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>科技</small></font></a>
+						/<a href="#"><font color="black"><small>教育</small></font></a>
+						/<a href="#"><font color="black"><small>文化</small></font></a>
+						/<a href="#"><font color="black"><small>卫生计生</small></font></a>
+						/<a href="#"><font color="black"><small>体育</small></font></a>
+						/<a href="#"><font color="black"><small>知识产权</small></font></a>
+						/<a href="#"><font color="black"><small>新闻出版广电</small></font></a>
+						/<a href="#"><font color="black"><small>旅游</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					</p>
+					<p><span>
+						<a ><font color="black"><small>农林汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>农业</small></font></a>
+						/<a href="#"><font color="black"><small>畜牧</small></font></a>
+						/<a href="#"><font color="black"><small>渔业</small></font></a>
+						/<a href="#"><font color="black"><small>粮食</small></font></a>
+						/<a href="#"><font color="black"><small>中医药</small></font></a>
+						/<a href="#"><font color="black"><small>烟草</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a ><font color="black"><small>基建汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>国土资源</small></font></a>
+						/<a href="#"><font color="black"><small>住房城乡建设</small></font></a>
+						/<a href="#"><font color="black"><small>交通运输</small></font></a>
+						/<a href="#"><font color="black"><small>水利</small></font></a>
+						/<a href="#"><font color="black"><small>能源</small></font></a>
+						/<a href="#"><font color="black"><small>环境保护</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a ><font color="black"><small>商务汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>商务</small></font></a>
+						/<a href="#"><font color="black"><small>税务</small></font></a>
+						/<a href="#"><font color="black"><small>工商</small></font></a>
+						/<a href="#"><font color="black"><small>投资促进</small></font></a>
+						/<a href="#"><font color="black"><small>海关</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a ><font color="black"><small>民生汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>民政</small></font></a>
+						/<a href="#"><font color="black"><small>人力资源社会保障</small></font></a>
+						/<a href="#"><font color="black"><small>扶贫</small></font></a>
+						/<a href="#"><font color="black"><small>民政</small></font></a>
+						/<a href="#"><font color="black"><small>宗教</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a  ><font color="black"><small>监管汇</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>人民银行</small></font></a>
+						/<a href="#"><font color="black"><small>银监</small></font></a>
+						/<a href="#"><font color="black"><small>证监</small></font></a>
+						/<a href="#"><font color="black"><small>保监</small></font></a>
+						/<a href="#"><font color="black"><small>质监</small></font></a>
+						/<a href="#"><font color="black"><small>药监</small></font></a>
+						/<a href="#"><font color="black"><small>安监</small></font></a>
+						/<a href="#"><font color="black"><small>统计</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/1.png" style="height:160px;width:900px;">
@@ -200,13 +317,50 @@ $("#city").click(function (e) {
 				</div>
 			</div>
 			<div id="div112" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
-				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>经济与信息化</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>发展改革</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>财政</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+				<div class="col-sm-8" style="margin:0px; padding:0px;">
+					<p><span>
+						<a ><font color="black"><small>中共主题馆</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>组织部</small></font></a>
+						/<a href="#"><font color="black"><small>宣传部</small></font></a>
+						/<a href="#"><font color="black"><small>统战部</small></font></a>
+						/<a href="#"><font color="black"><small>政策研究室</small></font></a>
+						/<a href="#"><font color="black"><small>政法部</small></font></a>
+						/<a href="#"><font color="black"><small>编办</small></font></a>
+						/<a href="#"><font color="black"><small>直属机关工委</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+					</span>
+					<p><span>
+						<a ><font color="black"><small>民主党派馆</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>民革</small></font></a>
+						/<a href="#"><font color="black"><small>民盟</small></font></a>
+						/<a href="#"><font color="black"><small>民建</small></font></a>
+						/<a href="#"><font color="black"><small>民促</small></font></a>
+						/<a href="#"><font color="black"><small>农工党</small></font></a>
+						/<a href="#"><font color="black"><small>致公党</small></font></a>
+						/<a href="#"><font color="black"><small>九三学社</small></font></a>
+						/<a href="#"><font color="black"><small>台盟</small></font></a>
+					</span>
+					<p><span>
+						<a ><font color="black"><small>人民团体馆</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>总工会</small></font></a>
+						/<a href="#"><font color="black"><small>共青团</small></font></a>
+						/<a href="#"><font color="black"><small>科协</small></font></a>
+						/<a href="#"><font color="black"><small>妇联</small></font></a>
+						/<a href="#"><font color="black"><small>工商联</small></font></a>
+						/<a href="#"><font color="black"><small>青联</small></font></a>
+						/<a href="#"><font color="black"><small>残联</small></font></a>
+						/<a href="#"><font color="black"><small>供销社</small></font></a>
+						/<a href="#"><font color="black"><small>贸易促进会</small></font></a>
+						/<a href="#"><font color="black"><small>红十字会</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						
+						</span>
+					<p><span>
+						<a ><font color="black"><small>公益组织馆</small>&gt</font></a>
+						：<a href="#"><font color="black"><small>壹基金公益基金会</small></font></a>
+						/<a href="#"><font color="black"><small>阿里巴巴公益基金会</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" class="img-responsive" src="../static/images/测试静态页面用img/1.png" style="height:160px;width:900px;">
@@ -215,16 +369,28 @@ $("#city").click(function (e) {
 				</div>
 			</div>
 			<div id="div113" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
-				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>	
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>科学</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>教育</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>文化</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>卫生</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>体育</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>知识产权</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+				<div class="col-sm-8" style="margin:0px; padding:0px;">
+					<p><span>
+						<a ><font color="black"><small>科研院所</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>中国科学院</small></font></a>
+						/<a href="#"><font color="black"><small>中国工程院</small></font></a>
+						/<a href="#"><font color="black"><small>中国农业科学院</small></font></a>
+						/<a href="#"><font color="black"><small>中国工程物理研究院</small></font></a>
+						/<a href="#"><font color="black"><small>重庆农科院</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a><font color="black"><small>高等院校</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>北京大学</small></font></a>
+						/<a href="#"><font color="black"><small>清华大学</small></font></a>
+						/<a href="#"><font color="black"><small>复旦大学</small></font></a>
+						/<a href="#"><font color="black"><small>浙江大学</small></font></a>
+						/<a href="#"><font color="black"><small>南开大学</small></font></a>
+						/<a href="#"><font color="black"><small>中国科技大学</small></font></a>
+						/<a href="#"><font color="black"><small>中山大学</small></font></a>
+						/<a href="#"><font color="black"><small>四川大学</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/1.png" style="height:160px;width:900px;">
@@ -233,16 +399,22 @@ $("#city").click(function (e) {
 				</div>
 			</div>
 			<div id="div114" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
-				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>农业</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>林业</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>畜牧业</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>渔业</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>粮食</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>中医药</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+				<div class="col-sm-8" style="margin:0px; padding:0px;">
+					<p><span>
+						<a ><font color="black"><small>国有企业</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>中国航天科技集团</small></font></a>
+						/<a href="#"><font color="black"><small>海尔集团</small></font></a>
+						/<a href="#"><font color="black"><small>长虹集团</small></font></a>
+						/<a href="#"><font color="black"><small>东方电气</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
+					<p><span>
+						<a><font color="black"><small>事业单位</small>&gt </font></a>
+						：<a href="#"><font color="black"><small>中国农村科技开发中心</small></font></a>
+						/<a href="#"><font color="black"><small>中国国际交流中心</small></font></a>
+						/<a href="#"><font color="black"><small>四川省高新技术产业金融服务中心</small></font></a>
+						/<a href="#"><font color="black"><small>更多</small></font></a>
+						</span>
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/2.png" style="height:160px;width:900px;">
@@ -336,7 +508,7 @@ $("#city").click(function (e) {
 			</div>
 		</div>
 <!--动图轮播-->
-		<div class="col-sm-5" style="display:block;z-index:1;margin:0px; padding:0px;">
+		<div class="col-sm-6" style="display:block;z-index:1;margin:0px; padding:0px;">
 			<div id="myCarousel" class="carousel slide" >
 				<ol class="carousel-indicators">
 					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -362,23 +534,27 @@ $("#city").click(function (e) {
 					data-slide="next">&rsaquo;</a>
 		</div>
 	
-		<div class="col-sm-5" style="display:block;z-index:3;margin:0px;float:right">
+		<div class="col-sm-4" style="display:block;z-index:3;margin:0px;float:right">
 				<img class="img-responsive" src="../static/images/测试静态页面用img/fuwubao.png" style="height:170px;width:1000px">
 				<br>
 				<img class="img-responsive" src="../static/images/测试静态页面用img/sanzhao.png" style="height:170px;width:1000px">
 		</div>
 		</div>
 		</div>
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在申报</B></font></a>
+<a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;截止申报</B></font></a>
+</div>
+</div> 
 <br>		
 <br>
 <!--正在申报的项目-->
 <div class="row-fluid">
 <div class="col-sm-6">
 <div style="position:absolute;left:150px;">
-<a href="#" ><font size="5" color="black"><B>正在申报的项目&nbsp;&nbsp;&nbsp;&nbsp;</B></font></a>
-<a href="#" ><font color="black"><B>科技馆</B></font></a>
-<a href="#" ><font color="black"><B>经信馆</B></font></a>
-<a href="#" ><font color="black"><B>创新创业专场</B></font></a>
+<a href="#" ><font size="5" color="black"><B>热门申报&nbsp;&nbsp;&nbsp;&nbsp;</B></font></a>
 </div>
 </div>
 </div>
@@ -434,11 +610,15 @@ $(document).ready(function(){
     });
 });
 </script>
-        <div class="col-sm-2 col-md-2 col-lg-2" id="myScrollspy">
-            <ul class="nav nav-tabs nav-stacked" id="myNav">
-                <li class="active"><a href="#section-1">经信汇</a></li>
-                <li><a href="#section-2">科教汇</a></li>
-                <li><a href="#section-3">农林汇</a></li>
+<div style="position:fixed; top:100px;left:-25px;">
+        <div class="col-sm-1 col-md-1 col-lg-1" id="myScrollspy">
+            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="500">
+                <li class="active"><a href="#section-1">政府馆</a></li>
+                <li><a href="#section-2">党团馆</a></li>
+                <li><a href="#section-3">院校馆</a></li>
+				<li><a href="#section-4">企事业馆</a></li>
+				<li><a href="#section-5">融资广场</a></li>
+				<li><a href="#section-6">配套中心</a></li>
                 <!--<li><a href="#section-4">基建汇</a></li>
                 <li><a href="#section-5">商务汇</a></li>
                 <li><a href="#section-6">民生汇</a></li>
@@ -448,7 +628,8 @@ $(document).ready(function(){
                 <li><a href="#section-10">政策汇</a></li>-->
             </ul>
         </div>
-	<div class="col-sm-9 col-md-9 col-lg-9"></div>
+</div>
+	<div class="col-sm-9 col-md-9 col-lg-11"></div>
 	<div class="col-sm-1 col-md-1 col-lg-1" id="myScrollspy1" >
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
                 <li class="active"><a href="#">登录</a></li>
@@ -496,28 +677,63 @@ function show3F(obj){
 	var a="div"+id;
 	document.getElementById(a).style.display="block";
 }
+function show4F(obj){
+	document.getElementById("div14").style.display="none";
+	document.getElementById("div15").style.display="none";
+	id=obj.id;
+	var a="div"+id;
+	document.getElementById(a).style.display="block";
+}
+function show5F(obj){
+	document.getElementById("div16").style.display="none";
+	document.getElementById("div17").style.display="none";
+	document.getElementById("div18*").style.display="none";
+	id=obj.id;
+	var a="div"+id;
+	document.getElementById(a).style.display="block";
+}
+function show6F(obj){
+	document.getElementById("div19").style.display="none";
+	document.getElementById("div20").style.display="none";
+	document.getElementById("div21").style.display="none";
+	document.getElementById("div22").style.display="none";
+	document.getElementById("div23").style.display="none";
+	id=obj.id;
+	var a="div"+id;
+	document.getElementById(a).style.display="block";
+}
 </script>
-
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>1F 政府馆&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
 
 <div id="section-1">
 <div>
 <div>
 <div class="container">
 <div class="col-md-2">
-<label>1F</label>
+<!--<label>1F  政府馆</label>-->
 <ul class="nav nav-list" contenteditable="true">
-                  <li id="1" onclick=show1F(this)><a href="#">全部</a></li>
-                  <li id="2" onclick=show1F(this)><a href="#">经济和信息化</a></li>
-				  <li id="3" onclick=show1F(this)><a href="#">发展改革</a></li>
-				  <li id="4" onclick=show1F(this)><a href="#">财政</a></li>
-				  <li id="5" onclick=show1F(this)><a href="#">其他</a></li>
-                </ul>
+                  <li id="1" onclick=show1F(this)><a href="#">经信汇</a></li>
+                  <li id="2" onclick=show1F(this)><a href="#">科教汇</a></li>
+				  <li id="3" onclick=show1F(this)><a href="#">农林汇</a></li>
+				  <li id="4" onclick=show1F(this)><a href="#">基建汇</a></li>
+				  <li id="5" onclick=show1F(this)><a href="#">商务汇</a></li>
+				  <li id="6" onclick=show1F(this)><a href="#">民生汇</a></li>
+				  <li id="7" onclick=show1F(this)><a href="#">监管汇</a></li>
 </div>
 <div class="col-md-10">
 
 
 <div id="div1" >
 <table class="table" >
+<tr>
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
@@ -606,33 +822,69 @@ function show3F(obj){
 </tr>
 </table>
 </div>
+<div id="div6" style="display:none">
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+</table>
+</div>
+
+<div id="div7" style="display:none">
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
 </div>
+</div>
+
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>2F 党团馆&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
+
 
 <div id="section-2">
 <div>
 <div>
 <div class="container">
 <div class="col-md-2">
-<label>2F</label>
+<!--<label>2F</label>-->
 <ul class="nav nav-list" contenteditable="true">
 				  
-                  <li id="6" onclick=show2F(this)><a href="#">全部</a></li>
-                  <li id="7" onclick=show2F(this)><a href="#">教育</a></li>
-				  <li id="8" onclick=show2F(this)><a href="#">文化</a></li>
-				  <li id="9" onclick=show2F(this)><a href="#">卫生</a></li>
-				  <li id="10" onclick=show2F(this)><a href="#">体育</a></li>
-				  <li id="11" onclick=show2F(this)><a href="#">科技</a></li>
-				  <li id="12" onclick=show2F(this)><a href="#">其他</a></li>
+                  <li id="8" onclick=show2F(this)><a href="#">中共</a></li>
+                  <li id="9" onclick=show2F(this)><a href="#">民主党派</a></li>
+				  <li id="10" onclick=show2F(this)><a href="#">人民团体</a></li>
+				  <li id="11" onclick=show2F(this)><a href="#">公益组织</a></li>
                 </ul>
 </div>
 <div class="col-md-10">
 
 
-<div id="div6" >
+<div id="div8" >
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -664,7 +916,7 @@ function show3F(obj){
 </table>
 </div>
 
-<div id="div7" style="display:none">
+<div id="div9" style="display:none">
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -684,7 +936,7 @@ function show3F(obj){
 </table>
 </div>
 
-<div id="div8" style="display:none">
+<div id="div10" style="display:none">
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -695,29 +947,6 @@ function show3F(obj){
 </td>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
-</tr>
-</table>
-</div>
-
-<div id="div9" style="display:none">
-<table class="table">
-<tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-</tr>
-</table>
-</div>
-
-<div id="div10" style="display:none">
-<table class="table">
-<tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
 </td>
 </tr>
 </table>
@@ -732,53 +961,39 @@ function show3F(obj){
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
 </td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
 </tr>
 </table>
 </div>
-
-<div id="div12" style="display:none">
-<table class="table">
-<tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-</tr>
-</table>
-</div>
-
 </div>
 </div>
 </div>
 </div>
 </div>
 
-
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>3F 院校馆&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
 <div id="section-3">
 <div>
 <div>
 <div class="container">
 <div class="col-md-2">
-<label>3F</label>
+<!--<label>3F</label>-->
 <ul class="nav nav-list" contenteditable="true">
-                  <li id="13" onclick=show3F(this)><a href="#">全部</a></li>
-                  <li id="14" onclick=show3F(this)><a href="#">农业</a></li>
-				  <li id="15" onclick=show3F(this)><a href="#">林业</a></li>
-				  <li id="16" onclick=show3F(this)><a href="#">畜牧食品</a></li>
-				  <li id="17" onclick=show3F(this)><a href="#">水利</a></li>
-				  <li id="18" onclick=show3F(this)><a href="#">环保</a></li>
-				  <li id="19" onclick=show3F(this)><a href="#">其他</a></li>
+                  <li id="12" onclick=show3F(this)><a href="#">科研院所</a></li>
+                  <li id="13" onclick=show3F(this)><a href="#">高等院校</a></li>
                 </ul>
 </div>
 <div class="col-md-10">
 
 
-<div id="div13" >
+<div id="div12" >
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -810,7 +1025,7 @@ function show3F(obj){
 </table>
 </div>
 
-<div id="div14" style="display:none">
+<div id="div13" style="display:none">
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -826,6 +1041,67 @@ function show3F(obj){
 <tr>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!--4F-->
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>4F 企事业馆&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
+<div id="section-4">
+<div>
+<div>
+<div class="container">
+<div class="col-md-2">
+<!--<label>4F</label>-->
+<ul class="nav nav-list" contenteditable="true">
+                  <li id="14" onclick=show4F(this)><a href="#">国有企业</a></li>
+				  <li id="15" onclick=show4F(this)><a href="#">事业单位</a></li>
+                </ul>
+</div>
+<div class="col-md-10">
+
+
+<div id="div14" >
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
 </tr>
 </table>
 </div>
@@ -843,11 +1119,45 @@ function show3F(obj){
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
 </td>
 </tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+</tr>
 </table>
 </div>
+</div>
+</div>
 
-<div id="div16" style="display:none">
-<table class="table">
+
+</div>
+</div>
+</div>
+
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>5F 融资广场&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
+<div id="section-5">
+<div>
+<div>
+<div class="container">
+<div class="col-md-2">
+<!--<label>5F</label>-->
+<ul class="nav nav-list" contenteditable="true">
+                  <li id="16" onclick=show5F(this)><a href="#">吸引投资</a></li>
+                  <li id="17" onclick=show5F(this)><a href="#">争取贷款</a></li>
+				  <li id="18" onclick=show5F(this)><a href="#">企业上市</a></li>
+</div>
+<div class="col-md-10">
+
+
+<div id="div16" >
+<table class="table" >
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
@@ -855,6 +1165,25 @@ function show3F(obj){
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
 </td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
 </tr>
 </table>
 </div>
@@ -865,6 +1194,16 @@ function show3F(obj){
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
 </td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
 </tr>
 </table>
 </div>
@@ -878,11 +1217,125 @@ function show3F(obj){
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
 </td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="row-fluid">
+<div class="col-sm-6">
+<div style="position:absolute;left:150px;">
+<font size="4" color="black"><B>6F 配套中心&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
+</div>
+</div>
+</div>
+<br>
+<br>
+<div id="section-6">
+<div>
+<div>
+<div class="container">
+<div class="col-md-2">
+<!--<label>6F</label>-->
+<ul class="nav nav-list" contenteditable="true">
+                  <li id="19" onclick=show5F(this)><a href="#">工商代理</a></li>
+                  <li id="20" onclick=show5F(this)><a href="#">资质代办</a></li>
+				  <li id="21" onclick=show5F(this)><a href="#">知识产权</a></li>
+				  <li id="22" onclick=show5F(this)><a href="#">财务服务</a></li>
+				  <li id="23" onclick=show5F(this)><a href="#">更多</a></li>
+</div>
+<div class="col-md-10">
+
+
+<div id="div19" >
+<table class="table" >
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
 </tr>
 </table>
 </div>
 
-<div id="div19" style="display:none">
+<div id="div20" style="display:none">
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+<tr>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+</tr>
+</table>
+</div>
+
+<div id="div21" style="display:none">
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
+</td>
+</tr>
+</table>
+</div>
+
+<div id="div22" style="display:none">
+<table class="table">
+<tr>
+<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+</td>
+<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
+<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+</td>
+</tr>
+</table>
+</div>
+
+<div id="div23" style="display:none">
 <table class="table">
 <tr>
 <td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
@@ -891,14 +1344,8 @@ function show3F(obj){
 </tr>
 </table>
 </div>
-
-
 </div>
 </div>
-</div>
-</div>
-</div>
-
 </div>
 </div>
 </div>

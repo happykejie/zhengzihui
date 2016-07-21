@@ -163,15 +163,30 @@
                         </ul>
                     </div>
                 </div>
-                <div class="panel panel-default">
+				 <div class="panel panel-default">
                     <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse"  href="#CollectCenter" aria-expanded="false" aria-controls="CollectCenter">
+                                我的收藏<span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="CollectCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <ul class="panel-body">
+                            <li><a class="not-clicked" id="{% url 'collects' %}" href="javascript:void(0);">收藏的项目</a></li>
+                            <li><a class="not-clicked" id="{% url 'collect_serve' %}" href="javascript:void(0);">收藏的服务</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFour">
                         <h4 class="panel-title">
                             <a class="collapsed" role="button" data-toggle="collapse"  href="#EvaluationCenter" aria-expanded="false" aria-controls="EvaluationCenter">
                                 评价管理<span class="glyphicon glyphicon-chevron-down"></span>
                             </a>
                         </h4>
                     </div>
-                    <div id="EvaluationCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div id="EvaluationCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
                         <ul class="panel-body">
                             <li><a class="not-clicked" id="{% url 'my_evaluate' %}" href="javascript:void(0);">我的评价</a></li>
                             <li><a class="not-clicked" id="{% url 'statistics' %}" href="javascript:void(0);">评价统计</a></li>

@@ -881,8 +881,8 @@ def grade_grow(request):
 def all_orders(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
 
     for order in order_list:
@@ -1158,6 +1158,13 @@ def order_add_commit(request):
             order.save()
             return render(request,'commit_complete.html',{})
 
+#收藏管理
+	#收藏的项目
+def collects(request):
+	return render(request,'collects.html',{})
+	#收藏的服务
+def collect_serve(request):
+	return render(request,'collect_serve.html',{})
 #评价管理
 
     #我的评价
