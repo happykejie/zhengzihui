@@ -60,6 +60,8 @@ urlpatterns = [
     #用户信息
         #我的信息
     url(r'^zzh/my_info/', "zhengzihui_app.views.my_info",name="my_info"),
+    #总览
+    #url(r'^zzh/view_all/', "zhengzihui_app.views.view_all",name="view_all"),
         #保存修改信息
     url(r'^zzh/modify_user/', "zhengzihui_app.views.modify_user",name="modify_user"),
         #安全中心
