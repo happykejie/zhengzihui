@@ -96,9 +96,15 @@ urlpatterns = [
     url(r'^order_commit/', "zhengzihui_app.views.order_commit",name="order_commit"),
        #添加评论
     url(r'^order_add_commit/', "zhengzihui_app.views.order_add_commit",name="order_add_commit"),
-
-
-
+	
+	
+	#收藏管理
+		#收藏的项目
+	url(r'^zzh/collects/', "zhengzihui_app.views.collects",name="collects"),
+		#收藏的服务
+    url(r'^zzh/collect_sever/', "zhengzihui_app.views.collect_serve",name="collect_serve"),
+		
+		
     #评价管理
         #我的评价
     url(r'^zzh/my_evaluate/', "zhengzihui_app.views.my_evaluate",name="my_evaluate"),
