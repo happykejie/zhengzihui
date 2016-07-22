@@ -5,6 +5,7 @@ from django.http import HttpResponse as HR
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from itertools import chain
+import random
 
 import random
 import top.api
@@ -713,8 +714,78 @@ def sortServByaward(request):
 
     
     
+#YZ 查看合同
+def contact_details(request):
+    goodsid = 0
+    if request.GET['goodsid']:
+        contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
+        contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
 
+        contact_file.close()
+        goodsid = request.GET['goodsid']
+        return render(request,'contact_details.html',{'goodsid':goodsid,'contact_string':contact_string})
+    return HttpResponse("还没有选择项目")
+
+def order_details(request):
+    goodsid = 0
+    if request.GET['goodsid']:
+        goodsid = int(request.GET['goodsid'])
+        goods = tb_goods.objects.get(goods_id = goodsid)#取到服务对象
+        item = tb_item.objects.get(item_id=goods.item_id)#取得对应的申报项目的对象
+        item_spa = tb_item_pa(ipa_id=item.item_pa_id)#获得项目发布机构对象
+        goods_spa = tb_service_provider(sp_id=goods.sp_id)#获得服务提供商的对象
+        user_id = int(request.COOKIES['user_id'])
+        buyer = tb_user.objects.get(user_id=user_id)#获取当前用户对象
+
+        #生成随机的0-1000000的数，并不与数据库中的数相同;给order_no赋值
+        order_no =random.randint(0,1000000)
+        while( len(tb_order.objects.filter(order_no=order_no)) == 1 ):
+            order_no =random.randint(0,1000000)
+        print type(item.item_name)
+        #add_time 用的是插入数据时便生成，即保存最后修改的时间错。
+        order = tb_order(order_id=10,order_no=order_no,goods_id=goodsid,pay_no=order_no,item_id=item.item_id,item_name=item.item_name,sp_id=goods_spa.sp_id,\
+                         sp_name=goods_spa.sp_name,buyer_id=buyer.user_id,buyer_name=buyer.user_name,buyer_email=buyer.user_email,\
+                         payment_code=order_no,payment_time=None,final_time=None,good_amount=goods.goods_payahead,\
+                         order_amount=goods.goods_payahead + goods.goods_awardafter,\
+                         refund_amount=goods.goods_payahead,delay_time=None,order_from=1,express_id=1,express_no=1,eval_state=0,order_state=3,refund_state=0,lock_state=0,express_state=0)
+        '''#order.order_no = order_no
+        #order.goods_id = goodsid
+        #order.pay_no = order_no #这里默认Pay_no与订单号一致
+        order.item_id = item.item_id
+        order.item_name = item.item_name
+        order.sp_id = goods_spa.sp_id
+        order.sp_name = goods_spa.sp_name
+        order.buyer_id = buyer.user_id
+        order.buyer_name = buyer.user_name
+        order.buyer_email = buyer.user_email
+        order.add_time = time.localtime()
+        order.payment_code = order_no #暂时不知道什么用默认和订单号一致
+        order.payment_time = None#暂时取值为Null,因为并没有支付，等待后续的线上支付或者线下支付
+        order.final_time = None #当帮用户申报成功或者订单取消时取值
+        order.good_amount = goods.goods_payahead # 收取的服务费用,首付费用
+        order.order_amount = goods.goods_payahead + goods.goods_awardafter #订单的总金额是首付+奖金
+        order.refund_amount = goods.goods_payahead
+        order.delay_time = None #不知道干嘛的呀
+        order.order_from = 1 #默认都是来之WEB端
+        order.express_id =1 #默认值，应该是不会用到
+        order.express_no= 1 #默认值，应该是不会用到
+        order.eval_state = 0 #生成订单的时候肯定是没有评价的
+        order.order_state = 3 #只是生成了订单后续的选择支付也没有选择完毕
+        order.refund_state = 0 #生成订单时代表没有申请退款
+        order.lock_state = 0 #正常，只有订单出现异常的时候才锁定
+        order.express_state = 0 #是一个默认值，应该不会用到
+        '''
+        order.save()
+
+
+
+
+    return render(request,'order_details.html',{'order':order,'goods':goods,'item':item,})
 	
+def order_completed(request):
+    if request.GET['goodsid']:
+        goodsid = request.GET['goodsid']
+        return render(request,'order_completed.html',{'goodsid':goodsid,})
 
 #xcz    
 def Payback(request):

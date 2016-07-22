@@ -48,7 +48,11 @@ urlpatterns = [
     url(r'^sortServByaward/$','zhengzihui_app.views.sortServByaward',name="sortServByaward"),
     url(r'^service_details/$','zhengzihui_app.views.service_details',name="service_details"),
     url(r'^service_list/$','zhengzihui_app.views.service_list',name="service_list"),
-    
+
+    #预定流程
+    url(r'^contact_details/$','zhengzihui_app.views.contact_details',name="contact_details"),
+    url(r'^order_details/$','zhengzihui_app.views.order_details',name="order_details"),
+    url(r'^order_completed/$','zhengzihui_app.views.order_completed',name="order_completed"),
     url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
 
     url(r'^searchforc/', 'zhengzihui_app.views.tag_autocomplete',name='auto'),  

@@ -338,7 +338,7 @@ class tb_item(models.Model):
     class Meta:
         verbose_name = '项目详情表'
         verbose_name_plural = '项目详情表' 
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.item_name
     def get_remain_time(self):
         remain_time = '0'
@@ -360,7 +360,7 @@ class tb_item_click(models.Model):
     class Meta:
         verbose_name = '项目点击表'
         verbose_name_plural = '项目点击表'
-    def __unicode__(self):
+    def __str__(self):
         return self.item_name
         
         
@@ -374,7 +374,7 @@ class tb_item_pa(models.Model):
     class Meta:
         verbose_name = '项目发布机构表'
         verbose_name_plural = '项目发布机构表'
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.ipa_name
     
 class tb_area(models.Model):
@@ -386,7 +386,7 @@ class tb_area(models.Model):
     class Meta:
         verbose_name = '地区表'
         verbose_name_plural = '地区表'
-    def __unicode__(self):
+    def __str__(self):
         return self.area_name
 
 
@@ -401,7 +401,7 @@ class tb_item_class(models.Model):
     class Meta:
         verbose_name = '项目分类'
         verbose_name_plural = '项目分类'
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.itcl_name
 
 
@@ -447,7 +447,7 @@ class tb_article(models.Model):
     class Meta:
         verbose_name = '文章表'
         verbose_name_plural = '文章表'
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.article_name
   
 
@@ -488,7 +488,7 @@ class tb_album(models.Model):
     class Meta:
         verbose_name = '相册表'
         verbose_name_plural = '相册表'
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.album_name
 
 
@@ -503,7 +503,7 @@ class tb_pic(models.Model):
     class Meta:
         verbose_name = '图片表'
         verbose_name_plural = '图片表'
-    def __unicode__(self):   #python 2 
+    def __str__(self):   #python 2
         return self.pic_name
 
 
@@ -642,7 +642,7 @@ class tb_goods_click(models.Model):
     class Meta:
         verbose_name = '服务商点击表'
         verbose_name_plural = '服务商点击表'
-    def __unicode__(self):
+    def __str__(self):
         return self.goods_name
 
 
@@ -697,10 +697,10 @@ class tb_goods_evaluation(models.Model):
     class Meta:
         verbose_name = '服务商评价表'
         verbose_name_plural = '服务商评价表'
-    def __unicode__(self):
+    def __str__(self):
         return self.goods_name
 
-    def __unicode__(self):
+    def __str__(self):
         return self.user_name
 
 class tb_order(models.Model):
@@ -709,20 +709,20 @@ class tb_order(models.Model):
     goods_id = models.IntegerField("商品id",null = False)
     pay_no = models.IntegerField("支付单号",null = False)
     item_id = models.IntegerField("项目id",null = False)
-    item_name = models.CharField("项目名称",max_length = 40, null = False)
+    item_name = models.CharField("项目名称",max_length = 1000, null = False)
     sp_id = models.IntegerField("服务提供商id",null = False)
     sp_name = models.CharField("服务提供商名称",max_length = 40, null = False)
     buyer_id = models.IntegerField("买家id",null = False)
     buyer_name = models.CharField("买家姓名",max_length = 40, null = False)
     buyer_email = models.EmailField("买家电子邮箱",max_length = 40,null=False,blank=False)
-    add_time = models.DateTimeField("订单生成时间",null=False,blank=False)
+    add_time = models.DateTimeField("订单生成时间",auto_now=True,blank=False)
     payment_code = models.CharField("支付方式名称代码",max_length = 100,null = False)
-    payment_time = models.DateTimeField("支付(付款)时间",null=False,blank=False)
-    final_time = models.DateTimeField("订单完成时间",null=False,blank=False)
-    good_amount = models.IntegerField("商品总价格",null = False)
-    order_amount = models.IntegerField("订单总价格",null = False,default=0)
-    refund_amount = models.IntegerField("退款金额",null = False)
-    delay_time = models.DateTimeField("延迟时间",null=False,blank=False)
+    payment_time = models.DateTimeField("支付(付款)时间",null=True,blank=False)#这个需要后续完成
+    final_time = models.DateTimeField("订单完成时间",null=True,blank=False)#这个也是后续完成
+    good_amount = models.IntegerField("商品总价格",null = False)#服务总价格=首付
+    order_amount = models.IntegerField("订单总价格",null = False,default=0)#订单总价格=首付加奖金
+    refund_amount = models.IntegerField("退款金额",null = False)#退的钱应该是首付价格
+    delay_time = models.DateTimeField("延迟时间",null=True,blank=False)#这个应该是一个时间段的字段
 
     WEB = 1
     MOBILE = 0
@@ -754,8 +754,8 @@ class tb_order(models.Model):
     (CANCEL,'已取消'),
     (NOTPAYMENT,"未付款"),
     (PAYMENT,'已付款'),
-    (DELIVER,"已发货"),
-    (RECEIPT,"已收货"),  
+    (DELIVER,"已下单"),#代表生成了订单，后续的付款也没有执行
+    (RECEIPT,"已完成"),
     )
     order_state = models.IntegerField("订单状态",choices=ORDER_STATE_CHOICES,default=NOTPAYMENT,null=False,blank=False)
 
@@ -763,7 +763,7 @@ class tb_order(models.Model):
     PARTREFUND = 1
     ALLREFUND = 2
     REFUND_STAT_CHOICES = (
-    (NOTREFUND,'无退款'),
+    (NOTREFUND,'无退款'),#代表没有申请退款
     (PARTREFUND,"部分退款"),
     (ALLREFUND,"全部退款"),
   
@@ -794,7 +794,7 @@ class tb_order(models.Model):
         verbose_name = '订单表'
         verbose_name_plural = '订单表'
     
-    def __unicode__(self):
+    def __str__(self):
         return self.item_name
       
     

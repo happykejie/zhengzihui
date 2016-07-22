@@ -126,7 +126,7 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <a href="#" class="btn btn-primary btn-lg active" role="button">我要收藏</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'selectpay' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <a href="#" class="btn btn-primary btn-lg active" role="button">我要收藏</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
@@ -363,18 +363,7 @@ $(document).ready(function(){
     });
 </script>
 {% endif %}
-    
-	<div class="col-sm-2" id="myScrollspy1" style="margin-left:99%">
-            <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
-                <li class="active"><a href="#">登录</a></li>
-                <li><a href="#">我的直通车</a></li>
-                <li><a href="#">我的资金</a></li>
-                <li><a href="#">我的关注</a></li>
-                <li><a href="#">我看过的</a></li>
-		<li><a href="#section-0">返回顶部</a></li>
-		<li><a href="#">用户反馈</a></li>
-            </ul>
-        </div>
+
 </div>
  
 {% endblock %}
