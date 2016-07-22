@@ -6,7 +6,7 @@
 
 <ul class="nav nav-tabs">
    <li class="active"><a href="#">企业注册</a></li>
-   <li><a href="#">个人注册</a></li>
+   <li><a href="{% url 'g_register' %}">个人注册</a></li>
 </ul>
 <p>{{message|safe}}</p>
 <form class="form-horizontal" role="form" method="post" action="{% url 'regCompany' %}" id="regCompanyForm" name="regCompanyForm">

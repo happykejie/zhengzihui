@@ -8,11 +8,36 @@ from filer.fields.image import FilerImageField #YZ add for filer
 from filer.fields.file import FilerFileField
 
 # Create your models here.
+class tb_user_expand(models.Model):
+    user_id = models.AutoField("用户id",primary_key=True)
+    company_tel = models.CharField("联系人移动电话",max_length=30,blank=False)
+    company_email = models.EmailField("联系人邮箱",blank=False)
+    company_name = models.CharField("公司名称",max_length=30,blank=False)
+    company_district = models.CharField("公司所在区县",max_length=50,blank=False)
+    company_address = models.CharField("公司注册地址",max_length=50,blank=False)
+    company_registered_capital = models.IntegerField("公司注册资本",blank=False)
+    company_industry = models.CharField("公司所属行业",max_length=30,blank=False)
+    company_stuff_no = models.CharField("公司人数",max_length=30, blank=False)
+    company_nature = models.CharField("公司性质",max_length=30,blank=False)
+    companyUserContactName = models.CharField("联系人姓名", max_length=40, blank=False)
+    companyUserPhone = models.CharField("固话", max_length=40, blank=False)  # 固话
+    class Meta:
+        verbose_name = '用户扩展信息'
+        verbose_name_plural = '用户扩展信息'
+    def __unicode__(self):
+        return self.company_name
+
+    def __unicode__(self):
+        return self.company_email
+
+    def __unicode__(self):
+        return self.company_tel
 
     
 
 class tb_user(models.Model):
     user_id = models.AutoField("用户id",primary_key = True)
+    expand = models.ForeignKey(tb_user_expand,verbose_name='对应的扩展表')
     user_name = models.CharField("用户名称",max_length=100,null=False,blank=False)
     user_password = models.CharField("密码",max_length=100,null=False,blank=False)
     user_telephone = models.CharField("电话",max_length=40,null=False,blank=False)
@@ -54,29 +79,34 @@ class tb_user(models.Model):
     def __str__(self):
         return self.user_type
 '''
-class tb_user_expand(models.Model):
-    user_id = models.AutoField("用户id",primary_key=True)
-    company_tel = models.CharField("办公电话",max_length=30,null=False,blank=False)
-    company_email = models.EmailField("办公邮箱",null=False,blank=False)
-    company_name = models.CharField("公司名称",max_length=30,null=False,blank=False)
-    company_district = models.CharField("公司所在区县",max_length=50,null=False,blank=False)
-    company_address = models.CharField("公司注册地址",max_length=50,null=False,blank=False)
-    company_registered_capital = models.IntegerField("公司注册资本",null=False,blank=False)
-    company_industry = models.CharField("公司所属行业",max_length=30,null=False,blank=False)
-    company_stuff_no = models.IntegerField("公司人数",null=False,blank=False)
-    company_nature = models.CharField("公司性质",max_length=30,null=False,blank=False)
-    
-    class Meta:
-        verbose_name = '用户扩展信息'
-        verbose_name_plural = '用户扩展信息' 
-    def __unicode__(self):
-        return self.company_name
+
+
+'''
+class tb_companyuser(models.Model):
+    companyUserId = models.AutoField("用户id",primary_key = True)
+    companyUserName = models.CharField("用户名",max_length=100,null=False,blank=False)
+    companyUserPassword = models.CharField("密码",max_length=100,null=False,blank=False)
+    companyUserCompanyName = models.CharField("公司名称",max_length=100,null=False,blank=False)
+    companyUserCompanyLocation = models.CharField("公司位置",max_length=100,null=False,blank=False)#省市县
+    companyUserCompanyAddress = models.CharField("公司地址",max_length=100,null=False,blank=False)
+    companyUserCompanyCapital = models.CharField("注册资本",max_length=100,null=False,blank=False)
+    companyUserCompanyPeople = models.CharField("公司人数",max_length=100,null=False,blank=False)
+    companyUserCompanyIndustry = models.CharField("公司行业",max_length=100,null=False,blank=False)
+    companyUserCompanyNature = models.CharField("公司性质",max_length=100,null=False,blank=False)
+    companyUserContactName = models.CharField("联系人姓名",max_length=40,null=False,blank=False)
+    companyUserPhone = models.CharField("固话", max_length=40, null=False, blank=False)#固话
+    companyUserTelephone = models.CharField("手机", max_length=40, null=False, blank=False)#手机
+    companyUserEmail = models.EmailField("用户邮箱", null=False, blank=False)
 
     def __unicode__(self):
-        return self.company_email
-
+        return self.companyUserName
     def __unicode__(self):
-        return self.company_tel
+        return self.companyUserCompanyName
+    def __unicode__(self):
+        return self.companyUserContactName
+'''
+
+
 
 
 defaultImageURLoftb_service_provider_sp_image1 = 'img/tb_service_provider_sp_img1/%Y/%m/%d'

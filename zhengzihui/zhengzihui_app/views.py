@@ -17,7 +17,7 @@ import jieba,p_alipay.alipay
 from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
-from models import tb_companyuser,tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
 appkey='23297047'
@@ -27,11 +27,13 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
-	request.session['bumen']='全部'
-	request.session['jibie']='全部'
-	request.session['zhuangtai']='全部'
-	#print (123)
-	return render_to_response('index.html',{})
+    request.session['bumen']='全部'
+    request.session['jibie']='全部'
+    request.session['zhuangtai']='全部'
+    #print (123)
+    if request.COOKIES['user_id']:
+        return HttpResponseRedirect('/login')
+    return render_to_response('index.html',{})
 
 #xcz 搜索
 #为了显示当前路径，袁志修改，现在还有一些BUG
@@ -889,6 +891,13 @@ def user_center(request):
     return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
 
 
+#总览 cyf
+#def view_all(request):
+   # return HttpResponse("hello world")
+
+
+
+
 #用户信息 zss
 
     #我的信息
@@ -897,6 +906,7 @@ def my_info(request):
     company = []
     usertype = False
     if request.COOKIES['user_id']:
+        #print("2222")
         user_id = int(request.COOKIES['user_id'])
         user = tb_user.objects.get(user_id=user_id)
         if user.user_type == 1:
@@ -952,8 +962,8 @@ def grade_grow(request):
 def all_orders(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
 
     for order in order_list:
@@ -1229,6 +1239,13 @@ def order_add_commit(request):
             order.save()
             return render(request,'commit_complete.html',{})
 
+#收藏管理
+	#收藏的项目
+def collects(request):
+	return render(request,'collects.html',{})
+	#收藏的服务
+def collect_serve(request):
+	return render(request,'collect_serve.html',{})
 #评价管理
 
     #我的评价
@@ -1445,7 +1462,11 @@ def login(request):
     if 'user_name' in request.COOKIES:
         response = render_to_response('index.html',{'user_name':request.COOKIES['user_name']})
         return response
-        
+    if 'user_id' in request.COOKIES:
+        userid = int(request.COOKIES['user_id'])
+        user_name_getby_id = tb_user.objects.get(user_id = userid)
+        response = render_to_response('index.html',{'user_name':user_name_getby_id})
+        return response
     if request.method == 'POST' :  
         if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
@@ -1469,7 +1490,7 @@ def login(request):
                 
                 response.set_cookie('user_name',user_name,3600)
                 response.set_cookie('user_id',user.user_id,3600)
-                
+                #print(user.expand.company_name)
                 
                 if 'unregist_tobepay_goodsid' in request.COOKIES:
                     goodsid = request.COOKIES['unregist_tobepay_goodsid']
@@ -1480,7 +1501,7 @@ def login(request):
                 return response
             else:
                 errors.append('密码错误')
-    return render_to_response('denglu.html', {'errors': errors})        
+    return render_to_response('denglu.html', {'errors': errors})
     
 def logout(request):
         response = HttpResponseRedirect('/index/')
@@ -1632,6 +1653,7 @@ def regCompany(request):
 
 def regCompany(request):
     add = []
+    add2 = []
     if request.method == 'POST':
         companyUserName = request.POST.get("regName")
         companyUserPassword = request.POST.get("password")
@@ -1650,19 +1672,44 @@ def regCompany(request):
         securityCode = request.POST.get("securityCode")
         securityCode2 = request.POST.get("securityCode2")
         try:
-            user1 = tb_companyuser.objects.get(companyUserName = companyUserName)
-            #user2 = tb_companyUser.objects.get(companyUserCompanyName = companyUserCompanyName)
-            #user3 = tb_companyUser.objects.get(companyUserPhone = companyUserPhone)
-            return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("用户名重复");</script>'})
-        except tb_companyuser.DoesNotExist:
+            user1 = tb_user.objects.get(user_name = companyUserName)
+            return render(request, 'regCompany.html', {'regName': companyUserName,
+                                                       'password': companyUserPassword,
+                                                       'password2': companyUserPassword2,
+                                                       'companyName': companyUserCompanyName,
+                                                       'companyLocation': companyUserCompanyLocation,
+                                                       'companyAddress': companyUserCompanyAddress,
+                                                       'companyCapital': companyUserCompanyCapital,
+                                                       'companyPeople': companyUserCompanyPeople,
+                                                       'companyIndustry': companyUserCompanyIndustry,
+                                                       'companyNature': companyUserCompanyNature,
+                                                       'contactName': companyUserContactName, 'phone': companyUserPhone,
+                                                       'telphone': companyUserTelephone, 'email': companyUserEmail,
+                                                       'securityCode2': securityCode,
+                                                       'message': '<script type="text/javascript">alert("用户名重复！");</script>'})
+        except tb_user.DoesNotExist:
             pass
         try:
-            user2 = tb_companyuser.objects.get(companyUserCompanyName = companyUserCompanyName)
-            return  render(request, "regCompany.html", {'message':'<script type="text/javascript">alert("该公司已被注册");</script>'})
-        except tb_companyuser.DoesNotExist:
+            user2 = tb_user_expand.objects.get(company_name = companyUserCompanyName)
+            return render(request, 'regCompany.html', {'regName': companyUserName,
+                                                       'password': companyUserPassword,
+                                                       'password2': companyUserPassword2,
+                                                       'companyName': companyUserCompanyName,
+                                                       'companyLocation': companyUserCompanyLocation,
+                                                       'companyAddress': companyUserCompanyAddress,
+                                                       'companyCapital': companyUserCompanyCapital,
+                                                       'companyPeople': companyUserCompanyPeople,
+                                                       'companyIndustry': companyUserCompanyIndustry,
+                                                       'companyNature': companyUserCompanyNature,
+                                                       'contactName': companyUserContactName, 'phone': companyUserPhone,
+                                                       'telphone': companyUserTelephone, 'email': companyUserEmail,
+                                                       'securityCode2': securityCode,
+                                                       'message': '<script type="text/javascript">alert("该公司已被注册！");</script>'})
+        except tb_user_expand.DoesNotExist:
             pass
         if securityCode != securityCode2:
-            return render(request, 'regCompany.html', {'regName': companyUserName, 'password': companyUserPassword,
+            return render(request, 'regCompany.html', {'regName': companyUserName,
+                                                       'password': companyUserPassword,
                                                        'password2': companyUserPassword2,
                                                        'companyName': companyUserCompanyName,
                                                        'companyLocation': companyUserCompanyLocation,
@@ -1675,21 +1722,28 @@ def regCompany(request):
                                                        'telphone': companyUserTelephone, 'email': companyUserEmail,
                                                        'securityCode2': securityCode,
                                                        'message': '<script type="text/javascript">alert("短信验证码错误！");</script>'})
-        add = tb_companyuser()
-        add.companyUserName = request.POST.get("regName")
-        add.companyUserPassword = request.POST.get("password")
-        add.companyUserPassword2 = request.POST.get("password2")
-        add.companyUserCompanyName = request.POST.get("companyName")
-        add.companyUserCompanyLocation = request.POST.get("companyLocation")
-        add.companyUserCompanyAddress = request.POST.get("companyAddress")
-        add.companyUserCompanyCapital = request.POST.get("companyCapital")
-        add.companyUserCompanyPeople = request.POST.get("companyPeople")
-        add.companyUserCompanyIndustry = request.POST.get("companyIndustry")
-        add.companyUserCompanyNature = request.POST.get("companyNature")
-        add.companyUserContactName = request.POST.get("contactName")
-        add.companyUserPhone = request.POST.get("phone")
-        add.companyUserTelephone = request.POST.get("telphone")
-        add.companyUserEmail = request.POST.get("email")
+        add = tb_user()
+        add2 = tb_user_expand()
+        add.user_name = request.POST.get("regName")
+        add.user_password = request.POST.get("password")
+        add.user_telephone = request.POST.get("telphone")
+        add.user_email = request.POST.get("email")
+        add.user_type = 1
+        add.user_auth = 1
+        add2.company_name = request.POST.get("companyName")
+        add2.company_district = request.POST.get("companyLocation")
+        add2.company_address = request.POST.get("companyAddress")
+        add2.company_registered_capital = request.POST.get("companyCapital")
+        add2.company_stuff_no = request.POST.get("companyPeople")
+        add2.company_industry = request.POST.get("companyIndustry")
+        add2.company_nature = request.POST.get("companyNature")
+        add2.companyUserContactName = request.POST.get("contactName")
+        add2.companyUserPhone = request.POST.get("phone")
+        add2.company_tel = request.POST.get("telphone")
+        add2.company_email = request.POST.get("email")
+        add2.save()
+        expand = tb_user_expand.objects.get(company_name = companyUserCompanyName)
+        add.expand = expand
         add.save()
         return render_to_response("index.html", {})
     return render_to_response("regCompany.html")
