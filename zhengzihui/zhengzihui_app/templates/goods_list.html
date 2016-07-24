@@ -218,11 +218,14 @@
                             首付：{{ goods.goods_payahead }}+申报成功应付奖金{{ goods.goods_awardafter }}
                         </span>
                     </p>
+	                <center><span><font color="#dc143c">接单时间进度</font></span></center>
                     <div class="progress">
                         <div class="progress-bar"></div>
                         <div class="info" style="left:{{ goods.goods_remaintime }}%;">{{ goods.goods_remaintime }}%</div>
                     </div>
+
                     <div class="date">
+
                         <span class="start">
                             {{ goods.goods_accept_starttime }}
                         </span>

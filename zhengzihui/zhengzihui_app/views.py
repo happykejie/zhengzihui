@@ -31,7 +31,7 @@ def index(request):
     request.session['jibie']='全部'
     request.session['zhuangtai']='全部'
     #print (123)
-    if request.COOKIES['user_id']:
+    if 'user_id'in request.COOKIES:#
         return HttpResponseRedirect('/login')
     return render_to_response('index.html',{})
 
@@ -727,7 +727,7 @@ def contact_details(request):
         goodsid = request.GET['goodsid']
         return render(request,'contact_details.html',{'goodsid':goodsid,'contact_string':contact_string})
     return HttpResponse("还没有选择项目")
-
+#YZ
 def order_details(request):
     goodsid = 0
     if request.GET['goodsid']:
@@ -745,7 +745,10 @@ def order_details(request):
             order_no =random.randint(0,1000000)
         print type(item.item_name)
         #add_time 用的是插入数据时便生成，即保存最后修改的时间错。
-        order = tb_order(order_id=10,order_no=order_no,goods_id=goodsid,pay_no=order_no,item_id=item.item_id,item_name=item.item_name,sp_id=goods_spa.sp_id,\
+        allorder = tb_order.objects.all()
+        lastid = allorder[len(allorder)-1].order_id
+
+        order = tb_order(order_id=lastid+1,order_no=order_no,goods_id=goodsid,pay_no=order_no,item_id=item.item_id,item_name=item.item_name,sp_id=goods_spa.sp_id,\
                          sp_name=goods_spa.sp_name,buyer_id=buyer.user_id,buyer_name=buyer.user_name,buyer_email=buyer.user_email,\
                          payment_code=order_no,payment_time=None,final_time=None,good_amount=goods.goods_payahead,\
                          order_amount=goods.goods_payahead + goods.goods_awardafter,\
@@ -1002,9 +1005,9 @@ def all_orders(request):
 def not_pay(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
-        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=1).order_by('-add_time')
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
         a_order = {}
@@ -1033,8 +1036,8 @@ def not_pay(request):
 def payed(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=2).order_by('-add_time')
 
     for order in order_list:
@@ -1065,8 +1068,8 @@ def payed(request):
 def delivered(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
@@ -1097,8 +1100,8 @@ def delivered(request):
 def checked(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=4).order_by('-add_time')
 
     for order in order_list:
@@ -1128,8 +1131,8 @@ def checked(request):
 def delete(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=0).order_by('-add_time')
 
     for order in order_list:
@@ -1158,8 +1161,8 @@ def delete(request):
 
     #确认订单
 def order_enter(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1171,8 +1174,8 @@ def order_enter(request):
 
     #申请关闭
 def order_giveup(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1185,8 +1188,8 @@ def order_giveup(request):
         
     #删除订单
 def order_delete(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1197,8 +1200,8 @@ def order_delete(request):
 
     #去评价
 def order_commit(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1217,8 +1220,8 @@ def order_commit(request):
             return render(request,'order_commit.html',{'order':a_order})
     #添加评价
 def order_add_commit(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.POST['order_id']
         order = tb_order.objects.get(order_id=order_id)
         goods_id = order.goods_id
@@ -1250,8 +1253,8 @@ def collect_serve(request):
 
     #我的评价
 def my_evaluate(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         a_evaluations = []
         evaluations = tb_goods_evaluation.objects.filter(user_id=user_id).order_by('-create_time')
         for evaluation in evaluations:
@@ -1279,8 +1282,8 @@ def my_evaluate(request):
 
     #评价统计
 def statistics(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         all_orders = len(tb_order.objects.filter(buyer_id=user_id))
         all_commit = len(tb_goods_evaluation.objects.filter(user_id=user_id))
         not_commit = all_orders - all_commit
@@ -1443,8 +1446,8 @@ def register3(request):
         userid = request.GET['user_id_r3']
     
     request.session['user_id'] = userid
-    print(request.session['user_id'])
-    print(request.session['user_name_s'])
+    #print(request.session['user_id'])
+    #print(request.session['user_name_s'])
     if 'unregist_tobepay_goodsid' in request.session:
         goodsid =request.session['unregist_tobepay_goodsid']
         return HttpResponseRedirect('/selectpay')
