@@ -1529,7 +1529,7 @@ def selectpay(request):
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
             goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
-            response =  HttpResponseRedirect("/g_register")
+            response =  HttpResponseRedirect("/regCompany")
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
             response.set_cookie('unregist_tobepay_goodsid',goods.goods_id,3600)
