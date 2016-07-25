@@ -150,6 +150,10 @@ urlpatterns = [
 
     #短信验证页
     url(r'^register_sms/$', zhengzihui_app.views.register_sms, name='register_sms'),
+#    企业画像
+    url(r'^custom/$', zhengzihui_app.views.custom,name='custom'),
+    url(r'savec/$', zhengzihui_app.views.savec,name='savec'),
+    url(r'custmap/$', zhengzihui_app.views.cmap,name='cmap'),
 
 
     #app下载

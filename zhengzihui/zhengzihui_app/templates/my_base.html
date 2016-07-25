@@ -106,9 +106,13 @@
 
 		<div style="float:right">
 			<ul class="nav navbar-nav">
+			{% if request.COOKIES.user_id %}
 			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
-			<li><a href="{% url 'login' %}">登录</a></li>
-			<li><a href="{% url 'regCompany' %}">注册</a></li>
+			{% endif %}
+			{% if not request.COOKIES.user_id %}
+				<li><a href="{% url 'login' %}">登录</a></li>
+				<li><a href="{% url 'regCompany' %}">注册</a></li>
+			{% endif %}
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
 			<li><a href="#">手机政资汇</a></li>
 			<li><a href="#">微信</a></li>

@@ -17,7 +17,7 @@ import jieba,p_alipay.alipay
 from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
-from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+from models import *
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
 appkey='23297047'
@@ -158,6 +158,8 @@ def search_result(request):
 
     if (len(items)>10):
     	items = items[:10]#不够10条报错
+    else:
+        items = items
     a_items = get_and_set_info(items)
     #获得热门推荐的项目YZ
     recommend = []
@@ -1792,7 +1794,101 @@ def register_sms(request):
 
 
 
+def cmap(request):
+    #ce shi shu ju mu qian xie si le 
 
+    request.COOKIES['user_id']="2016"
+    if 'user_id' in request.COOKIES:
+        if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0 :
+            return  render_to_response("e_customization.html",{})
+        else:
+            if(tb_customcompany.objects.get(company_id=request.COOKIES['user_id'])).conclusion=="":
+                return HttpResponse("DDCL")
+            else:
+                user_id=request.COOKIES['user_id']
+                #conc=tb_customcompany.objects.get(company_id=user_id).conclusion 
+                #wu shu ju  xie si le de ce shi shui chan 
+                conc="水产"
+                A=tb_user.objects.get(user_id = user_id).user_name
+                B=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)
+                C=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)
+                D=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)
+                E=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)
+                if (len(B)==0):
+                    B=""
+                else:
+                    B=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_name
+                if (len(C)==0):
+                    C=""
+                else:
+                    C=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_name
+                if (len(D)==0):
+                    D=""
+                else:
+                    D=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_name
+                if (len(E)==0):
+                    E=""
+                else:
+                    E=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_name
+
+                #A="100"
+                #B="110"
+                #C="120"
+                #D="130"
+                #E="140"
+                return render_to_response("cust_map.html",{'A':A,'B':B,'C':C,'D':D,'E':E})
+
+def custom(request):
+     #return render_to_response("e_customization.html",{})
+    #ce shi shu ju mu qian xie si le 
+    request.COOKIES['user_id']="2016"
+    if 'user_id' in request.COOKIES:
+        if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0:
+          #print (123) 
+          return render_to_response("e_customization.html",{})
+        else:
+            return HttpResponse("DDCL")       
+           
+        #else:
+         #   return HttpResponse("map for e_man")
+  #  else:
+     #   return HttpResponseRedirect('/login',{})
+    #return render_to_response("e_customization.html",{})
+
+def savec(request):
+    #ce shi shu ju mu qian xie si le 
+    request.COOKIES['user_id']="2016"
+    if (request.method=="POST"):
+        company_id=request.COOKIES['user_id']
+        hangye=request.POST.get("hangye")
+        bumen=request.POST.get("bumen")
+        jibie=request.POST.get("jibie")
+        guquan=request.POST.get("guquan")
+        zhaiquan=request.POST.get("zhaiquan")
+        ziben=request.POST.get("ziben")
+        zimiaoshu=request.POST.get("qiyejianjie")
+        xiangmumiaoshu=request.POST.get("xiangmujianjie")
+
+        zimiaoshutu=request.POST.get("jianjiefile")
+        xiangmutu=request.POST.get("xiangmufile")
+        #print(xiangmutu)
+        add =   tb_customcompany()
+        add.company_id=company_id
+        add.custom_hangye=hangye
+        add.custom_bumen=bumen
+        add.custom_jiebie =jibie
+        add.wanted_guquan=guquan
+        add.wanted_rongzi =zhaiquan
+        add.wanted_ziben=ziben
+        add.self_des=zimiaoshu
+        add.item_des=xiangmumiaoshu
+        add.self_file= zimiaoshutu
+        add.item_file= xiangmutu
+        add.conclusion=""
+        add.save()
+        print(111)
+        return HttpResponseRedirect('/index',{})
+    return render_to_response("e_customization.html",{})
 
   
 	

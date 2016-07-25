@@ -66,6 +66,7 @@
         top: 30px; /* Set the top position of pinned element */
     
 	
+}
 	.image{height:250px;width:200px;background: #ffffff}
 
 
@@ -91,19 +92,22 @@
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
 		<div style="float:left">
 			 <ul class="nav navbar-nav">
-			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}</a></li>
-			 <li><a href="{% url 'login' %}">登录</a></li>
-			 <li><a href="{% url 'g_register' %}">注册</a></li>
-			 <li><a href="{% url 'logout' %}">退出</a></li>
+			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}欢迎来到政资汇！</a></li>
+
 			 </ul>
             
         </div>
          
 		<div style="float:right">
 			<ul class="nav navbar-nav">
+			
 			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
+			
+
+			
 			<li><a href="{% url 'login' %}">登录</a></li>
 			<li><a href="{% url 'regCompany' %}">注册</a></li>
+			
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
 			<li><a href="#">手机政资汇</a></li>
 			<li><a href="#">微信</a></li>
@@ -121,7 +125,7 @@
 									 <a href="#">融资合作</a>
 								</li>
 								<li>
-									 <a href="#">网站联</a>
+									 <a href="#">网站联盟</a>
 								</li>
 							</ul>
 			</li>

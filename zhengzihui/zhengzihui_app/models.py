@@ -8,6 +8,7 @@ from filer.fields.image import FilerImageField #YZ add for filer
 from filer.fields.file import FilerFileField
 
 # Create your models here.
+
 class tb_user_expand(models.Model):
     user_id = models.AutoField("用户id",primary_key=True)
     company_tel = models.CharField("联系人移动电话",max_length=30,blank=False)
@@ -851,3 +852,18 @@ class tb_companyuser(models.Model):
         return self.companyUserCompanyName
     def __unicode__(self):
         return self.companyUserContactName
+        
+        
+class tb_customcompany(models.Model):
+    company_id = models.CharField("企业id",max_length=100,null=False,blank=False,primary_key=True)
+    custom_hangye = models.CharField("行业",max_length=100,null=False,blank=False)
+    custom_bumen = models.CharField("部门",max_length=100,null=False,blank=False)
+    custom_jiebie = models.CharField("级别",max_length=100,null=False,blank=False)
+    wanted_guquan = models.CharField("股权",max_length=100,null=False,blank=False)
+    wanted_rongzi = models.CharField("债券",max_length=100,null=False,blank=False)
+    wanted_ziben = models.CharField("资本",max_length=100,null=False,blank=False)
+    self_des = models.CharField("自评",max_length=100,null=True,blank=False)
+    item_des = models.CharField("项目评价",max_length=100,null=True,blank=False)
+    self_file = models.FileField(upload_to = './upload',null=True)
+    item_file = models.FileField(upload_to = './upload',null=True)
+    conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
