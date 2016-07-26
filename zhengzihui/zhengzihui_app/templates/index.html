@@ -12,23 +12,23 @@
   <link rel="stylesheet" href="../static/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
   <script src="../static/jquery-2.14/jquery.js"></script>
   <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.core.js"></script>
-  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script> 
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
   <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.position.js"></script>
   <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.menu.js"></script>
   <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.autocomplete.js"></script>
   <link rel="stylesheet" href="../static/jquery-ui-1.10.4/demos/demos.css">
-  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">   
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
   <script src="../static/js/Popt.js"></script>
   <script src="../static/js/cityJson.js"></script>
   <script src="../static/js/citySet.js"></script>
   	<script >
 
-	  $(document).ready(function () {  
+	  $(document).ready(function () {
 	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
 	});
 	</script>
    <!--$( "#inputitem" ).autocomplete('/searchforc/', {multiple: true, multipleSeparator: ' '});-->
-  
+
   <style type="text/css"><!--附加导航样式-->
     /* Custom Styles */
     ul.nav-tabs{
@@ -64,8 +64,8 @@
     }
     ul.nav-tabs.affix{
         top: 30px; /* Set the top position of pinned element */
-    
-	
+
+
 }
 	.image{height:250px;width:200px;background: #ffffff}
 
@@ -95,19 +95,19 @@
 			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}欢迎来到政资汇！</a></li>
 
 			 </ul>
-            
+
         </div>
-         
+
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			
+			{% if user_name %}
 			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
-			
 
-			
+
+			{% else %}
 			<li><a href="{% url 'login' %}">登录</a></li>
 			<li><a href="{% url 'regCompany' %}">注册</a></li>
-			
+			{% endif %}
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
 			<li><a href="#">手机政资汇</a></li>
 			<li><a href="#">微信</a></li>
@@ -129,24 +129,24 @@
 								</li>
 							</ul>
 			</li>
-			
+
 			<li><a href="{% url 'representations' %}">融资广场</a></li>
 			<li><a href="#">配套中心</a></li>
 		 </ul>
 		</div>
-	</nav>	
+	</nav>
 		<!--div class="jumbotron"> </div -->
 <!--网站图标+搜索栏-->
   <div class="row">
-    <div class="col-sm-4">
-      <center><a href="{% url 'index' %}"><img src="../static/images/logo.jpg"></img></a></center>
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <center><a href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
     </div>
-	
-    <div class="col-sm-8">
-		<div class="row-fluid">
+
+    <div class="col-sm-9 col-md-9 col-lg-9">
+		<div class="col-sm-2 col-md-2 col-lg-2" style="padding:0px">
 			<div id="chosecity" >
 				<form action="">
-					<input type="text" id="city" value="切换城市"/>
+					<input type="text" id="city" style="width: 80%;height:45px;border: hidden;" value="切换城市"/>
 <script type="text/javascript">
 $("#city").click(function (e) {
 	SelCity(this,e);
@@ -155,34 +155,52 @@ $("#city").click(function (e) {
 				</form>
 			</div>
 		</div>
+        <div class="col-sm-10 col-md-10 col-lg-10" style="padding:0px">
 		<div class="search">
 			<div class="row">
 				<form action="/search" method="GET" class="search">
-					<div class="col-md-2" style="float:left;padding:0px">
-					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px"> 
-    						  <option>所属行业</option>
-   						  <option>领域或产品</option>	
-							<option>归口部门受理人员</option>	 
+
+					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
+					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
+    						  <option>全部</option>
+   						  <option>发布部门</option>
     					  </select>
-    					  </div>
-    					<div class="col-sm-6" style="float:left;padding:0px">
-					<input class="input input-lg"  id="inputitem" name="inputitem" style="float:left;width:80%;">
-					<button type="submit" class="btn btn-primary btn-lg btn-block" style="float:left;width:20%">搜索</button>
+    				</div>
+					<!--
+					<script>
+						function checkifNone(){
+							var vaofin=document.getElementById("inputitem").value;
+							if(vaofin!='')
+							{
+								;
+							}
+							else{
+							alert(" 请输入要查询的内容");
+							}
+
+						}
+					</script>
+					-->
+    				<div class="col-sm-6 col-md-6 col-lg-6" style="padding:0px">
+					<input class="input input-lg"  id="inputitem" name="inputitem" style="width:100%;" >
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+					<button type="submit" class="btn btn-primary btn-lg btn-block" style=""   >搜索</button>
 					</div>
 				</form>
-			<div class="col-sm-2" style="float:left;padding:0px">
-			<button type="button" class="btn btn-primary btn-lg btn-block" style="float:left;" onclick="javascript:window.location.href='#'">共享</button>
+			<div class="col-sm-2" style="padding:0px">
+			<button type="button" class="btn btn-primary btn-lg btn-block"  onclick="javascript:window.location.href='#'">有偿申报</button>
 			</div>
 			</div>
 		</div>
-      
-      
+        </div>
+
   </div>
 </div>
 <br>
 <br>
 <!--导航栏-->
-<!--div class="jumbotron" --> 
+<!--div class="jumbotron" -->
 	<script>
 			function show(object){
 				id=object.id;
@@ -554,8 +572,8 @@ $("#city").click(function (e) {
 <a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在申报</B></font></a>
 <a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;截止申报</B></font></a>
 </div>
-</div> 
-<br>		
+</div>
+<br>
 <br>
 <!--正在申报的项目-->
 <div class="row-fluid">
@@ -573,11 +591,11 @@ $("#city").click(function (e) {
 <script type="text/javascript">
 function ToGreen(obj){
 	obj.style.backgroundColor="#87CEEB";
-	
+
 }
 function ToWhite(obj){
 	obj.style.backgroundColor="WHITE";
-	
+
 }
 </script>
 <table align="center" style="width:1000px;">
@@ -611,8 +629,8 @@ function ToWhite(obj){
 <script type="text/javascript">
 $(document).ready(function(){
     $("#myNav").affix({
-        offset: { 
-            top: 125 
+        offset: {
+            top: 125
      	}
     });
 });
@@ -881,7 +899,7 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>2F</label>-->
 <ul class="nav nav-list" contenteditable="true">
-				  
+
                   <li id="8" onclick=show2F(this)><a href="#">中共</a></li>
                   <li id="9" onclick=show2F(this)><a href="#">民主党派</a></li>
 				  <li id="10" onclick=show2F(this)><a href="#">人民团体</a></li>

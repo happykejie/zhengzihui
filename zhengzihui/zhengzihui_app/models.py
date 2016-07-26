@@ -407,7 +407,20 @@ class tb_item_pa(models.Model):
         verbose_name_plural = '项目发布机构表'
     def __str__(self):   #python 2
         return self.ipa_name
-    
+
+class tb_shoucang_item(models.Model):
+
+    user_id = models.IntegerField('对应用户的ID',null=False)
+    item_id = models.IntegerField('对应项目的ID',null=False)
+
+class tb_shoucang_goods(models.Model):
+
+    user_id = models.IntegerField('对应用户的ID',null=False)
+    goods_id = models.IntegerField('对应服务的ID',null=False)
+
+
+
+
 class tb_area(models.Model):
     area_id = models.IntegerField("地区id",primary_key=True,null=False)
     area_name = models.CharField("地区名称",max_length =100, null = False)

@@ -54,7 +54,9 @@ urlpatterns = [
     url(r'^contact_details/$',zhengzihui_app.views.contact_details,name="contact_details"),
     url(r'^order_details/$',zhengzihui_app.views.order_details,name="order_details"),
     url(r'^order_completed/$',zhengzihui_app.views.order_completed,name="order_completed"),
-    url(r'^pay/', "zhengzihui_app.views.pay",name="pay"),
+    url(r'^pay/', zhengzihui_app.views.pay,name="pay"),
+    url(r'^shoucang_item/',zhengzihui_app.views.shoucang_item,name="shoucang_item"),
+    url(r'^shoucang_goods/',zhengzihui_app.views.shoucang_goods,name="shoucang_goods"),
 
     url(r'^searchforc/', zhengzihui_app.views.tag_autocomplete,name='auto'),
     

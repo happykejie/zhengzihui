@@ -794,6 +794,26 @@ def order_completed(request):
         goodsid = request.GET['goodsid']
         return render(request,'order_completed.html',{'goodsid':goodsid,})
 
+def shoucang_item(request):
+    user_id = request.GET['user_id']
+    item_id = request.GET['item_id']
+    if len(tb_shoucang_item.objects.filter(user_id=user_id).filter(item_id=item_id)):
+        return HttpResponse("您已经收藏过该项目")
+    else:
+        newOne = tb_shoucang_item(item_id=item_id,user_id=user_id)
+        newOne.save()
+        return HttpResponse("收藏项目成功")
+
+def shoucang_goods(request):
+    user_id = request.GET['user_id']
+    goods_id = request.GET['goods_id']
+    if len(tb_shoucang_goods.objects.filter(user_id=user_id).filter(gooods_id=goods_id)):
+        return HttpResponse("您已经收藏过该服务")
+    else:
+        newOne = tb_shoucang_goods(goods_id=goods_id,user_id=user_id)
+        newOne.save()
+        return HttpResponse("收藏服务成功")
+
 #xcz    
 def Payback(request):
 	order_id=request.session['unpayedid']

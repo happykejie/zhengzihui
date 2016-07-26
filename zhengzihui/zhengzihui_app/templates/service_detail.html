@@ -6,20 +6,15 @@
 
 
 <!-- assets -->
+
     <link rel="stylesheet" type="text/css" href="/static/css/jcarousel.connected-carousels.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/jquery-confirm.min.css">
-
-    <script type="text/javascript" src="/static/js/jquery.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.jcarousel.min.js"></script>
-
     <script type="text/javascript" src="/static/js/jcarousel.connected-carousels.js"></script>
     <link rel="stylesheet" type="text/css" href="/static/css/recommend_item.css">
-    <script src="/static/js/Popt.js"></script>
-    <script src="/static/js/cityJson.js"></script>
-    <script src="/static/js/citySet.js"></script>
+
 	<script src="/static/js/jquery-confirm.min.js"></script>
 
- 
+
 
 <nav class="navbar navbar-default" role="navigation">
    <div class="navbar-header">
@@ -113,7 +108,8 @@
 
 <div class="row-fluid col-md-offset-1 col-lg-offset-1 col-md-4 col-lg-4">
 <!--这里还有好评率、成功率和服务特色没有添加相应逻辑；对应的缺少tb_goods表单和成功率字段-->
-<h4>{{item.item_name}}</h4>
+<h4>{{goods.goods_name}}</h4>
+	<h6>服务编号：{{ goods.goods_code }}</h6>
 <p><strong>收费标准： ￥ {{goods.goods_market_price}}</strong></p>
 
 <hr></hr>
@@ -126,7 +122,7 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <a href="#" class="btn btn-primary btn-lg active" role="button">我要收藏</a>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <button type="button" class="btn-lg btn-primary" id="shoucang">我要收藏</button>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
@@ -315,7 +311,7 @@
         
         
     </div>
-<hr></hr>
+<hr>
 </div>
         <!--可下拉导航条目
         <li class="dropdown">
@@ -336,6 +332,7 @@
 <!--附加导航-->
 
 <div class="row">
+
 <script type="text/javascript">
 $(document).ready(function(){
     $("#myNav").affix({
@@ -343,6 +340,17 @@ $(document).ready(function(){
             top: 125 
      	}
     });
+	<!--点击收藏的script脚本-->
+	 $("#shoucang").click(function(){
+	                    var user_id = "{{request.COOKIES.user_id}}";
+						//alert(test);
+	                    var goods_id = "{{ goods.goods_id }}"
+	                    $.get("/shoucang_goods/",{'user_id':user_id,'goods_id':goods_id}, function(ret){
+		                    alert(ret);
+                            })
+
+                 });
+
 });
 </script>
 <!--if showDialogflag  现在是需要登录之后才能看到服务的相关价格，所以暂时不要提示要不要支付-->
@@ -363,6 +371,9 @@ $(document).ready(function(){
     });
 </script>
 {% endif %}
+
+
+
 
 </div>
  
