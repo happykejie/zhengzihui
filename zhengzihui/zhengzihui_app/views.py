@@ -207,19 +207,91 @@ def get_and_set_info(items):
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
     return a_items
+def getthe_filteditem(request):
+    a_items = []
+    middle_items=[]
+    tmiddle_items=[]
+    items=[]
+    selected = {}
+    flag = False
+    if 'bumen' in request.session:
+        value = request.session['bumen']
+        selected['bumen'] = value
+
+        flag = True
+    else:
+        selected['bumen'] = ''
+    if 'jibie' in request.session:
+        value = request.session['jibie']
+        selected['jibie'] = value
+        flag = True
+    else:
+        selected['jibie'] = ''
+    if 'zhuangtai' in request.session:
+        value = request.session['zhuangtai']
+        selected['zhuangtai'] = value
+        flag = True
+    else:
+        selected['zhuangtai'] = ''
+
+
+    allthebumen = ['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
+    allthejibie = ['县级财政资金','市级财政资金','省级财政资金','中央财政资金']
+    allthezhuangtai = ['截止申报','正在申报']
+
+    if  (selected['jibie'].encode("utf-8") != '全部'):
+
+    	jibielist = (selected['jibie'].encode("utf-8")).split(',')
+
+    	for i in jibielist:
+    		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+    else:
+    	middle_items=tb_item.objects.all()
+
+    if  (selected['zhuangtai'].encode("utf-8") != '全部'):
+
+    	for i in middle_items:
+            print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
+            if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
+    			tmiddle_items.append(i)
+    else:
+    	tmiddle_items=middle_items
+
+    if  (selected['bumen'].encode("utf-8") != '全部'):
+    	bumenlist = (selected['bumen'].encode("utf-8")).split(',')
+    	for i in tmiddle_items:
+    		for j in bumenlist:
+    			if j in (i.item_about).encode("utf-8"):
+    				items.append(i)
+    else:
+
+    	items=tmiddle_items
+
+    if (len(items)>10):
+    	items = items[:10]#不够10条报错
+    else:
+        items = items
+    return items
 
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
     #if request.session[] != None:
-
+    filted_item = getthe_filteditem(request)
     a_items = []
-
+    items = []
     if (sortbyLevelFlag==True):
-        items = tb_item.objects.order_by('item_level')
+        itemstemp = tb_item.objects.order_by('item_level')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortbyLevelFlag
         sortbyLevelFlag= False
     else:
-        items = tb_item.objects.order_by('-item_level')
+        itemstemp = tb_item.objects.order_by('-item_level')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortbyLevelFlag
         sortbyLevelFlag= True
 
@@ -234,14 +306,23 @@ def item_sortbyLevel(request):
 ###服务商排序
 sortflag1=True
 def search_result_sort_deadtime(request):
+    filted_item = getthe_filteditem(request)
     a_items = []
-
+    items = []
     if(sortflag1==True):
-    	items = tb_item.objects.order_by('item_deadtime')
+    	itemstemp = tb_item.objects.order_by('item_deadtime')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortflag1
         sortflag1=False
     else:
-    	items = tb_item.objects.order_by('-item_deadtime')
+    	itemstemp = tb_item.objects.order_by('-item_deadtime')
+
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortflag1
         sortflag1=True
 
@@ -254,21 +335,32 @@ def search_result_sort_deadtime(request):
 #综合排序 现在仅靠点击率来排序
 sortbyComprihensiveFlag=True
 def item_sortbyComprihensive(request):
+    filted_item = getthe_filteditem(request)
+    a_items = []
     items = []
+    itemstemp = []
     if (sortbyComprihensiveFlag==True):
 
         itemsinclick = tb_item_click.objects.order_by('-click_counter')
 
         for thing in itemsinclick:
             willappend = tb_item.objects.get(item_id=thing.item.item_id)
-            items.append(willappend)
+            itemstemp.append(willappend)
+
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortbyComprihensiveFlag
         sortbyComprihensiveFlag=False
     else:
         itemsinclick = tb_item_click.objects.order_by('click_counter')
         for thing in itemsinclick:
             willappend = tb_item.objects.get(item_id=thing.item.item_id)
-            items.append(willappend)
+            itemstemp.append(willappend)
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortbyComprihensiveFlag
         sortbyComprihensiveFlag=True
     a_items = get_and_set_info(items)
@@ -287,7 +379,10 @@ def project_detail(request):
         #能保证取到吗
         project_detail_item_id = request.GET['id']
 
-
+    addclick = tb_item_click.objects.get(item_id = project_detail_item_id)
+    addclick.click_counter += 1
+    print(addclick.click_counter)
+    addclick.save()
     item = tb_item.objects.get(item_id = project_detail_item_id)
     item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name #扩展对象属性，直接填写即可YZ
     item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
@@ -475,7 +570,8 @@ def item_details(request):
         
        
     item = tb_item.objects.get(item_id = project_detail_item_id)
-    
+
+
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
     article0 = None
     article1 = None
