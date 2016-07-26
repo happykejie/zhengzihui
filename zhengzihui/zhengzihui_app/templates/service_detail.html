@@ -46,7 +46,7 @@
 
 
 </nav>
-
+<!--
     <div class="content">
         <div class="path">
         <span>
@@ -66,6 +66,7 @@
     </div>
     <hr></hr>
     </div>
+-->
 <!--轮播-->   
 <!--这里的图片需要从项目的相册中取得，对应的缺少相应的字段指示项目的相册，同时相册中也没有数据--> 
 
@@ -108,9 +109,9 @@
 
 <div class="row-fluid col-md-offset-1 col-lg-offset-1 col-md-4 col-lg-4">
 <!--这里还有好评率、成功率和服务特色没有添加相应逻辑；对应的缺少tb_goods表单和成功率字段-->
-<h4>{{goods.goods_name}}</h4>
+<h4>关于"{{goods.goods_name}}"的服务</h4>
 	<h6>服务编号：{{ goods.goods_code }}</h6>
-<p><strong>收费标准： ￥ {{goods.goods_market_price}}</strong></p>
+<p><strong>收费标准： ￥ {{ goods.goods_payahead }} + 奖金{{goods.goods_awardafter}}</strong></p>
 
 <hr></hr>
 

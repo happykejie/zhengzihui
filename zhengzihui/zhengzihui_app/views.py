@@ -380,44 +380,48 @@ def project_detail(request):
         project_detail_item_id = request.GET['id']
 
     addclick = tb_item_click.objects.get(item_id = project_detail_item_id)
-    addclick.click_counter += 1
-    print(addclick.click_counter)
-    addclick.save()
+    if addclick==None:
+        addclick = tb_item_click(itcl_id=0,item_id=project_detail_item_id,click_counter=1)
+        addclick.save()
+    else:
+        addclick.click_counter += 1
+        addclick.save()
     item = tb_item.objects.get(item_id = project_detail_item_id)
     item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name #扩展对象属性，直接填写即可YZ
     item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
     #print item.item_pa_name
     #print item.item_pa_name
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
-    article0 = None
-    article1 = None
+    
     a_pics = []
-    if (len(article)>=2):
-        article0 = article[0]
-        article1 = article[1]
-    if (len(article)==1):
-        article0 = article[0]
-        article1 = None
-    if (len(article)==0):
-        pass
     #article2 = article[2]
-    if ((article0 == None)and(article1==None)):
+    if (len(article)==0):
         #获取项目起止时间
         gettimeInstance = tb_item.objects.get(item_id = project_detail_item_id)
         #获得热门推荐的项目
         recommendtemp = get_the_hotrecommend()
         recommend = get_and_set_info(recommendtemp)
+        
+        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+        for pic in pics:
+            a_pic = pic.pic_object.url[14:]
+            #print a_pic
+            a_pics.append(a_pic)
         if not a_pics  :
             pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
             a_pics.append(pic_url)
 
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        context = {'item':item,'article':article,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
         #print item.item_pa_address
 
         return render(request,'project_detail.html',context)
 
     else:
-
+        
+        
+        
         album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
         pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
@@ -433,7 +437,8 @@ def project_detail(request):
         #获得热门推荐的项目
         recommendtemp = get_the_hotrecommend()
         recommend = get_and_set_info(recommendtemp)
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        print "sdklfsdlflsdkflsdklksdlfksdlfksdkl"
+        context = {'item':item,'article':article[0],'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
         return render(request,'project_detail.html',context)
 
 
@@ -640,6 +645,7 @@ def service_list(request):
         tb_goods_list = tb_goods.objects.filter(item_id = id1)
         #for a in tb_goods_list: 
         #print (a.goods_id)
+        
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
             endtime = goods.goods_accept_endtime
@@ -677,7 +683,13 @@ def service_details(request):
     if request.GET['goodsid']:
 	    service_detail_goods_id = request.GET['goodsid']
     goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的服务商
-
+    if(len(tb_goods_click.objects.filter(goods_id =service_detail_goods_id ))):
+        addclick = tb_goods_click.objects.filter(goods_id =service_detail_goods_id )[0]
+        addclick.gocl_num +=1
+        addclick.save()
+    else:
+        addclick = tb_goods_click(goods_id=service_detail_goods_id,goods_name = goods.goods_name,gocl_id =0,gocl_num =1)
+        addclick.save()
 
     #计算日期百分比用于赋值进度条
     starttime = goods.goods_accept_starttime
@@ -740,13 +752,21 @@ def service_details(request):
     return render(request,'service_detail.html',{'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
 
 def sortServByComp(request):
+    tb_goods_list = []
     if request.session['for_sort_itemid']:
         itemid = request.session['for_sort_itemid']
 
         print "在排序当中"
-        tb_goods_list = tb_goods.objects.order_by('-goods_sort').filter(item_id=itemid)#我们默认goods_sort代表点击率
-
-        print tb_goods_list[0].goods_sort
+        tb_goods_listTemp = tb_goods.objects.filter(item_id = itemid)#我们默认goods_sort代表点击率
+        goodsorderTemp = tb_goods_click.objects.order_by('-gocl_num')
+        for goods in goodsorderTemp:
+            tb_goods_list.append(tb_goods.objects.get(goods_id = goods.goods_id))
+        for goods in tb_goods_listTemp:
+            if goods not in tb_goods_list:
+                tb_goods_list.append(goods)
+                
+            
+        
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
             endtime = goods.goods_accept_endtime

@@ -178,9 +178,18 @@ $(function(){
 				
 			    <div class="declare">
 					{% if request.COOKIES.user_name %}
-			            <a href="{% url 'service_list' %}?itemid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
-			        {% else %}
-						<a href="{% url 'selectpay' %}?goodsid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+			            <a href="{% url 'service_list' %}?itemid={{item.item_id}}"><button class="product_btn" id="shenbao">我要申报</button></a>
+			            {% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
+					{% else %}
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+
+							<a href="{% url 'selectpay' %}?goodsid={{item.item_id}} "><button class="product_btn">我要申报</button></a>
+						{% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
 			        {% endif %}
 
 				    {% if request.COOKIES.user_name %}
@@ -221,7 +230,7 @@ $(function(){
 									<div class="facts">
 									  <ul class="tab_list">
 										
-									    <li><a>{{ article1.article_content }}</a></li>
+									    <li><a>{{ article.article_content }}</a></li>
 										
 									  </ul>   
 
