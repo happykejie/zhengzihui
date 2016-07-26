@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/recommend_item.css">
 
 	<script src="/static/js/jquery-confirm.min.js"></script>
-
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
 
 <nav class="navbar navbar-default" role="navigation">
@@ -122,12 +122,27 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <button type="button" class="btn-lg btn-primary" id="shoucang">我要收藏</button>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+					 <button type="button" class="btn-lg btn-primary" id="shoucang" onclick="show()">我要收藏</button>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
 		
 </div>
                 
 
+<!--点击收藏的script脚本-->
+			<script>
+				  $(document).ready(function(){
+                    $("#shoucang").click(function(){
+	                    var user_id = "{{request.COOKIES.user_id}}";
 
+	                    var goods_id = "{{ goods.goods_id }}";
+	                    //alert(goods_id);
+	                    //alert(user_id);
+	                    $.get("/shoucang_goods/",{'user_id':user_id,'goods_id':goods_id}, function(ret){
+		                    alert(ret);
+                            })
+
+                 });
+            });
+			</script>
 
 
 </div>
@@ -333,26 +348,7 @@
 
 <div class="row">
 
-<script type="text/javascript">
-$(document).ready(function(){
-    $("#myNav").affix({
-        offset: { 
-            top: 125 
-     	}
-    });
-	<!--点击收藏的script脚本-->
-	 $("#shoucang").click(function(){
-	                    var user_id = "{{request.COOKIES.user_id}}";
-						//alert(test);
-	                    var goods_id = "{{ goods.goods_id }}"
-	                    $.get("/shoucang_goods/",{'user_id':user_id,'goods_id':goods_id}, function(ret){
-		                    alert(ret);
-                            })
 
-                 });
-
-});
-</script>
 <!--if showDialogflag  现在是需要登录之后才能看到服务的相关价格，所以暂时不要提示要不要支付-->
 {% if 0 %}
 <script>
@@ -376,5 +372,6 @@ $(document).ready(function(){
 
 
 </div>
+
  
 {% endblock %}

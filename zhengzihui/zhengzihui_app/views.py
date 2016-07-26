@@ -807,7 +807,8 @@ def shoucang_item(request):
 def shoucang_goods(request):
     user_id = request.GET['user_id']
     goods_id = request.GET['goods_id']
-    if len(tb_shoucang_goods.objects.filter(user_id=user_id).filter(gooods_id=goods_id)):
+    print(user_id)
+    if len(tb_shoucang_goods.objects.filter(user_id=user_id).filter(goods_id=goods_id)):
         return HttpResponse("您已经收藏过该服务")
     else:
         newOne = tb_shoucang_goods(goods_id=goods_id,user_id=user_id)
