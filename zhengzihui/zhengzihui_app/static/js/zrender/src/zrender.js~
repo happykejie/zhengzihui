@@ -54,7 +54,7 @@ define(
          * http://explorercanvas.googlecode.com/svn/trunk/excanvas.js
          */
         // 核心代码会生成一个全局变量 G_vmlCanvasManager，模块改造后借用于快速判断canvas支持
-        require('./excanvas');
+        require('./lib/excanvas');
 
         var self = {};
         var zrender = self;     // 提供MVC内部反向使用静态方法；
