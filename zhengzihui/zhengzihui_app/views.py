@@ -5,6 +5,7 @@ from django.http import HttpResponse as HR
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render_to_response
 from itertools import chain
+import random
 
 import random
 import top.api
@@ -16,7 +17,7 @@ import jieba,p_alipay.alipay
 from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
-from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
+from models import *
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
 appkey='23297047'
@@ -26,11 +27,13 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
-	request.session['bumen']='全部'
-	request.session['jibie']='全部'
-	request.session['zhuangtai']='全部'
-	#print (123)
-	return render_to_response('index.html',{})
+    request.session['bumen']='全部'
+    request.session['jibie']='全部'
+    request.session['zhuangtai']='全部'
+    #print (123)
+    if 'user_id'in request.COOKIES:#
+        return HttpResponseRedirect('/login')
+    return render_to_response('index.html',{})
 
 #xcz 搜索
 #为了显示当前路径，袁志修改，现在还有一些BUG
@@ -155,6 +158,8 @@ def search_result(request):
 
     if (len(items)>10):
     	items = items[:10]#不够10条报错
+    else:
+        items = items
     a_items = get_and_set_info(items)
     #获得热门推荐的项目YZ
     recommend = []
@@ -202,19 +207,91 @@ def get_and_set_info(items):
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))#获取项目对应订单的数量
         a_items.append(a_item)
     return a_items
+def getthe_filteditem(request):
+    a_items = []
+    middle_items=[]
+    tmiddle_items=[]
+    items=[]
+    selected = {}
+    flag = False
+    if 'bumen' in request.session:
+        value = request.session['bumen']
+        selected['bumen'] = value
+
+        flag = True
+    else:
+        selected['bumen'] = ''
+    if 'jibie' in request.session:
+        value = request.session['jibie']
+        selected['jibie'] = value
+        flag = True
+    else:
+        selected['jibie'] = ''
+    if 'zhuangtai' in request.session:
+        value = request.session['zhuangtai']
+        selected['zhuangtai'] = value
+        flag = True
+    else:
+        selected['zhuangtai'] = ''
+
+
+    allthebumen = ['经济与信息化','发展与改革','财政','科技','教育','文化','卫计','体育','知识产权','农业','林业','畜牧','渔业','粮食','中医药','国土','住建','交通','水利','能源','环保','商务','投资促进','工商','税务','民政','人社','扶贫','旅游','人民银行','银监','证监','保监','质监','药监','安监']
+    allthejibie = ['县级财政资金','市级财政资金','省级财政资金','中央财政资金']
+    allthezhuangtai = ['截止申报','正在申报']
+
+    if  (selected['jibie'].encode("utf-8") != '全部'):
+
+    	jibielist = (selected['jibie'].encode("utf-8")).split(',')
+
+    	for i in jibielist:
+    		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+    else:
+    	middle_items=tb_item.objects.all()
+
+    if  (selected['zhuangtai'].encode("utf-8") != '全部'):
+
+    	for i in middle_items:
+            print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
+            if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
+    			tmiddle_items.append(i)
+    else:
+    	tmiddle_items=middle_items
+
+    if  (selected['bumen'].encode("utf-8") != '全部'):
+    	bumenlist = (selected['bumen'].encode("utf-8")).split(',')
+    	for i in tmiddle_items:
+    		for j in bumenlist:
+    			if j in (i.item_about).encode("utf-8"):
+    				items.append(i)
+    else:
+
+    	items=tmiddle_items
+
+    if (len(items)>10):
+    	items = items[:10]#不够10条报错
+    else:
+        items = items
+    return items
 
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
     #if request.session[] != None:
-
+    filted_item = getthe_filteditem(request)
     a_items = []
-
+    items = []
     if (sortbyLevelFlag==True):
-        items = tb_item.objects.order_by('item_level')
+        itemstemp = tb_item.objects.order_by('item_level')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortbyLevelFlag
         sortbyLevelFlag= False
     else:
-        items = tb_item.objects.order_by('-item_level')
+        itemstemp = tb_item.objects.order_by('-item_level')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortbyLevelFlag
         sortbyLevelFlag= True
 
@@ -229,14 +306,23 @@ def item_sortbyLevel(request):
 ###服务商排序
 sortflag1=True
 def search_result_sort_deadtime(request):
+    filted_item = getthe_filteditem(request)
     a_items = []
-
+    items = []
     if(sortflag1==True):
-    	items = tb_item.objects.order_by('item_deadtime')
+    	itemstemp = tb_item.objects.order_by('item_deadtime')
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortflag1
         sortflag1=False
     else:
-    	items = tb_item.objects.order_by('-item_deadtime')
+    	itemstemp = tb_item.objects.order_by('-item_deadtime')
+
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortflag1
         sortflag1=True
 
@@ -249,21 +335,32 @@ def search_result_sort_deadtime(request):
 #综合排序 现在仅靠点击率来排序
 sortbyComprihensiveFlag=True
 def item_sortbyComprihensive(request):
+    filted_item = getthe_filteditem(request)
+    a_items = []
     items = []
+    itemstemp = []
     if (sortbyComprihensiveFlag==True):
 
         itemsinclick = tb_item_click.objects.order_by('-click_counter')
 
         for thing in itemsinclick:
             willappend = tb_item.objects.get(item_id=thing.item.item_id)
-            items.append(willappend)
+            itemstemp.append(willappend)
+
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
         global sortbyComprihensiveFlag
         sortbyComprihensiveFlag=False
     else:
         itemsinclick = tb_item_click.objects.order_by('click_counter')
         for thing in itemsinclick:
             willappend = tb_item.objects.get(item_id=thing.item.item_id)
-            items.append(willappend)
+            itemstemp.append(willappend)
+        for item in itemstemp:
+            if item in filted_item:
+                items.append(item)
+
         global sortbyComprihensiveFlag
         sortbyComprihensiveFlag=True
     a_items = get_and_set_info(items)
@@ -282,42 +379,49 @@ def project_detail(request):
         #能保证取到吗
         project_detail_item_id = request.GET['id']
 
-
+    addclick = tb_item_click.objects.get(item_id = project_detail_item_id)
+    if addclick==None:
+        addclick = tb_item_click(itcl_id=0,item_id=project_detail_item_id,click_counter=1)
+        addclick.save()
+    else:
+        addclick.click_counter += 1
+        addclick.save()
     item = tb_item.objects.get(item_id = project_detail_item_id)
     item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name #扩展对象属性，直接填写即可YZ
     item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
     #print item.item_pa_name
     #print item.item_pa_name
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
-    article0 = None
-    article1 = None
+    
     a_pics = []
-    if (len(article)>=2):
-        article0 = article[0]
-        article1 = article[1]
-    if (len(article)==1):
-        article0 = article[0]
-        article1 = None
-    if (len(article)==0):
-        pass
     #article2 = article[2]
-    if ((article0 == None)and(article1==None)):
+    if (len(article)==0):
         #获取项目起止时间
         gettimeInstance = tb_item.objects.get(item_id = project_detail_item_id)
         #获得热门推荐的项目
         recommendtemp = get_the_hotrecommend()
         recommend = get_and_set_info(recommendtemp)
+        
+        album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
+        for pic in pics:
+            a_pic = pic.pic_object.url[14:]
+            #print a_pic
+            a_pics.append(a_pic)
         if not a_pics  :
             pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
             a_pics.append(pic_url)
 
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        context = {'item':item,'article':article,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
         #print item.item_pa_address
 
         return render(request,'project_detail.html',context)
 
     else:
-
+        
+        
+        
         album = tb_album.objects.filter(album_type=0,affiliation_id=project_detail_item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
         pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]#获取前四张图片
@@ -333,7 +437,8 @@ def project_detail(request):
         #获得热门推荐的项目
         recommendtemp = get_the_hotrecommend()
         recommend = get_and_set_info(recommendtemp)
-        context = {'item':item,'article0':article0,'article1':article1,'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
+        print "sdklfsdlflsdkflsdklksdlfksdlfksdkl"
+        context = {'item':item,'article':article[0],'a_pics':a_pics,'recommend':recommend,'gettimeInstance':gettimeInstance,}
         return render(request,'project_detail.html',context)
 
 
@@ -470,7 +575,8 @@ def item_details(request):
         
        
     item = tb_item.objects.get(item_id = project_detail_item_id)
-    
+
+
     article = tb_article.objects.filter(affiliation_id = project_detail_item_id)
     article0 = None
     article1 = None
@@ -539,6 +645,7 @@ def service_list(request):
         tb_goods_list = tb_goods.objects.filter(item_id = id1)
         #for a in tb_goods_list: 
         #print (a.goods_id)
+        
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
             endtime = goods.goods_accept_endtime
@@ -576,7 +683,13 @@ def service_details(request):
     if request.GET['goodsid']:
 	    service_detail_goods_id = request.GET['goodsid']
     goods = tb_goods.objects.get(goods_id = service_detail_goods_id)#获得需要购买的项目的id对应的服务商
-
+    if(len(tb_goods_click.objects.filter(goods_id =service_detail_goods_id ))):
+        addclick = tb_goods_click.objects.filter(goods_id =service_detail_goods_id )[0]
+        addclick.gocl_num +=1
+        addclick.save()
+    else:
+        addclick = tb_goods_click(goods_id=service_detail_goods_id,goods_name = goods.goods_name,gocl_id =0,gocl_num =1)
+        addclick.save()
 
     #计算日期百分比用于赋值进度条
     starttime = goods.goods_accept_starttime
@@ -639,13 +752,21 @@ def service_details(request):
     return render(request,'service_detail.html',{'goods':goods,'finish_percentage':finish_percentage,'pics_url':pics_url,'publish_time_format':publish_time_format,'datetime_format':datetime_format,'goods_recommend_display':goods_recommend_display,'showDialogflag':showDialogflag})
 
 def sortServByComp(request):
+    tb_goods_list = []
     if request.session['for_sort_itemid']:
         itemid = request.session['for_sort_itemid']
 
         print "在排序当中"
-        tb_goods_list = tb_goods.objects.order_by('-goods_sort').filter(item_id=itemid)#我们默认goods_sort代表点击率
-
-        print tb_goods_list[0].goods_sort
+        tb_goods_listTemp = tb_goods.objects.filter(item_id = itemid)#我们默认goods_sort代表点击率
+        goodsorderTemp = tb_goods_click.objects.order_by('-gocl_num')
+        for goods in goodsorderTemp:
+            tb_goods_list.append(tb_goods.objects.get(goods_id = goods.goods_id))
+        for goods in tb_goods_listTemp:
+            if goods not in tb_goods_list:
+                tb_goods_list.append(goods)
+                
+            
+        
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
             endtime = goods.goods_accept_endtime
@@ -713,8 +834,102 @@ def sortServByaward(request):
 
     
     
+#YZ 查看合同
+def contact_details(request):
+    goodsid = 0
+    if request.GET['goodsid']:
+        contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
+        contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
 
+        contact_file.close()
+        goodsid = request.GET['goodsid']
+        return render(request,'contact_details.html',{'goodsid':goodsid,'contact_string':contact_string})
+    return HttpResponse("还没有选择项目")
+#YZ
+def order_details(request):
+    goodsid = 0
+    if request.GET['goodsid']:
+        goodsid = int(request.GET['goodsid'])
+        goods = tb_goods.objects.get(goods_id = goodsid)#取到服务对象
+        item = tb_item.objects.get(item_id=goods.item_id)#取得对应的申报项目的对象
+        item_spa = tb_item_pa(ipa_id=item.item_pa_id)#获得项目发布机构对象
+        goods_spa = tb_service_provider(sp_id=goods.sp_id)#获得服务提供商的对象
+        user_id = int(request.COOKIES['user_id'])
+        buyer = tb_user.objects.get(user_id=user_id)#获取当前用户对象
+
+        #生成随机的0-1000000的数，并不与数据库中的数相同;给order_no赋值
+        order_no =random.randint(0,1000000)
+        while( len(tb_order.objects.filter(order_no=order_no)) == 1 ):
+            order_no =random.randint(0,1000000)
+        print type(item.item_name)
+        #add_time 用的是插入数据时便生成，即保存最后修改的时间错。
+        allorder = tb_order.objects.all()
+        lastid = allorder[len(allorder)-1].order_id
+
+        order = tb_order(order_id=lastid+1,order_no=order_no,goods_id=goodsid,pay_no=order_no,item_id=item.item_id,item_name=item.item_name,sp_id=goods_spa.sp_id,\
+                         sp_name=goods_spa.sp_name,buyer_id=buyer.user_id,buyer_name=buyer.user_name,buyer_email=buyer.user_email,\
+                         payment_code=order_no,payment_time=None,final_time=None,good_amount=goods.goods_payahead,\
+                         order_amount=goods.goods_payahead + goods.goods_awardafter,\
+                         refund_amount=goods.goods_payahead,delay_time=None,order_from=1,express_id=1,express_no=1,eval_state=0,order_state=3,refund_state=0,lock_state=0,express_state=0)
+        '''#order.order_no = order_no
+        #order.goods_id = goodsid
+        #order.pay_no = order_no #这里默认Pay_no与订单号一致
+        order.item_id = item.item_id
+        order.item_name = item.item_name
+        order.sp_id = goods_spa.sp_id
+        order.sp_name = goods_spa.sp_name
+        order.buyer_id = buyer.user_id
+        order.buyer_name = buyer.user_name
+        order.buyer_email = buyer.user_email
+        order.add_time = time.localtime()
+        order.payment_code = order_no #暂时不知道什么用默认和订单号一致
+        order.payment_time = None#暂时取值为Null,因为并没有支付，等待后续的线上支付或者线下支付
+        order.final_time = None #当帮用户申报成功或者订单取消时取值
+        order.good_amount = goods.goods_payahead # 收取的服务费用,首付费用
+        order.order_amount = goods.goods_payahead + goods.goods_awardafter #订单的总金额是首付+奖金
+        order.refund_amount = goods.goods_payahead
+        order.delay_time = None #不知道干嘛的呀
+        order.order_from = 1 #默认都是来之WEB端
+        order.express_id =1 #默认值，应该是不会用到
+        order.express_no= 1 #默认值，应该是不会用到
+        order.eval_state = 0 #生成订单的时候肯定是没有评价的
+        order.order_state = 3 #只是生成了订单后续的选择支付也没有选择完毕
+        order.refund_state = 0 #生成订单时代表没有申请退款
+        order.lock_state = 0 #正常，只有订单出现异常的时候才锁定
+        order.express_state = 0 #是一个默认值，应该不会用到
+        '''
+        order.save()
+
+
+
+
+    return render(request,'order_details.html',{'order':order,'goods':goods,'item':item,})
 	
+def order_completed(request):
+    if request.GET['goodsid']:
+        goodsid = request.GET['goodsid']
+        return render(request,'order_completed.html',{'goodsid':goodsid,})
+
+def shoucang_item(request):
+    user_id = request.GET['user_id']
+    item_id = request.GET['item_id']
+    if len(tb_shoucang_item.objects.filter(user_id=user_id).filter(item_id=item_id)):
+        return HttpResponse("您已经收藏过该项目")
+    else:
+        newOne = tb_shoucang_item(item_id=item_id,user_id=user_id)
+        newOne.save()
+        return HttpResponse("收藏项目成功")
+
+def shoucang_goods(request):
+    user_id = request.GET['user_id']
+    goods_id = request.GET['goods_id']
+    print(user_id)
+    if len(tb_shoucang_goods.objects.filter(user_id=user_id).filter(goods_id=goods_id)):
+        return HttpResponse("您已经收藏过该服务")
+    else:
+        newOne = tb_shoucang_goods(goods_id=goods_id,user_id=user_id)
+        newOne.save()
+        return HttpResponse("收藏服务成功")
 
 #xcz    
 def Payback(request):
@@ -941,9 +1156,9 @@ def all_orders(request):
 def not_pay(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
-        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=1).order_by('-add_time')
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
+        order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
         a_order = {}
@@ -972,8 +1187,8 @@ def not_pay(request):
 def payed(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=2).order_by('-add_time')
 
     for order in order_list:
@@ -1004,8 +1219,8 @@ def payed(request):
 def delivered(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=3).order_by('-add_time')
 
     for order in order_list:
@@ -1036,8 +1251,8 @@ def delivered(request):
 def checked(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=4).order_by('-add_time')
 
     for order in order_list:
@@ -1067,8 +1282,8 @@ def checked(request):
 def delete(request):
     order_list = []
     a_order_list = []
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_list = tb_order.objects.filter(buyer_id=user_id,order_state=0).order_by('-add_time')
 
     for order in order_list:
@@ -1097,8 +1312,8 @@ def delete(request):
 
     #确认订单
 def order_enter(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1110,8 +1325,8 @@ def order_enter(request):
 
     #申请关闭
 def order_giveup(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1124,8 +1339,8 @@ def order_giveup(request):
         
     #删除订单
 def order_delete(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1136,8 +1351,8 @@ def order_delete(request):
 
     #去评价
 def order_commit(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.GET['id']
         order = tb_order.objects.get(order_id=order_id)
         if order.buyer_id == user_id:
@@ -1156,8 +1371,8 @@ def order_commit(request):
             return render(request,'order_commit.html',{'order':a_order})
     #添加评价
 def order_add_commit(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         order_id = request.POST['order_id']
         order = tb_order.objects.get(order_id=order_id)
         goods_id = order.goods_id
@@ -1189,8 +1404,8 @@ def collect_serve(request):
 
     #我的评价
 def my_evaluate(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         a_evaluations = []
         evaluations = tb_goods_evaluation.objects.filter(user_id=user_id).order_by('-create_time')
         for evaluation in evaluations:
@@ -1218,8 +1433,8 @@ def my_evaluate(request):
 
     #评价统计
 def statistics(request):
-    if request.session['user_id']:
-        user_id = int(request.session['user_id'])
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
         all_orders = len(tb_order.objects.filter(buyer_id=user_id))
         all_commit = len(tb_goods_evaluation.objects.filter(user_id=user_id))
         not_commit = all_orders - all_commit
@@ -1396,8 +1611,8 @@ def register3(request):
         userid = request.GET['user_id_r3']
     
     request.session['user_id'] = userid
-    print(request.session['user_id'])
-    print(request.session['user_name_s'])
+    #print(request.session['user_id'])
+    #print(request.session['user_name_s'])
     if 'unregist_tobepay_goodsid' in request.session:
         goodsid =request.session['unregist_tobepay_goodsid']
         return HttpResponseRedirect('/selectpay')
@@ -1415,7 +1630,11 @@ def login(request):
     if 'user_name' in request.COOKIES:
         response = render_to_response('index.html',{'user_name':request.COOKIES['user_name']})
         return response
-        
+    if 'user_id' in request.COOKIES:
+        userid = int(request.COOKIES['user_id'])
+        user_name_getby_id = tb_user.objects.get(user_id = userid)
+        response = render_to_response('index.html',{'user_name':user_name_getby_id})
+        return response
     if request.method == 'POST' :  
         if not request.POST.get('_username'):  
             errors.append('请输入用户名')  
@@ -1473,7 +1692,7 @@ def selectpay(request):
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
             goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
-            response =  HttpResponseRedirect("/g_register")
+            response =  HttpResponseRedirect("/regCompany")
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
             response.set_cookie('unregist_tobepay_goodsid',goods.goods_id,3600)
@@ -1738,7 +1957,101 @@ def register_sms(request):
 
 
 
+def cmap(request):
+    #ce shi shu ju mu qian xie si le 
 
+    #request.COOKIES['user_id']="2016"
+    if 'user_id' in request.COOKIES:
+        if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0 :
+            return  render_to_response("e_customization.html",{})
+        else:
+            if(tb_customcompany.objects.get(company_id=request.COOKIES['user_id'])).conclusion=="":
+                return HttpResponse("等待处理")
+            else:
+                user_id=request.COOKIES['user_id']
+                #conc=tb_customcompany.objects.get(company_id=user_id).conclusion 
+                #wu shu ju  xie si le de ce shi shui chan 
+                conc="水产"
+                A=tb_user.objects.get(user_id = user_id).user_name
+                B=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)
+                C=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)
+                D=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)
+                E=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)
+                if (len(B)==0):
+                    B=""
+                else:
+                    B=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_name
+                if (len(C)==0):
+                    C=""
+                else:
+                    C=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_name
+                if (len(D)==0):
+                    D=""
+                else:
+                    D=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_name
+                if (len(E)==0):
+                    E=""
+                else:
+                    E=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_name
+
+                #A="100"
+                #B="110"
+                #C="120"
+                #D="130"
+                #E="140"
+                return render_to_response("cust_map.html",{'A':A,'B':B,'C':C,'D':D,'E':E})
+
+def custom(request):
+     #return render_to_response("e_customization.html",{})
+    #ce shi shu ju mu qian xie si le 
+    #request.COOKIES['user_id']="2016"
+    if 'user_id' in request.COOKIES:
+        if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0:
+          #print (123) 
+          return render_to_response("e_customization.html",{})
+        else:
+            return HttpResponse("等待处理")       
+           
+        #else:
+         #   return HttpResponse("map for e_man")
+  #  else:
+     #   return HttpResponseRedirect('/login',{})
+    #return render_to_response("e_customization.html",{})
+
+def savec(request):
+    #ce shi shu ju mu qian xie si le 
+    #request.COOKIES['user_id']="2016"
+    if (request.method=="POST"):
+        company_id=request.COOKIES['user_id']
+        hangye=request.POST.get("hangye")
+        bumen=request.POST.get("bumen")
+        jibie=request.POST.get("jibie")
+        guquan=request.POST.get("guquan")
+        zhaiquan=request.POST.get("zhaiquan")
+        ziben=request.POST.get("ziben")
+        zimiaoshu=request.POST.get("qiyejianjie")
+        xiangmumiaoshu=request.POST.get("xiangmujianjie")
+
+        zimiaoshutu=request.POST.get("jianjiefile")
+        xiangmutu=request.POST.get("xiangmufile")
+        #print(xiangmutu)
+        add =   tb_customcompany()
+        add.company_id=company_id
+        add.custom_hangye=hangye
+        add.custom_bumen=bumen
+        add.custom_jiebie =jibie
+        add.wanted_guquan=guquan
+        add.wanted_rongzi =zhaiquan
+        add.wanted_ziben=ziben
+        add.self_des=zimiaoshu
+        add.item_des=xiangmumiaoshu
+        add.self_file= zimiaoshutu
+        add.item_file= xiangmutu
+        add.conclusion=""
+        add.save()
+        print(111)
+        return HttpResponseRedirect('/index',{})
+    return render_to_response("e_customization.html",{})
 
   
 	

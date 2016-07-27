@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -145,6 +144,23 @@ class Migration(migrations.Migration):
                 ('companyUserPhone', models.CharField(max_length=40, verbose_name=b'\xe5\x9b\xba\xe8\xaf\x9d')),
                 ('companyUserTelephone', models.CharField(max_length=40, verbose_name=b'\xe6\x89\x8b\xe6\x9c\xba')),
                 ('companyUserEmail', models.EmailField(max_length=254, verbose_name=b'\xe7\x94\xa8\xe6\x88\xb7\xe9\x82\xae\xe7\xae\xb1')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='tb_customcompany',
+            fields=[
+                ('company_id', models.CharField(max_length=100, serialize=False, verbose_name=b'\xe4\xbc\x81\xe4\xb8\x9aid', primary_key=True)),
+                ('custom_hangye', models.CharField(max_length=100, verbose_name=b'\xe8\xa1\x8c\xe4\xb8\x9a')),
+                ('custom_bumen', models.CharField(max_length=100, verbose_name=b'\xe9\x83\xa8\xe9\x97\xa8')),
+                ('custom_jiebie', models.CharField(max_length=100, verbose_name=b'\xe7\xba\xa7\xe5\x88\xab')),
+                ('wanted_guquan', models.CharField(max_length=100, verbose_name=b'\xe8\x82\xa1\xe6\x9d\x83')),
+                ('wanted_rongzi', models.CharField(max_length=100, verbose_name=b'\xe5\x80\xba\xe5\x88\xb8')),
+                ('wanted_ziben', models.CharField(max_length=100, verbose_name=b'\xe8\xb5\x84\xe6\x9c\xac')),
+                ('self_des', models.CharField(max_length=100, null=True, verbose_name=b'\xe8\x87\xaa\xe8\xaf\x84')),
+                ('item_des', models.CharField(max_length=100, null=True, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe8\xaf\x84\xe4\xbb\xb7')),
+                ('self_file', models.FileField(null=True, upload_to=b'./upload')),
+                ('item_file', models.FileField(null=True, upload_to=b'./upload')),
+                ('conclusion', models.CharField(max_length=100, null=True, verbose_name=b'\xe7\xbd\x91\xe7\xab\x99\xe8\xaf\x84\xe4\xbb\xb7')),
             ],
         ),
         migrations.CreateModel(
@@ -397,25 +413,25 @@ class Migration(migrations.Migration):
                 ('goods_id', models.IntegerField(verbose_name=b'\xe5\x95\x86\xe5\x93\x81id')),
                 ('pay_no', models.IntegerField(verbose_name=b'\xe6\x94\xaf\xe4\xbb\x98\xe5\x8d\x95\xe5\x8f\xb7')),
                 ('item_id', models.IntegerField(verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xaeid')),
-                ('item_name', models.CharField(max_length=40, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe5\x90\x8d\xe7\xa7\xb0')),
+                ('item_name', models.CharField(max_length=1000, verbose_name=b'\xe9\xa1\xb9\xe7\x9b\xae\xe5\x90\x8d\xe7\xa7\xb0')),
                 ('sp_id', models.IntegerField(verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe6\x8f\x90\xe4\xbe\x9b\xe5\x95\x86id')),
                 ('sp_name', models.CharField(max_length=40, verbose_name=b'\xe6\x9c\x8d\xe5\x8a\xa1\xe6\x8f\x90\xe4\xbe\x9b\xe5\x95\x86\xe5\x90\x8d\xe7\xa7\xb0')),
                 ('buyer_id', models.IntegerField(verbose_name=b'\xe4\xb9\xb0\xe5\xae\xb6id')),
                 ('buyer_name', models.CharField(max_length=40, verbose_name=b'\xe4\xb9\xb0\xe5\xae\xb6\xe5\xa7\x93\xe5\x90\x8d')),
                 ('buyer_email', models.EmailField(max_length=40, verbose_name=b'\xe4\xb9\xb0\xe5\xae\xb6\xe7\x94\xb5\xe5\xad\x90\xe9\x82\xae\xe7\xae\xb1')),
-                ('add_time', models.DateTimeField(verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe7\x94\x9f\xe6\x88\x90\xe6\x97\xb6\xe9\x97\xb4')),
+                ('add_time', models.DateTimeField(auto_now=True, verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe7\x94\x9f\xe6\x88\x90\xe6\x97\xb6\xe9\x97\xb4')),
                 ('payment_code', models.CharField(max_length=100, verbose_name=b'\xe6\x94\xaf\xe4\xbb\x98\xe6\x96\xb9\xe5\xbc\x8f\xe5\x90\x8d\xe7\xa7\xb0\xe4\xbb\xa3\xe7\xa0\x81')),
-                ('payment_time', models.DateTimeField(verbose_name=b'\xe6\x94\xaf\xe4\xbb\x98(\xe4\xbb\x98\xe6\xac\xbe)\xe6\x97\xb6\xe9\x97\xb4')),
-                ('final_time', models.DateTimeField(verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe5\xae\x8c\xe6\x88\x90\xe6\x97\xb6\xe9\x97\xb4')),
+                ('payment_time', models.DateTimeField(null=True, verbose_name=b'\xe6\x94\xaf\xe4\xbb\x98(\xe4\xbb\x98\xe6\xac\xbe)\xe6\x97\xb6\xe9\x97\xb4')),
+                ('final_time', models.DateTimeField(null=True, verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe5\xae\x8c\xe6\x88\x90\xe6\x97\xb6\xe9\x97\xb4')),
                 ('good_amount', models.IntegerField(verbose_name=b'\xe5\x95\x86\xe5\x93\x81\xe6\x80\xbb\xe4\xbb\xb7\xe6\xa0\xbc')),
                 ('order_amount', models.IntegerField(default=0, verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe6\x80\xbb\xe4\xbb\xb7\xe6\xa0\xbc')),
                 ('refund_amount', models.IntegerField(verbose_name=b'\xe9\x80\x80\xe6\xac\xbe\xe9\x87\x91\xe9\xa2\x9d')),
-                ('delay_time', models.DateTimeField(verbose_name=b'\xe5\xbb\xb6\xe8\xbf\x9f\xe6\x97\xb6\xe9\x97\xb4')),
+                ('delay_time', models.DateTimeField(null=True, verbose_name=b'\xe5\xbb\xb6\xe8\xbf\x9f\xe6\x97\xb6\xe9\x97\xb4')),
                 ('order_from', models.IntegerField(default=1, verbose_name=b'WEB\xe6\x88\x96\xe8\x80\x85mobile', choices=[(1, b'PC\xe7\xab\xaf'), (0, b'\xe6\x89\x8b\xe6\x9c\xba\xe7\xab\xaf')])),
                 ('express_id', models.IntegerField(verbose_name=b'\xe7\x89\xa9\xe6\xb5\x81\xe5\x85\xac\xe5\x8f\xb8id')),
                 ('express_no', models.CharField(max_length=100, verbose_name=b'\xe7\x89\xa9\xe6\xb5\x81\xe5\x8d\x95\xe5\x8f\xb7')),
                 ('eval_state', models.IntegerField(default=0, verbose_name=b'\xe8\xaf\x84\xe4\xbb\xb7\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\x9c\xaa\xe8\xaf\x84\xe4\xbb\xb7'), (1, b'\xe5\xb7\xb2\xe8\xaf\x84\xe4\xbb\xb7')])),
-                ('order_state', models.IntegerField(default=1, verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe5\xb7\xb2\xe5\x8f\x96\xe6\xb6\x88'), (1, b'\xe6\x9c\xaa\xe4\xbb\x98\xe6\xac\xbe'), (2, b'\xe5\xb7\xb2\xe4\xbb\x98\xe6\xac\xbe'), (3, b'\xe5\xb7\xb2\xe5\x8f\x91\xe8\xb4\xa7'), (4, b'\xe5\xb7\xb2\xe6\x94\xb6\xe8\xb4\xa7')])),
+                ('order_state', models.IntegerField(default=1, verbose_name=b'\xe8\xae\xa2\xe5\x8d\x95\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe5\xb7\xb2\xe5\x8f\x96\xe6\xb6\x88'), (1, b'\xe6\x9c\xaa\xe4\xbb\x98\xe6\xac\xbe'), (2, b'\xe5\xb7\xb2\xe4\xbb\x98\xe6\xac\xbe'), (3, b'\xe5\xb7\xb2\xe4\xb8\x8b\xe5\x8d\x95'), (4, b'\xe5\xb7\xb2\xe5\xae\x8c\xe6\x88\x90')])),
                 ('refund_state', models.IntegerField(default=0, verbose_name=b'\xe9\x80\x80\xe6\xac\xbe\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\x97\xa0\xe9\x80\x80\xe6\xac\xbe'), (1, b'\xe9\x83\xa8\xe5\x88\x86\xe9\x80\x80\xe6\xac\xbe'), (2, b'\xe5\x85\xa8\xe9\x83\xa8\xe9\x80\x80\xe6\xac\xbe')])),
                 ('lock_state', models.IntegerField(default=0, verbose_name=b'\xe9\x94\x81\xe5\xae\x9a\xe7\x8a\xb6\xe6\x80\x81', choices=[(0, b'\xe6\xad\xa3\xe5\xb8\xb8'), (1, b'\xe9\x94\x81\xe5\xae\x9a')])),
                 ('express_state', models.IntegerField(default=1, verbose_name=b'\xe7\x89\xa9\xe6\xb5\x81\xe7\x8a\xb6\xe6\x80\x81', choices=[(1, b'\xe5\xbe\x85\xe5\x8f\x91\xe8\xb4\xa7'), (2, b'\xe5\xbe\x85\xe6\x94\xb6\xe8\xb4\xa7'), (3, b'\xe5\xb7\xb2\xe4\xbb\x98\xe6\xac\xbe'), (4, b'\xe5\xb7\xb2\xe5\x8f\x91\xe8\xb4\xa7')])),
@@ -472,6 +488,22 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='tb_shoucang_goods',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user_id', models.IntegerField(verbose_name=b'\xe5\xaf\xb9\xe5\xba\x94\xe7\x94\xa8\xe6\x88\xb7\xe7\x9a\x84ID')),
+                ('goods_id', models.IntegerField(verbose_name=b'\xe5\xaf\xb9\xe5\xba\x94\xe6\x9c\x8d\xe5\x8a\xa1\xe7\x9a\x84ID')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='tb_shoucang_item',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('user_id', models.IntegerField(verbose_name=b'\xe5\xaf\xb9\xe5\xba\x94\xe7\x94\xa8\xe6\x88\xb7\xe7\x9a\x84ID')),
+                ('item_id', models.IntegerField(verbose_name=b'\xe5\xaf\xb9\xe5\xba\x94\xe9\xa1\xb9\xe7\x9b\xae\xe7\x9a\x84ID')),
+            ],
+        ),
+        migrations.CreateModel(
             name='tb_SysMessage',
             fields=[
                 ('sys_id', models.IntegerField(serialize=False, primary_key=True)),
@@ -523,7 +555,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='tb_user',
-            name='expend',
+            name='expand',
             field=models.ForeignKey(verbose_name=b'\xe5\xaf\xb9\xe5\xba\x94\xe7\x9a\x84\xe6\x89\xa9\xe5\xb1\x95\xe8\xa1\xa8', to='zhengzihui_app.tb_user_expand'),
         ),
     ]

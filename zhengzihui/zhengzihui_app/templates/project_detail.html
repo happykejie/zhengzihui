@@ -3,6 +3,7 @@
 {% block title %}项目详情{% endblock %}
 
 {% block content %}
+
 	<!--百度地图的样式-->
 	<style type="text/css">
 	body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
@@ -35,14 +36,14 @@
 	<!--百度地图的API到此-->
 
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-<link href="/static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+
 
 <script defer src="/static/js/jquery.flexslider.js"></script>
 <link rel="stylesheet" href="/static/css/flexslider.css" type="text/css" media="screen" />
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="/static/js/simpleCart.min.js"> </script>
-<script src="/static/js/jquery.min.js"></script>
+
 <!-- Custom Theme files -->
 <link href="/static/css/style.css" rel='stylesheet' type='text/css' />
 
@@ -177,21 +178,34 @@ $(function(){
 				
 			    <div class="declare">
 					{% if request.COOKIES.user_name %}
-			            <a href="{% url 'service_list' %}?itemid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
-			        {% else %}
-						<a href="{% url 'selectpay' %}?goodsid={{article0.affiliation_id}} "><button class="product_btn">我要申报</button></a>
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+			            <a href="{% url 'service_list' %}?itemid={{item.item_id}}"><button class="product_btn" id="shenbao">我要申报</button></a>
+			            {% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
+					{% else %}
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+
+							<a href="{% url 'selectpay' %}?goodsid={{item.item_id}} "><button class="product_btn">我要申报</button></a>
+						{% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
 			        {% endif %}
 
 				    {% if request.COOKIES.user_name %}
-				        <a href="#"><button class="product_btn">我要收藏</button></a>
+				        <button class="product_btn" id="shoucang">我要收藏</button>
 					{% else %}
-					    <a href="{% url 'g_register' %} "><button class="product_btn">我要收藏</button></a>
+					    <a href="{% url 'regCompany' %} "><button class="product_btn">我要收藏</button></a>
 				    {% endif %}
 
 				    <a class="project_src", href="#">查看原文</a>
 				
 				</div>
 			</div>
+
+
+
+
 			<div class="clearfix"></div>
 		  
 		   <div class="sap_tabs">	
@@ -216,7 +230,7 @@ $(function(){
 									<div class="facts">
 									  <ul class="tab_list">
 										
-									    <li><a>{{ article1.article_content }}</a></li>
+									    <li><a>{{ article.article_content }}</a></li>
 										
 									  </ul>   
 
@@ -378,6 +392,19 @@ $(window).load(function() {
 });
 </script>
 
+<!--点击收藏的script脚本-->
+			<script>
+				  $(document).ready(function(){
+                    $("#shoucang").click(function(){
+	                    var user_id = "{{request.COOKIES.user_id}}";
+						//alert(test);
+	                    var item_id = "{{ item.item_id }}"
+	                    $.get("/shoucang_item/",{'user_id':user_id,'item_id':item_id}, function(ret){
+		                    alert(ret);
+                            })
 
+                 });
+            });
+			</script>
 
 {% endblock %}

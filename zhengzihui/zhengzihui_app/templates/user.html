@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
-    <title>政资汇-用户中心</title>
-    <script src="/static/jQuery-2.14/jquery.js" type="text/javascript"></script>
-    <link href="/static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
-    <script src="/static/bootstrap-3.3.5/js/bootstrap.js" type="text/javascript"></script>
+{% extends 'my_base.html' %}
+
+{% block title %}政资汇-用户中心{% endblock %}
+
+{% block content %}
+
+
     <link href="/static/css/user.css" rel="stylesheet" type="text/css"/>
     <script src="/static/js/user.js" type="text/javascript"></script>
+<<<<<<< HEAD
 </head>
 <body>
 <div class="container">
@@ -103,6 +101,7 @@
 </div>
 <br>
 <br>
+
 <!--导航栏-->
 <!--div class="jumbotron" --> 
     <script>
@@ -135,6 +134,7 @@
                         <ul class="panel-body">
 
                             <li><a class="not-clicked" id="{% url 'my_info' %}" href="javascript:void(0);">我的信息</a></li>
+			    <li><a class="not-clicked" href="/custmap">用户画报</a></li>
                             <li><a class="not-clicked" id="{% url 'safe_center' %}" href="javascript:void(0);">安全中心</a></li>
                             <li>支付绑定(待定)</li>
                             <li>我的等级与成长(待定)</li>
@@ -158,7 +158,7 @@
                             <li><a class="not-clicked" id="{% url 'all_orders' %}" href="javascript:void(0);">全部订单</a></li>
                             <li><a class="not-clicked" id="{% url 'not_pay' %}" href="javascript:void(0);">待付款</a></li>
                             <li><a class="not-clicked" id="{% url 'payed' %}" href="javascript:void(0);">已付款</a></li>
-                            <li><a class="not-clicked" id="{% url 'delivered' %}" href="javascript:void(0);">已发货</a></li>
+                            <li><a class="not-clicked" id="{% url 'delivered' %}" href="javascript:void(0);">已下单</a></li>
                             <li><a class="not-clicked" id="{% url 'checked' %}" href="javascript:void(0);">已验收</a></li>
                             <li><a class="not-clicked" id="{% url 'delete' %}" href="javascript:void(0);">已取消</a></li>
                         </ul>
@@ -194,6 +194,7 @@
                             <li>其他功能（待定)</li>
                         </ul>
                     </div>
+		   
                 </div>
             </div>
         </div>
@@ -256,6 +257,4 @@
 </table>
 </div>
 
-
-</body>
-</html>
+{% endblock %}

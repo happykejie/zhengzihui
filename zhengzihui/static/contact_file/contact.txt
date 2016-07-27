@@ -1,0 +1,348 @@
+
+FreeOA - All For You.
+
+    首页
+    新闻中心
+    产品应用
+    解决方案
+    图片风采
+    开源应用支持
+    程序设计与开发
+    关于我们
+
+
+Hadoop及HBase使用过程中的一些问题集
+[创建时间] 2015-10-20 14:50:46 [作者] 阿炯
+本文是我在使用Hbase的过程碰到的一些问题和相应的解决方法，现将这些经过总结分析，以免日后忘记。
+
+hadoop新增节点
+
+hadoop集群要增加3个节点。在3台主机分别配置了host、与集群内所有机器的ssh登录互信、jdk1.7 等。所有配置、目录等与集群其他机器保持一致。把安装文件拷贝到3台主机后，同时将修改后的配置文件分发到三台主机相应目录中。修改namenode的slaves文件，增加三台主机的host，然后分发到所有datanode。
+
+在三台主机中分别执行：
+yarn-daemon.sh start nodemanager
+hadoop-daemon.sh start datanode
+
+两个命令分别启动nodemanager、datanode 。
+
+再执行数据分布负载均衡，start-balancer.sh -threshold 5
+
+保证hadoop的文件是平均分布在各个节点中。
+
+Hbase 排错
+
+INFO client.HConnectionManager$HConnectionImplementation: This client just lost it's session with ZooKeeper, will automatically reconnect when needed.
+
+region server的超时时间需要设置为以下，防止FULL GC，带来的zookeeper超时。
+-XX:+UseConcMarkSweepGC -XX:+UseParNewGC -XX:CMSInitiatingOccupancyFraction=70
+
+<property>
+<name>hbase.regionserver.lease.period</name>
+<value>240000</value>
+</property>
+<property>
+<name>hbase.rpc.timeout</name>
+<value>280000</value>
+</property>
+
+集群假死，日志中出现zk通信超时的情况，不都是zk出现了问题，下面这两个问题在表现上是zk超时，实则是hbase或hadoop出现了问题。
+
+1、region server 所分配的内存堆过小，hb的数据量占用空间量大的情况下
+在系统的profile中，将此参数设置大一些：
+export HBASE_HEAPSIZE=30720
+
+在hb的hbase-env.sh中
+# The maximum amount of heap to use, in MB. Default is 1000.
+# export HBASE_HEAPSIZE=1000
+
+2、zk是最大连接数过小
+默认值是300，在查询量与记录数量特大的集群中，可能会造成相互间通信连接过多从而拒绝连接服务。
+<property>
+<name>hbase.zookeeper.property.maxClientCnxns</name>
+<value>15000</value>
+</property>
+
+3、HRegionServer启动不正常
+在namenode上执行jps,则可看到hbase启动是否正常，进程如下：
+[root@master bin]# jps
+26341 HMaster
+26642 Jps
+7840 ResourceManager
+7524 NameNode
+7699 SecondaryNameNode
+
+由上可见，hadoop启动正常。HBase少了一个进程，猜测应该是有个节点regionserver没有启动成功。
+
+进入节点slave1 ,执行jps查看启动进程：
+[root@master bin]# ssh slave1
+Last login: Thu Jul 17 17:29:11 2014 from master
+[root@slave1 ~]# jps
+4296 DataNode
+11261 HRegionServer
+11512 Jps
+11184 QuorumPeerMain
+
+由此可见Slave1节点正常。进入节点slave2节点，执行jps查看启动进程：
+[root@slave2 ~]# jps
+3795 DataNode
+11339 Jps
+11080 QuorumPeerMain
+
+OK，问题找到了 HRegionServer没有启动成功。进入HBase日志：
+
+2014-07-17 09:28:19,392 INFO  [regionserver60020] regionserver.HRegionServer: STOPPED: Unhandled: org.apache.hadoop.hbase.ClockOutOfSyncException: Server slave2,60020,1405560498057 has been rejected; Reported time is too far out of sync with master.  Time difference of 28804194ms > max allowed of 30000ms
+at org.apache.hadoop.hbase.master.ServerManager.checkClockSkew(ServerManager.java:314)
+at org.apache.hadoop.hbase.master.ServerManager.regionServerStartup(ServerManager.java:215)
+at org.apache.hadoop.hbase.master.HMaster.regionServerStartup(HMaster.java:1292)
+at org.apache.hadoop.hbase.protobuf.generated.RegionServerStatusProtos$RegionServerStatusService$2.callBlockingMethod(RegionServerStatusProtos.java:5085)
+at org.apache.hadoop.hbase.ipc.RpcServer.call(RpcServer.java:2185)
+at org.apache.hadoop.hbase.ipc.RpcServer$Handler.run(RpcServer.java:1889)
+
+根据错误日志，可得到slave2和maste机器时间差太多，查看各个系统的时间，果真如此，同步即可。另外一种方法就是配置hbase的配置文件：
+
+配置：hbase.master.maxclockske
+
+<property>
+ <name>hbase.master.maxclockskew</name>
+ <value>200000</value>
+ <description>Time difference of regionserver from master</description>
+</property>
+
+（这种方法不推荐）
+
+4、Zookeeper启动不正常。
+在启动hbase时，总是报错，提示zookeeper连接不上，查看zookeeper日志，发现：
+ClientCnxn$SendThread@966] - Opening socket connection to server slave1. Will not attempt to authenticate using SASL (无法定位登录配置)。经过百度可得
+
+由于hosts文件的问题，于是vi /etc/hosts 发现 ip slave1配置中ip错误。汗！幸亏hbase和zookeeper都有日志。于是重启zookeeper和hbase，上述问题解决。
+
+5、HBase shell执行list命令报错。
+在Hbase shell执行list命令报错：
+...
+实在太长
+
+关键错误信息：client.HConnectionManager$HConnectionImplementation: Can't get connection to ZooKeeper: KeeperErrorCode = ConnectionLoss for /hbase。根据信息可以判断zk无法连接。执行jps查看zk都正常。查看hbase-site.xml中zk节点配置正常。根据经验，应该是防火墙没有关闭，2181端口无法访问。ok执行service iptables stop关闭防火墙，重启hbase。进入hbase shell，执行list:
+hbase(main):001:0> list
+TABLE
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/root/hadoop/hbase/lib/slf4j-log4j12-1.6.4.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/root/hadoop/hadoop-2.2.0/share/hadoop/common/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+2014-07-17 14:06:26,013 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+0 row(s) in 1.0070 seconds
+
+=> []
+
+一切正常，问题解决。
+
+6、HBase Shell 增删改异常。
+在hbase shell上做增删改就会报异常：
+zookeeper.ClientCnxn: Session 0x0 for server null, unexpected error, closing socket connection and attempting reconnect。
+经判断是hbase版本的jar包和hadoop中的jar包不兼容的问题。解决方法：将hadoop中hadoop-2.2.0相关的jar包copy过来（${HABASE_HOME}/lib）替换即可。
+
+7、hb下面的regionserver全部掉线
+不是zk的问题 是hdfs的问题
+does not have any open files.   提高datanode节点间的最大传输数dfs.datanode.max.transfer.threads
+
+EndOfStreamException: Unable to read additional data from client sessionid 0x4f6ce1baef1cc5, likely client has closed socket
+    at org.apache.zookeeper.server.NIOServerCnxn.doIO(NIOServerCnxn.java:228)
+    at org.apache.zookeeper.server.NIOServerCnxnFactory.run(NIOServerCnxnFactory.java:208)
+    at java.lang.Thread.run(Thread.java:662)
+2015-09-09 12:00:04,636 INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181] server.NIOServerCnxn: Closed socket connection for client /172.16.0.175:39889 which had sessionid 0x4f6ce1baef1cc5
+2015-09-09 12:00:07,570 WARN  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181] server.NIOServerCnxn: caught end of stream exception
+EndOfStreamException: Unable to read additional data from client sessionid 0x4f6ce1baef1d4f, likely client has closed socket
+    at org.apache.zookeeper.server.NIOServerCnxn.doIO(NIOServerCnxn.java:228)
+    at org.apache.zookeeper.server.NIOServerCnxnFactory.run(NIOServerCnxnFactory.java:208)
+    at java.lang.Thread.run(Thread.java:662)
+2015-09-09 13:19:20,232 INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181] server.NIOServerCnxnFactory: Accepted socket connection from /172.16.0.161:55772
+2015-09-09 13:19:20,274 INFO  [NIOServerCxn.Factory:0.0.0.0/0.0.0.0:2181] server.ZooKeeperServer: Client attempting to establish new session at /172.16.0.161:55772
+2015-09-09 13:19:20,276 INFO  [CommitProcessor:0] server.ZooKeeperServer: Established session 0x4f6ce1baef1f96 with negotiated timeout 90000 for client /172.16.0.161:55772
+2015-09-09 13:20:21,000 INFO  [SessionTracker] server.ZooKeeperServer: Expiring session 0x24f6ce1bd0f207c, timeout of 90000ms exceeded
+2015-09-09 13:20:21,000 INFO  [ProcessThread(sid:0 cport:-1):] server.PrepRequestProcessor: Processed session termination for sessionid: 0x24f6ce1bd0f207c
+2015-09-09 13:24:21,037 WARN [QuorumPeer[myid=0]/0.0.0.0:2181] quorum.LearnerHandler: Closing connection to peer due to transaction timeout.
+2015-09-09 13:24:21,237 WARN [LearnerHandler-/192.168.40.35:56545] quorum.LearnerHandler: ****** GOODBYE /192.168.40.35:56545 ******
+2015-09-09 13:24:21,237 WARN [LearnerHandler-/192.168.40.35:56545] quorum.LearnerHandler: Ignoring unexpected exception
+
+8、设置分数少于3时datanode节点失败导致hdfs写失败
+任务量大，集群节点少（4个DN），集群不断出现问题，导致收集数据出现错误，以致数据丢失。出现数据丢失，最先拿来开刀的就是数据收集，先看看错误日志:
+
+Caused by: java.io.IOException: Failed to add a datanode.  User may turn off this feature by setting dfs.client.block.write.replace-datanode-<br />
+on-failure.policy in configuration, where the current policy is DEFAULT.  (Nodes: current=[10.0.2.163:50010, 10.0.2.164:50010], original=[10.0.2.163:50010, 10.0.2.164:50010])<br />
+    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.findNewDatanode(DFSOutputStream.java:817)<br />
+    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.addDatanode2ExistingPipeline(DFSOutputStream.java:877)<br />
+    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.setupPipelineForAppendOrRecovery(DFSOutputStream.java:983)<br />
+    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.processDatanodeError(DFSOutputStream.java:780)<br />
+    at org.apache.hadoop.hdfs.DFSOutputStream$DataStreamer.run(DFSOutputStream.java:449)
+    
+错误：
+Failed to add a datanode. User may turn off this feature by setting dfs.client.block.write.replace-datanode-on-failure.policy in configuration, where the current policy is DEFAULT
+
+从日志上看是说添加DN失败，需要关闭dfs.client.block.write.replace-datanode-on-failure.policy特性。但是我没有添加节点啊？看来问题不是这么简单。
+
+通过查看官方配置文档对上述的参数配置：
+参数 默认值 说明
+dfs.client.block.write.replace-datanode-on-failure.enable
+true     
+If there is a datanode/network failure in the write pipeline, DFSClient will try to remove the failed datanode from the pipeline and then continue writing with the remaining datanodes. As a result, the number of datanodes in the pipeline is decreased. The feature is to add new datanodes to the pipeline. This is a site-wide property to enable/disable the feature. When the cluster size is extremely small, e.g. 3 nodes or less, cluster administrators may want to set the policy to NEVER in the default configuration file or disable this feature. Otherwise, users may experience an unusually high rate of pipeline failures since it is impossible to find new datanodes for replacement. See also dfs.client.block.write.replace-datanode-on-failure.policy
+
+dfs.client.block.write.replace-datanode-on-failure.policy     
+DEFAULT     
+This property is used only if the value of dfs.client.block.write.replace-datanode-on-failure.enable is true. ALWAYS: always add a new datanode when an existing datanode is removed. NEVER: never add a new datanode. DEFAULT: Let r be the replication number. Let n be the number of existing datanodes. Add a new datanode only if r is greater than or equal to 3 and either (1) floor(r/2) is greater than or equal to n; or (2) r is greater than n and the block is hflushed/appended.
+
+来自：https://hadoop.apache.org/docs/current2/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml
+
+然后寻找源码位置在dfsclient中，发现是客户端在pipeline写数据块时候的问题，也找到了两个相关的参数：
+dfs.client.block.write.replace-datanode-on-failure.enable
+dfs.client.block.write.replace-datanode-on-failure.policy
+
+前者是，客户端在写失败的时候，是否使用更换策略，默认是true没有问题。
+后者是，更换策略的具体细节，默认是default。
+
+default在3个或以上备份的时候，是会尝试更换结点次数??次datanode。而在两个备份的时候，不更换datanode，直接开始写。由于我的节点只有4个，当集群负载太高的时候，同时两台以上DN没有响应，则出现HDFS写的问题。当集群比较小的时候我们可以关闭这个特性。
+
+9、hbase启动过程排错
+在进行灾难测试时，将其中的一台hdfs及region server直接进行了重启，那么如何在其启动之后来启动之前的服务呢。
+启动hdfs:
+sbin/hadoop-daemon.sh start datanode
+
+启动hbase regionserver:
+bin/hbase-daemon.sh  start regionserver
+
+但通过jps查看时，发现没有HQuorumPeer进程。经过在网上查证，说可能是服务器时间有较大的'漂移'，重新对时后，发现快了30s。重新同步后，再重启hbase服务，发现该进程依然没有起来。
+
+看来只有重启整个hbase集群。
+hadoop@xdm:/usr/local/hbase$ bin/stop-hbase.sh
+stopping hbase...................
+xd1: no zookeeper to stop because no pid file /tmp/hbase-hadoop-zookeeper.pid
+xd0: stopping zookeeper.
+xd2: stopping zookeeper.
+
+原来这个进程是zookeeper的。
+
+bash bin/hbase-daemon.sh start zookeeper
+
+进程HQuorumPeer没有启动；
+原因：/hbase/conf/hbase-site.xml文件有关hbase.zookeeper.property.dataDir配置的目录不存在
+解决方案：hbase.zookeeper.property.dataDir属性对应的value值/home/grid/zookeeper，在本地建立/home/grid/zookeeper目录
+
+Hadoop一般通过主机名来与集群中的节点进行通信，因此我们要将所有节点的ip与主机名映射关系写入到/etc/hosts中来保证我们的通信正常。如果有的朋友在配置文件中使用了ip后操作不正常请修改成对应的主机名即可。hadoop与hbase内核版本不兼容问题，因为hbase的lib目录下的hadoop的包比我安装的0.20.2的版本要新，需要用0.20.2的hadoop包替换，这点官网的文档是有说明的。
+
+如果你使用的是cloudera公司的定制版hadoop和hbase那么就免去了替换jar的过程，因为cloudera公司已经把所有的兼容性问题都解决了。
+
+10、Hadoop新加datanode节点时碰到的一些问题
+在所有机器中加入新的主机名到/etc/hosts文件中
+
+将主节点的ssh-key加入到新机器中
+ssh-copy-id 192.168.0.83
+
+将新节点的主机名加入到slaves中(新加一行)：
+vim /usr/local/hadoop/etc/hadoop/slaves
+
+重新同步配置文件到所有节点：
+for i in {80..83};do rsync -av /usr/local/hadoop/etc/ 192.168.0.$i:/usr/local/hadoop/etc/;done
+
+注意：对于所有非新加节点不用重启，只需要在新加节点上开启datanode，在开启成功后，要开启平衡脚本(/sbin/start-balancer.sh)。让其从其它节点同步数据过来，相应的其它节点所占用的系统空间会减少。
+
+还需要注意的是：数据节点之间的同步带宽默认只有1M，这个对有大量数据的集群来说实在太少了，可在新加节点上修改为10M：
+<property>
+<name>dfs.balance.bandwidthPerSec</name>
+<value>10485760</value>
+</property>
+
+开启datanode后，master的日志有如下：
+2015-10-19 15:26:31,738 WARN BlockStateChange: BLOCK* addStoredBlock: Redundant addStoredBlock request received for blk_1073742014_1202 on node 192.168.0.83:50010 size 60
+2015-10-19 15:26:31,738 WARN BlockStateChange: BLOCK* addStoredBlock: Redundant addStoredBlock request received for blk_1073742015_1203 on node 192.168.0.83:50010 size 60
+2015-10-19 15:26:31,739 INFO BlockStateChange: BLOCK* processReport: from storage DS-14d45702-1346-4f53-8178-4c9db668729d node DatanodeRegistration(192.168.0.83, datanodeUuid=c82b8d07-5ffb-46d5-81f7-47c06e673384, infoPort=50075, ipcPort=50020, storageInfo=lv=-56;cid=CID-c06612c4-aa83-4145-b2b5-e4faffa08074;nsid=531546365;c=0), blocks: 48, hasStaleStorage: false, processing time: 5 msecs
+
+出现了很多的警告，在50070端口的页面中不断的刷新时，发现xd0与xd3交替的出现，原来我是将xd0的机器克隆为xd3，没有将datanode下面的目录清理，只能停机清理干净后在开启。主节点的目录记录如下：
+2015-10-19 15:38:51,415 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 170 Total time for transactions(ms): 13 Number of transactions batched in Syncs: 2 Number of syncs: 131 SyncTimes(ms): 2621
+2015-10-19 15:38:51,433 INFO BlockStateChange: BLOCK* addToInvalidates: blk_1073742974_2164 192.168.0.81:50010 192.168.0.82:50010 192.168.0.80:50010
+2015-10-19 15:38:51,446 INFO BlockStateChange: BLOCK* addToInvalidates: blk_1073742975_2165 192.168.0.82:50010 192.168.0.81:50010 192.168.0.80:50010
+2015-10-19 15:38:53,844 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.82:50010 to delete [blk_1073742974_2164, blk_1073742975_2165]
+2015-10-19 15:38:56,844 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.81:50010 to delete [blk_1073742974_2164, blk_1073742975_2165]
+2015-10-19 15:38:56,848 INFO org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor: Rescanning after 30000 milliseconds
+2015-10-19 15:38:56,848 INFO org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor: Scanned 0 directive(s) and 0 block(s) in 1 millisecond(s).
+2015-10-19 15:38:57,220 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* registerDatanode: from DatanodeRegistration(192.168.0.83, datanodeUuid=b99253b7-6535-4d0e-85ad-7ca6332181af, infoPort=50075, ipcPort=50020, storageInfo=lv=-56;cid=CID-c06612c4-aa83-4145-b2b5-e4faffa08074;nsid=531546365;c=0) storage b99253b7-6535-4d0e-85ad-7ca6332181af
+2015-10-19 15:38:57,220 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor: Number of failed storage changes from 0 to 0
+2015-10-19 15:38:57,220 INFO org.apache.hadoop.net.NetworkTopology: Adding a new node: /default-rack/192.168.0.83:50010
+2015-10-19 15:38:57,273 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor: Number of failed storage changes from 0 to 0
+2015-10-19 15:38:57,273 INFO org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor: Adding new storage ID DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a for DN 192.168.0.83:50010
+2015-10-19 15:38:57,291 INFO org.apache.hadoop.hdfs.server.blockmanagement.BlockManager: Processing first storage report for DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a from datanode b99253b7-6535-4d0e-85ad-7ca6332181af
+2015-10-19 15:38:57,291 INFO BlockStateChange: BLOCK* processReport: from storage DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a node DatanodeRegistration(192.168.0.83, datanodeUuid=b99253b7-6535-4d0e-85ad-7ca6332181af, infoPort=50075, ipcPort=50020, storageInfo=lv=-56;cid=CID-c06612c4-aa83-4145-b2b5-e4faffa08074;nsid=531546365;c=0), blocks: 0, hasStaleStorage: false, processing time: 0 msecs
+2015-10-19 15:38:59,844 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.80:50010 to delete [blk_1073742974_2164, blk_1073742975_2165]
+2015-10-19 15:39:26,848 INFO org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor: Rescanning after 30000 milliseconds
+2015-10-19 15:39:26,848 INFO org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor: Scanned 0 directive(s) and 0 block(s) in 0 millisecond(s).
+
+本机节点的日志中也无报错。但这会影响原始机xd0的数据，之后发现上面的数据会有损坏，只好将其datanode下面的数据删除后再开启datanode。
+
+开启平衡同步脚本：
+hadoop@xd3:/usr/local/hadoop$ sbin/start-balancer.sh
+
+日志记录如下：
+hadoop@xd3:/usr/local/hadoop$ more logs/hadoop-hadoop-balancer-xd3.log
+2015-10-19 15:43:44,875 INFO org.apache.hadoop.hdfs.server.namenode.FSEditLog: Number of transactions: 172 Total time for transactions(ms): 13 Number of transactions batched in Syncs: 2 Number of syncs: 133 SyncTimes(ms): 2650
+2015-10-19 15:43:44,950 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* allocateBlock: /system/balancer.id. BP-668197744-192.168.0.9-1444641099117 blk_1073742981_2173{blockUCState=UNDER_CONSTRUCTION, primaryNodeIndex=-1, replicas=[ReplicaUnderConstruction[[DISK]DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a:NORMAL:192.168.0.83:50010|RBW], ReplicaUnderConstruction[[DISK]DS-f7b1834a-9174-445a-8802-8c6f908d0a94:NORMAL:192.168.0.81:50010|RBW], ReplicaUnderConstruction[[DISK]DS-6b35073c-4673-4fce-8d46-fe0377a17739:NORMAL:192.168.0.82:50010|RBW]]}
+2015-10-19 15:43:45,226 INFO org.apache.hadoop.hdfs.StateChange: BLOCK* fsync: /system/balancer.id for DFSClient_NONMAPREDUCE_912969379_1
+2015-10-19 15:43:45,285 INFO BlockStateChange: BLOCK* addStoredBlock: blockMap updated: 192.168.0.82:50010 is added to blk_1073742981_2173{blockUCState=UNDER_CONSTRUCTION, primaryNodeIndex=-1, replicas=[ReplicaUnderConstruction[[DISK]DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a:NORMAL:192.168.0.83:50010|RBW], ReplicaUnderConstruction[[DISK]DS-f7b1834a-9174-445a-8802-8c6f908d0a94:NORMAL:192.168.0.81:50010|RBW], ReplicaUnderConstruction[[DISK]DS-6b35073c-4673-4fce-8d46-fe0377a17739:NORMAL:192.168.0.82:50010|RBW]]} size 3
+2015-10-19 15:43:45,287 INFO BlockStateChange: BLOCK* addStoredBlock: blockMap updated: 192.168.0.81:50010 is added to blk_1073742981_2173{blockUCState=UNDER_CONSTRUCTION, primaryNodeIndex=-1, replicas=[ReplicaUnderConstruction[[DISK]DS-40fd35ff-cb26-47e8-aa50-654dbdfbbd4a:NORMAL:192.168.0.83:50010|RBW], ReplicaUnderConstruction[[DISK]DS-f7b1834a-9174-445a-8802-8c6f908d0a94:NORMAL:192.168.0.81:50010|RBW], ReplicaUnderConstruction[[DISK]DS-6b35073c-4673-4fce-8d46-fe0377a17739:NORMAL:192.168.0.82:50010|RBW]]} size 3
+2015-10-19 15:43:45,308 INFO BlockStateChange: BLOCK* addStoredBlock: blockMap updated: 192.168.0.83:50010 is added to blk_1073742981_2173 size 3
+2015-10-19 15:43:45,309 INFO org.apache.hadoop.hdfs.StateChange: DIR* completeFile: /system/balancer.id is closed by DFSClient_NONMAPREDUCE_912969379_1
+2015-10-19 15:43:45,331 INFO BlockStateChange: BLOCK* addToInvalidates: blk_1073742981_2173 192.168.0.81:50010 192.168.0.82:50010 192.168.0.83:50010
+2015-10-19 15:43:47,861 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.81:50010 to delete [blk_1073742981_2173]
+2015-10-19 15:43:47,862 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.82:50010 to delete [blk_1073742981_2173]
+2015-10-19 15:43:50,862 INFO BlockStateChange: BLOCK* BlockManager: ask 192.168.0.83:50010 to delete [blk_1073742981_2173]
+
+11、hadoop decommission时因block的replicas不够时久不能退役
+
+hadoop decommission一个节点Datanode，几万个block都同步过去了，但是唯独剩下2个block一直停留在哪，导致该节点几个小时也无法下线。hadoop UI中显示在Under Replicated Blocks里面有2个块始终无法消除。
+
+Under Replicated Blocks 2 Under Replicated Blocks In Files Under Construction 2
+
+Under Replicated Blocks 2
+Under Replicated Blocks In Files Under Construction 2
+
+Namenode日志里面一直有这样的滚动：
+2015-01-20 15:04:47,978 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Block: blk_8859027644264991843_26141120, Expected Replicas: 3, live replicas: 2, corrupt replicas: 0, decommissioned replicas: 1, excess replicas: 0, Is Open File: true, Datanodes having this block: 10.11.12.13:50010 10.11.12.14:50010 10.11.12.15:50010 , Current Datanode: 10.11.12.13:50010, Is current datanode decommissioning: true
+
+2015-01-20 15:04:47,978 INFO org.apache.hadoop.hdfs.server.namenode.FSNamesystem: Block: blk_8859027644264991843_26141120,Expected Replicas: 3, live replicas: 2, corrupt replicas: 0, decommissioned replicas: 1, excess replicas: 0, Is Open File: true, Datanodes having this block: 10.11.12.13:50010 10.11.12.14:50010 10.11.12.15:50010 , Current Datanode: 10.11.12.13:50010, Is current datanode decommissioning:true
+
+google了好久，貌似是一个hadoop的bug，https://issues.apache.org/jira/browse/HDFS-5579
+NameNode发现block的Replicas不够（期待应该有3个，实际有两个），或许是namenode认为数据不完整，执着地不让这个DataNode下架。。。
+
+最终尝试如下方式解决，把replications设置成2：
+hadoop fs -setrep -R 2 /
+
+执行完后很快，该节点就下线了，神奇的replications。
+
+
+通过搜索引擎找到关于它们使用过程中的问题集的文章：
+Hadoop常见错误及解决办法汇总【时常更新】
+
+感谢原作者！
+
+12、Hadoop开启安全模式引起的hbase列出表时出错
+
+在列出表时报错
+hbase(main):001:0> list
+TABLE                                                                                                                                
+ERROR: org.apache.hadoop.hbase.ipc.ServerNotRunningYetException: Server is not running yet
+
+在其日志文件中会有如下报错：
+
+2016-07-13 10:33:14,576 INFO  [master:hadoop1:60000] catalog.CatalogTracker: Failed verification of hbase:meta,,1 at address=hadoop3,60020,1453280257576, exception=org.apache.hadoop.hbase.NotServingRegionException: org.apache.hadoop.hbase.NotServingRegionException: Region is not online: 1468377187016
+
+经查看原因原来是 hadoop 集群处于安全模式。执行如下指令：
+hdfs dfsadmin -safemode leave
+
+重新启动habase，问题可得到解决。相关参数：
+safemode enter|leave|get|wait
+
+安全模式维护命令，安全模式是Namenode的一个状态，这种状态：
+1.不接受对名字空间的更改(只读)
+2.不复制或删除块
+
+Namenode会在启动时自动进入安全模式，当配置的块最小百分比数满足最小的副本数条件时，会自动离开安全模式。安全模式可以手动进入，但是这样的话也必须手动关闭安全模式。
+
+
+
+本网站内容版权归属请参考本站FAQ。
