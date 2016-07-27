@@ -1934,13 +1934,13 @@ def register_sms(request):
 def cmap(request):
     #ce shi shu ju mu qian xie si le 
 
-    request.COOKIES['user_id']="2016"
+    #request.COOKIES['user_id']="2016"
     if 'user_id' in request.COOKIES:
         if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0 :
             return  render_to_response("e_customization.html",{})
         else:
             if(tb_customcompany.objects.get(company_id=request.COOKIES['user_id'])).conclusion=="":
-                return HttpResponse("DDCL")
+                return HttpResponse("等待处理")
             else:
                 user_id=request.COOKIES['user_id']
                 #conc=tb_customcompany.objects.get(company_id=user_id).conclusion 
@@ -1978,13 +1978,13 @@ def cmap(request):
 def custom(request):
      #return render_to_response("e_customization.html",{})
     #ce shi shu ju mu qian xie si le 
-    request.COOKIES['user_id']="2016"
+    #request.COOKIES['user_id']="2016"
     if 'user_id' in request.COOKIES:
         if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0:
           #print (123) 
           return render_to_response("e_customization.html",{})
         else:
-            return HttpResponse("DDCL")       
+            return HttpResponse("等待处理")       
            
         #else:
          #   return HttpResponse("map for e_man")
@@ -1994,7 +1994,7 @@ def custom(request):
 
 def savec(request):
     #ce shi shu ju mu qian xie si le 
-    request.COOKIES['user_id']="2016"
+    #request.COOKIES['user_id']="2016"
     if (request.method=="POST"):
         company_id=request.COOKIES['user_id']
         hangye=request.POST.get("hangye")

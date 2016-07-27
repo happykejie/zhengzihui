@@ -3,16 +3,19 @@
 {% block title %}画像{% endblock %}
 
 {% block content %} 
+ <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">   
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
 <script src="../static/js/esl.js"></script>
 
-<div class ="container">
+<div class ="container-fruid">
 <div class="row">
-<div class="col-md-8 col-lg-7" style="margin:0px,padding:0px">
-<iframe id="fra" class="col-md-12" scrolling="yes" marginwidth="0px" frameborder="0" height="700px" src="/index"> </iframe> 
+<div class="col-md-5" style="margin:0px,padding:0px">
+<iframe id="fra" class="col-md-12" scrolling="yes" marginwidth="0px" frameborder="0" height="800px" src="/index"> </iframe> 
 </div>
-<div class="col-md-4 col-lg-5" style="margin:0px,padding:0px">
-<div id="container" style="width:100%;height:700px;background-color:#C5DAEF"></div>
+<div class="col-md-7" style="margin:0px,padding:0px">
+<div id="container" style="width:100%;height:800px;background-color:#C5DAEF"></div>
 <input id="qiye" type="hidden" value="{{ A }}">
 <input id="zhongyang" type="hidden" value="{{ B }}">
 <input id="shengji" type="hidden" value="{{ C }}">
