@@ -790,23 +790,35 @@ def user_center(request):
     #request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
     user = []
     a_click_items = []
-    a_recommend_items = []
+    #a_recommend_items = []
     if 'user_id' in request.COOKIES:
         user_id = int(request.COOKIES['user_id'])
         user = tb_user.objects.get(user_id=user_id)
     else:
         return HttpResponse("请先登录账号;请返回到上级页面登录或者注册")
+    if user.user_type == 0:
+        click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
+        for click_item in click_items:
+            a_click_item = {}
+            a_click_item['id'] = click_item.item_id#获取项目id
+            a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
+            album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+            album_id = album.album_id
+            a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            a_click_items.append(a_click_item)
 
-    click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
-    for click_item in click_items:
-        a_click_item = {}    
-        a_click_item['id'] = click_item.item_id#获取项目id
-        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
-        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
-        album_id = album.album_id
-        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_click_items.append(a_click_item)
-    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
+    else:
+        _industry = user.expand.company_industry
+        click_items = tb_item.objects.filter(item_about__contains = _industry)
+        for click_item in click_items:
+            a_click_item = {}
+            a_click_item['id'] = click_item.item_id  # 获取项目id
+            a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name  # 获取项目名字
+            album = tb_album.objects.filter(album_type=0, affiliation_id=click_item.item_id, is_default=1).order_by('-nacl_sort')[0]  # 获取项目对应的相册id
+            album_id = album.album_id
+            a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            a_click_items.append(a_click_item)
+    '''recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
     for recommend_item in recommend_items:
         a_recommend_item= {}
         a_recommend_item['id'] = recommend_item.item_id#获取项目id
@@ -814,8 +826,8 @@ def user_center(request):
         album = tb_album.objects.filter(album_type=0,affiliation_id=recommend_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
         album_id = album.album_id
         a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
-        a_recommend_items.append(a_recommend_item)
-    return render(request,'user.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items})
+        a_recommend_items.append(a_recommend_item)'''
+    return render(request,'user.html',{'user':user,'a_click_items':a_click_items})
 
 
 #总览 cyf
@@ -1319,13 +1331,27 @@ def g_register(request):
             except tb_user.DoesNotExist:
                 pass
             add = tb_user()
+            add2 = tb_user_expand()
             add.user_name = user_name
-            
             add.user_password = user_password
             add.user_telephone = user_telephone
             add.user_email = user_email
             add.user_auth = 0
-           
+            '''add2.company_name = None
+            add2.company_district = None
+            add2.company_address = None
+            add2.company_registered_capital = None
+            add2.company_stuff_no = None
+            add2.company_industry = None
+            add2.company_nature = None
+            add2.companyUserContactName = None
+            add2.companyUserPhone = None
+            add2.company_tel = None
+            add2.company_email = None
+            add2.save()
+            expand = tb_user_expand.objects.order_by('-user_id')[:1]
+            add.expand = expand'''
+            add.expand=None
             add.save()
             user_id = add.user_id
             token = token_confirm.generate_validate_token(user_name)

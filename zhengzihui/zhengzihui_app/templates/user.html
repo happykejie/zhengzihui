@@ -56,7 +56,7 @@
 <!--导航条 -->
     <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
         <div class="navbar-header">
-             <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+             <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{ user.user_name }} 欢迎来到政资汇！</a>
         </div>
         <div style="float:right">
             <ul class="nav navbar-nav">
@@ -203,7 +203,7 @@
             </div>
             <div id="right-main-box">
                 <h3>{{ user.user_name}}，欢迎您来到政资汇！</h3>
-                <p>浏览过的项目</p>
+                <p>猜您喜欢</p>
                 <div id="watch-list" class="clearfix">
                 {% for a_click_item in a_click_items%}
                     <div class="watch">
@@ -214,17 +214,7 @@
                     </div> 
                 {% endfor %}          
                 </div>
-                <p>推荐的项目</p>
-                <div id="recommend-list" class="clearfix">
-                {% for a_recommend_item in a_recommend_items%}
-                    <div class="recommend">
-                        <a href="{% url 'project_detail' %}?id={{ a_recommend_item.id }}">
-                            <img src="{{ a_recommend_item.pic_url }}"/>
-                            <p>{{ a_recommend_item.name }}</p>
-                        </a>
-                    </div>
-                {% endfor %}
-                </div>    
+
             </div>
 
         </div>

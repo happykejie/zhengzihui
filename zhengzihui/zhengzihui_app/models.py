@@ -10,17 +10,17 @@ from filer.fields.file import FilerFileField
 # Create your models here.
 class tb_user_expand(models.Model):
     user_id = models.AutoField("用户id",primary_key=True)
-    company_tel = models.CharField("联系人移动电话",max_length=30,blank=False)
-    company_email = models.EmailField("联系人邮箱",blank=False)
-    company_name = models.CharField("公司名称",max_length=30,blank=False)
-    company_district = models.CharField("公司所在区县",max_length=50,blank=False)
-    company_address = models.CharField("公司注册地址",max_length=50,blank=False)
-    company_registered_capital = models.IntegerField("公司注册资本",blank=False)
-    company_industry = models.CharField("公司所属行业",max_length=30,blank=False)
-    company_stuff_no = models.CharField("公司人数",max_length=30, blank=False)
-    company_nature = models.CharField("公司性质",max_length=30,blank=False)
-    companyUserContactName = models.CharField("联系人姓名", max_length=40, blank=False)
-    companyUserPhone = models.CharField("固话", max_length=40, blank=False)  # 固话
+    company_tel = models.CharField("联系人移动电话",max_length=30,blank=False,null=True)
+    company_email = models.EmailField("联系人邮箱",blank=False,null=True)
+    company_name = models.CharField("公司名称",max_length=30,blank=False,null=True)
+    company_district = models.CharField("公司所在区县",max_length=50,blank=False,null=True)
+    company_address = models.CharField("公司注册地址",max_length=50,blank=False,null=True)
+    company_registered_capital = models.IntegerField("公司注册资本",blank=False,null=True)
+    company_industry = models.CharField("公司所属行业",max_length=30,blank=False,null=True)
+    company_stuff_no = models.CharField("公司人数",max_length=30, blank=False,null=True)
+    company_nature = models.CharField("公司性质",max_length=30,blank=False,null=True)
+    companyUserContactName = models.CharField("联系人姓名", max_length=40, blank=False,null=True)
+    companyUserPhone = models.CharField("固话", max_length=40, blank=False,null=True)  # 固话
     class Meta:
         verbose_name = '用户扩展信息'
         verbose_name_plural = '用户扩展信息'
@@ -37,7 +37,7 @@ class tb_user_expand(models.Model):
 
 class tb_user(models.Model):
     user_id = models.AutoField("用户id",primary_key = True)
-    expand = models.ForeignKey(tb_user_expand,verbose_name='对应的扩展表')
+    expand = models.ForeignKey(tb_user_expand,verbose_name='对应的扩展表',null=True)
     user_name = models.CharField("用户名称",max_length=100,null=False,blank=False)
     user_password = models.CharField("密码",max_length=100,null=False,blank=False)
     user_telephone = models.CharField("电话",max_length=40,null=False,blank=False)
