@@ -291,8 +291,7 @@ def item_sortbyLevel(request):
            
             if 'search_content' in request.COOKIES:
                 goodsname = request.COOKIES['search_content']
-                print goodsname.encode("utf-8")
-                print "Iam Herea"
+
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
@@ -345,8 +344,7 @@ def search_result_sort_deadtime(request):
            
             if 'search_content' in request.COOKIES:
                 goodsname = request.COOKIES['search_content']
-                print goodsname.encode("utf-8")
-                print "Iam Herea"
+
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:

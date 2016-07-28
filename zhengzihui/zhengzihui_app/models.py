@@ -392,7 +392,7 @@ class tb_item_click(models.Model):
         verbose_name = '项目点击表'
         verbose_name_plural = '项目点击表'
     def __str__(self):
-        return self.item_name
+        return '项目id  '+str(self.item.item_id)+'  '+'关于                       '+str(self.item.item_name)+'                       的点击表'
         
         
 class tb_item_pa(models.Model):
