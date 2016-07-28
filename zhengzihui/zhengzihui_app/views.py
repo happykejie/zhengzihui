@@ -64,7 +64,8 @@ def Searchgoods(request):
 	#xiangmusousuo        
 	#分词
             #一样更新session中的'bumen'值YZ
-            request.session['bumen']=goodsname.encode("utf-8")
+            request.session['search_content']=goodsname.encode("utf-8")
+            
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
             for gname in seg_list:
@@ -91,8 +92,13 @@ def Searchgoods(request):
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
     context = {'selected':selected,'flag':flag,'items':a_items,'search_content':search_content,'recommend':recommend,}
-    return render(request,'search_result.html',context)
-
+    
+    response =  render(request,'search_result.html',context)
+    if goodsname == '':
+        goodsname = '全部'
+    
+    response.set_cookie('search_content',goodsname)
+    return response
 
 #zss 点击搜索的下一级
 def search_result(request):
@@ -275,10 +281,33 @@ def getthe_filteditem(request):
 
 sortbyLevelFlag = True
 def item_sortbyLevel(request):
-    #if request.session[] != None:
-    filted_item = getthe_filteditem(request)
     a_items = []
     items = []
+    filted_item = getthe_filteditem(request)
+    
+    if len(filted_item) == 0:
+            goodsname = ''
+            ads = []
+           
+            if 'search_content' in request.COOKIES:
+                goodsname = request.COOKIES['search_content']
+                print goodsname.encode("utf-8")
+                print "Iam Herea"
+            seg_list = jieba.cut(goodsname,cut_all=False)
+        #搜索
+            for gname in seg_list:
+                #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
+                ads+=tb_item.objects.filter(item_name__contains = gname)
+        #去重复
+            for i in ads: 
+                if i not in items:
+                    items.append(i)
+
+            
+            
+    filted_item = items
+    items = []
+    itemstemp = []
     if (sortbyLevelFlag==True):
         itemstemp = tb_item.objects.order_by('item_level')
         for item in itemstemp:
@@ -306,9 +335,33 @@ def item_sortbyLevel(request):
 ###服务商排序
 sortflag1=True
 def search_result_sort_deadtime(request):
-    filted_item = getthe_filteditem(request)
     a_items = []
     items = []
+    filted_item = getthe_filteditem(request)
+    
+    if len(filted_item) == 0:
+            goodsname = ''
+            ads = []
+           
+            if 'search_content' in request.COOKIES:
+                goodsname = request.COOKIES['search_content']
+                print goodsname.encode("utf-8")
+                print "Iam Herea"
+            seg_list = jieba.cut(goodsname,cut_all=False)
+        #搜索
+            for gname in seg_list:
+                #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
+                ads+=tb_item.objects.filter(item_name__contains = gname)
+        #去重复
+            for i in ads: 
+                if i not in items:
+                    items.append(i)
+
+            
+            
+    filted_item = items
+    items = []
+    itemstemp = []
     if(sortflag1==True):
     	itemstemp = tb_item.objects.order_by('item_deadtime')
         for item in itemstemp:
@@ -335,9 +388,33 @@ def search_result_sort_deadtime(request):
 #综合排序 现在仅靠点击率来排序
 sortbyComprihensiveFlag=True
 def item_sortbyComprihensive(request):
-    filted_item = getthe_filteditem(request)
     a_items = []
     items = []
+    filted_item = getthe_filteditem(request)
+    
+    if len(filted_item) == 0:
+            goodsname = ''
+            ads = []
+           
+            if 'search_content' in request.COOKIES:
+                goodsname = request.COOKIES['search_content']
+                print goodsname.encode("utf-8")
+                print "Iam Herea"
+            seg_list = jieba.cut(goodsname,cut_all=False)
+        #搜索
+            for gname in seg_list:
+                #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
+                ads+=tb_item.objects.filter(item_name__contains = gname)
+        #去重复
+            for i in ads: 
+                if i not in items:
+                    items.append(i)
+
+            
+            
+    filted_item = items
+    items = []
+    
     itemstemp = []
     if (sortbyComprihensiveFlag==True):
 
@@ -1656,15 +1733,15 @@ def login(request):
                 
                 response = render_to_response('index.html',{'user_name':user.user_name})
                 
-                response.set_cookie('user_name',user_name,3600)
-                response.set_cookie('user_id',user.user_id,3600)
+                response.set_cookie('user_name',user_name)
+                response.set_cookie('user_id',user.user_id)
                 #print(user.expand.company_name)
                 
                 if 'unregist_tobepay_goodsid' in request.COOKIES:
                     goodsid = request.COOKIES['unregist_tobepay_goodsid']
                     responsenotpay = HttpResponseRedirect('/service_list/?itemid='+str(goodsid))
-                    responsenotpay.set_cookie('user_name',user_name,3600)
-                    responsenotpay.set_cookie('user_id',user.user_id,3600)
+                    responsenotpay.set_cookie('user_name',user_name)
+                    responsenotpay.set_cookie('user_id',user.user_id)
                     return responsenotpay
                 return response
             else:
