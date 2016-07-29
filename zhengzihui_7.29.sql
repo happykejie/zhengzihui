@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `auth_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.auth_group 的数据：~0 rows (大约)
+DELETE FROM `auth_group`;
 /*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
 
@@ -41,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `auth_group_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.auth_group_permissions 的数据：~0 rows (大约)
+DELETE FROM `auth_group_permissions`;
 /*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
 
@@ -54,9 +56,10 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `content_type_id` (`content_type_id`,`codename`),
   CONSTRAINT `auth__content_type_id_508cf46651277a81_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.auth_permission 的数据：~114 rows (大约)
+-- 正在导出表  zhengzihui_test_second.auth_permission 的数据：~111 rows (大约)
+DELETE FROM `auth_permission`;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
 INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALUES
 	(1, 'Can add source', 1, 'add_source'),
@@ -172,7 +175,13 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 	(111, 'Can delete tb_companyuser', 37, 'delete_tb_companyuser'),
 	(112, 'Can add tb_customcompany', 38, 'add_tb_customcompany'),
 	(113, 'Can change tb_customcompany', 38, 'change_tb_customcompany'),
-	(114, 'Can delete tb_customcompany', 38, 'delete_tb_customcompany');
+	(114, 'Can delete tb_customcompany', 38, 'delete_tb_customcompany'),
+	(115, 'Can add tb_shoucang_item', 39, 'add_tb_shoucang_item'),
+	(116, 'Can change tb_shoucang_item', 39, 'change_tb_shoucang_item'),
+	(117, 'Can delete tb_shoucang_item', 39, 'delete_tb_shoucang_item'),
+	(118, 'Can add tb_shoucang_goods', 40, 'add_tb_shoucang_goods'),
+	(119, 'Can change tb_shoucang_goods', 40, 'change_tb_shoucang_goods'),
+	(120, 'Can delete tb_shoucang_goods', 40, 'delete_tb_shoucang_goods');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
 
 
@@ -193,10 +202,11 @@ CREATE TABLE IF NOT EXISTS `auth_user` (
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.auth_user 的数据：~1 rows (大约)
+-- 正在导出表  zhengzihui_test_second.auth_user 的数据：~0 rows (大约)
+DELETE FROM `auth_user`;
 /*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
 INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `username`, `first_name`, `last_name`, `email`, `is_staff`, `is_active`, `date_joined`) VALUES
-	(1, 'pbkdf2_sha256$24000$vrePNmsfkowk$6tslXw/PW6FIHwaJdhn4t6OnDNvnyOVyTDv4FD0tInI=', '2016-07-19 08:42:44', 1, 'admin', '', '', 'oeiro@qq.com', 1, 1, '2016-07-19 08:42:36');
+	(1, 'pbkdf2_sha256$24000$vrePNmsfkowk$6tslXw/PW6FIHwaJdhn4t6OnDNvnyOVyTDv4FD0tInI=', '2016-07-28 09:24:33', 1, 'admin', '', '', 'oeiro@qq.com', 1, 1, '2016-07-19 08:42:36');
 /*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
 
 
@@ -213,6 +223,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.auth_user_groups 的数据：~0 rows (大约)
+DELETE FROM `auth_user_groups`;
 /*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
 
@@ -230,6 +241,7 @@ CREATE TABLE IF NOT EXISTS `auth_user_user_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.auth_user_user_permissions 的数据：~0 rows (大约)
+DELETE FROM `auth_user_user_permissions`;
 /*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
 
@@ -249,10 +261,16 @@ CREATE TABLE IF NOT EXISTS `django_admin_log` (
   KEY `django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id` (`user_id`),
   CONSTRAINT `djang_content_type_id_697914295151027a_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
   CONSTRAINT `django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.django_admin_log 的数据：~0 rows (大约)
+-- 正在导出表  zhengzihui_test_second.django_admin_log 的数据：~4 rows (大约)
+DELETE FROM `django_admin_log`;
 /*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+INSERT INTO `django_admin_log` (`id`, `action_time`, `object_id`, `object_repr`, `action_flag`, `change_message`, `content_type_id`, `user_id`) VALUES
+	(1, '2016-07-28 13:07:00', '10', '1524124551', 1, '已添加。', 10, 1),
+	(2, '2016-07-28 13:12:09', '11', '44545', 1, '已添加。', 10, 1),
+	(3, '2016-07-28 13:12:11', '9', '13688118677', 2, '已修改 expand 。', 11, 1),
+	(4, '2016-07-28 13:13:00', '11', '44545', 2, '没有字段被修改。', 10, 1);
 /*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
 
 
@@ -263,9 +281,10 @@ CREATE TABLE IF NOT EXISTS `django_content_type` (
   `model` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_45f3b1d93ec8c61c_uniq` (`app_label`,`model`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.django_content_type 的数据：~38 rows (大约)
+-- 正在导出表  zhengzihui_test_second.django_content_type 的数据：~37 rows (大约)
+DELETE FROM `django_content_type`;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
 INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 	(4, 'admin', 'logentry'),
@@ -303,6 +322,8 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 	(36, 'zhengzihui_app', 'tb_order'),
 	(26, 'zhengzihui_app', 'tb_pic'),
 	(12, 'zhengzihui_app', 'tb_service_provider'),
+	(40, 'zhengzihui_app', 'tb_shoucang_goods'),
+	(39, 'zhengzihui_app', 'tb_shoucang_item'),
 	(31, 'zhengzihui_app', 'tb_sysmessage'),
 	(11, 'zhengzihui_app', 'tb_user'),
 	(10, 'zhengzihui_app', 'tb_user_expand');
@@ -316,9 +337,10 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.django_migrations 的数据：~17 rows (大约)
+DELETE FROM `django_migrations`;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
 INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(1, 'contenttypes', '0001_initial', '2016-07-22 01:49:41'),
@@ -337,7 +359,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 	(14, 'zhengzihui_app', '0002_auto_20160722_0149', '2016-07-22 01:49:45'),
 	(15, 'admin', '0002_logentry_remove_auto_add', '2016-07-25 02:07:12'),
 	(16, 'auth', '0007_alter_validators_add_error_messages', '2016-07-25 02:07:12'),
-	(17, 'zhengzihui_app', '0002_tb_customcompany', '2016-07-25 02:07:12');
+	(17, 'zhengzihui_app', '0002_tb_customcompany', '2016-07-25 02:07:12'),
+	(18, 'zhengzihui_app', '0003_tb_shoucang_goods_tb_shoucang_item', '2016-07-25 14:05:25'),
+	(19, 'zhengzihui_app', '0004_auto_20160725_2205', '2016-07-25 14:06:03');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 
 
@@ -350,15 +374,18 @@ CREATE TABLE IF NOT EXISTS `django_session` (
   KEY `django_session_de54fa62` (`expire_date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.django_session 的数据：~6 rows (大约)
+-- 正在导出表  zhengzihui_test_second.django_session 的数据：~8 rows (大约)
+DELETE FROM `django_session`;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 	('4f5mpio9ula0pskfpo7emo11w7uor5i6', 'ZGQ0MDU5NjZkY2ZiYWU3ZjcwYzFhMGRjNzU4Mzg5MjE3ZmZlMzVhZDp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4Iiwiemh1YW5ndGFpIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgifQ==', '2016-08-08 02:34:08'),
 	('7meh46fget24szd6zl1y0x2ewcfacgr9', 'ODIwZWEwMjg3NWFmODVlZmVlNTdmODlhNDk1NTVmZDI3NWE1NTBhMTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgiLCJmb3Jfc29ydF9pdGVtaWQiOjEsInpodWFuZ3RhaSI6Ilx1NTE2OFx1OTBlOCJ9', '2016-08-08 02:32:09'),
 	('7qganljyjdteufpclr2zgya0lweb31dr', 'NDRiOWVjMmJjZTUwYTYyYjIxNWUyOTk1NGVjYjFjMzRlYjZlODJjNzp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsImppYmllIjoiXHU1MTY4XHU5MGU4IiwiZm9yX3NvcnRfaXRlbWlkIjoxLCJfYXV0aF91c2VyX2hhc2giOiIwMGVjMmNjMmNlOTIzMWNmOTM0YTk1NmJmMDUzNTU3NTcyYjI5ZDgxIiwiemh1YW5ndGFpIjoiXHU1MTY4XHU5MGU4In0=', '2016-08-02 13:47:25'),
 	('7wtcpe5m2w9gocwire5pfn16baqg191g', 'ZGQ0MDU5NjZkY2ZiYWU3ZjcwYzFhMGRjNzU4Mzg5MjE3ZmZlMzVhZDp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4Iiwiemh1YW5ndGFpIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgifQ==', '2016-08-08 02:36:12'),
-	('jyh3e3h927q7oog3vywep3l99g2zwnl7', 'MzIyZTE2NjhmMTNmNGM4Njk2MTdjMmZlZWQ0OThiYmI1Yjk2NWQ5Mzp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4Iiwiemh1YW5ndGFpIjoiXHU1MTY4XHU5MGU4IiwiZm9yX3NvcnRfaXRlbWlkIjoxLCJqaWJpZSI6Ilx1NTE2OFx1OTBlOCJ9', '2016-08-08 09:09:32'),
-	('l9nn59s7a5ap3mzjjhvru9bmkdnz2zww', 'ZGUzYWVlNjg0NjhkMGFhYmY1YmNjZTFjY2ZjNDFjMDVmMjZhMzQ1OTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgiLCJ6aHVhbmd0YWkiOiJcdTUxNjhcdTkwZTgifQ==', '2016-08-05 02:44:08');
+	('jyh3e3h927q7oog3vywep3l99g2zwnl7', 'ODIwZWEwMjg3NWFmODVlZmVlNTdmODlhNDk1NTVmZDI3NWE1NTBhMTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgiLCJmb3Jfc29ydF9pdGVtaWQiOjEsInpodWFuZ3RhaSI6Ilx1NTE2OFx1OTBlOCJ9', '2016-08-09 09:11:03'),
+	('l9nn59s7a5ap3mzjjhvru9bmkdnz2zww', 'ZGUzYWVlNjg0NjhkMGFhYmY1YmNjZTFjY2ZjNDFjMDVmMjZhMzQ1OTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgiLCJ6aHVhbmd0YWkiOiJcdTUxNjhcdTkwZTgifQ==', '2016-08-05 02:44:08'),
+	('mbpu3bq1zfqy34qkzojd3xtye6upxq4q', 'Y2FiNTZjNjA1NTIwMzczMjUzM2ZlMjIwZTExY2NmNjZmNDcwYThmZTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiamliaWUiOiJcdTUxNjhcdTkwZTgiLCJmb3Jfc29ydF9pdGVtaWQiOjE4LCJ6aHVhbmd0YWkiOiJcdTUxNjhcdTkwZTgifQ==', '2016-08-10 08:26:00'),
+	('ovbj6l7nk842kr5wuycdzn86vx6kl6mg', 'ZTI2ZWQ1ZjkyMzg2ODU5Mjc0OTMwNGM2ODg1ZmNmN2QxZDYwNjc5YTp7ImJ1bWVuIjoiXHU1MTY4XHU5MGU4IiwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsImppYmllIjoiXHU1MTY4XHU5MGU4IiwiZm9yX3NvcnRfaXRlbWlkIjozLCJfYXV0aF91c2VyX2hhc2giOiIwMGVjMmNjMmNlOTIzMWNmOTM0YTk1NmJmMDUzNTU3NTcyYjI5ZDgxIiwiemh1YW5ndGFpIjoiXHU1MTY4XHU5MGU4In0=', '2016-08-12 02:05:51');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 
 
@@ -375,6 +402,7 @@ CREATE TABLE IF NOT EXISTS `easy_thumbnails_source` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.easy_thumbnails_source 的数据：~0 rows (大约)
+DELETE FROM `easy_thumbnails_source`;
 /*!40000 ALTER TABLE `easy_thumbnails_source` DISABLE KEYS */;
 /*!40000 ALTER TABLE `easy_thumbnails_source` ENABLE KEYS */;
 
@@ -395,6 +423,7 @@ CREATE TABLE IF NOT EXISTS `easy_thumbnails_thumbnail` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.easy_thumbnails_thumbnail 的数据：~0 rows (大约)
+DELETE FROM `easy_thumbnails_thumbnail`;
 /*!40000 ALTER TABLE `easy_thumbnails_thumbnail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `easy_thumbnails_thumbnail` ENABLE KEYS */;
 
@@ -411,6 +440,7 @@ CREATE TABLE IF NOT EXISTS `easy_thumbnails_thumbnaildimensions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.easy_thumbnails_thumbnaildimensions 的数据：~0 rows (大约)
+DELETE FROM `easy_thumbnails_thumbnaildimensions`;
 /*!40000 ALTER TABLE `easy_thumbnails_thumbnaildimensions` DISABLE KEYS */;
 /*!40000 ALTER TABLE `easy_thumbnails_thumbnaildimensions` ENABLE KEYS */;
 
@@ -428,6 +458,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_accessory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_accessory 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_accessory`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_accessory` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_accessory` ENABLE KEYS */;
 
@@ -446,6 +477,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_album` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_album 的数据：~18 rows (大约)
+DELETE FROM `zhengzihui_app_tb_album`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_album` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_album` (`album_id`, `album_name`, `album_type`, `affiliation_id`, `nacl_des`, `nacl_sort`, `upload_time`, `is_default`) VALUES
 	(1, '1', 0, 1, '1', 1, '2016-05-01 04:38:30', 1),
@@ -483,6 +515,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_apage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_apage 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_apage`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_apage` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_apage` ENABLE KEYS */;
 
@@ -498,6 +531,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_apage_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_apage_class 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_apage_class`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_apage_class` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_apage_class` ENABLE KEYS */;
 
@@ -513,6 +547,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_area` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_area 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_area`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_area` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_area` ENABLE KEYS */;
 
@@ -537,11 +572,13 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_article 的数据：~3 rows (大约)
+DELETE FROM `zhengzihui_app_tb_article`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_article` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_article` (`article_id`, `article_code`, `article_name`, `author`, `author_email`, `article_type`, `affiliation_id`, `article_content`, `article_keywords`, `article_des`, `article_sort`, `upload_time`, `is_default`, `article_click`) VALUES
 	(1, 1, '2016科技厅关于科技计划项目的申报通知	', '1', '1@qq.com', 0, 1, '     近日，四川省教育考试院来函批复，同意西华大学今年将22个本科专业调整到本科一批次录取。加上去年纳入本科一批次招生的21个专业，2016年西华大学共有43个专业纳入本科一批次在川招生，预计该校普通本科一本批次招生计划将占普通本科总计划数的60%。', '1', '1', 1, '2016-05-07 11:18:51', 1, 1),
 	(2, 2, '项目负责人、申报单位登录“四川省科技计划项目管理中心”', '项目负责人、申报单位登录“四川省科技计划项目管理中心”', '1111@sina.com', 0, 2, '金正恩在讲话中高度肯定了朝鲜在今年1月份的核试验和2月份的火箭发射所取得的“前所未有”的伟大成就。\r\n　　朝鲜劳动党第七次全国代表大会6日在平壤开幕，朝中社当天曾发布一万多字的长篇报道称“开发小型核弹头是送给劳动党七大的礼物”。\r\n　　报道称，开发小型核弹头、弹道火箭重返大气层环境模拟试验取得成功、进行高功率固体火箭发动机地上点火及级间分离试验、进行新型洲际弹道火箭大功率发动机地上点火试验是朝鲜国防科技人员向劳动党七大献礼。\r\n　　此前，金正恩的西装照片几乎只出现在朝鲜对外公布的领导人官方照片中。\r\n　　韩国电视台对朝鲜电视台金正恩的讲话做了报道评论。韩国分析人士认为，朝鲜劳动党七大日程表一开始就未包含进行第五次核试验。而朝鲜是否举行第五次核试验，这也是韩国方面此前最担心的事情。', '111111111111111111111111111', '1', 1, '2016-05-07 11:20:34', 1, 1),
-	(3, 3, '3', '3', '1111@sina.com', 0, 3, '从去年开始，川内不少老牌二本院校就将大批二本专业调整至一本招生，今年这一趋势仍在继续，再加上去年四川合并二、三本批次，各个批次的界限越来越模糊，这背后将会给考生们带来什么样的影响？考生们在志愿填报上应有哪些应对之策？记者采访了相关专家。', '3', '3', 3, '2016-05-07 11:19:51', 1, 3);
+	(3, 3, '3', '3', '1111@sina.com', 0, 3, '从去年开始，川内不少老牌二本院校就将大批二本专业调整至一本招生，今年这一趋势仍在继续，再加上去年四川合并二、三本批次，各个批次的界限越来越模糊，这背后将会给考生们带来什么样的影响？考生们在志愿填报上应有哪些应对之策？记者采访了相关专家。', '3', '3', 3, '2016-05-07 11:19:51', 1, 3),
+	(18, 18, '国家海洋局　教育部关于联合印发《海洋人才港访问学者项目管理办法(试行)》的通知', '默认', '默认', 0, 18, '"                             \\n\\u0009\\u0009\\n\\u0009\\u0009\\u0009var file_yt=\'\';\\n\\u0009\\u0009\\u0009if(file_yt!=\\"\\"){             \\n\\u0009\\u0009        document.write(\'\\u003ch2\\u003e\'+file_yt+\'\\u003c/h2\\u003e\');\\n\\u0009\\u0009\\u0009}\\n\\u0009\\u0009\\n\\u0009\\u0009国家海洋局　教育部关于联合印发《海洋人才港访问学者项目管理办法(试行)》的通知\\n\\u0009\\u0009\\n\\u0009\\u0009\\u0009var file_subdoctitle=\'\';\\n\\u0009\\u0009\\u0009if(file_subdoctitle!=\\"\\"){             \\n   \\u0009\\u0009        document.write(\'\\u003ch2\\u003e\'+file_subdoctitle+\'\\u003c/h2\\u003e\');\\n\\u0009\\u0009\\u0009}\\n\\u0009\\u0009\\n\\u0009\\u0009\\n\\u0009\\u0009\\u0009var file_fwzh=\'国海发[2014]21号\';\\n\\u0009\\u0009\\u0009if(file_fwzh!=\\"\\"){             \\n   \\u0009\\u0009        document.write(\'\\u003cp id=\\"content_fwzh\\"\\u003e\'+file_fwzh+\'\\u003c/p\\u003e\');\\n\\u0009\\u0009\\u0009}\\n\\u0009\\u0009国海发[2014]21号\\n\\u0009\\u0009\\n\\u0009\\u0009\\u0009沿海省(区、市)及计划单列市海洋厅(局)，国家海洋局局属各单位、机关各部门，教育部部属各高等学校：\\n　　现将《海洋人才港访问学者项目管理办法(试行)》印发给你们，请结合实际认真抓好贯彻执行。\\n海洋人才港访问学者项目管理办法\\n(试行)\\n　　第一章　总则\\n　　第一条　海洋人才港访问学者(以下简称“访问学者”)项目，是促进高校与海洋科研、业务机构交流合作，引导海洋教育发展，提升海洋人才培养质量，服务海洋强国建设的重要举措。为进一步加强此项工作，根据《国家海洋局关于海洋人才港工程的实施意见》，制定本办法。\\n　　第二条　本办法所称的访问学者，是指从高校选派到国家海洋系统事业单位研修的优秀中青年高校教师。\\n　　第三条　访问学者项目要以服务海洋事业发展为宗旨，以促进海洋人才培养为重点，努力引导高校教师了解海洋事业发展及其对海洋人才的需求，培养适应海洋领域需要的合格人才。\\n　　第四条　访问学者项目由国家海洋局主管，负责总体组织、统筹协调和督促检查，海洋系统各单位负责接收访问学者研修安排和服务管理等工作。\\n　　第五条　本方法所称的选派单位是指各高校；接收单位是指为访问学者提供研修岗位的单位。\\n　　第二章　选派\\n　　第六条　访问学者选派计划由国家海洋局征求海洋系统各单位意见后研究制定。\\n　　第七条　访问学者人选需具备以下基本条件：具有学校正式编制的教职员工；有强烈的事业心、责任感和奉献海洋事业发展精神；一般应具有硕士以上学位；有扎实的专业基础和较好的科研能力；身体健康。\\n　　第八条　选派单位应根据国家海洋局发布的计划和本单位教师培养需求实际，按照公开公正原则，认真组织做好人选推荐工作。\\n　　第九条　国家海洋局根据选派单位报送人选情况，审定访问学者名单，协调落实接收单位。\\n　　第十条　选派单位应对访问学者进行行前教育培训，明确学习研修任务和纪律要求。\\n　　第三章　接收\\n　　第十一条　接收单位应树立大局意识，把访问学者项目作为支持推进海洋人才培养和促进海洋强国战略的重要任务，认真组织做好接收安排和管理服务工作。\\n　　第十二条　接收单位应按照注重质量、确保实效原则，根据访问学者实际情况，制定研修方案，明确研修目标，完善研修措施，切实增强研修针对性实效性。\\n　　第十三条　接收单位要安排访问学者了解本单位的科研、业务工作模式和重点任务，并统筹安排本单位学术造诣高、治学经验丰富的学术技术带头人担任指导教师，指导访问学者开展学习研修和课题研究。可将指导教师指导访问学者的工作量作为申请课题、年度考核、评优奖励的重要依据。\\n　　第四章　研修任务与待遇\\n　　第十四条　访问学者研修主要任务。\\n　　(一)全面了解接收单位的科研、业务工作模式和重点任务，学习掌握本领域本专业对人才知识、技能的实际要求。\\n　　(二)学习指导教师治学经验、教学理念和研究方法。\\n　　(三)根据指导教师安排参与有关课题研究，也可作为学术助手直接参与指导教师所在研究团队或实验室科研工作。\\n　　第十五条　研修期限为3—12个月，方式为全脱产。研修期间，选派单位不得为访问学者安排其他工作。\\n　　第十六条　接收单位根据本单位有关规定，为访问学者发放劳务费，主要用于访问学者食宿补贴，也可为指导教师发放相关补助。\\n　　第十七条　访问学者研修期间，只转组织关系，不转户口和行政、工资关系，由选派单位发放工资，仍享受选派单位同类同级人员各项福利待遇。\\n　　第十八条　访问学者研修期间取得的科研成果，由访问学者和接收单位按照国家有关规定协商办理。\\n　　第十九条　访问学者应严格遵守接收单位有关规章制度，尊重指导教师，认真完成学习研修任务。对研修态度消极或违纪的访问学者，接收单位经报国家海洋局同意后可取消其研修资格，并通报选派单位。\\n　　第二十条　访问学者研修期满后返回原单位工作。确需延长研修期限的，经选派单位和接收单位同意，报国家海洋局备案，纳入下一批次项目予以安排。\\n　　第五章　管理与考核\\n　　第二十一条　访问学者研修期间，由选派单位和接收单位共同管理，以接收单位为主。党员访问学者编入所在接收单位党组织，参加党的组织生活。\\n　　第二十二条　访问学者研修期满应对其进行考核，考核工作由选派单位和接收单位共同负责。考核结果报国家海洋局备案。对考核合格的，由国家海洋局颁发海洋人才港访问学者证书。\\n　　第二十三条　选派单位和接收单位应加强访问学者的跟踪培养，积极为其成长和发挥作用创造条件。\\n　　第二十四条　本办法由国家海洋局负责解释。\\n　　第二十五条　本办法自印发之日起施行。\\n\\u0009\\u0009\\n\\u0009\\u0009\\n\\u0009\\u0009扫一扫分享本页\\n\\u0009\\u0009（责任编辑：任巍）\\n\\u0009\\u0009\\n\\u0009\\u0009\\u0009相关阅读\\n\\u0009\\u0009\\u0009\\n\\u0009\\u0009\\n\\u0009"', '18', '19', 18, '2016-07-27 16:08:22', 1, 0);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_article` ENABLE KEYS */;
 
 
@@ -558,6 +595,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_artificial_representations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_artificial_representations 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_artificial_representations`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_artificial_representations` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_artificial_representations` ENABLE KEYS */;
 
@@ -582,6 +620,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_companyuser` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_companyuser 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_companyuser`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_companyuser` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_companyuser` ENABLE KEYS */;
 
@@ -603,10 +642,12 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_customcompany` (
   PRIMARY KEY (`company_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_customcompany 的数据：~1 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_customcompany 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_customcompany`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_customcompany` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_customcompany` (`company_id`, `custom_hangye`, `custom_bumen`, `custom_jiebie`, `wanted_guquan`, `wanted_rongzi`, `wanted_ziben`, `self_des`, `item_des`, `self_file`, `item_file`, `conclusion`) VALUES
-	('2016', '建筑业', '监管汇：人民银行／银监／质监／保监／证监／药监／安监／统计／更多', '中央', '风险投资', '银行', '创业板', 'niaho ', 'nihao ', '', '', '水产');
+	('2016', '建筑业', '监管汇：人民银行／银监／质监／保监／证监／药监／安监／统计／更多', '中央', '风险投资', '银行', '创业板', 'niaho ', 'nihao ', '', '', '水产'),
+	('9', '批发和零售业', '监管汇：人民银行／银监／质监／保监／证监／药监／安监／统计／更多', '中央', '风险投资', '担保', '新三板', 'shige haogeongsi', '', '', '', '水产');
 /*!40000 ALTER TABLE `zhengzihui_app_tb_customcompany` ENABLE KEYS */;
 
 
@@ -636,6 +677,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_goods` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_goods 的数据：~3 rows (大约)
+DELETE FROM `zhengzihui_app_tb_goods`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_goods` (`goods_id`, `item_id`, `sp_id`, `goods_name`, `goods_market_price`, `goods_code`, `goods_payahead`, `goods_awardafter`, `goods_accept_starttime`, `goods_accept_endtime`, `goods_price`, `goods_price_discouint`, `goods_pay`, `goods_guarantee`, `goods_sort`, `goods_commend`, `goods_evaluation_good_star`, `goods_evaluation_count`, `goods_show`, `goods_status`) VALUES
 	(1, 1, 1, ' 2016科技厅关于科技计划项目的申报通知', 100000, 3, 10000, 10000, '2016-07-19 17:20:16', '2016-09-19 17:20:14', 300, 1, 1, '1', 1, 0, 1, 1, 1, 0),
@@ -656,6 +698,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_goods_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_goods_class 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_goods_class`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_class` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_class` ENABLE KEYS */;
 
@@ -668,10 +711,15 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_goods_click` (
   `gocl_id` int(11) NOT NULL,
   `gocl_num` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_goods_click 的数据：~0 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_goods_click 的数据：~2 rows (大约)
+DELETE FROM `zhengzihui_app_tb_goods_click`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_click` DISABLE KEYS */;
+INSERT INTO `zhengzihui_app_tb_goods_click` (`id`, `goods_id`, `goods_name`, `gocl_id`, `gocl_num`) VALUES
+	(1, 1, ' 2016科技厅关于科技计划项目的申报通知', 0, 3),
+	(2, 3, ' 2016科技厅关于科技计划项目的申报通知', 0, 8),
+	(3, 2, ' 2016科技厅关于科技计划项目的申报通知', 0, 4);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_click` ENABLE KEYS */;
 
 
@@ -694,7 +742,10 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_goods_evaluation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_goods_evaluation 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_goods_evaluation`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` DISABLE KEYS */;
+INSERT INTO `zhengzihui_app_tb_goods_evaluation` (`goev_id`, `order_id`, `goods_id`, `goods_name`, `user_id`, `user_name`, `create_time`, `goev_desccredit`, `goev_servicecredit`, `goev_content`, `is_anonymous`, `goev_show`, `goev_status`) VALUES
+	(0, 15, 2, ' 2016科技厅关于科技计划项目的申报通知', 9, 'orchard', '2016-07-28 09:20:19', 5, 4, '不是特别好', 1, 0, 0);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` ENABLE KEYS */;
 
 
@@ -720,26 +771,27 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_item 的数据：~18 rows (大约)
+DELETE FROM `zhengzihui_app_tb_item`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_item` (`item_id`, `item_code`, `item_name`, `itcl_id`, `item_level`, `item_ga`, `item_pa_id`, `item_publish`, `item_deadtime`, `item_about`, `item_url`, `item_key`, `item_status`, `is_hot`, `item_from`, `is_recommend`) VALUES
-	(1, '1', '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, 1, '1', 1, '2016-04-03 04:35:19', '2016-05-03 16:28:49', '养殖/科技/互联网', '1', '科技项目', 0, 0, 0, 1),
-	(2, '2', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 2, 4, '2', 2, '2016-05-01 04:35:42', '2016-06-18 04:35:43', '农林/住建/其他', '2', '互联网项目', 0, 0, 0, 1),
-	(3, '3', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 3, 3, '3', 3, '2016-05-01 04:36:23', '2016-07-15 04:36:24', '农业/养殖/互联网+', '3', '科技项目', 0, 0, 0, 1),
-	(4, '4', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 4, 3, '4', 4, '2016-05-01 04:36:47', '2016-05-28 04:36:48', '水产/养殖/其他', '4', '科技项目', 0, 0, 0, 0),
-	(5, '5', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 5, 2, '5', 5, '2016-05-01 04:37:05', '2016-07-08 04:37:07', '水产/政务/管理/新产业', '5', '中央项目', 0, 0, 0, 0),
-	(6, '6', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 6, 2, '5万-500万', 1, '2016-03-08 09:42:34', '2016-09-01 09:42:39', '农业/养殖/互联网+', '6', '水产/政务/管理/新产业', 0, 0, 1, 1),
-	(7, '7', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 7, 1, '5万-500万', 2, '2016-03-23 09:44:34', '2016-06-11 09:44:38', '水产/政务/管理/新产业', '7', '科技项目', 0, 0, 0, 1),
-	(8, '8', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 8, 1, '5万-500万', 3, '2015-12-03 09:45:32', '2016-06-30 09:45:40', '农林/住建/其他', '8', '互联网项目', 0, 0, 0, 1),
-	(9, '9', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 9, 3, '5万-500万', 4, '2016-04-13 09:46:22', '2016-06-17 09:46:26', '农业/养殖/互联网+', '9', '中央项目', 0, 0, 0, 1),
-	(10, '10', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 10, 4, '5万-500万', 5, '2016-05-01 09:47:25', '2016-05-31 09:47:28', '水产/政务/管理/新产业', '10', '科技项目', 0, 0, 0, 0),
-	(11, '11', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 11, 4, '5万-500万', 1, '2016-04-03 09:48:13', '2016-05-04 09:48:23', '养殖/科技/互联网', '11', '互联网项目', 0, 0, 0, 1),
-	(12, '12', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 12, 1, '5万-500万', 2, '2016-04-07 09:49:12', '2016-05-04 09:49:15', '养殖/科技/互联网', '12', '中央项目', 0, 0, 0, 0),
-	(13, '13', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 13, 2, '5万-500万', 3, '2016-04-10 09:50:24', '2016-05-28 09:50:30', '水产/政务/管理/新产业', '13', '科技项目', 0, 0, 0, 1),
-	(14, '14', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 14, 1, '5万-500万', 4, '2016-04-01 09:53:00', '2016-06-09 09:53:03', '水产/政务/管理/新产业', '14', '科技项目', 0, 0, 0, 1),
-	(15, '15', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 15, 1, '5万-500万', 5, '2016-04-05 09:54:09', '2016-05-04 09:54:12', '养殖/科技/互联网', '15', '互联网项目', 0, 0, 0, 0),
-	(16, '16', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 16, 1, '5万-500万', 1, '2016-04-03 09:55:05', '2016-06-24 09:55:08', '农林/住建/其他', '16', '中央项目', 0, 0, 0, 0),
-	(17, '17', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 17, 1, '5万-500万', 2, '2016-04-20 09:56:04', '2016-07-08 09:56:08', '水产/政务/管理/新产业 ', '17', '科技项目', 0, 0, 0, 0),
-	(18, '18', '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 18, 1, '5万-500万', 3, '2016-03-31 09:56:50', '2016-05-26 09:56:53', '农业/养殖/互联网+', '18', '互联网项目', 0, 0, 0, 0);
+	(1, '1', '国家发展改革委关于开展全国教育收费专项检查的通知', 1, 1, '5万-500万', 1, '2016-04-03 04:35:19', '2016-09-03 16:28:49', '养殖/科技/互联网', '1', '科技项目', 1, 0, 0, 1),
+	(2, '2', '四川省科技厅计划项目招标通知', 2, 4, '5万-500万', 2, '2016-05-01 04:35:42', '2016-06-18 04:35:43', '农林/住建/其他', '2', '互联网项目', 0, 0, 0, 1),
+	(3, '3', '浙江省农业厅计划项目招标通知', 3, 3, '5万-500万', 3, '2016-05-01 04:36:23', '2017-07-15 04:36:24', '农业/养殖/互联网+', '3', '科技项目', 1, 0, 0, 1),
+	(4, '4', '四川省教育厅计划项目招标通知', 4, 3, '5万-500万', 4, '2016-05-01 04:36:47', '2016-05-28 04:36:48', '水产/养殖/其他', '4', '科技项目', 0, 0, 0, 0),
+	(5, '5', '湖南省关于湘江环境自然保护招标', 5, 2, '5万-500万', 5, '2016-05-01 04:37:05', '2017-07-08 04:37:07', '水产/政务/管理/新产业', '5', '中央项目', 1, 0, 0, 0),
+	(6, '6', '湖北省关于自然灾害预警项目', 6, 2, '5万-500万', 1, '2016-03-08 09:42:34', '2016-09-01 09:42:39', '农业/养殖/互联网+', '6', '水产/政务/管理/新产业', 1, 0, 1, 1),
+	(7, '7', '北京互联网公司扶持项目', 7, 1, '5万-500万', 2, '2016-03-23 09:44:34', '2016-06-11 09:44:38', '水产/政务/管理/新产业', '7', '科技项目', 0, 0, 0, 1),
+	(8, '8', '成都市G20招标', 8, 1, '5万-500万', 3, '2015-12-03 09:45:32', '2017-06-30 09:45:40', '农林/住建/其他', '8', '互联网项目', 1, 0, 0, 1),
+	(9, '9', '石家庄关于建立高铁的项目', 9, 3, '5万-500万', 4, '2016-04-13 09:46:22', '2016-06-17 09:46:26', '农业/养殖/互联网+', '9', '中央项目', 0, 0, 0, 1),
+	(10, '10', '新津关于养老的项目', 10, 4, '5万-500万', 5, '2016-05-01 09:47:25', '2016-05-31 09:47:28', '水产/政务/管理/新产业', '10', '科技项目', 0, 0, 0, 0),
+	(11, '11', '中央关于量子计算机的项目招标', 11, 4, '5万-500万', 1, '2016-04-03 09:48:13', '2016-05-04 09:48:23', '养殖/科技/互联网', '11', '互联网项目', 0, 0, 0, 1),
+	(12, '12', '深圳市高科技项目', 12, 1, '5万-500万', 2, '2016-04-07 09:49:12', '2017-05-04 09:49:15', '养殖/科技/互联网', '12', '中央项目', 1, 0, 0, 0),
+	(13, '13', '四川省出国人才计划项目', 13, 2, '5万-500万', 3, '2016-04-10 09:50:24', '2017-05-28 09:50:30', '水产/政务/管理/新产业', '13', '科技项目', 1, 0, 0, 1),
+	(14, '14', '重庆市教育部计划项目招标', 14, 1, '5万-500万', 4, '2016-04-01 09:53:00', '2017-06-09 09:53:03', '水产/政务/管理/新产业', '14', '科技项目', 1, 0, 0, 1),
+	(15, '15', '教育部办公厅转发《国家档案局办公室关于组织推荐2016年国家档案局科技项目的通知》的通知', 15, 1, '5万-500万', 5, '2016-04-05 09:54:09', '2017-05-04 09:54:12', '养殖/科技/互联网', '15', '互联网项目', 1, 0, 0, 0),
+	(16, '16', '教育部办公厅关于印发《中国语言资源保护工程专项资金管理办法（试行）》的通知', 16, 1, '5万-500万', 1, '2016-04-03 09:55:05', '2017-06-24 09:55:08', '农林/住建/其他', '16', '中央项目', 1, 0, 0, 0),
+	(17, '17', '财政部 教育部 人力资源社会保障部关于印发《中等职业学校免学费补助资金管理办法》的通知', 17, 1, '5万-500万', 2, '2016-04-20 09:56:04', '2017-07-08 09:56:08', '水产/政务/管理/新产业 ', '17', '科技项目', 1, 0, 0, 0),
+	(18, '18', '国家海洋局　教育部关于联合印发《海洋人才港访问学者项目管理办法(试行)》的通知', 18, 4, '5万-500万', 18, '2015-02-09 00:00:00', '2017-02-09 09:56:53', '教育/出国', 'http://www.moe.edu.cn/jyb_xxgk/moe_1777/moe_1779/201502/t20150209_185740.html', '教育项目', 0, 0, 0, 0);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item` ENABLE KEYS */;
 
 
@@ -755,6 +807,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_item_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_item_class 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_item_class`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item_class` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item_class` ENABLE KEYS */;
 
@@ -771,23 +824,24 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_item_click` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_item_click 的数据：~18 rows (大约)
+DELETE FROM `zhengzihui_app_tb_item_click`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item_click` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_item_click` (`id`, `itcl_id`, `click_counter`, `item_id`) VALUES
-	(2, 0, 7, 1),
-	(3, 0, 11, 2),
-	(4, 0, 1, 3),
-	(5, 0, 1, 4),
-	(6, 0, 0, 5),
+	(2, 0, 23, 1),
+	(3, 0, 23, 2),
+	(4, 0, 3, 3),
+	(5, 0, 3, 4),
+	(6, 0, 7, 5),
 	(7, 0, 2, 6),
 	(8, 0, 0, 7),
-	(9, 0, 0, 8),
-	(10, 0, 0, 9),
+	(9, 0, 11, 8),
+	(10, 0, 4, 9),
 	(11, 0, 0, 10),
-	(12, 0, 0, 11),
+	(12, 0, 1, 11),
 	(13, 0, 0, 12),
 	(14, 0, 0, 13),
-	(15, 0, 0, 14),
-	(16, 0, 0, 15),
+	(15, 0, 4, 14),
+	(16, 0, 2, 15),
 	(17, 0, 0, 16),
 	(18, 0, 0, 17),
 	(19, 0, 0, 18);
@@ -806,13 +860,15 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_item_pa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_item_pa 的数据：~5 rows (大约)
+DELETE FROM `zhengzihui_app_tb_item_pa`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item_pa` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_item_pa` (`ipa_id`, `ipa_name`, `ipa_parent_id`, `ipa_sort`, `area_id`, `ipa_address`) VALUES
 	(1, '四川省科技厅', 1, 1, 1, '成都市天府广场'),
 	(2, '四川农业局', 2, 2, 2, '成都市天府广场'),
 	(3, '中央财政厅', 3, 3, 3, '成都市天府广场'),
 	(4, '湖北教育局', 4, 4, 4, '成都市天府广场'),
-	(5, '中央农业局', 5, 5, 5, '成都市天府广场');
+	(5, '中央农业局', 5, 5, 5, '成都市天府广场'),
+	(18, '国家海洋局;教育部', 1, 18, 1, '成都市天府广场');
 /*!40000 ALTER TABLE `zhengzihui_app_tb_item_pa` ENABLE KEYS */;
 
 
@@ -827,6 +883,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_message 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_message`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_message` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_message` ENABLE KEYS */;
 
@@ -841,6 +898,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_messagetext` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_messagetext 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_messagetext`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_messagetext` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_messagetext` ENABLE KEYS */;
 
@@ -862,6 +920,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_news 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_news`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_news` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_news` ENABLE KEYS */;
 
@@ -877,6 +936,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_news_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_news_class 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_news_class`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_news_class` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_news_class` ENABLE KEYS */;
 
@@ -896,6 +956,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_notice` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_notice 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_notice`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_notice` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_notice` ENABLE KEYS */;
 
@@ -912,6 +973,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_notice_class` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_notice_class 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_notice_class`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_notice_class` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_notice_class` ENABLE KEYS */;
 
@@ -948,17 +1010,22 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_order` (
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_order 的数据：~8 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_order 的数据：~9 rows (大约)
+DELETE FROM `zhengzihui_app_tb_order`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_order` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_order` (`order_id`, `order_no`, `goods_id`, `pay_no`, `item_id`, `item_name`, `sp_id`, `sp_name`, `buyer_id`, `buyer_name`, `buyer_email`, `add_time`, `payment_code`, `payment_time`, `final_time`, `good_amount`, `order_amount`, `refund_amount`, `delay_time`, `order_from`, `express_id`, `express_no`, `eval_state`, `order_state`, `refund_state`, `lock_state`, `express_state`) VALUES
 	(1, 1, 0, 1, 1, '的说法是尽快快快快快快快', 1, '1', 3, '3', '1@qq.com', '2016-05-21 03:39:54', '1', '2016-05-03 03:39:59', '2016-05-03 03:40:00', 1, 77777, 0, '2016-05-03 03:40:16', 1, 1, '1', 0, 0, 0, 0, 1),
-	(2, 105597, 3, 105597, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-24 03:11:42', '105597', NULL, NULL, 100, 200, 100, NULL, 1, 1, '1', 0, 3, 0, 0, 0),
+	(2, 105597, 3, 105597, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-26 09:10:47', '105597', NULL, NULL, 100, 200, 100, NULL, 1, 1, '1', 0, 3, 0, 1, 0),
 	(3, 3, 0, 3, 3, '2016科技厅关于科技计划项目的申报通知', 3, '3', 3, '3', '1@qq.com', '2016-05-02 03:42:03', '1', '2016-05-03 03:42:07', '2016-05-03 03:42:08', 1, 9999, 1, '2016-05-03 03:42:17', 1, 1, '1', 0, 2, 0, 0, 1),
 	(4, 4, 0, 4, 4, '2016科技厅关于科技计划项目的申报通知', 4, '4', 3, '3', '1@qq.com', '2016-05-04 10:16:26', '1', '2016-05-04 10:16:29', '2016-05-04 10:16:30', 1, 0, 1, '2016-05-04 10:16:34', 1, 1, '1', 0, 3, 0, 0, 1),
 	(5, 5, 0, 5, 5, '2016科技厅关于科技计划项目的申报通知', 5, '5', 3, '3', '1@qq.com', '2016-05-04 10:17:06', '1', '2016-05-04 10:17:09', '2016-05-04 10:17:11', 1, 0, 1, '2016-05-04 10:17:15', 1, 11, '1', 0, 4, 0, 0, 1),
 	(6, 6, 0, 6, 6, '2016科技厅关于科技计划项目的申报通知', 6, '6', 3, '3', '1@qq.com', '2016-05-04 10:17:53', '1', '2016-05-04 10:17:58', '2016-05-04 10:17:59', 1, 0, 1, '2016-05-04 10:18:04', 1, 11, '1', 0, 0, 0, 0, 1),
-	(10, 159020, 2, 159020, 3, '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-24 03:05:36', '159020', NULL, NULL, 1000, 2000, 1000, NULL, 1, 1, '1', 0, 3, 0, 0, 0),
-	(11, 3551, 1, 3551, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-25 08:04:35', '3551', NULL, NULL, 10000, 20000, 10000, NULL, 1, 1, '1', 0, 3, 0, 0, 0);
+	(10, 159020, 2, 159020, 3, '四川省科技厅计划项目招标通知201顶顶顶顶顶顶顶顶6之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-27 08:23:44', '159020', NULL, NULL, 1000, 2000, 1000, NULL, 1, 1, '1', 0, 3, 0, 1, 0),
+	(11, 3551, 1, 3551, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-26 09:10:44', '3551', NULL, NULL, 10000, 20000, 10000, NULL, 1, 1, '1', 0, 3, 0, 1, 0),
+	(12, 758401, 1, 758401, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-26 09:10:42', '758401', NULL, NULL, 10000, 20000, 10000, NULL, 1, 1, '1', 0, 3, 0, 1, 0),
+	(13, 104438, 3, 104438, 1, '四川省科技厅计划项目招标通知2016之特别假话找白哦', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-26 09:10:41', '104438', NULL, NULL, 100, 200, 100, NULL, 1, 1, '1', 0, 3, 0, 1, 0),
+	(14, 499590, 2, 499590, 3, '浙江省农业厅计划项目招标通知', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-27 08:22:25', '499590', NULL, NULL, 1000, 2000, 1000, NULL, 1, 1, '1', 0, 3, 0, 0, 0),
+	(15, 925122, 2, 925122, 3, '浙江省农业厅计划项目招标通知', 1, '', 9, 'orchard', 'changyifan123@qq.com', '2016-07-28 09:20:19', '925122', NULL, NULL, 1000, 2000, 1000, NULL, 1, 1, '1', 1, 4, 0, 0, 0);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_order` ENABLE KEYS */;
 
 
@@ -975,6 +1042,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_pic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_pic 的数据：~22 rows (大约)
+DELETE FROM `zhengzihui_app_tb_pic`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_pic` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_pic` (`pic_id`, `pic_name`, `pic_tag`, `album_id`, `pic_object`, `pic_size`, `upload_time`) VALUES
 	(1, '1', '1', 1, 'img_for_items/2016/05/01/6aa33f80-a3c0-11e5-a70d-dc85def86878.png', 0, '2016-05-06 13:50:06'),
@@ -1028,11 +1096,48 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_service_provider` (
   PRIMARY KEY (`sp_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_service_provider 的数据：~1 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_service_provider 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_service_provider`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_service_provider` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_service_provider` (`sp_code`, `sp_id`, `sp_name`, `psw`, `tel`, `email`, `master`, `sp_image1`, `sp_image2`, `sp_grade`, `sp_sort`, `area_id`, `Register_cap`, `staff_number`, `Annual_totals`, `organization_name`, `organization_id`, `organization_assets`, `organization_profile`, `sp_auth`, `is_recommend`) VALUES
 	(1, 1, 'rongyida', '123456', '12312', '12@1213', '1', '24', '2232', 1, 21, '100', 339999, 12, 1231, 'rongyida', 2, 112321312, '3422skdfjkd', 1, 1);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_service_provider` ENABLE KEYS */;
+
+
+-- 导出  表 zhengzihui_test_second.zhengzihui_app_tb_shoucang_goods 结构
+CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_shoucang_goods` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `goods_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_shoucang_goods 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_shoucang_goods`;
+/*!40000 ALTER TABLE `zhengzihui_app_tb_shoucang_goods` DISABLE KEYS */;
+INSERT INTO `zhengzihui_app_tb_shoucang_goods` (`id`, `user_id`, `goods_id`) VALUES
+	(1, 9, 3),
+	(2, 9, 2);
+/*!40000 ALTER TABLE `zhengzihui_app_tb_shoucang_goods` ENABLE KEYS */;
+
+
+-- 导出  表 zhengzihui_test_second.zhengzihui_app_tb_shoucang_item 结构
+CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_shoucang_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_shoucang_item 的数据：~2 rows (大约)
+DELETE FROM `zhengzihui_app_tb_shoucang_item`;
+/*!40000 ALTER TABLE `zhengzihui_app_tb_shoucang_item` DISABLE KEYS */;
+INSERT INTO `zhengzihui_app_tb_shoucang_item` (`id`, `user_id`, `item_id`) VALUES
+	(1, 9, 1),
+	(2, 9, 5),
+	(3, 9, 18),
+	(4, 9, 3);
+/*!40000 ALTER TABLE `zhengzihui_app_tb_shoucang_item` ENABLE KEYS */;
 
 
 -- 导出  表 zhengzihui_test_second.zhengzihui_app_tb_sysmessage 结构
@@ -1045,6 +1150,7 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_sysmessage` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_sysmessage 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_sysmessage`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_sysmessage` DISABLE KEYS */;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_sysmessage` ENABLE KEYS */;
 
@@ -1064,10 +1170,11 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_user` (
   CONSTRAINT `D488b378309e1fcb47188b2b261691cb` FOREIGN KEY (`expand_id`) REFERENCES `zhengzihui_app_tb_user_expand` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2017 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_user 的数据：~2 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_user 的数据：~0 rows (大约)
+DELETE FROM `zhengzihui_app_tb_user`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_user` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_user` (`user_id`, `user_name`, `user_password`, `user_telephone`, `user_email`, `user_auth`, `user_type`, `expand_id`) VALUES
-	(9, 'orchard', '123456', '13688118677', 'changyifan123@qq.com', 1, 1, 9),
+	(9, 'orchard', '123456', '13688118677', 'changyifan123@qq.com', 1, 1, 11),
 	(2016, 'testxcz', '123456', '2234234234', '21312@123', 1, 1, 9);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_user` ENABLE KEYS */;
 
@@ -1087,12 +1194,15 @@ CREATE TABLE IF NOT EXISTS `zhengzihui_app_tb_user_expand` (
   `companyUserContactName` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   `companyUserPhone` varchar(40) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
--- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_user_expand 的数据：~1 rows (大约)
+-- 正在导出表  zhengzihui_test_second.zhengzihui_app_tb_user_expand 的数据：~3 rows (大约)
+DELETE FROM `zhengzihui_app_tb_user_expand`;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_user_expand` DISABLE KEYS */;
 INSERT INTO `zhengzihui_app_tb_user_expand` (`user_id`, `company_tel`, `company_email`, `company_name`, `company_district`, `company_address`, `company_registered_capital`, `company_industry`, `company_stuff_no`, `company_nature`, `companyUserContactName`, `companyUserPhone`) VALUES
-	(9, '13688118677', 'changyifan123@qq.com', 'uestc', '四川', '成都', 2, '金融', '50-99', '国营', '常益凡', '123455');
+	(9, '13688118677', 'changyifan123@qq.com', 'uestc', '四川', '成都', 2, '金融', '50-99', '国营', '常益凡', '123455'),
+	(10, '1524124551', '5454@qq.com', '科技公司', '成都市', '忠烈祠', 5000000, '互联网', '50', '民营', '老厂', '44587812'),
+	(11, '44545', '4545@qq.com', '科技公司', '成都市', '忠烈祠', 5000000, '互联网', '50', '民营', '老厂', '148412125454');
 /*!40000 ALTER TABLE `zhengzihui_app_tb_user_expand` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
