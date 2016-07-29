@@ -288,7 +288,7 @@ def item_sortbyLevel(request):
     if len(filted_item) == 0:
             goodsname = ''
             ads = []
-           
+            print request.COOKIES['search_content']
             if 'search_content' in request.COOKIES:
                 goodsname = request.COOKIES['search_content']
 
@@ -301,10 +301,11 @@ def item_sortbyLevel(request):
             for i in ads: 
                 if i not in items:
                     items.append(i)
-
+            filted_item = items
             
-            
-    filted_item = items
+          
+    
+    print len(filted_item)  
     items = []
     itemstemp = []
     if (sortbyLevelFlag==True):
@@ -357,7 +358,7 @@ def search_result_sort_deadtime(request):
 
             
             
-    filted_item = items
+            filted_item = items
     items = []
     itemstemp = []
     if(sortflag1==True):
@@ -410,7 +411,7 @@ def item_sortbyComprihensive(request):
 
             
             
-    filted_item = items
+            filted_item = items
     items = []
     
     itemstemp = []
@@ -831,14 +832,14 @@ def sortServByComp(request):
     if request.session['for_sort_itemid']:
         itemid = request.session['for_sort_itemid']
 
-        print "在排序当中"
+        #print "在排序当中"
         tb_goods_listTemp = tb_goods.objects.filter(item_id = itemid)#我们默认goods_sort代表点击率
         goodsorderTemp = tb_goods_click.objects.order_by('-gocl_num')
         for goods in goodsorderTemp:
             tb_goods_list.append(tb_goods.objects.get(goods_id = goods.goods_id))
-        for goods in tb_goods_listTemp:
-            if goods not in tb_goods_list:
-                tb_goods_list.append(goods)
+        for goods in tb_goods_list:
+            if goods not in tb_goods_listTemp:
+                tb_goods_list.remove(goods)
                 
             
         
@@ -913,11 +914,12 @@ def sortServByaward(request):
 def contact_details(request):
     goodsid = 0
     if request.GET['goodsid']:
-        contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
-        contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
+        #contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
+        #contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
 
-        contact_file.close()
+        #contact_file.close()
         goodsid = request.GET['goodsid']
+        contact_string = '政资汇合同详情：等待完善'
         return render(request,'contact_details.html',{'goodsid':goodsid,'contact_string':contact_string})
     return HttpResponse("还没有选择项目")
 #YZ
