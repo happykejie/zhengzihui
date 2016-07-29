@@ -27,7 +27,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
-    request.session['bumen']='全部'
+    request.session['bumen']='财政'#不知道为什么需要这样才能够避免不出现多的搜索条目
+    
     request.session['jibie']='全部'
     request.session['zhuangtai']='全部'
     #print (123)
