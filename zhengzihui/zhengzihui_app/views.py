@@ -214,10 +214,14 @@ def get_and_set_info(items):
         a_items.append(a_item)
     return a_items
 def getthe_filteditem(request):
+    items=[]
+    search_content = request.COOKIES['search_content']
+    if  search_content!= request.session['bumen'] and search_content!= request.session['jibie'] and search_content!= request.session['zhuangtai']:
+        return items
     a_items = []
     middle_items=[]
     tmiddle_items=[]
-    items=[]
+    
     selected = {}
     flag = False
     if 'bumen' in request.session:
@@ -284,7 +288,8 @@ def item_sortbyLevel(request):
     a_items = []
     items = []
     filted_item = getthe_filteditem(request)
-    
+    print request.COOKIES['search_content']
+    print len(filted_item)
     if len(filted_item) == 0:
             goodsname = ''
             ads = []
@@ -302,10 +307,10 @@ def item_sortbyLevel(request):
                 if i not in items:
                     items.append(i)
             filted_item = items
-            
+              
           
     
-    print len(filted_item)  
+    print len(filted_item)
     items = []
     itemstemp = []
     if (sortbyLevelFlag==True):
