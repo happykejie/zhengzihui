@@ -1,0 +1,133 @@
+{% extends 'my_base.html' %}
+
+{% block title %}Frame{% endblock %}
+
+{% block content %}
+<style type="text/css">
+.pub-free-tip {
+	background: #f90;
+	font-size: 14px;
+	line-height: 35px;
+	color: #fff;
+	padding: 0 25px;
+	font-weight: bold;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+</style>
+
+<div class='free_require_frame'>
+    <div id='' style=''>
+        <form id='' action="/free_require/require_finish/" method="post" class='form-horizontal' >
+            <div class="pub-free-tip">官方提供线上担保交易，保障您的资金安全，且不会收取您任何佣金。 80%的欺诈、资金盗取均由线下交易导致，请勿线下交易。</div>
+            <div style="background:#eee;padding: 16px 25px;">
+            <fieldset style=''>
+                <legend>输入你的手机号码并验证：</legend>
+                <div class='form-group'>
+                    <div class="col-sm-2">
+                        {{ form.mobile_num }}
+                        
+                        <div style=''><font color="#FF0000">{{ err_msg.mobile_num }}</font></div>
+                    </div>
+                    <div class='col-sm-9'></div>
+                </div>
+                <div class='form-group'>
+                    <div class='col-sm-2'>
+                        <input type='text' name='vcode' id='vcode' placeholder="验证码" />
+                        <div style=''><font color="#FF0000">{{err_msg.vcode}}</font></div>
+                    </div>
+                    <div class='col-sm-2'>
+                        <input type="button" id="Verification" value="获取验证码" />
+                    </div>
+                    <div class='col-sm-8'></div>
+                </div>
+                <div class='form-group'>
+                    <div class='col-sm-1'></div>
+                    <div class='col-sm-1'>
+                        <!-- input type="button" id="next" value="Next" style='display:none' /-->
+                    </div>
+                    <div class='col-sm-10'></div>
+                </div>
+            </fieldset>
+            <fieldset style='display:block'>
+                <legend>选择输入需求类型，方便我们分类：</legend>
+                <div class='form-group'>
+                    <div class='col-sm-2'>
+                        {{ form.require_type }}
+                    </div>
+                    <div class='col-sm-10'></div>
+                </div>
+                <div class='form-group'>
+                    <div class='col-sm-1'></div>
+                    <div class='col-sm-1'>
+                        <!--input type="button" id="next" value="Next" /-->
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset style='display:block'>
+                <legend>说说你的具体要求：</legend>
+                <div class='form-group'>
+                    <div class='col-sm-12'>
+                        <textarea name='require_describe' rows="15" cols=100% value="{{ require_type }}"  placeholder='描述你自己的详细需求'></textarea>
+                    </div>
+                </div>
+                <div class='form-group'>
+                    <div class='col-sm-1'>
+                        <input type="submit" id="submit" value="提交表单" style='width:200%'/>
+                    </div>
+                    <div class='col-sm-1'>
+                        
+                    </div>
+                    <div class='col-sm-1'>
+                        <input type="reset" id="reset" value="重置表单" style='width:200%'/>
+                    </div>
+                    <div class='col-sm-9'></div>
+                </div>
+            </fieldset>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+    $('input#Verification').click(function(){
+        var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+        if(!reg.test($("input#id_mobile_num").val())) 
+        { 
+            alert('请输入有效的手机号码！'); 
+            return false; 
+        }
+
+        //ajax to 
+        var mobile_num = $('input#id_mobile_num').val();
+        var fd = new FormData();
+        fd.append("mobile_num",mobile_num);
+
+        $.ajax({
+            url: '/free_require/verification/',
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data){
+
+                if (data=='success') {
+                    $('input#id_mobile_num').attr('readonly','true');
+                    $('input#Verification').hide();
+                    //$('input#next').show();
+                }
+            }
+        });
+
+    });
+
+</script>
+<script type="text/javascript">
+    var reg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/; 
+    if(!reg.test($("input#id_mobile_num").val())) 
+    { 
+        alert('请输入有效的手机号码！'); 
+        return false; 
+    } 
+</script>
+{% endblock %}
+

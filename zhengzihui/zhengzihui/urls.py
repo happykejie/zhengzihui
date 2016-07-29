@@ -20,6 +20,7 @@ import zhengzihui_app.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^free_require/', include('fr_app.urls')),
     url(r'^index/$',zhengzihui_app.views.index,name='index'),
     url(r'^hire/$',zhengzihui_app.views.newhire,name='newhire'),
     url(r'^search/$',zhengzihui_app.views.Searchgoods,name='Searchgoods'),

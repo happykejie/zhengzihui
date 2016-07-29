@@ -1,0 +1,28 @@
+<div class='require_type'>
+    <div >here is require type</div>
+    <div>error: {{err_msg}}</div>
+    <button id="next_step" type="button">Next</button>
+</div>
+
+<script type="text/javascript">
+
+    var fd = new FormData();
+    fd.append("require_type",'N1');
+
+    $('button#next_step').click(function(){
+        $.ajax({
+            url: '/free_require/require_type/',
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data){
+
+                $('div#fr_body').children().remove();
+                $('#fr_body').append(data);
+            }
+        });
+
+    });
+
+</script>
