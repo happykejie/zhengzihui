@@ -140,6 +140,7 @@ def search_result(request):
 
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+        middle_items = list(middle_items)
     else:
     	middle_items=tb_item.objects.all()
     
@@ -171,7 +172,11 @@ def search_result(request):
     recommend = []
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'recommend':recommend,})
+    response = render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'recommend':recommend,})
+    if request.session['bumen']:
+        
+        response.set_cookie('search_content',str(request.session['bumen']))
+    return response
 
 ##############################
 #排序部分
@@ -215,9 +220,7 @@ def get_and_set_info(items):
     return a_items
 def getthe_filteditem(request):
     items=[]
-    search_content = request.COOKIES['search_content']
-    if  search_content!= request.session['bumen'] and search_content!= request.session['jibie'] and search_content!= request.session['zhuangtai']:
-        return items
+    
     a_items = []
     middle_items=[]
     tmiddle_items=[]
@@ -255,6 +258,7 @@ def getthe_filteditem(request):
 
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+        middle_items = list(middle_items)
     else:
     	middle_items=tb_item.objects.all()
 
@@ -281,6 +285,10 @@ def getthe_filteditem(request):
     	items = items[:10]#不够10条报错
     else:
         items = items
+    search_content = request.COOKIES['search_content']
+    if  search_content!= request.session['bumen'] and search_content!= request.session['jibie'] and search_content!= request.session['zhuangtai']:
+        items = []
+        return items
     return items
 
 sortbyLevelFlag = True
@@ -574,6 +582,7 @@ def search_result_load(request):
     	#print jibielist
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))
+        middle_items = list(middle_items)            
     else:
     	middle_items=tb_item.objects.all()
     	'''for i in middle_items:
