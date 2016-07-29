@@ -1471,10 +1471,40 @@ def order_add_commit(request):
 #收藏管理
 	#收藏的项目
 def collects(request):
-	return render(request,'collects.html',{})
+    userid = request.COOKIES['user_id']
+    citems = tb_shoucang_item.objects.filter(user_id=userid)
+    items = []
+    a_items = []
+    for item in citems:
+        tmp = tb_item.objects.get(item_id=item.item_id)
+        items.append(tmp)
+    a_items = get_and_set_info(items)
+    return render(request,'collects.html',{'items':a_items})
 	#收藏的服务
 def collect_serve(request):
-	return render(request,'collect_serve.html',{})
+    userid = request.COOKIES['user_id']
+    cgoods = tb_shoucang_goods.objects.filter(user_id=userid)
+    goods = []
+    a_goods = []
+    for good in cgoods:
+        tmp = tb_goods.objects.get(goods_id=good.goods_id)
+        goods.append(tmp)
+    for good in goods:
+            starttime = good.goods_accept_starttime
+            endtime = good.goods_accept_endtime
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+            print starttime
+            print endtime
+            print days_remain
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1-(float(days_remain)/float(days_total)))*100)
+            good.goods_remaintime = finish_percentage#完成百分比为对象添加的属性
+    return render(request,'collect_serve.html',{'goods':goods})
 #评价管理
 
     #我的评价
