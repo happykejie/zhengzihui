@@ -28,19 +28,17 @@ def _do_exception(func):
 
 #@_do_exception
 def frame(request):
-        #pdb.set_trace()
 	form = FRequireInfoForm()
         return render(request,Page.frame,{'form':form})
 
 
 def verification(request):
     if request.method=='POST':
-        pdb.set_trace()
         mobile_num = request.POST['mobile_num']
         vcode=_send_vcode(mobile_num)
         if vcode!='': #send verification
             #save this number at session
-            request.session['vcode'] = vcode
+            request.session['vcode'] = str(vcode)
             request.session['mobile_num'] = mobile_num
             return HttpResponse('success')
     
@@ -49,7 +47,6 @@ def verification(request):
 
 #@_do_exception
 def require_finish(request):
-    #pdb.set_trace()
     if request.method == 'POST':
         form = FRequireInfoForm(request.POST)
         err_msg = Error()
@@ -64,7 +61,7 @@ def require_finish(request):
         elif not  _check_mobile_num(request):
             err_msg.mobile_num ='无效手机号码' 
         else:
-            err_msg.other = '其他错误'
+            err_msg.other = '我们遭遇了一个未预料的错误，请联系管理员'
 
     else:
         form = FRequireInfoForm()
@@ -106,8 +103,9 @@ def _check_require_type(require_type):
 
 
 def _check_vcode(request):
-    vcode = request.session.get('vcode','invalid')
-    if vcode!='invalid' and request.POST.get('vcode','')==vcode:
+    vcode_s = request.session.get('vcode','invalid')
+    vcode_p = request.POST.get('vcode','')
+    if vcode_s!='invalid' and vcode_s==vcode_p:
         return True
 
     return False

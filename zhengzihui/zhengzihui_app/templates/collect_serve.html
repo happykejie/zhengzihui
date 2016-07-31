@@ -1,9 +1,63 @@
 <div>
-	<div id="serve-title">
-		<p>收藏的项目</p>
-	</div>
+    <link href="/static/css/search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/shoucang_item.js" type="text/javascript"></script>
+    
+    <script>
 	
-	
-	
-	
-</div>
+    $.ajaxSetup({
+
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+
+    });
+	</script>
+        
+        
+        <div id="list">
+            {% for good in goods %}
+            <div class="list-content">
+				<a href="/service_details/?goodsid={{ good.goods_id }}">
+                    <img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /><!--需要后期替换的图片页-->
+				</a>
+
+                <div class="text">
+                    <p class="title">
+                        <a href="/service_details/?goodsid={{ goods.goods_id }}">
+	                        {{ good.goods_name }}+服务编号：{{ good.goods_code }}
+	                    </a>
+                    </p>
+
+                    <p class="benefit">
+                        <span class="benefit-text">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <span>收费标准</span>
+                        </span>
+                        <span class="benefit-num">
+                            首付：{{ good.goods_payahead }}+申报成功应付奖金{{ good.goods_awardafter }}
+                        </span>
+                    </p>
+	                <center><span><font color="#dc143c">接单时间进度</font></span></center>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                        <div class="info" style="left:{{ good.goods_remaintime }}%;">{{ good.goods_remaintime }}%</div>
+                    </div>
+
+                    <div class="date">
+
+                        <span class="start">
+                            {{ good.goods_accept_starttime }}
+                        </span>
+                         <span class="stop">
+                           {{ good.goods_accept_endtime }}
+                        </span>
+                    </div>
+
+                </div>
+                <div class="watch">
+                    <a href="/service_details/?goodsid={{ good.goods_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                </div>
+               
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
