@@ -27,7 +27,8 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
-    request.session['bumen']='全部'
+    request.session['bumen']='财政'#不知道为什么需要这样才能够避免不出现多的搜索条目
+    
     request.session['jibie']='全部'
     request.session['zhuangtai']='全部'
     #print (123)
@@ -140,6 +141,7 @@ def search_result(request):
 
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+        middle_items = list(middle_items)
     else:
     	middle_items=tb_item.objects.all()
     
@@ -171,7 +173,11 @@ def search_result(request):
     recommend = []
     recommendtemp = get_the_hotrecommend()
     recommend = get_and_set_info(recommendtemp)
-    return render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'recommend':recommend,})
+    response = render(request,'search_result.html',{'selected':selected,'flag':flag,'items':a_items,'recommend':recommend,})
+    if request.session['bumen']:
+        
+        response.set_cookie('search_content',str(request.session['bumen']))
+    return response
 
 ##############################
 #排序部分
@@ -214,10 +220,12 @@ def get_and_set_info(items):
         a_items.append(a_item)
     return a_items
 def getthe_filteditem(request):
+    items=[]
+    
     a_items = []
     middle_items=[]
     tmiddle_items=[]
-    items=[]
+    
     selected = {}
     flag = False
     if 'bumen' in request.session:
@@ -251,6 +259,7 @@ def getthe_filteditem(request):
 
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))#匹配数据库的级别这一栏的数值YZ
+        middle_items = list(middle_items)
     else:
     	middle_items=tb_item.objects.all()
 
@@ -277,6 +286,10 @@ def getthe_filteditem(request):
     	items = items[:10]#不够10条报错
     else:
         items = items
+    search_content = request.COOKIES['search_content']
+    if  search_content!= request.session['bumen'] and search_content!= request.session['jibie'] and search_content!= request.session['zhuangtai']:
+        items = []
+        return items
     return items
 
 sortbyLevelFlag = True
@@ -284,11 +297,12 @@ def item_sortbyLevel(request):
     a_items = []
     items = []
     filted_item = getthe_filteditem(request)
-    
+    print request.COOKIES['search_content']
+    print len(filted_item)
     if len(filted_item) == 0:
             goodsname = ''
             ads = []
-           
+            print request.COOKIES['search_content']
             if 'search_content' in request.COOKIES:
                 goodsname = request.COOKIES['search_content']
 
@@ -301,10 +315,11 @@ def item_sortbyLevel(request):
             for i in ads: 
                 if i not in items:
                     items.append(i)
-
-            
-            
-    filted_item = items
+            filted_item = items
+              
+          
+    
+    print len(filted_item)
     items = []
     itemstemp = []
     if (sortbyLevelFlag==True):
@@ -357,7 +372,7 @@ def search_result_sort_deadtime(request):
 
             
             
-    filted_item = items
+            filted_item = items
     items = []
     itemstemp = []
     if(sortflag1==True):
@@ -410,7 +425,7 @@ def item_sortbyComprihensive(request):
 
             
             
-    filted_item = items
+            filted_item = items
     items = []
     
     itemstemp = []
@@ -568,6 +583,7 @@ def search_result_load(request):
     	#print jibielist
     	for i in jibielist:
     		middle_items = chain(middle_items,(tb_item.objects.filter(item_level = (allthejibie.index(i)+1))))
+        middle_items = list(middle_items)            
     else:
     	middle_items=tb_item.objects.all()
     	'''for i in middle_items:
@@ -831,14 +847,14 @@ def sortServByComp(request):
     if request.session['for_sort_itemid']:
         itemid = request.session['for_sort_itemid']
 
-        print "在排序当中"
+        #print "在排序当中"
         tb_goods_listTemp = tb_goods.objects.filter(item_id = itemid)#我们默认goods_sort代表点击率
         goodsorderTemp = tb_goods_click.objects.order_by('-gocl_num')
         for goods in goodsorderTemp:
             tb_goods_list.append(tb_goods.objects.get(goods_id = goods.goods_id))
-        for goods in tb_goods_listTemp:
-            if goods not in tb_goods_list:
-                tb_goods_list.append(goods)
+        for goods in tb_goods_list:
+            if goods not in tb_goods_listTemp:
+                tb_goods_list.remove(goods)
                 
             
         
@@ -913,11 +929,12 @@ def sortServByaward(request):
 def contact_details(request):
     goodsid = 0
     if request.GET['goodsid']:
-        contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
-        contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
+        #contact_file = open("D:\Users\yuanzhi\zhengzihui\zhengzihui\zhengzihui_app\static\contact_file\contact.txt","r+")#这是一个绝对路径
+        #contact_string = contact_file.read().decode("gbk")#需要解码一下~不知道为什么YZ
 
-        contact_file.close()
+        #contact_file.close()
         goodsid = request.GET['goodsid']
+        contact_string = '政资汇合同详情：等待完善'
         return render(request,'contact_details.html',{'goodsid':goodsid,'contact_string':contact_string})
     return HttpResponse("还没有选择项目")
 #YZ
