@@ -21,6 +21,7 @@
   <script src="../static/js/Popt.js"></script>
   <script src="../static/js/cityJson.js"></script>
   <script src="../static/js/citySet.js"></script>
+	<link href="/static/css/user_remen.css" rel="stylesheet" type="text/css"/>
   	<script >
 
 	  $(document).ready(function () {
@@ -82,6 +83,8 @@
 ._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
 ._citys1 a:hover { color: #fff; background-color: #56b4f8; }
 .AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+dd:hover{color:red !important;background:#eee;}
+dd.hover-red:hover{color:red !important;background:#eee;}
 
 </style>
 </head>
@@ -93,7 +96,16 @@
 		<div style="float:left">
 			 <ul class="nav navbar-nav">
 
-			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}欢迎来到政资汇！</a></li>
+			
+			 {% if user_name %}
+			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}</a></li>
+			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
+
+
+			{% else %}
+			<li><a href="{% url 'login' %}">登录</a></li>
+			<li><a href="{% url 'regCompany' %}">注册</a></li>
+			{% endif %}
 
 
 			 </ul>
@@ -102,23 +114,16 @@
 
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			{% if user_name %}
-			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
-
-
-			{% else %}
-			<li><a href="{% url 'login' %}">登录</a></li>
-			<li><a href="{% url 'regCompany' %}">注册</a></li>
-			{% endif %}
+			
 			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
-			<li><a href="#">手机政资汇</a></li>
+			<li><a href="url 'download'%}">手机政资汇</a></li>
 			<li><a href="#">微信</a></li>
 			<li><a href="#">客服电话</a></li>
 			<li class="dropdown">
 							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="black">合作中心</font><strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									 <a href="#">申报合作</a>
+									 <a href="url 'business_cooperation' %">申报合作</a>
 								</li>
 								<li>
 									 <a href="#">配套合作</a>
@@ -127,7 +132,7 @@
 									 <a href="#">融资合作</a>
 								</li>
 								<li>
-									 <a href="#">网站联盟</a>
+									 <a href=" url 'union_website' ">网站联盟</a>
 								</li>
 							</ul>
 			</li>
@@ -164,8 +169,9 @@ $("#city").click(function (e) {
 
 					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
 					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
-    						  <option>全部</option>
-   						  <option>发布部门</option>
+    						  <option>所属行业</option>
+   						  <option>领域或产品</option>	
+							<option>归口部门受理人员</option>	
     					  </select>
     				</div>
 					<!--
@@ -191,7 +197,22 @@ $("#city").click(function (e) {
 					</div>
 				</form>
 			<div class="col-sm-2" style="padding:0px">
-			<button type="button" class="btn btn-primary btn-lg btn-block"  onclick="javascript:window.location.href='#'">有偿申报</button>
+			<div class="dropdown">
+   <button type="button" class="btn btn-primary btn-lg btn-block" style="width:60%" id="dropdownMenu1" 
+      data-toggle="dropdown">
+      共享
+      <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation">
+         <a role="menuitem" tabindex="-1" href="#">需求信息发布</a>
+      </li>
+      <li role="presentation">
+         <a role="menuitem" tabindex="-1" href="#">政咨信息共享</a>
+      </li>
+
+   </ul>
+</div>
 			</div>
 			</div>
 		</div>
@@ -218,50 +239,72 @@ $("#city").click(function (e) {
 	</script>
 	<div class="row-fluid">
 		<div class="category-type">
-        <div class="text" style="background-color:#87CEEB;"><font color="white"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中央资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;省级资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;市级资金&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;县级资金</B></font></div>
+        <div class="text" style="background-color:#00BFFF; line-height:3em">
+<font color="white">
+<B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a class="hover-red" href="{% url 'search_result'%}"><font color="white">中央资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{% url 'search_result'%}"><font color="white">省级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{% url 'search_result'%}"><font color="white">市级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="{% url 'search_result'%}"><font color="white">县级资金</a></B></font></div>
 		</div>
-		<div class="col-sm-2" style="margin:0px; padding:0px;background-color:gray;">
-				<ul class="list-inline">
-					<li id="111" onmouseover="show(this)" onmouseout="hide(this)" >
-						    <a href="#"><font color="white"><small>政府部门/</small></font></a>
-							<a href="#"><font color="white"><small>直属机构/</small></font></a>
-							<a href="#"><font color="white"><small>管理机构</small></font></a>
-					</li>
-				</ul>
-				<br>
-				<br>
-				<br>
-				<ul class="list-inline">
-					<li id="112" onmouseover="show(this)" onmouseout="hide(this)">
-						<a href="#"><font color="white"><small>党派/</small></font></a>
-						<a href="#"><font color="white"><small>人民团体/</small></font></a>
-						<a href="#"><font color="white"><small>公益性组织</small></font></a>
-					</li>
-					</ul>
-					<br>
-					<br>
-					<br>
-				<ul class="list-inline">
-					<li id="113" onmouseover="show(this)" onmouseout="hide(this)">
-						<a href="#"><font color="white"><small>科研院所/</small></font></a>
-						<a href="#"><font color="white"><small>高等院校</small></font></a>
-					</li>
-					</ul>
-					<br>
-					<br>
-					<br>
-				<ul class="list-inline">
-					<li id="114" onmouseover="show(this)" onmouseout="hide(this)">
-						<a href="#"><font color="white"><small>国有企业/</small></font></a>
-						<a href="#"><font color="white"><small>事业单位</small></font></a>
-					</li>
-					<br>
-					<br>
-					<br>
-					<br>
-				</ul>
-		</div>
+		<div class="col-sm-2" style="margin:0px; padding:11px 0px;background-color:#696969;>
+				<ul class="nav">
+					<li id="111" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
+						    <dd class="hover-red" style="line-height:6em; text-align:center;"><a class="hover-red" href="#" style="text-decoration:none">政府部门/</a>
+							<a class="hover-red" href="#" style="text-decoration:none"><font size="2">直属机构/</font></a>
+							<a  href="#" style="text-decoration:none">管理机构</a></dd>
 
+
+
+					</li>
+                    
+
+
+
+
+
+
+					<li id="112" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#"style="text-decoration:none">党派/</a>
+						<a href="#" style="text-decoration:none">人民团体/</a>
+						<a href="#" style="text-decoration:none">公益性组织</a></dd>
+
+
+
+					</li>
+
+				
+
+
+
+
+
+					<li id="113" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#" style="text-decoration:none">科研院所/</a>
+						<a href="#" style="text-decoration:none">高等院校</a></dd>
+
+
+					</li>
+
+
+
+
+
+
+
+					<li id="114" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#" style="text-decoration:none">国有企业/</a>
+						<a href="#" style="text-decoration:none">事业单位</a></dd>
+
+
+					</li>
+
+
+
+
+
+				</ul>
+		</div>
 		<div class="col-sm-6" style="margin:0px; padding:0px;">
 			<div id="div111"  style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
@@ -570,12 +613,21 @@ $("#city").click(function (e) {
 		</div>
 <div class="row-fluid">
 <div class="col-sm-6">
-<div style="position:absolute;left:150px;">
-<a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;正在申报</B></font></a>
-<a href="#" ><font color="black"><B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;截止申报</B></font></a>
+<div style="position:absolute;right:250px;">
+
+<a href="{% url 'search_result'%}" ><font color="black"><B>正在申报</B></font></a>
 </div>
 </div>
+<div class="col-sm-4">
+<div style="position:absolute;left:0px;">
+
+<a href="{% url 'search_result'%}" ><font color="black"><B>截止申报</B></font></a>
+</div>
+</div>
+<br>		
 <br>
+<br>		
+<br><br>		
 <br>
 <!--正在申报的项目-->
 <div class="row-fluid">
@@ -602,26 +654,45 @@ function ToWhite(obj){
 </script>
 <table align="center" style="width:1000px;">
 <tr>
-<td	 onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=1"> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg" width="95%"></a><center>
+{% for a_click_item in a_click_items%}
+<td>
+ <div class="collect">
+                        <a href="{% url 'project_detail' %}?id={{ a_click_item.id }}"><img src="{{ a_click_item.pic_url }}"/>
+                            
+                            {{ a_click_item.name }}
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{a_click_item.item_ga}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:{{a_click_item.ipa_name}}
+						<span class="money">
+						</span>
+							</small></p>
+                            <div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: {{ a_click_item.item_consume_time }}%; line-height:50px;">
+								</div>
+							</div>
+						<h5 class="shoufei">{{ a_click_item.item_publish}}  &nbsp;   {{ a_click_item.item_consume_time }}%   &nbsp;      {{ a_click_item.item_deadtime}}</h5>
+	</h5>
+	
+	
+                    </div> 
+
 </td>
-<td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=2"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg" width="95%"></a><center>
-</td>
-<td  onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=3"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg" width="95%"></a><center>
-</td>
-</tr>
-<tr>
-<td  onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=4" > <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg" width="95%"></a><center>
-<td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=5"  > <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg" width="95%"></a><center>
-<td   onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<center><a href = "/project_detail/?id=6" > <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg" width="95%"></a><center>
+{% endfor %}
+
+
+
+
+
+
 </tr>
 </table>
-</div>
+
 <br>
 <br>
 <br>
@@ -761,68 +832,480 @@ function show6F(obj){
 <div id="div1" >
 <table class="table" >
 <tr>
-<tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
-</tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
-</tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
-</tr>
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ item.item_publish }}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ item.item_deadtime }}</h5>
+	</span>
+	
+	
+                    </div> 
+					 <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div>
+					<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	</div>
+         
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	</div>
+              
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </table>
 </div>
 
 <div id="div2" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
 </td>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
 </td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+ <div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-</tr>
+
+
+
+
 </table>
 </div>
 
 <div id="div3" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
+
 </tr>
 </table>
 </div>
@@ -830,12 +1313,65 @@ function show6F(obj){
 <div id="div4" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
+
 </tr>
 </table>
 </div>
@@ -843,24 +1379,129 @@ function show6F(obj){
 <div id="div5" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 </table>
 </div>
 <div id="div6" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 </table>
 </div>
@@ -868,12 +1509,65 @@ function show6F(obj){
 <div id="div7" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
+
 </tr>
 </table>
 </div>
@@ -901,6 +1595,7 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>2F</label>-->
 <ul class="nav nav-list" contenteditable="true">
+				  
 
                   <li id="8" onclick=show2F(this)><a href="#">中共</a></li>
                   <li id="9" onclick=show2F(this)><a href="#">民主党派</a></li>
@@ -914,31 +1609,268 @@ function show6F(obj){
 <div id="div8" >
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 </table>
 </div>
@@ -946,19 +1878,125 @@ function show6F(obj){
 <div id="div9" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 <tr>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
 </tr>
 </table>
 </div>
@@ -966,15 +2004,263 @@ function show6F(obj){
 <div id="div10" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+<tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+</tr>
+<tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+</tr>
+<tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+</tr>
+
+
+
+
+
+
+
+
 </tr>
 </table>
 </div>
@@ -982,12 +2268,176 @@ function show6F(obj){
 <div id="div11" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
+<tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+</tr>
+<tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+</tr>
+
 </tr>
 </table>
 </div>
@@ -1023,31 +2473,438 @@ function show6F(obj){
 <div id="div12" >
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
+
+</tr>
+<tr>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+</tr>
+<tr>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 </table>
 </div>
@@ -1055,20 +2912,127 @@ function show6F(obj){
 <div id="div13" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-</tr>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </table>
 </div>
 </div>
@@ -1104,31 +3068,271 @@ function show6F(obj){
 <div id="div14" >
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 </table>
 </div>
@@ -1136,20 +3340,126 @@ function show6F(obj){
 <div id="div15" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
 </tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-</tr>
+
+
+
+
 </table>
 </div>
 </div>
@@ -1186,31 +3496,271 @@ function show6F(obj){
 <div id="div16" >
 <table class="table" >
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
 </tr>
 </table>
 </div>
@@ -1218,19 +3768,126 @@ function show6F(obj){
 <div id="div17" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+
+
 </tr>
 <tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
 </tr>
 </table>
 </div>
@@ -1238,15 +3895,88 @@ function show6F(obj){
 <div id="div18" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 </table>
 </div>
@@ -1284,31 +4014,171 @@ function show6F(obj){
 <div id="div19" >
 <table class="table" >
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
-</tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/5.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/6.jpg"></a>
-</tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/7.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/8.jpg"></a>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/9.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 </table>
 </div>
@@ -1316,19 +4186,89 @@ function show6F(obj){
 <div id="div20" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
-</tr>
-<tr>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/4.jpg"></a>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 </table>
 </div>
@@ -1336,15 +4276,88 @@ function show6F(obj){
 <div id="div21" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/3.jpg"></a>
-</td>
+
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
 </tr>
 </table>
 </div>
@@ -1352,22 +4365,126 @@ function show6F(obj){
 <div id="div22" style="display:none">
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
-<td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/2.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div> 
+					<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+	
+	
+                    </div>
 </tr>
 </table>
 </div>
 
 <div id="div23" style="display:none">
+
+
+
+
+
+
 <table class="table">
 <tr>
-<td	class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
-<a href = "#" target = _blank> <img class="img-responsive" src = "../static/images/测试静态页面用img/1.jpg"></a>
-</td>
+<div class="collect">
+                        <a href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>                   
+    </div> 
+
 </tr>
 </table>
 </div>
@@ -1376,6 +4493,10 @@ function show6F(obj){
 </div>
 </div>
 </div>
+
+
+
+
 <!--4F到8F未写-->
 <br>
 <br>
