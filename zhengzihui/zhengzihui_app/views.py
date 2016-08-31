@@ -18,6 +18,7 @@ from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
 from models import *
+from .forms import ShareForm,LinkerForm
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
 appkey='23297047'
@@ -1141,8 +1142,53 @@ def user_center(request):
 #def view_all(request):
    # return HttpResponse("hello world")
 
+#用于政资信息共享
+def shareinformation(request):
+	if request.method == "POST":
+		form = ShareForm(request.POST)
+		if form.is_valid():
+			post = form.save(commit=False)
+			post.author = request.user
+			post.save()
+			return HttpResponseRedirect('/Publish/')
+	else:
+		form = ShareForm()
+	return render(request, 'shareinformation.html', {'form': form}) 
+	
+#用于发布人信息发布
+def Publish(request):
+	if request.method == "POST":
+		form2 = LinkerForm(request.POST)
+		if form2.is_valid():
+			post = form2.save(commit=False)
+			post.author = request.user
+			post.save()
+			return render(request,'SharePublish.html',{'post':post} )
+	else:
+		form2 = LinkerForm()
+	return render(request, 'sharedetail.html', {'form2': form2}) 
+	
 
-
+		
+flag=True
+def change(request):
+    global flag,link
+    if flag:
+        id1 = int(request.GET['id'])
+        link = Linker.objects.get(id=id1)
+        flag=False
+        return render_to_response('sharedetail.html',{'link':link})
+    else:
+        l = request.GET
+        Linker.linkname = l['name']
+        Linker.linktephon=l['phone']
+        Linker.linkemail=l['email']
+        Linker.linkadress=l['adress']
+        Linker.remarks=l['remarks']
+        Linker.secert=l['secert']
+        Linker.save()
+        flag=True
+        return render_to_response('SharePublish.html',{'right':True})  
 
 #用户信息 zss
 

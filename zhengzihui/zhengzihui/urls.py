@@ -132,6 +132,11 @@ urlpatterns = [
     url(r'^union_website',zhengzihui_app.views.union_website,name="union_website"),
     #帐号申述
     url(r'^representations',zhengzihui_app.views.representations,name="representations"),
+	#信息共享-xy
+	url(r'^shareinformation',"zhengzihui_app.views.shareinformation",name="shareinformation"),
+	#发布人信息发布-xy
+	url(r'^Publish',"zhengzihui_app.views.Publish",name="Publish"),
+	url(r'^change',"zhengzihui_app.views.change",name="change"),
     #政资汇简介
     url(r'^introduce',zhengzihui_app.views.introduce,name="introduce"),
     #可信网站

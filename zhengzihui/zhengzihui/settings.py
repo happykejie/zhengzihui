@@ -102,11 +102,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
       #there have a option
-	 'NAME':'zhengzihui_test_second',#your database name
+	 'NAME':'zhengzihui_test',#your database name
 	 'USER':'root',#your username of mysql
-     'PASSWORD':'123654',#password of mysql user
-	 'HOST':'127.0.0.1',#localhost
-	 'PORT':'3306',#defaut port of mysql
+	 'PASSWORD':'123456',#password of mysql user
+	 #'HOST':'127.0.0.1',#localhost
+	 #'PORT':'3306',#defaut port of mysql
     }
 }
 
@@ -173,7 +173,7 @@ SUIT_CONFIG = {
         {'label': u'附件相关','models': ('zhengzihui_app.tb_pic', 'zhengzihui_app.tb_album','zhengzihui_app.tb_area','zhengzihui_app.tb_article','zhengzihui_app.tb_accessory')},
         {'label': u'关于站内消息','models': ('zhengzihui_app.tb_Message', 'zhengzihui_app.tb_MessageText','zhengzihui_app.tb_SysMessage')},
         {'label': u'关于订单','models': ('zhengzihui_app.tb_order', 'zhengzihui_app.tb_Artificial_Representations')},
-        {'label': u'关于项目','models': ('zhengzihui_app.tb_item', 'zhengzihui_app.tb_item_class','zhengzihui_app.tb_item_click','zhengzihui_app.tb_item_pa')},
+        {'label': u'关于项目','models': ('zhengzihui_app.tb_item', 'zhengzihui_app.tb_item_class','zhengzihui_app.tb_item_click','zhengzihui_app.tb_item_pa','zhengzihui_app.shareinformation','zhengzihui_app.Linker',)},
         #{'model':'zhengzihui_app.tb_user','label':u'用户','icon':'icon-user'}, 
         {'app':'zhengzihui_app','label': u'所有站点内容管理', 'models': (
             
@@ -212,6 +212,8 @@ SUIT_CONFIG = {
             {'model': 'zhengzihui_app.tb_item_class','label': u'项目分类表'},
             {'model': 'zhengzihui_app.tb_item_click','label': u'项目点击表'},
             {'model': 'zhengzihui_app.tb_item_pa','label': u'项目发布机构表'},
+			{'model': 'zhengzihui_app.shareinformation','label': u'政资信息共享'},
+			{'model': 'zhengzihui_app.Linker','label': u'政资信息发布人'},
             
             {'model': 'zhengzihui_app.tb_order','label': u'订单表'},
             {'model': 'zhengzihui_app.tb_Artificial_Representations','label': u'人工申诉表'},

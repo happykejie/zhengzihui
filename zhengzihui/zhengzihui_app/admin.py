@@ -4,6 +4,7 @@ from django.contrib.admin import AdminSite #import for Adminsite change the head
 
 
 from .models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area#引入需要管理的表单
+from .models import shareinformation,Linker
 # Register your models here.
 class Tb_Apage_ClassAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -105,6 +106,21 @@ class tb_item_Admin(admin.ModelAdmin):
     list_display = ['item_id', 'item_code', 'item_name','itcl_id', 'item_level', 'item_ga','item_pa_id','item_publish','item_deadtime','item_about','item_url','item_key','item_status','is_hot','item_from','is_recommend']
 
 
+#政资信息共享与发布--xy
+class shareinformation_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('共享政资信息',{'fields':['projectname','projectdirect','projectneed','projectprocess','projectmanage','projectlink','projectsecret']}),
+    
+    ]
+    list_display = ['projectname','projectdirect','projectneed','projectprocess','projectmanage','projectlink','projectsecret']
+	
+class Linker_Admin(admin.ModelAdmin):
+    fieldsets = [
+            ('政资信息发布人',{'fields':['linkname', 'linkemail','linkadress','linktelphon','remarks','secret']}),
+    
+    ]
+    list_display = ['linkname', 'linkemail','linkadress','linktelphon','remarks','secret']
+	
 '''class tb_item_click_Admin(admin.ModelAdmin):
     fieldsets = [
             ('添加项目点击率',{'fields':['itcl_id','click_counter']}),
@@ -222,6 +238,9 @@ admin.site.register(tb_goods_click,tb_goods_click_Admin)
 admin.site.register(tb_goods_class,tb_goods_class_Admin)
 admin.site.register(tb_goods_evaluation,tb_goods_evaluation_Admin)
 admin.site.register(tb_order,tb_order_Admin)
+#政资信息共享与发布--xy
+admin.site.register(shareinformation,shareinformation_Admin)
+admin.site.register(Linker,Linker_Admin)
 
 admin.site.register(tb_Artificial_Representations,tb_Artificial_Representations_Admin)
 admin.site.register(tb_Message,tb_Message_Admin)

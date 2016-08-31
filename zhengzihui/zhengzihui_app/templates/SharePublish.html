@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>项目及发布人信息</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <link href="../static/css/representations.css" rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+
+</div>
+	<div>
+		<img class="h" src="../static/images/2.png" alt="placeholder+image">
+	</div>
+	<div class="center">
+		
+		<hr width="100%">
+<!--信息表格-->					
+<table class="table table-condensed">
+   <caption><h2><b>发布人基本信息</b></h2></caption>
+   
+   <tbody>
+      <tr>
+         <td><b>发布人姓名：</b></td>
+         <td>{{post.linkname}}</td>
+		 <td><b>发布人电话：</b></td>
+         <td>{{post.linktelphon}}</td>
+      </tr>
+      <tr>
+         <td><b>发布人邮件：</b></td>
+         <td>{{post.linkemail}}</td>
+		 <td><b>发布人单位：</b></td>
+         <td>{{post.linkadress}}</td>
+      </tr>
+	  <tr>
+         <td><b>其他信息：</b></td>
+         <td>{{post.remarks}}</td>
+		 <td><b>信息是否保密：</b></td>
+         <td>{{post.secret}}</td>
+      </tr>
+   </tbody>
+</table>
+ <center><a class="className" <a href='/change/?id={{post.id}}'>信息修改</a></center>
+<!--信息表格-->			
+ <div class="footer">
+		
+		<hr width="100%">
+		
+			<p class="footer">Copyright © 2002-2016  版权所有  政资汇科技有限公司   苏ICP证B2-20100204  [乙测资字32005078]   </p>
+		
+	</div>
+</body>
+</html>	

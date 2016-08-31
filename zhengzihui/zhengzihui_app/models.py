@@ -880,3 +880,43 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+	
+#用于政资分享的模块--xy
+LEVEL_CHOICES = (  
+    ('N1', 'YES'),  
+    ('N2', 'NO'),   
+)  
+class shareinformation(models.Model):
+    projectname = models.CharField("项目名称",max_length=20,null=False)
+    projectdirect = models.CharField("项目方向和领域",max_length=20,null=False)
+    projectneed = models.CharField("项目申报要求",max_length=30,null=False)
+    projectprocess = models.TextField("项目申报流程",null=False)
+    projectmanage = models.CharField("项目管理部门",max_length=20,null=False)   
+    projectlink = models.CharField("项目联系人及电话",max_length=20,null=False)
+    projectsecret = models.CharField("项目是否保密",max_length=10,null=False,choices = LEVEL_CHOICES)
+    class Meta:
+        verbose_name = u'政资信息共享'
+        verbose_name_plural = u'政资信息共享'
+    def __unicode__(self):   #python 2 
+        return self.projectname
+
+
+
+#用于政资分享的模块--xy
+LEVEL_CHOICES = (  
+    ('YES', 'YES'),  
+    ('NO', 'NO'),   
+)  
+class Linker(models.Model):
+	
+    linkname = models.CharField("联系人姓名",max_length=20,null=False)
+    linkemail = models.EmailField("联系人邮箱",null=False,blank=False)
+    linkadress = models.CharField("联系人地址",max_length=30,null=False)
+    linktelphon = models.CharField("联系人电话",max_length=11,null=False)
+    remarks = models.TextField("备注",null=False)   
+    secret = models.CharField("是否保密",max_length=10,null=False,choices = LEVEL_CHOICES)
+    class Meta:
+        verbose_name = u'政资信息发布人'
+        verbose_name_plural = u'政资信息发布人'
+    def __unicode__(self):   #python 2 
+        return self.linkname
