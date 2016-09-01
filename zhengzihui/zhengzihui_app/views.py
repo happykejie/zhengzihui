@@ -2205,15 +2205,150 @@ def savec(request):
         add.item_file= xiangmutu
         add.conclusion=""
         add.save()
-        print(111)
+        #print(111)
         return HttpResponseRedirect('/index',{})
     return render_to_response("e_customization.html",{})
 
-  
+def busindex(request):
+	return render_to_response("bus_index.html",{})
+
+
+def buspubservice(request):
+	sp_id=9
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	if(request.method=="POST"):
+		mod=""
+		fea=""
+		if(request.POST.get("modon")):
+			mod+=request.POST.get("modon")
+			pay=request.POST.get("paya")
+		if(request.POST.get("modtw")):
+			mod+=request.POST.get("modtw")
+			payt=request.POST.get("payb")
+		if(request.POST.get("modth")):
+			mod+=request.POST.get("modth")
+			payth=request.POST.get("payc")
+		#print(mod)
+		if(request.POST.get("feaon")):
+			fea+=request.POST.get("feaon")
+			fea+="  "
+		if(request.POST.get("featw")):
+			fea+=request.POST.get("featw")
+			fea+="  "
+		if(request.POST.get("feath")):
+			fea+=request.POST.get("feath")
+			fea+="  "
+		if(request.POST.get("feafo")):
+			fea+=request.POST.get("feafo")
+			fea+="  "
+		if(request.POST.get("feafi")):
+			fea+=request.POST.get("feafi")
+			fea+="  "
+		#print(fea)
+		sname=request.POST.get("sname")
+		payt=request.POST.get("payb")
+		fuwuneirong=request.POST.get("fuwuneirong")
+		fuwuliucheng=request.POST.get("fuwuliucheng")
+		chenggonganli=request.POST.get("chenggonganli")
+		fanli=request.POST.get("fanli")
+		#print(fanli)
+		add=tb_goods_wfc()
+		add.goods_payahead=pay
+		add.goods_awardmid=payt
+		add.goods_awardafter=payth
+		#add.goods_id
+		add.goods_name=sname
+		add.item_id=1
+		add.sp_id=sp_id
+		add.goods_fanli=fanli
+		add.fea=fea
+		add.cont=fuwuneirong
+		add.steps=fuwuliucheng
+		add.exa=chenggonganli
+		add.smod=mod
+		add.save()
+        #print(111)
+		return render_to_response("buswaitforchecked.html",{})
+	else:
+		return render_to_response("buspubservice.html",{})
+	
+def busmaservice(request):
+	sp_id=1
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	goods = tb_goods.objects.filter(sp_id=sp_id)
+	return render_to_response("busmaservice.html",{'goods_list':goods})
 	
 	
-	
-	
+def merge_service_details(request):
+	sp_id=9
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	if (request.method=="GET"):
+		mid=request.GET.get("goodsid")
+		#print (mid)
+		goods=tb_goods.objects.get(goods_id=mid)
+		return render_to_response("busmerservice.html",{'goods':goods})
+	else:
+		did=request.POST.get("deletegoodsid")
+		dgoods=tb_goods.objects.get(goods_id=did)
+		dgoods.goods_show=0
+		dgoods.goods_status=0
+		dgoods.save()
+		mod=""
+		fea=""
+		if(request.POST.get("modon")):
+			mod+=request.POST.get("modon")
+			pay=request.POST.get("paya")
+		if(request.POST.get("modtw")):
+			mod+=request.POST.get("modtw")
+			payt=request.POST.get("payb")
+		if(request.POST.get("modth")):
+			mod+=request.POST.get("modth")
+			payth=request.POST.get("payc")
+		#print(mod)
+		if(request.POST.get("feaon")):
+			fea+=request.POST.get("feaon")
+			fea+="  "
+		if(request.POST.get("featw")):
+			fea+=request.POST.get("featw")
+			fea+="  "
+		if(request.POST.get("feath")):
+			fea+=request.POST.get("feath")
+			fea+="  "
+		if(request.POST.get("feafo")):
+			fea+=request.POST.get("feafo")
+			fea+="  "
+		if(request.POST.get("feafi")):
+			fea+=request.POST.get("feafi")
+			fea+="  "
+		#print(fea)
+		
+		payt=request.POST.get("payb")
+		fuwuneirong=request.POST.get("fuwuneirong")
+		fuwuliucheng=request.POST.get("fuwuliucheng")
+		chenggonganli=request.POST.get("chenggonganli")
+		fanli=request.POST.get("fanli")
+		#print(fanli)
+		add=tb_goods_wfc()
+		add.goods_payahead=pay
+		add.goods_awardmid=payt
+		add.goods_awardafter=payth
+		#add.goods_id
+		add.goods_name="hahaha"
+		add.item_id=1
+		add.sp_id=sp_id
+		add.goods_fanli=fanli
+		add.fea=fea
+		add.cont=fuwuneirong
+		add.steps=fuwuliucheng
+		add.exa=chenggonganli
+		add.smod=mod
+		add.save()
+        #print(111)
+		return render_to_response("buswaitforchecked.html",{})
+		
 	
 	
 	

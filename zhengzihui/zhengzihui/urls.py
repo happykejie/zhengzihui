@@ -163,7 +163,14 @@ urlpatterns = [
     #支付选择页面
 	url(r'^selectpay/$', zhengzihui_app.views.selectpay,name='selectpay'),
 	#邮箱验证页
-	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',zhengzihui_app.views.active_user,name='active_user')
+	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',zhengzihui_app.views.active_user,name='active_user'),
+
+	#商家入住首页
+	url(r'^busindex/$',zhengzihui_app.views.busindex,name='busindex'),
+	url(r'^buspubservice/',zhengzihui_app.views.buspubservice,name='buspubservice'),
+	url(r'^busmaservice/',zhengzihui_app.views.busmaservice,name='busmaservice'),
+	url(r'^merge_service_details/',zhengzihui_app.views.merge_service_details,name='merge_service_details'),
+
 ]
 
 

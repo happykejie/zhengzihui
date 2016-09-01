@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+发布服务
+</title>
+</head>
+<body>
+<br />
+<br />
+<br />
+<br />
+<div class="container-fruid">
+<div class="row">
+<div class="col-lg-offset-2 col-lg-1 col-sm-1 col-md-1">
+<h2>
+收费模式
+</h2>
+</div>
+</div>
+<br />
+<br />
+<form role="form" method="POST" action="">
+<div class="row">
+	<div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">服务名称:</font></h3></center></div>
+	<div class="col-lg-offset-3">
+	<br />
+	<br />
+	<h4><p><input name="sname" type="text" value="" placeholder=""></h4>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">模式选择:</font></h3></center></div>
+<div class="col-lg-offset-3">
+	<br />
+	<br />
+	<h4><p><input name="modon" type="radio" value="启动经费">&nbsp;启动经费 <input name="paya" type="text" value="" placeholder="金额"></h4>
+	<h4><p><input name="modtw" type="radio" value="中期经费">&nbsp;中期经费 <input name="payb" type="text" value="" placeholder="金额"></h4>
+	<h4><p><input name="modth" type="radio" value="成功赏金">&nbsp;成功赏金 <input name="payc" type="text" value="" placeholder="金额"></h4>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-1 col-sm-1 col-md-1">
+<h2>
+服务特色
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">特色选择:</font></h3></center></div>
+<div class="col-lg-offset-3">
+	<br />
+	<br />
+	<h4><p><input id="feaon" name="feaon" type="checkbox" value="按时完成"><font color="orange">&nbsp;按时完成</font></h4>
+	<h4><p><input id="featw" name="featw" type="checkbox" value="保证修改"><font color="orange">&nbsp;保证修改</font></h4>
+	<h4><p><input id="feath" name="feath" type="checkbox" value="提供原版"><font color="orange">&nbsp;提供原版</font></h4>
+	<h4><p><input id="feafo" name="feafo" type="checkbox" value="后续服务"><font color="orange">&nbsp;后续服务</font></h4>
+	<h4><p><input id="feafi" name="feafi" type="checkbox" value="提供加急"><font color="orange">&nbsp;提供加急</font></h4>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-1 col-sm-1 col-md-1">
+<h2>
+服务内容
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="fuwuneirong" name="fuwuneirong" style="width:100%;"></textarea>
+</div>
+</div>
+
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-1 col-sm-1 col-md-1">
+<h2>
+服务流程
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="fuwuliucheng" name="fuwuliucheng" style="width:100%;"></textarea>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-1 col-sm-1 col-md-1">
+<h2>
+成功案例
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="chenggonganli" name="chenggonganli" style="width:100%;"></textarea>
+</div>
+</div>
+<br />
+<br />
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h3>
+填写平台返利
+</h3>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">选择比例:</font></h3></center></div>
+<div class="col-lg-1 col-sm-1 col-md-1"></div>
+<br />
+<br />
+<select name="fanli">
+  <option value="10%">10%</option>
+  <option value="20%">20%</option>
+  <option value="30%">30%</option>
+</select>
+</div>
+
+
+
+
+<div class="row">
+<div class="col-lg-offset-7">
+<input type="submit" class="btn btn-lg btn-default" value="发布"></input>
+</div>
+</div>
+
+</form>
+</div>
+</body>
+</html>
