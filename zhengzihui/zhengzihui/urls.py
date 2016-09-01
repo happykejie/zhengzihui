@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 """zhengzihui URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -166,9 +166,18 @@ urlpatterns = [
 	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',zhengzihui_app.views.active_user,name='active_user'),
 
 
+
     #forTest
     url(r'^test/$', zhengzihui_app.views.forTest,name='forTest'),
-    url(r'^bus_comment_manager/$', zhengzihui_app.views.bus_comment_manager,name='bus_comment_manager')
+    url(r'^bus_comment_manager/$', zhengzihui_app.views.bus_comment_manager,name='bus_comment_manager'),
+
+	#商家入住首页
+	url(r'^busindex/$',zhengzihui_app.views.busindex,name='busindex'),
+	url(r'^buspubservice/',zhengzihui_app.views.buspubservice,name='buspubservice'),
+	url(r'^busmaservice/',zhengzihui_app.views.busmaservice,name='busmaservice'),
+	url(r'^merge_service_details/',zhengzihui_app.views.merge_service_details,name='merge_service_details')
+
+
 ]
 
 

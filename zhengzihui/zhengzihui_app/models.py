@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 import datetime,time
 
 from django.db import models
@@ -619,9 +619,32 @@ class tb_SysMessage(models.Model):
     class Meta:
         verbose_name = '系统信息表'
         verbose_name_plural = '系统信息表'
+class tb_goods_wfc(models.Model):
+    goods_id = models.AutoField("自增索引id主键",primary_key = True,null=False)
+    goods_name = models.CharField("服务名称",max_length = 40, null = False)
+    item_id = models.IntegerField("服务对应项目的id",null = False)
+    sp_id = models.IntegerField("服务对应的服务提供商",null = False)
+    goods_fanli = models.CharField("平台返利",null=False,max_length=20)
+	#smod = models.CharField("服务模式",max_length=20,null=True)
+    fea = models.CharField("服务特色",max_length = 20, null = True)
+    cont = models.CharField("服务内容",max_length = 100, null = True)
+    steps = models.CharField("服务流程",max_length = 100, null = True)
+    exa = models.CharField("成功案例",max_length = 100, null = True)
+    smod = models.CharField("服务模式",max_length = 100, null = True)
+    goods_payahead = models.IntegerField("首付金额",null=False,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=True)
+    goods_awardmid = models.IntegerField("中期奖金",null=True)
+    class Meta:
+        verbose_name = '待测服务信息表'
+        verbose_name_plural = '待测服务信息表'
+    
+    def __unicode__(self):
+        return self.goods_name
+
+
 
 class tb_goods(models.Model):
-    goods_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
+    goods_id = models.AutoField("自增索引id主键",primary_key = True,null=False)
     item_id = models.IntegerField("服务对应项目的id",null = False)
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
     goods_name = models.CharField("服务名称",max_length = 40, null = False)
@@ -629,7 +652,8 @@ class tb_goods(models.Model):
     #Addby YZ为了服务列表的数据呈现
     goods_code = models.IntegerField("服务编号",null=True)
     goods_payahead = models.IntegerField("首付金额",null=False,default=100)
-    goods_awardafter = models.IntegerField("申报成功后奖金",null=False,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=True)
+    goods_awardmid = models.IntegerField("中期奖金",null=True)
     goods_accept_starttime = models.DateTimeField("开始接单时间",null=True)
     goods_accept_endtime = models.DateTimeField("最后接单时间",null=True)
 
@@ -638,6 +662,14 @@ class tb_goods(models.Model):
     goods_pay = models.IntegerField("该服务支持的支付方式",null = False)
     goods_guarantee = models.CharField("商家保证",max_length = 100, null = False)
     goods_sort = models.IntegerField("排序",null = False)#用来排序
+
+  	#smod = models.CharField("模式选择",max_length = 20, null = True)
+    fea = models.CharField("服务特色",max_length = 20, null = True)
+    cont = models.CharField("服务内容",max_length = 100, null = True)
+    steps = models.CharField("服务流程",max_length = 100, null = True)
+    exa = models.CharField("成功案例",max_length = 100, null = True)
+    smod = models.CharField("服务模式",max_length = 100, null = True)
+    goods_fanli = models.CharField("平台返利",null=False,max_length=20)
     
     NOTCOMMEND = 0
     COMMEND = 1
@@ -880,3 +912,4 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+

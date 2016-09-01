@@ -1,3 +1,4 @@
+
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
@@ -17,6 +18,7 @@ import jieba,p_alipay.alipay
 from token import Token
 from django.core.mail import send_mail
 from django.core import serializers #用来序列化model 传给js
+#from models import tb_user_expand,tb_user,tb_service_provider,tb_News_Class,tb_News,Tb_Notice,Tb_Notice_Class,Tb_Apage,Tb_Apage_Class,tb_album,tb_pic,tb_accessory,tb_Artificial_Representations,tb_Message,tb_MessageText,tb_SysMessage,tb_item,tb_item_pa,tb_item_class,tb_goods,tb_album,tb_pic,tb_article,tb_goods_evaluation,tb_goods_click,tb_goods_class,tb_order,tb_item_click,tb_area
 from models import *
 SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
 token_confirm = Token(SECRET_KEY)
@@ -27,14 +29,47 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 # Create your views here.
 def index(request):
-    request.session['bumen']='财政'#不知道为什么需要这样才能够避免不出现多的搜索条目
+    a_click_items=[]
+    click_items = tb_item_click.objects.order_by('-click_counter')[:4]
+    for click_item in click_items:
+        a_click_item = {}    
+        a_click_item['id'] = click_item.item_id#获取项目id
+        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
+        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_click_item['item_ga'] = tb_item.objects.get(item_id=click_item.item_id).item_ga#获取项目资助金额
+        item=tb_item.objects.get(item_id=click_item.item_id)
+        item_pa_id=item.item_pa_id
+        a_click_item['ipa_name'] = tb_item_pa.objects.get(ipa_id=item_pa_id).ipa_name#获取项目管理单位名称
+        
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_click_item['item_publish'] = tb_item.objects.get(item_id=click_item.item_id).item_publish.strftime('%Y.%m.%d')#获取项目开始时间
+        a_click_item['item_deadtime'] = tb_item.objects.get(item_id=click_item.item_id).item_deadtime.strftime('%Y.%m.%d')#获取项目截止时间
+        start_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_click_item['item_consume_time'] = 100
+            a_click_item['item_key'] = "已结束"
+        else:
+            a_click_item['item_consume_time'] = int(consume_time)
+        
+
+        a_click_items.append(a_click_item)
+    return render(request,'index.html',{'a_click_items':a_click_items})
     
-    request.session['jibie']='全部'
-    request.session['zhuangtai']='全部'
-    #print (123)
-    if 'user_id'in request.COOKIES:#
-        return HttpResponseRedirect('/login')
-    return render_to_response('index.html',{})
+
+    
+	#request.session['bumen']='全部'
+	#request.session['jibie']='全部'
+	#request.session['zhuangtai']='全部'
+	#print (123)
+
+
+
+	#return render_to_response('index.html',{})
+
 
 #xcz 搜索
 #为了显示当前路径，袁志修改，现在还有一些BUG
@@ -697,8 +732,7 @@ def item_details(request):
         return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
 
         
-
-    
+#服务商列表展示 YZ
 def service_list(request):
     service = 1
     noservice = 0
@@ -734,8 +768,12 @@ def service_list(request):
         id1 = int(id1)
         request.session['for_sort_itemid'] = id1
         tb_goods_list = tb_goods.objects.filter(item_id = id1)
-        #for a in tb_goods_list: 
-        #print (a.goods_id)
+        if len(tb_goods_list):
+            service = 1
+            noservice =0
+        else:
+            noservice = 1
+            service = 0
         
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
@@ -2171,20 +2209,168 @@ def savec(request):
         add.item_file= xiangmutu
         add.conclusion=""
         add.save()
-        print(111)
+        #print(111)
         return HttpResponseRedirect('/index',{})
     return render_to_response("e_customization.html",{})
 
-  
+def busindex(request):
+	return render_to_response("bus_index.html",{})
+
+
+def buspubservice(request):
+	sp_id=9
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	if(request.method=="POST"):
+		mod=""
+		fea=""
+		payt=0
+		payth=0
+		if(request.POST.get("modon")):
+			mod+=request.POST.get("modon")
+			pay=request.POST.get("paya")
+		if(request.POST.get("modtw")):
+			mod+=request.POST.get("modtw")
+			payt=request.POST.get("payb")
+		if(request.POST.get("modth")):
+			mod+=request.POST.get("modth")
+			payth=request.POST.get("payc")
+		#print(mod)
+		if(request.POST.get("feaon")):
+			fea+=request.POST.get("feaon")
+			fea+="  "
+		if(request.POST.get("featw")):
+			fea+=request.POST.get("featw")
+			fea+="  "
+		if(request.POST.get("feath")):
+			fea+=request.POST.get("feath")
+			fea+="  "
+		if(request.POST.get("feafo")):
+			fea+=request.POST.get("feafo")
+			fea+="  "
+		if(request.POST.get("feafi")):
+			fea+=request.POST.get("feafi")
+			fea+="  "
+		#print(fea)
+		
+		sname=request.POST.get("sname")
+		#payt=request.POST.get("payb")
+		fuwuneirong=request.POST.get("fuwuneirong")
+		fuwuliucheng=request.POST.get("fuwuliucheng")
+		chenggonganli=request.POST.get("chenggonganli")
+		fanli=request.POST.get("fanli")
+		#print(fanli)
+		add=tb_goods_wfc()
+		add.goods_payahead=pay
+		add.goods_awardmid=payt
+		add.goods_awardafter=payth
+		#add.goods_id
+		add.goods_name=sname
+		add.item_id=1
+		add.sp_id=sp_id
+		add.goods_fanli=fanli
+		add.fea=fea
+		add.cont=fuwuneirong
+		add.steps=fuwuliucheng
+		add.exa=chenggonganli
+		add.smod=mod
+		add.save()
+        #print(111)
+		return render_to_response("buswaitforchecked.html",{})
+	else:
+		return render_to_response("buspubservice.html",{})
 	
-	
+
 def forTest(request):
     return render_to_response("bus_index.html", {})
 
 def bus_comment_manager(request):
     return render_to_response("bus_comment_manager.html", {})
+
+def busmaservice(request):
+	sp_id=1
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	goods = tb_goods.objects.filter(sp_id=sp_id)
+	return render_to_response("busmaservice.html",{'goods_list':goods})
+	
+
+
+	
+def merge_service_details(request):
+	sp_id=9
+	#if 'user_id' in request.COOKIES:
+	#	sp_id=request.COOKIES['user_id']
+	if (request.method=="GET"):
+		mid=request.GET.get("goodsid")
+		#print (mid)
+		goods=tb_goods.objects.get(goods_id=mid)
+		return render_to_response("busmerservice.html",{'goods':goods})
+	else:
+		did=request.POST.get("deletegoodsid")
+		dgoods=tb_goods.objects.get(goods_id=did)
+		dgoods.goods_show=0
+		dgoods.goods_status=0
+		dgoods.save()
+		mod=""
+		fea=""
+		payt=0
+		payth=0
+		pay=request.POST.get("pay")
+		if(request.POST.get("modon")):
+			mod+=request.POST.get("modon")
+			pay=request.POST.get("paya")
+		if(request.POST.get("modtw")):
+			mod+=request.POST.get("modtw")
+			payt=request.POST.get("payb")
+		if(request.POST.get("modth")):
+			mod+=request.POST.get("modth")
+			payth=request.POST.get("payc")
+		#print(mod)
+		if(request.POST.get("feaon")):
+			fea+=request.POST.get("feaon")
+			fea+="  "
+		if(request.POST.get("featw")):
+			fea+=request.POST.get("featw")
+			fea+="  "
+		if(request.POST.get("feath")):
+			fea+=request.POST.get("feath")
+			fea+="  "
+		if(request.POST.get("feafo")):
+			fea+=request.POST.get("feafo")
+			fea+="  "
+		if(request.POST.get("feafi")):
+			fea+=request.POST.get("feafi")
+			fea+="  "
+		#print(fea)
+		pay=request.POST.get("paya")
+		sname=request.POST.get("sname")
+		#payt=request.POST.get("payb")
+		fuwuneirong=request.POST.get("fuwuneirong")
+		fuwuliucheng=request.POST.get("fuwuliucheng")
+		chenggonganli=request.POST.get("chenggonganli")
+		fanli=request.POST.get("fanli")
+		#print(fanli)
+		add=tb_goods_wfc()
+		add.goods_payahead=pay
+		add.goods_awardmid=payt
+		add.goods_awardafter=payth
+		#add.goods_id
+		add.goods_name=sname
+		add.item_id=1
+		add.sp_id=sp_id
+		add.goods_fanli=fanli
+		add.fea=fea
+		add.cont=fuwuneirong
+		add.steps=fuwuliucheng
+		add.exa=chenggonganli
+		add.smod=mod
+		add.save()
+        #print(111)
+		return render_to_response("buswaitforchecked.html",{})
+		
 	
 	
 	
-	
+
 
