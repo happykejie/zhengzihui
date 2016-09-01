@@ -25,22 +25,41 @@
 </div>
 <br />
 <br />
-<form role="form" method="POST" action="">
+<script>
+function check()
+{	
+	var a =  document.getElementById("sname").value;
+	var b =  document.getElementById("paya").value;
+	//alert(a);
+	//alert(b);
+	//alert(a);
+	if((a=="")||(b=="")){
+		alert("服务名，启动经费不为空");
+		return false;
+	}
+	else{
+		//alert(453);
+		return true;
+	}
+}
+</script>
+<form role="form" method="POST" action="" onsubmit="return check()">
 <div class="row">
 	<div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">服务名称:</font></h3></center></div>
 	<div class="col-lg-offset-3">
 	<br />
 	<br />
-	<h4><p><input name="sname" type="text" value="" placeholder=""></h4>
+	<h4><p><input name="sname" id="sname" type="text" value="" placeholder=""></h4>
+</div>
 </div>
 <div class="row">
 <div class="col-lg-offset-2	 col-lg-1 col-sm-1 col-md-1"><center><h3><font color="grey">模式选择:</font></h3></center></div>
 <div class="col-lg-offset-3">
 	<br />
 	<br />
-	<h4><p><input name="modon" type="radio" value="启动经费">&nbsp;启动经费 <input name="paya" type="text" value="" placeholder="金额"></h4>
-	<h4><p><input name="modtw" type="radio" value="中期经费">&nbsp;中期经费 <input name="payb" type="text" value="" placeholder="金额"></h4>
-	<h4><p><input name="modth" type="radio" value="成功赏金">&nbsp;成功赏金 <input name="payc" type="text" value="" placeholder="金额"></h4>
+	<h4><p><input name="modon" type="radio" value="启动经费">&nbsp;启动经费 <input name="paya" id="paya" type="text" value="" placeholder="金额"></h4>
+	<h4><p><input name="modtw" type="radio" value="中期经费">&nbsp;中期经费 <input name="payb"  id="payb" type="text" value="" placeholder="金额"></h4>
+	<h4><p><input name="modth" type="radio" value="成功赏金">&nbsp;成功赏金 <input name="payc" id="payc" type="text" value="" placeholder="金额"></h4>
 </div>
 </div>
 

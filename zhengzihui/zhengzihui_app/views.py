@@ -2220,6 +2220,8 @@ def buspubservice(request):
 	if(request.method=="POST"):
 		mod=""
 		fea=""
+		payt=0
+		payth=0
 		if(request.POST.get("modon")):
 			mod+=request.POST.get("modon")
 			pay=request.POST.get("paya")
@@ -2246,8 +2248,9 @@ def buspubservice(request):
 			fea+=request.POST.get("feafi")
 			fea+="  "
 		#print(fea)
+		
 		sname=request.POST.get("sname")
-		payt=request.POST.get("payb")
+		#payt=request.POST.get("payb")
 		fuwuneirong=request.POST.get("fuwuneirong")
 		fuwuliucheng=request.POST.get("fuwuliucheng")
 		chenggonganli=request.POST.get("chenggonganli")
@@ -2298,6 +2301,9 @@ def merge_service_details(request):
 		dgoods.save()
 		mod=""
 		fea=""
+		payt=0
+		payth=0
+		pay=request.POST.get("pay")
 		if(request.POST.get("modon")):
 			mod+=request.POST.get("modon")
 			pay=request.POST.get("paya")
@@ -2324,8 +2330,9 @@ def merge_service_details(request):
 			fea+=request.POST.get("feafi")
 			fea+="  "
 		#print(fea)
-		
-		payt=request.POST.get("payb")
+		pay=request.POST.get("paya")
+		sname=request.POST.get("sname")
+		#payt=request.POST.get("payb")
 		fuwuneirong=request.POST.get("fuwuneirong")
 		fuwuliucheng=request.POST.get("fuwuliucheng")
 		chenggonganli=request.POST.get("chenggonganli")
@@ -2336,7 +2343,7 @@ def merge_service_details(request):
 		add.goods_awardmid=payt
 		add.goods_awardafter=payth
 		#add.goods_id
-		add.goods_name="hahaha"
+		add.goods_name=sname
 		add.item_id=1
 		add.sp_id=sp_id
 		add.goods_fanli=fanli
