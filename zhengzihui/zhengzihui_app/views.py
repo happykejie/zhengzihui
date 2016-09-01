@@ -2178,7 +2178,11 @@ def savec(request):
   
 	
 	
-	
+def forTest(request):
+    return render_to_response("bus_index.html", {})
+
+def bus_comment_manager(request):
+    return render_to_response("bus_comment_manager.html", {})
 	
 	
 	
