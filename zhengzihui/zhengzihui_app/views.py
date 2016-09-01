@@ -1,3 +1,4 @@
+
 # coding=utf-8
 from django.shortcuts import render
 from django.shortcuts import HttpResponse, HttpResponseRedirect
@@ -731,8 +732,7 @@ def item_details(request):
         return render(request,'project_detail.html',{'item':item,'article0':article0,'article1':article1,'a_pics':a_pics})
 
         
-
-    
+#服务商列表展示 YZ
 def service_list(request):
     service = 1
     noservice = 0
@@ -768,8 +768,12 @@ def service_list(request):
         id1 = int(id1)
         request.session['for_sort_itemid'] = id1
         tb_goods_list = tb_goods.objects.filter(item_id = id1)
-        #for a in tb_goods_list: 
-        #print (a.goods_id)
+        if len(tb_goods_list):
+            service = 1
+            noservice =0
+        else:
+            noservice = 1
+            service = 0
         
         for goods in tb_goods_list:
             starttime = goods.goods_accept_starttime
@@ -2283,6 +2287,7 @@ def busmaservice(request):
 	goods = tb_goods.objects.filter(sp_id=sp_id)
 	return render_to_response("busmaservice.html",{'goods_list':goods})
 	
+
 	
 def merge_service_details(request):
 	sp_id=9
@@ -2359,4 +2364,5 @@ def merge_service_details(request):
 	
 	
 	
+
 

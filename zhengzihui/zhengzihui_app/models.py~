@@ -1,3 +1,4 @@
+
 ﻿#coding:utf-8
 import datetime,time
 
@@ -652,7 +653,7 @@ class tb_goods(models.Model):
     #Addby YZ为了服务列表的数据呈现
     goods_code = models.IntegerField("服务编号",null=True)
     goods_payahead = models.IntegerField("首付金额",null=False,default=100)
-    goods_awardafter = models.IntegerField("申报成功后奖金",null=True,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=True)
     goods_awardmid = models.IntegerField("中期奖金",null=True)
     goods_accept_starttime = models.DateTimeField("开始接单时间",null=True)
     goods_accept_endtime = models.DateTimeField("最后接单时间",null=True)
@@ -912,3 +913,4 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+

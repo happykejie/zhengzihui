@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 import datetime,time
 
 from django.db import models
@@ -912,3 +912,4 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+

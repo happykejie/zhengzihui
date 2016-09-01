@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 """zhengzihui URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
