@@ -68,10 +68,10 @@
 <center><a href="#"><font color="white" size="4px">首页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px">订单管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="order_manage()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px">结算管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="counter_manage()">结算管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px">点评管理</font></a></center>
@@ -100,6 +100,16 @@
 		var url="/busmaservice"
 		$('#fra').attr('src',url);
 	}
+	//YZ
+	function order_manage(){
+		var url="/bus_order_manage"
+		$('#fra').attr('src',url);
+	}
+	function counter_manage(){
+		var url="/bus_counter_manage"
+		$('#fra').attr('src',url);
+	}
+
 </script>
 </div>
 </div>

@@ -170,6 +170,16 @@ urlpatterns = [
 	url(r'^buspubservice/',zhengzihui_app.views.buspubservice,name='buspubservice'),
 	url(r'^busmaservice/',zhengzihui_app.views.busmaservice,name='busmaservice'),
 	url(r'^merge_service_details/',zhengzihui_app.views.merge_service_details,name='merge_service_details'),
+    #YZ
+    url(r'^bus_order_manage/',zhengzihui_app.views.bus_order_manage,name="bus_order_manage"),
+    url(r'^bus_counter_manage/',zhengzihui_app.views.bus_counter_manage,name="bus_counter_manage"),
+    url(r'^change_paper_send_state/',zhengzihui_app.views.change_paper_send_state,name="change_paper_send_state"),
+    url(r'^change_has_pay_state/',zhengzihui_app.views.change_has_pay_state,name="change_has_pay_state"),
+    url(r'^sort_has_pay/',zhengzihui_app.views.sort_has_pay,name="sort_has_pay"),
+    url(r'^sort_order_manage/',zhengzihui_app.views.sort_order_manage,name="sort_order_manage"),
+
+
+
 
 ]
 
