@@ -2281,11 +2281,33 @@ def buspubservice(request):
 		return render_to_response("buspubservice.html",{})
 	
 
-def forTest(request):
-    return render_to_response("bus_index.html", {})
+
 
 def bus_comment_manager(request):
-    return render_to_response("bus_comment_manager.html", {})
+    service_provider = 'cyf'
+    comment_list = tb_goods_evaluation.objects.filter(service_provider=service_provider)
+   # print(comment_list)
+    #print service_provider
+    return render_to_response("bus_comment_manager.html", {'comment_list':comment_list})
+
+def service_provider_reply(request):
+    if request.GET['id']:
+        id = request.GET['id']
+        goods = tb_goods_evaluation.objects.get(goods_id=id)
+        user_name = goods.user_name
+        if request.method == 'POST':
+            goods.reply_content = request.POST.get("reply")
+            goods.save()
+            return HttpResponseRedirect('/busindex',{})
+    return render_to_response('service_provider_reply.html', {'user_name':user_name})
+
+
+
+def info_main(request):
+    return render_to_response('info_main.html', {})
+
+
+
 
 def busmaservice(request):
 	sp_id=1

@@ -167,10 +167,12 @@ urlpatterns = [
 
 
 
-    #forTest
-    url(r'^test/$', zhengzihui_app.views.forTest,name='forTest'),
-    url(r'^bus_comment_manager/$', zhengzihui_app.views.bus_comment_manager,name='bus_comment_manager'),
 
+    #点评管理
+    url(r'^bus_comment_manager/$', zhengzihui_app.views.bus_comment_manager,name='bus_comment_manager'),
+    url(r'^service_provider_reply/$', zhengzihui_app.views.service_provider_reply,name='service_provider_reply'),
+    #信息维护
+    url(r'^info_main/$', zhengzihui_app.views.info_main,name='info_main'),
 	#商家入住首页
 	url(r'^busindex/$',zhengzihui_app.views.busindex,name='busindex'),
 	url(r'^buspubservice/',zhengzihui_app.views.buspubservice,name='buspubservice'),

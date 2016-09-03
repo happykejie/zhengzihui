@@ -65,7 +65,7 @@
 
 <div class = "col-sm-1 col-md-1 col-lg-1"></div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<<<<<<< HEAD
+
 <center><a href="#"><font color="white" size="4px">首页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
@@ -78,34 +78,14 @@
 <center><a href="#"><font color="white" size="4px" onclick="comment_manager()">点评管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="">信息维护</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="info_main()">信息维护</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" >服务维护</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="manageservice()">服务维护</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="pubservice()">服务发布</font></a></center>
-=======
-<center><a href="#"><font color="white" size="5px">首页</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="5px">订单管理</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="5px">结算管理</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="5px">点评管理</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="5px">信息维护</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="5px" onclick="manageservice()">服务维护</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="5px" onclick="pubservice()">服务发布</font></a></center>
->>>>>>> c597e26660fab3ce8d7e7dd326fb67e3909e35ee
+
 </div>
 </div>
 
@@ -119,19 +99,17 @@
 		$('#fra').attr('src',url);
 	}
 	function manageservice(){
-<<<<<<< HEAD
-		var url="#"
+        var url="/busmaservice"
 		$('#fra').attr('src',url);
 	}
 	function comment_manager(){
 	    var url="/bus_comment_manager"
 		$('#fra').attr('src',url);
     }
-=======
-		var url="/busmaservice"
+    function info_main(){
+        var url="/info_main"
 		$('#fra').attr('src',url);
-	}
->>>>>>> c597e26660fab3ce8d7e7dd326fb67e3909e35ee
+    }
 </script>
 </div>
 </div>
