@@ -1029,12 +1029,83 @@ def order_details(request):
         order.express_state = 0 #是一个默认值，应该不会用到
         '''
         order.save()
-
-
-
-
     return render(request,'order_details.html',{'order':order,'goods':goods,'item':item,})
-	
+
+ ##     #订单详情
+def order_detail(request):
+    #request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
+    user = []
+    a_click_items = []
+    a_recommend_items = []
+    if 'user_id' in request.COOKIES:
+        user_id = int(request.COOKIES['user_id'])
+        user = tb_user.objects.get(user_id=user_id)
+    else:
+        return HttpResponse("请先登录账号;请返回到上级页面登录或者注册")
+
+    click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
+    for click_item in click_items:
+        a_click_item = {}    
+        a_click_item['id'] = click_item.item_id#获取项目id
+        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
+        a_click_item['item_ga'] = tb_item.objects.get(item_id=click_item.item_id).item_ga#获取项目资助金额
+        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        item=tb_item.objects.get(item_id=click_item.item_id)
+        item_pa_id=item.item_pa_id
+        a_click_item['ipa_name'] = tb_item_pa.objects.get(ipa_id=item_pa_id).ipa_name#获取项目管理单位名称
+        
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_click_item['item_publish'] = tb_item.objects.get(item_id=click_item.item_id).item_publish.strftime('%Y.%m.%d')#获取项目开始时间
+        a_click_item['item_deadtime'] = tb_item.objects.get(item_id=click_item.item_id).item_deadtime.strftime('%Y.%m.%d')#获取项目截止时间
+        start_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_click_item['item_consume_time'] = 100
+            a_click_item['item_key'] = "已结束"
+        else:
+            a_click_item['item_consume_time'] = int(consume_time)
+        a_click_items.append(a_click_item)
+    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
+    for recommend_item in recommend_items:
+        a_recommend_item= {}
+        a_recommend_item['id'] = recommend_item.item_id#获取项目id
+        a_recommend_item['name'] = recommend_item.item_name#获取项目名字
+        album = tb_album.objects.filter(album_type=0,affiliation_id=recommend_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_recommend_items.append(a_recommend_item)
+
+    order_details_order_id = 1#取一个默认值
+    if request.GET['id']:
+        #能保证取到吗
+        order_details_order_id = request.GET['id']
+    order = tb_order.objects.get(order_id = order_details_order_id)
+    order.goods_code=(tb_goods.objects.get(goods_id=order.goods_id)).goods_code
+    order.goods_name=(tb_goods.objects.get(goods_id=order.goods_id)).goods_name  
+    order.buyer_name=(tb_user.objects.get(user_id=order.buyer_id)).user_name
+    order.buyer_telephone=(tb_user.objects.get(user_id=order.buyer_id)).user_telephone 
+    order.buyer_email=(tb_user.objects.get(user_id=order.buyer_id)).user_email 
+    #dont know why
+    '''if order.lock_state == 0:
+        if order.order_state == 0:
+            order['order_state'] = '已取消'
+        if order.order_state == 1:
+            order['order_state'] = '未付款'
+        if order.order_state == 2:
+            order['order_state'] = '已付款'
+        if order.order_state == 3:
+            order['order_state'] = '已发货' 
+        if order.order_state == 4:
+            order['order_state'] = '已验收'
+    else:
+        order['order_state'] = '申请处理中'''
+    return render(request,'user_info.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items,'order':order})       
+       
+
+    
 def order_completed(request):
     if request.GET['goodsid']:
         goodsid = request.GET['goodsid']
@@ -1225,6 +1296,89 @@ def modify_user(request):
         user_expand.company_nature = request.POST['company_nature']
         user_expand.save()
     return HttpResponseRedirect('/zzh/user_center')
+    
+#lqx
+#商家中心
+def merchant_center(request):
+    #request.session['user_id'] = 3#此处设置了个session值用来测试，等登录模块完成之后再修改
+    sp = []
+    if 'sp_id' in request.COOKIES:
+        sp_id = int(request.COOKIES['sp_id'])
+        sp = tb_service_provider.objects.get(sp_id=sp_id)
+    else:
+        return HttpResponse("请先登录账号;请返回到上级页面登录或者注册")
+
+    return render(request,'shenbaohezuo.html',{'sp':sp,})
+
+    
+    #保存登录商家修改信息
+def modify_merchant(request):
+    sp = []
+    sp_expand = []
+    if request.COOKIES['sp_id']:
+        sp_id = int(request.COOKIES['sp_id'])
+        sp = tb_service_provider.objects.get(sp_id=sp_id)
+    sp.sp_name = request.POST['name']
+    sp.sp_email = request.POST['email']
+    sp.sp_password = request.POST['password']
+    sp.sp_telephone = request.POST['phonenumber']
+    sptype = int(request.POST['sptype'])
+    sp.sp_type = request.POST['sp_type']
+    
+
+    return HttpResponseRedirect('/zzh/merchant_center')
+##商家登录页面        
+def merchant(request):
+    errors= []  
+    sp_name=None  
+    password=None
+    sp = tb_service_provider()
+    if 'sp_name' in request.COOKIES:
+        response = render_to_response('shenbaohezuo.html',{'sp_name':request.COOKIES['sp_name']})
+        return response
+        
+    if request.method == 'POST' :  
+        if not request.POST.get('_spname'):  
+            errors.append('请输入用户名')  
+        else:
+            sp_name = request.POST.get('_spname')  
+        if not request.POST.get('password'):  
+            errors.append('请输入登陆密码')  
+        else:  
+            password= request.POST.get('password')  
+        if sp_name is not None and password is not None:
+            try:
+                sp = tb_service_provider.objects.get(sp_name = sp_name)
+            except tb_service_provider.DoesNotExist:
+                errors.append('用户名不存在')
+            if sp.sp_auth == 0:
+            	errors.append('请查看邮件完成用户认证')
+            	return render_to_response('merchant.html', {'errors': errors})
+            if password == sp.psw:
+                
+                response = render_to_response('shenbaohezuo.html',{'sp_name':sp.sp_name,})
+                
+                response.set_cookie('sp_name',sp_name,3600)
+                response.set_cookie('sp_id',sp.sp_id,3600)
+                #print(user.expand.company_name)
+                
+                if 'unregist_tobepay_goodsid' in request.COOKIES:
+                    goodsid = request.COOKIES['unregist_tobepay_goodsid']
+                    responsenotpay = HttpResponseRedirect('/service_list/?itemid='+str(goodsid))
+                    responsenotpay.set_cookie('sp_name',sp_name,3600)
+                    responsenotpay.set_cookie('sp_id',sp.user_id,3600)
+                    return responsenotpay
+                return response
+            else:
+                errors.append('密码错误')
+    return render_to_response('merchant.html', {'errors': errors})    
+###商家退出
+def merchantout(request):
+        response = HttpResponseRedirect('/index/')
+        response.delete_cookie('sp_name')
+        response.delete_cookie('sp_id')
+        return response    
+    
     #安全中心
 def safe_center(request):
     if request.session['user_id']:
@@ -1253,9 +1407,11 @@ def all_orders(request):
     for order in order_list:
         a_order = {}
         a_order['order_id'] = order.order_id#获取订单id
+        a_order['order_no'] = order.order_no#获取订单编号
         a_order['goods_id'] = order.goods_id#获取商品id     
         a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
         a_order['item_id'] = order.item_id#获取项目id
+        a_order['add_time'] = order.add_time#获取起始时间
         if order.lock_state == 0:
             if order.order_state == 0:
                 a_order['order_state'] = '已取消'
@@ -1282,6 +1438,94 @@ def all_orders(request):
         a_order_list.append(a_order)
     return render(request,'order_list.html',{'a_order_list':a_order_list})
 
+##qiu
+def all_orders_back(request):
+    user = []
+    a_click_items = []
+    a_recommend_items = []
+    if 'user_id' in request.COOKIES:
+        user_id = int(request.COOKIES['user_id'])
+        user = tb_user.objects.get(user_id=user_id)
+    else:
+        return HttpResponse("请先登录账号;请返回到上级页面登录或者注册")
+
+    click_items = tb_item_click.objects.order_by('-click_counter')[:15]#获取点击率前15的项目
+    for click_item in click_items:
+        a_click_item = {}    
+        a_click_item['id'] = click_item.item_id#获取项目id
+        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
+        a_click_item['item_ga'] = tb_item.objects.get(item_id=click_item.item_id).item_ga#获取项目资助金额
+        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        item=tb_item.objects.get(item_id=click_item.item_id)
+        item_pa_id=item.item_pa_id
+        a_click_item['ipa_name'] = tb_item_pa.objects.get(ipa_id=item_pa_id).ipa_name#获取项目管理单位名称
+        
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_click_item['item_publish'] = tb_item.objects.get(item_id=click_item.item_id).item_publish.strftime('%Y.%m.%d')#获取项目开始时间
+        a_click_item['item_deadtime'] = tb_item.objects.get(item_id=click_item.item_id).item_deadtime.strftime('%Y.%m.%d')#获取项目截止时间
+        start_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_click_item['item_consume_time'] = 100
+            a_click_item['item_key'] = "已结束"
+        else:
+            a_click_item['item_consume_time'] = int(consume_time)
+        a_click_items.append(a_click_item)
+    recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
+    for recommend_item in recommend_items:
+        a_recommend_item= {}
+        a_recommend_item['id'] = recommend_item.item_id#获取项目id
+        a_recommend_item['name'] = recommend_item.item_name#获取项目名字
+        album = tb_album.objects.filter(album_type=0,affiliation_id=recommend_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_recommend_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_recommend_items.append(a_recommend_item)
+    
+    order_list = []
+    a_order_list = []
+    if request.COOKIES['user_id']:
+        user_id = int(request.COOKIES['user_id'])
+        order_list = tb_order.objects.filter(buyer_id=user_id).order_by('-add_time')
+
+    for order in order_list:
+        a_order = {}
+        a_order['order_id'] = order.order_id#获取订单id
+        a_order['order_no'] = order.order_no#获取订单编号
+        a_order['goods_id'] = order.goods_id#获取商品id     
+        a_order['goods_name'] = tb_goods.objects.get(goods_id=order.goods_id).goods_name#获取商品的名字
+        a_order['item_id'] = order.item_id#获取项目id
+        a_order['add_time'] = order.add_time#获取起始时间
+        if order.lock_state == 0:
+            if order.order_state == 0:
+                a_order['order_state'] = '已取消'
+            if order.order_state == 1:
+                a_order['order_state'] = '未付款'
+            if order.order_state == 2:
+                a_order['order_state'] = '已付款'
+            if order.order_state == 3:
+                a_order['order_state'] = '已发货' 
+            if order.order_state == 4:
+                a_order['order_state'] = '已验收'
+        else:
+            a_order['order_state'] = '申请处理中'
+        a_order['order_amount'] = order.order_amount
+        if order.eval_state == 0:
+            a_order['eval_state'] = '未评价'
+        else:
+            a_order['eval_state'] = '已评价'
+        ipa_id = tb_item.objects.get(item_id=order.item_id).item_pa_id
+        a_order['publish'] = tb_item_pa.objects.get(ipa_id=ipa_id).ipa_name
+        album = tb_album.objects.filter(album_type=0,affiliation_id=order.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_order['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_order_list.append(a_order)
+    return render(request,'order_back.html',{'user':user,'a_click_items':a_click_items,'a_recommend_items':a_recommend_items,'a_order_list':a_order_list})
+    
+    
+    
     #未支付
 def not_pay(request):
     order_list = []
@@ -2213,6 +2457,17 @@ def savec(request):
         return HttpResponseRedirect('/index',{})
     return render_to_response("e_customization.html",{})
 
+
+'''
+**************
+商家后台部分
+**************
+'''
+
+
+
+
+
 def busindex(request):
 	return render_to_response("bus_index.html",{})
 
@@ -2393,6 +2648,218 @@ def merge_service_details(request):
 		
 	
 	
-	
+#YZ
+
+def get_all_order_of_sp(sp_id):
+    if not sp_id:
+        return '请输入服务商id'
 
 
+    # 获取该商家获得的所有订单
+    all_order = tb_order.objects.filter(sp_id=sp_id)
+    # 为每个订单添加一个服务名称的属性
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+    return all_order
+def bus_order_manage(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
+
+    for order in all_order:
+
+        if order.efile_send :
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+
+
+    return render(request,"bus_order_manage.html",{'all_order':all_order,'sp_id':sp_id})
+
+def change_paper_send_state(request):
+    if 'order_id' in request.GET:
+        order_id = request.GET.get('order_id')
+        temp_order = tb_order.objects.get(order_id=order_id)
+        temp_order.paper_send = 1
+        temp_order.save()
+        #很冗余的代码，就是为了取订单
+        if 'sp_id' in request.COOKIES:
+            sp_id = request.COOKIES['sp_id']
+        else:
+            sp_id = 1
+        all_order = get_all_order_of_sp(sp_id)
+
+        for order in all_order:
+            # print order.goods_id
+
+            if order.efile_send:
+                order.str_efile_send = '已经交付'
+            else:
+                order.str_efile_send = '未交付'
+            if order.paper_send:
+                order.str_paper_send = '已经送达'
+            else:
+                order.str_paper_send = '未送达'
+
+        return render(request,"bus_order_manage.html",{'all_order':all_order})
+    else:
+        return HttpResponse("没有正确的订单号")
+
+
+def bus_counter_manage(request):
+
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+
+    # 获取该商家获得的所有订单
+    all_order = get_all_order_of_sp(sp_id=sp_id)
+    # 为每个订单添加一个服务名称的属性
+    for order in all_order:
+
+        if order.has_pay == 1:
+            order.str_has_pay = '订单已经申请结算,正在结算中'
+        elif order.has_pay == 2:
+            order.str_has_pay = "订单已经结算"
+        else:
+            order.str_has_pay = '未结算'
+
+    return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+def change_has_pay_state(request):
+    if 'order_id' in request.GET:
+        order_id = request.GET.get('order_id')
+        temp_order = tb_order.objects.get(order_id=order_id)
+        temp_order.has_pay = 1#状态1表示申请结算
+        temp_order.save()
+        #很冗余的代码，就是为了取订单
+        if 'sp_id' in request.COOKIES:
+            sp_id = request.COOKIES['sp_id']
+        else:
+            sp_id = 1
+
+        # 获取该商家获得的所有订单
+        all_order = get_all_order_of_sp(sp_id=sp_id)
+        for order in all_order:
+
+            if order.has_pay == 1:
+                order.str_has_pay = '订单已经申请结算,正在结算中'
+            else:
+                order.str_has_pay = '未结算'
+
+        return render(request,"bus_counter_manage.html",{'all_order':all_order})
+    else:
+        return HttpResponse("没有正确的订单号")
+
+def sort_has_pay(request):
+    sp_id = request.GET.get('sp_id')
+    flag = request.GET.get('flag')
+    if flag == '1':
+        all_order = tb_order.objects.filter(sp_id = sp_id).order_by('-has_pay')
+    else:
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('has_pay')
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+        if order.has_pay == 1:
+            order.str_has_pay = '订单已经申请结算,正在结算中'
+        elif order.has_pay == 2:
+            order.str_has_pay = "订单已经结算"
+        else:
+            order.str_has_pay = '未结算'
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+
+    return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+def sort_order_manage(request):
+    sp_id = request.GET.get('sp_id')
+    flag = request.GET.get('flag')
+    if flag == '0':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-add_time')
+    elif flag == '1':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('promise_finish_time')
+
+    else:
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-finish_percentage')
+
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+        if order.efile_send:
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+
+    return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})

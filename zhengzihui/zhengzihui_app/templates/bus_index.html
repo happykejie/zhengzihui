@@ -69,16 +69,17 @@
 <center><a href="#"><font color="white" size="4px">首页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px">订单管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="order_manage()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px">结算管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="counter_manage()">结算管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="comment_manager()">点评管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="info_main()">信息维护</font></a></center>
+
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="manageservice()">服务维护</font></a></center>
@@ -102,6 +103,7 @@
         var url="/busmaservice"
 		$('#fra').attr('src',url);
 	}
+
 	function comment_manager(){
 	    var url="/bus_comment_manager"
 		$('#fra').attr('src',url);
@@ -110,6 +112,18 @@
         var url="/info_main"
 		$('#fra').attr('src',url);
     }
+
+	//YZ
+	function order_manage(){
+		var url="/bus_order_manage"
+		$('#fra').attr('src',url);
+	}
+	function counter_manage(){
+		var url="/bus_counter_manage"
+		$('#fra').attr('src',url);
+	}
+
+
 </script>
 </div>
 </div>

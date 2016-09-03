@@ -626,7 +626,7 @@ class tb_goods_wfc(models.Model):
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
     goods_fanli = models.CharField("平台返利",null=False,max_length=20)
 	#smod = models.CharField("服务模式",max_length=20,null=True)
-    fea = models.CharField("服务特色",max_length = 20, null = True)
+    fea = models.CharField("服务特色",max_length = 1000, null = True)
     cont = models.CharField("服务内容",max_length = 100, null = True)
     steps = models.CharField("服务流程",max_length = 100, null = True)
     exa = models.CharField("成功案例",max_length = 100, null = True)
@@ -796,7 +796,15 @@ class tb_order(models.Model):
     buyer_name = models.CharField("买家姓名",max_length = 40, null = False)
     buyer_email = models.EmailField("买家电子邮箱",max_length = 40,null=False,blank=False)
     add_time = models.DateTimeField("订单生成时间",auto_now=True,blank=False)
+    promise_finish_time = models.DateTimeField("订单截止交付时间", auto_now=True, blank=False)
+
+    efile_send = models.IntegerField("电子档是否提交",null=False,default=0)
+    paper_send = models.IntegerField("纸质档是否提交",null=False,default=0)
+
     payment_code = models.CharField("支付方式名称代码",max_length = 100,null = False)
+    has_pay = models.IntegerField("是否支付",null=False,default=0)
+    finish_percentage = models.IntegerField('完成进度',null=False,default=0)
+
     payment_time = models.DateTimeField("支付(付款)时间",null=True,blank=False)#这个需要后续完成
     final_time = models.DateTimeField("订单完成时间",null=True,blank=False)#这个也是后续完成
     good_amount = models.IntegerField("商品总价格",null = False)#服务总价格=首付
