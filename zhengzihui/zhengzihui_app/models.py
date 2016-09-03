@@ -242,6 +242,7 @@ class tb_News(models.Model):
 class Tb_Notice(models.Model):
     Notice_id = models.AutoField(primary_key = True)  
     Notice_title = models.CharField('公告标题',max_length=100,null =False)
+    Notice_short_content = models.CharField('公告短内容',max_length=1000,null=True)
     Article_id = models.IntegerField('文章ID',null =False)
     Notice_time = models.DateField('发布时间')
     Notice_source = models.CharField('公告来源',max_length=100,null =False)

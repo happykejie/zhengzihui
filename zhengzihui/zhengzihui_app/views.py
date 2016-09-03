@@ -1855,7 +1855,7 @@ def selectpay(request):
             response =  HttpResponseRedirect("/regCompany")
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
-            response.set_cookie('unregist_tobepay_goodsid',goods.goods_id,3600)
+            response.set_cookie('unregist_tobepay_goodsid',goods.goods_id)
             #print(request.COOKIES['unregist_tobepay_goodsid'])
         return response
 
@@ -2222,10 +2222,97 @@ def savec(request):
 
 
 
+def get_today_order(wt_order ):
+    td_order = []
+    td_order = wt_order
+    for order in wt_order:
+        #print type(order.add_time)
+        #order.add_time.replace(tzinfo=None)
+        if (order.add_time.replace(tzinfo=None) -datetime.datetime.now()).days == 0 :
+            pass
+        else:
+            td_order.remove(order)
 
+    return td_order
 
+#YZ
 def busindex(request):
-	return render_to_response("bus_index.html",{})
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
+
+    weichuli_order = []
+    chulizhong_order = []
+    daishenghe_order = []
+    yiwancheng_order = []
+
+    for order in all_order:
+        if order.order_state == 1:
+            weichuli_order.append(order)
+        elif order.order_state == 2:
+            chulizhong_order.append(order)
+        elif order.order_state == 3:
+            yiwancheng_order.append(order)
+        else:
+            pass
+
+    all_wfto_num = len(weichuli_order)
+    all_dsh_num = len(daishenghe_order)
+    all_clz_num = len(chulizhong_order)
+    all_ywc_num = len(yiwancheng_order)
+    order_num_info = []
+    order_num_info.append(all_wfto_num)
+    order_num_info.append(all_dsh_num)
+    order_num_info.append(all_ywc_num)
+    order_num_info.append(all_clz_num)
+    #今日数据用的是所有的数据，怎么搞还要想想
+
+    '''#get today order
+    #today_wcl_order = get_today_order(temp_wcl)
+    today_dsh_order = get_today_order(daishenghe_order)
+    today_ywc_order = get_today_order(yiwancheng_order)
+    today_clz_order = get_today_order(chulizhong_order)
+    today_order_num =[]
+    today_order_num.append(0)
+    today_order_num.append(len(today_dsh_order))
+    today_order_num.append(len(today_ywc_order))
+    today_order_num.append(len(today_clz_order))
+    '''
+
+    #get 3 latest comment
+    latest_comment=[]
+    latest_comment= tb_goods_evaluation.objects.all()[:2]
+    #latest_comment =latest_comment[:2]
+
+    mine_comment = []
+    for comment in latest_comment:
+        temp_goods = tb_goods.objects.get(goods_id = comment.goods_id)
+        temp_sp = tb_service_provider.objects.get(sp_id = temp_goods.sp_id)
+        if temp_sp:
+            mine_comment.append(comment)
+
+    mine_notice = []
+    #later WILL changge YZ 没有针对不同的商家推送不同的通知，获取的是全网的通知
+    latest_notice = Tb_Notice.objects.all()[:2]
+
+    mine_notice = latest_notice
+    #以开始接单时间排序，最新发布的服务，这里是为了避免老徐改他的代码所以没有添加一个publish_time的字段，应该是要添加的
+    mine_leatest_serv = tb_goods.objects.filter(sp_id = sp_id).order_by('-goods_accept_starttime')
+    if len(mine_leatest_serv) == 0:
+        pass
+    elif len(mine_leatest_serv) == 1:
+        pass
+    else:
+        mine_leatest_serv = mine_leatest_serv[0:1]
+
+    #mine_info_short = tb_user.objects.get()   wait for other
+    context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
+               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
+    response = render(request,"bus_index.html",context)
+    response.set_cookie('first_page',1)
+    return response
 
 
 def buspubservice(request):
@@ -2296,7 +2383,7 @@ def busmaservice(request):
 	#if 'user_id' in request.COOKIES:
 	#	sp_id=request.COOKIES['user_id']
 	goods = tb_goods.objects.filter(sp_id=sp_id)
-	return render_to_response("busmaservice.html",{'goods_list':goods})
+	return render_to_response("busmaservice.html",{'goods_list':goods,})
 	
 
 	
@@ -2373,7 +2460,7 @@ def merge_service_details(request):
 		return render_to_response("buswaitforchecked.html",{})
 		
 	
-	
+
 #YZ
 
 def get_all_order_of_sp(sp_id):
@@ -2427,7 +2514,7 @@ def bus_order_manage(request):
         else:
             order.str_paper_send = '未送达'
 
-
+    #request.COOKIES['first_page'] = 0
     return render(request,"bus_order_manage.html",{'all_order':all_order,'sp_id':sp_id})
 
 def change_paper_send_state(request):
@@ -2454,7 +2541,7 @@ def change_paper_send_state(request):
                 order.str_paper_send = '已经送达'
             else:
                 order.str_paper_send = '未送达'
-
+        #request.COOKIES['first_page'] = 0
         return render(request,"bus_order_manage.html",{'all_order':all_order})
     else:
         return HttpResponse("没有正确的订单号")
@@ -2478,7 +2565,7 @@ def bus_counter_manage(request):
             order.str_has_pay = "订单已经结算"
         else:
             order.str_has_pay = '未结算'
-
+    #request.session['first_page'] = 0
     return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
 
 def change_has_pay_state(request):
@@ -2501,7 +2588,7 @@ def change_has_pay_state(request):
                 order.str_has_pay = '订单已经申请结算,正在结算中'
             else:
                 order.str_has_pay = '未结算'
-
+        #request.session['first_page'] = 0
         return render(request,"bus_counter_manage.html",{'all_order':all_order})
     else:
         return HttpResponse("没有正确的订单号")
@@ -2542,7 +2629,7 @@ def sort_has_pay(request):
         order.goods_name = goods_name
         order.buyer_expand_address = str(buyer_expand_address)
         order.buyer_expand_contact = str(buyer_expand_contact)
-
+    #request.session['first_page'] = 0
     return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
 
 def sort_order_manage(request):
@@ -2587,5 +2674,5 @@ def sort_order_manage(request):
         order.goods_name = goods_name
         order.buyer_expand_address = str(buyer_expand_address)
         order.buyer_expand_contact = str(buyer_expand_contact)
-
+    #request.session['first_page'] = 0
     return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})
