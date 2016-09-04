@@ -778,6 +778,9 @@ CREATE TABLE `zhengzihui_app_tb_goods_evaluation` (
   `is_anonymous` int(11) NOT NULL,
   `goev_show` int(11) NOT NULL,
   `goev_status` int(11) NOT NULL,
+  `reply_content` longtext COLLATE utf8_unicode_ci,
+  `service_provider` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `star` int(11) DEFAULT NULL,
   PRIMARY KEY (`goev_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -788,7 +791,7 @@ CREATE TABLE `zhengzihui_app_tb_goods_evaluation` (
 
 LOCK TABLES `zhengzihui_app_tb_goods_evaluation` WRITE;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` DISABLE KEYS */;
-INSERT INTO `zhengzihui_app_tb_goods_evaluation` VALUES (1,2,3,'service_ 2016科技厅关于科技计划项目的申报通知',9,'orchard','2016-04-02 07:15:16',3,3,'good',1,1,1),(2,10,2,'service_ 2016科技厅关于科技计划项目的申报通知',9,'orchard','2016-09-02 07:15:16',4,4,'very)good',1,1,1),(3,11,1,'service_ 2016科技厅关于科技计划项目的申报通知',9,'orchard','2017-03-02 07:15:16',5,5,'great',1,1,1);
+INSERT INTO `zhengzihui_app_tb_goods_evaluation` VALUES (2,3,3,'帮助徐成章找女朋友',2,'徐成章','2016-09-03 13:32:01',1,2,'这个项目非常好',1,2,3,'啦啦啦','cyf',5);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1390,4 +1393,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-04 18:53:13
+-- Dump completed on 2016-09-04 19:28:00
