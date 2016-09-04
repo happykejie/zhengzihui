@@ -78,11 +78,16 @@ urlpatterns = [
         #等级与成长
     url(r'^zzh/grade_grow/', zhengzihui_app.views.grade_grow,name="grade_grow"),
 
+#商家中心
+    url(r'^zzh/merchant_center/', zhengzihui_app.views.merchant_center,name="merchant_center"),    
+    #商家保存修改信息
+    url(r'^zzh/modify_merchant/', zhengzihui_app.views.modify_merchant,name="modify_merchant"),    
 
     #订单管理
         #全部订单
     url(r'^zzh/all_orders/', zhengzihui_app.views.all_orders,name="all_orders"),
-        #未支付
+    url(r'^zzh/all_orders_back/', zhengzihui_app.views.all_orders_back,name="all_orders_back"),
+    #未支付
     url(r'^zzh/not_pay/', zhengzihui_app.views.not_pay,name="not_pay"),
         #已支付
     url(r'^zzh/payed/', zhengzihui_app.views.payed,name="payed"),
@@ -93,6 +98,9 @@ urlpatterns = [
        #已取消
     url(r'^zzh/delete/', zhengzihui_app.views.delete,name="delete"),
 
+       #订单详情
+    url(r'^zzh/order_detail/', zhengzihui_app.views.order_detail,name="order_detail"),        
+    
        #确认订单
     url(r'^order_enter/', zhengzihui_app.views.order_enter,name="order_enter"),
        #取消订单
@@ -149,7 +157,11 @@ urlpatterns = [
     url(r'^password2/$', zhengzihui_app.views.password2,name='password2'),
     url(r'^password3/$', zhengzihui_app.views.password3,name='password3'),
     url(r'^password4/$', zhengzihui_app.views.password4,name='password4'),
+    url(r'^merchant/$',zhengzihui_app.views.merchant,name='merchant'),
+    url(r'^merchantout/$',zhengzihui_app.views.merchantout,name='merchantout'),
 
+    
+    
     #短信验证页
     url(r'^register_sms/$', zhengzihui_app.views.register_sms, name='register_sms'),
 #    企业画像
