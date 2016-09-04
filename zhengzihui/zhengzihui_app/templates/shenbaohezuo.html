@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>申报合作</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
+  <script src="../static/jquery-2.14/jquery.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.core.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script> 
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.position.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.menu.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.autocomplete.js"></script>
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/demos/demos.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">   
+  <script src="../static/js/Popt.js"></script>
+  <script src="../static/js/cityJson.js"></script>
+  <script src="../static/js/citySet.js"></script>
+  <link href="/static/css/user_remen.css" rel="stylesheet" type="text/css"/>
+  	<script >
+
+	  $(document).ready(function () {  
+	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
+	});
+	</script>
+   <!--$( "#inputitem" ).autocomplete('/searchforc/', {multiple: true, multipleSeparator: ' '});-->
+  
+  <style type="text/css"><!--附加导航样式-->
+    /* Custom Styles */
+
+    ul.nav-tabs{
+		z-index:1;
+        width: 140px;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    }
+    ul.nav-tabs li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-tabs li:first-child{
+        border-top: none;
+    }
+    ul.nav-tabs li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-tabs li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-tabs li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    ul.nav-tabs.affix{
+        top: 30px;
+	}
+
+		/* Set the top position of pinned element */
+    
+	
+	.image{height:250px;width:200px;background: #ffffff}
+
+
+
+
+._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative;background-color: white; }
+._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
+._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
+._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+.citySel { background-color: #56b4f8; color: #fff !important; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
+._citys1 a:hover { color: #fff; background-color: #56b4f8; }
+.AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+dd:hover{color:red !important;background:#eee;}
+dd.hover-red:hover{color:red !important;background:#eee;}
+
+
+blockquote{padding:0px;margin:0px;font-size:17.5px;border-left:2px solid #000000;border-right:5px solid #FFFFFF;border-top:5px solid #FFFFFF;border-bottom:5px solid #FFFFFF}
+
+.page_center {
+width:600px;
+margin:20px auto;
+} 
+#one {
+width:250px;
+height:160px;
+margin-left:80px;
+background-color:pink;
+position:absolute;
+
+}
+
+#two{
+width:250px;
+height:160px;
+background-color:gray;
+margin-left:400px;
+position:absolute;
+}
+
+#three {
+width:250px;
+height:160px;
+background-color:green;
+position:absolute;
+margin-left:730px;
+}
+
+#four {
+width:250px;
+height:160px;
+margin-left:80px;
+background-color:pink;
+position:absolute;
+margin-top:200px;
+}
+
+#five{
+width:250px;
+height:160px;
+background-color:gray;
+margin-left:400px;
+position:absolute;
+margin-top:200px;
+}
+
+#six {
+width:250px;
+height:160px;
+background-color:green;
+position:absolute;
+margin-left:730px;
+margin-top:200px;
+}
+
+
+</style>
+</head>
+<body>
+
+<div>
+<!--导航条 -->
+<div class="row">
+    <div class="col-sm-3">
+      <center>&nbsp&nbsp<img src="../static/images/logo.jpg"></img></center>
+    </div>
+    <div class="col-sm-2">
+      <h2><a  href="{% url 'merchant_center'%}"> {{ sp_name }}</a></h2>
+    </div>
+    <div class="col-sm-2"></div>
+    <div class="col-sm-1">
+      <blockquote style="padding:0px;margin:0px; display:inline-block" >
+				
+					<center>&nbsp<img src="../static/images/denglu/user.png"></img></center>
+				 
+			</blockquote>
+    </div>
+    <div class="col-sm-2">
+      登录账号名<br><br>
+      设置&nbsp&nbsp账号管理&nbsp&nbsp提醒
+      
+    </div>
+    <div class="col-sm-1">
+      <blockquote style="padding:0px;margin:0px; display:inline-block" >
+				
+					<h5>帮助中心</h5><br>
+				 
+			</blockquote>
+    </div>
+    <div class="col-sm-1">
+      <blockquote style="padding:0px;margin:0px; display:inline-block" >
+				
+					<h5><a href="{% url 'merchantout' %}">退出</a></h5><br>
+				 
+			</blockquote>
+    </div>
+    
+
+</div>
+</div>
+
+
+
+
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:#008080;margin:20px;margin-right:50px;">
+		<div>
+			 <ul class="nav navbar-nav" style="text-indent: 1cm">
+			 <li><a  href="{% url 'user_center'%}"><font size="5" color="white">首页</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+			 <li><a href="{% url 'login' %}"><font size="5" color="white">订单管理</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+			 <li><a href="{% url 'g_register' %}"><font size="5" color="white">结算管理</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+			 <li><a href="{% url 'logout' %}"><font size="5" color="white">点评管理</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+
+			<li><a href="{% url 'user_center'%}"><font size="5" color="white">信息维护</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+			<li><a href="{% url 'download'%}"><font size="5" color="white">服务维护</font>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></li>
+			<li><a href="{% url 'download'%}"><font size="5" color="white">服务发布</font></a></li>
+			</ul>
+		</div>
+	</nav>	
+<div id="one" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp未处理订单</h5>
+    <div style="position: absolute; bottom: 10px; right: 10px;">更多</div>
+</div>
+<div id="two" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp今日汇总</h5>
+    
+    <span><center>未处理 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp待审核</center></span>
+    <br>
+    <span><center>已完成 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp处理中</center></span>
+    <div style="position: absolute; bottom: 10px; right: 10px;">更多</div>
+</div>
+<div id="three" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp最新点评</h5>
+    <center><font size="2">收到维尔特无语如图一如抑郁Yui于同日UR有人与人</font></center><br>
+    <center><font size="2">分条供应仍对法国银行人特意人格和女女恢复人体有分公司</font></center>
+
+    <div style="position: absolute; bottom: 10px; right: 10px;">更多</div>
+</div>
+<div id="four" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp政资会重要通知</h5>
+    <center><font size="2">收到维尔特无语如图一如抑郁Yui于同日UR有人与人</font></center><br>
+    <center><font size="2">分条供应仍对法国银行人特意人格和女女恢复人体有分公司</font></center>
+
+</div>
+<div id="five" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp最新发布</h5>
+    <span>&nbsp&nbsp&nbsp&nbsp<img src="../static/images/denglu/user.png"></img>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    <img src="../static/images/denglu/user.png"></img></span>
+    <p>&nbsp&nbsp&nbsp&nbsp服务名称&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp服务名称</p>
+    
+
+    <div style="position: absolute; bottom: 10px; right: 10px;">更多</div>
+</div>
+<div id="six" class="page_center">
+    <br>
+    <h5>&nbsp&nbsp常用信息</h5>
+    <center><font size="2">服务区域：成都</font></center>
+    <center><font size="2">联系人姓名：lily</font></center>
+    <center><font size="2">联系电话：11111111111</font></center>
+    <div style="position: absolute; bottom: 10px; right: 10px;">更多</div>
+</div>
+</body>
+</html>
+

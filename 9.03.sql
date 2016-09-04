@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `zhengzihui_test_second` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
-USE `zhengzihui_test_second`;
--- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.13, for Linux (x86_64)
 --
--- Host: 127.0.0.1    Database: zhengzihui_test_second
+-- Host: localhost    Database: zhengzihui_test_second
 -- ------------------------------------------------------
--- Server version	5.5.50-0ubuntu0.14.04.1
+-- Server version	5.7.13-0ubuntu0.16.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -55,8 +53,8 @@ CREATE TABLE `auth_group_permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `group_id` (`group_id`,`permission_id`),
   KEY `auth_group__permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id` (`permission_id`),
-  CONSTRAINT `auth_group_permission_group_id_689710a9a73b7457_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `auth_group__permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+  CONSTRAINT `auth_group__permission_id_1f49ccbbdc69d2fc_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permission_group_id_689710a9a73b7457_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -173,8 +171,8 @@ CREATE TABLE `auth_user_user_permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`,`permission_id`),
   KEY `auth_user_u_permission_id_384b62483d7071f0_fk_auth_permission_id` (`permission_id`),
-  CONSTRAINT `auth_user_user_permissi_user_id_7f0938558328534a_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `auth_user_u_permission_id_384b62483d7071f0_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+  CONSTRAINT `auth_user_u_permission_id_384b62483d7071f0_fk_auth_permission_id` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissi_user_id_7f0938558328534a_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -206,8 +204,8 @@ CREATE TABLE `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `djang_content_type_id_697914295151027a_fk_django_content_type_id` (`content_type_id`),
   KEY `django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id` (`user_id`),
-  CONSTRAINT `django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
-  CONSTRAINT `djang_content_type_id_697914295151027a_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+  CONSTRAINT `djang_content_type_id_697914295151027a_fk_django_content_type_id` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_52fdd58701c5f563_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -259,7 +257,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +266,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2016-07-27 07:15:40'),(2,'auth','0001_initial','2016-07-27 07:15:40'),(3,'admin','0001_initial','2016-07-27 07:15:41'),(4,'contenttypes','0002_remove_content_type_name','2016-07-27 07:15:41'),(5,'auth','0002_alter_permission_name_max_length','2016-07-27 07:15:41'),(6,'auth','0003_alter_user_email_max_length','2016-07-27 07:15:41'),(7,'auth','0004_alter_user_username_opts','2016-07-27 07:15:41'),(8,'auth','0005_alter_user_last_login_null','2016-07-27 07:15:41'),(9,'auth','0006_require_contenttypes_0002','2016-07-27 07:15:41'),(10,'easy_thumbnails','0001_initial','2016-07-27 07:15:41'),(11,'easy_thumbnails','0002_thumbnaildimensions','2016-07-27 07:15:41'),(12,'sessions','0001_initial','2016-07-27 07:15:41'),(13,'zhengzihui_app','0001_initial','2016-07-27 07:15:42'),(14,'zhengzihui_app','0002_auto_20160901_0132','2016-09-01 01:33:10'),(15,'zhengzihui_app','0003_auto_20160901_0136','2016-09-01 01:36:07'),(16,'zhengzihui_app','0004_auto_20160901_0933','2016-09-01 09:35:07'),(17,'zhengzihui_app','0005_auto_20160901_0933','2016-09-01 09:35:07'),(18,'zhengzihui_app','0006_tb_goods_goods_fanli','2016-09-01 09:35:08'),(19,'zhengzihui_app','0007_auto_20160901_0950','2016-09-01 09:50:26'),(20,'zhengzihui_app','0008_auto_20160901_1129','2016-09-01 11:29:54'),(21,'zhengzihui_app','0009_auto_20160901_1131','2016-09-01 11:31:05'),(22,'zhengzihui_app','0010_auto_20160901_1141','2016-09-01 11:41:56'),(23,'zhengzihui_app','0011_auto_20160901_1144','2016-09-01 11:44:54');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2016-07-27 07:15:40'),(2,'auth','0001_initial','2016-07-27 07:15:40'),(3,'admin','0001_initial','2016-07-27 07:15:41'),(4,'contenttypes','0002_remove_content_type_name','2016-07-27 07:15:41'),(5,'auth','0002_alter_permission_name_max_length','2016-07-27 07:15:41'),(6,'auth','0003_alter_user_email_max_length','2016-07-27 07:15:41'),(7,'auth','0004_alter_user_username_opts','2016-07-27 07:15:41'),(8,'auth','0005_alter_user_last_login_null','2016-07-27 07:15:41'),(9,'auth','0006_require_contenttypes_0002','2016-07-27 07:15:41'),(10,'easy_thumbnails','0001_initial','2016-07-27 07:15:41'),(11,'easy_thumbnails','0002_thumbnaildimensions','2016-07-27 07:15:41'),(12,'sessions','0001_initial','2016-07-27 07:15:41'),(13,'zhengzihui_app','0001_initial','2016-07-27 07:15:42'),(14,'zhengzihui_app','0002_auto_20160901_0132','2016-09-01 01:33:10'),(15,'zhengzihui_app','0003_auto_20160901_0136','2016-09-01 01:36:07'),(16,'zhengzihui_app','0004_auto_20160901_0933','2016-09-01 09:35:07'),(17,'zhengzihui_app','0005_auto_20160901_0933','2016-09-01 09:35:07'),(18,'zhengzihui_app','0006_tb_goods_goods_fanli','2016-09-01 09:35:08'),(19,'zhengzihui_app','0007_auto_20160901_0950','2016-09-01 09:50:26'),(20,'zhengzihui_app','0008_auto_20160901_1129','2016-09-01 11:29:54'),(21,'zhengzihui_app','0009_auto_20160901_1131','2016-09-01 11:31:05'),(22,'zhengzihui_app','0010_auto_20160901_1141','2016-09-01 11:41:56'),(23,'zhengzihui_app','0011_auto_20160901_1144','2016-09-01 11:44:54'),(24,'zhengzihui_app','0012_auto_20160902_0207','2016-09-03 13:25:05'),(25,'zhengzihui_app','0013_tb_goods_evaluation_star','2016-09-03 13:25:06'),(26,'zhengzihui_app','0014_auto_20160903_0434','2016-09-03 13:25:06');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -684,13 +682,13 @@ CREATE TABLE `zhengzihui_app_tb_goods` (
   `goods_evaluation_count` int(11) NOT NULL,
   `goods_show` int(11) NOT NULL,
   `goods_status` int(11) NOT NULL,
-  `cont` varchar(100) COLLATE utf8_unicode_ci,
-  `exa` varchar(100) COLLATE utf8_unicode_ci,
-  `steps` varchar(100) COLLATE utf8_unicode_ci,
-  `fea` varchar(20) COLLATE utf8_unicode_ci,
-  `smod` varchar(100) COLLATE utf8_unicode_ci,
+  `cont` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `exa` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `steps` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fea` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `smod` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `goods_fanli` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `goods_awardmid` int(11),
+  `goods_awardmid` int(11) DEFAULT NULL,
   PRIMARY KEY (`goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -780,6 +778,9 @@ CREATE TABLE `zhengzihui_app_tb_goods_evaluation` (
   `is_anonymous` int(11) NOT NULL,
   `goev_show` int(11) NOT NULL,
   `goev_status` int(11) NOT NULL,
+  `reply_content` longtext COLLATE utf8_unicode_ci,
+  `service_provider` varchar(100) COLLATE utf8_unicode_ci,
+  `star` int(11),
   PRIMARY KEY (`goev_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -790,6 +791,7 @@ CREATE TABLE `zhengzihui_app_tb_goods_evaluation` (
 
 LOCK TABLES `zhengzihui_app_tb_goods_evaluation` WRITE;
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` DISABLE KEYS */;
+INSERT INTO `zhengzihui_app_tb_goods_evaluation` VALUES (2,3,4,'帮助徐成章找女朋友',2,'徐成章','2016-09-03 13:32:01',1,2,'这个项目非常好',1,2,3,'啦啦啦','cyf',5);
 /*!40000 ALTER TABLE `zhengzihui_app_tb_goods_evaluation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -808,12 +810,12 @@ CREATE TABLE `zhengzihui_app_tb_goods_wfc` (
   `cont` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `steps` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `exa` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `fea` varchar(20) COLLATE utf8_unicode_ci,
+  `fea` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `goods_fanli` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
-  `smod` varchar(100) COLLATE utf8_unicode_ci,
-  `goods_awardafter` int(11),
+  `smod` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `goods_awardafter` int(11) DEFAULT NULL,
   `goods_payahead` int(11) NOT NULL,
-  `goods_awardmid` int(11),
+  `goods_awardmid` int(11) DEFAULT NULL,
   PRIMARY KEY (`goods_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1384,4 +1386,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-01 22:11:48
+-- Dump completed on 2016-09-03 21:34:11
