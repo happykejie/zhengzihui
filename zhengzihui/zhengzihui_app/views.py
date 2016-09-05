@@ -58,18 +58,13 @@ def index(request):
         
 
         a_click_items.append(a_click_item)
+
+        request.session['bumen']='财政'
+        request.session['jibie']='全部'
+        request.session['zhuangtai']='全部'
     return render(request,'index.html',{'a_click_items':a_click_items})
     
 
-    
-	#request.session['bumen']='全部'
-	#request.session['jibie']='全部'
-	#request.session['zhuangtai']='全部'
-	#print (123)
-
-
-
-	#return render_to_response('index.html',{})
 
 
 #xcz 搜索
