@@ -159,6 +159,8 @@ urlpatterns = [
     url(r'^password4/$', zhengzihui_app.views.password4,name='password4'),
     url(r'^merchant/$',zhengzihui_app.views.merchant,name='merchant'),
     url(r'^merchantout/$',zhengzihui_app.views.merchantout,name='merchantout'),
+    url(r'^applyforjoin/$',zhengzihui_app.views.applyforjoin,name='applyforjoin'),
+    url(r'^success/$',zhengzihui_app.views.success,name='success'),
 
     
     

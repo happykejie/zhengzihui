@@ -114,28 +114,32 @@ defaultImageURLoftb_service_provider_sp_image1 = 'img/tb_service_provider_sp_img
 defaultImageURLoftb_service_provider_sp_image2 = 'img/tb_service_provider_sp_img2/%Y/%m/%d'
         
 class  tb_service_provider(models.Model):
-    sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
-    sp_id = models.IntegerField("内部ID",null=False,blank=False)
+    #sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
+    sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
+    #sp_id = models.IntegerField("内部ID",null=False,blank=False)
+    sp_id = models.AutoField("内部ID",primary_key = True)
     sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
-    psw = models.CharField("密码",max_length=40,null=False,blank=False)
+    psw = models.CharField("密码",max_length=40,null=True,blank=False)
 
     tel = models.CharField("电话",max_length=40,null=False,blank=False)
     email = models.EmailField("邮箱",null=False,blank=False)
-    master = models.CharField("擅长领域",max_length=50,null=False,blank=False)
-    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=False,blank=False)
-    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=False,blank=False)
-    sp_grade = models.IntegerField("服务商等级",null=False,blank=False)
-    sp_sort = models.IntegerField("排序",null=False,blank=False)
-    area_id = models.CharField("服务提供商所在地",max_length=10,null=False,blank=False)
-    Register_cap = models.IntegerField("注册资金",null=False,blank=False)
-    staff_number = models.IntegerField("职员人数",null=False,blank=False)
-    Annual_totals = models.IntegerField("年营业额",null=False,blank=False)
-    organization_name = models.CharField("机构名称",max_length=40,null=False,blank=False)
-    organization_id = models.IntegerField("机构代码",null=False,blank=False)
-    organization_assets = models.IntegerField("机构资产",null=False,blank=False)
-    organization_profile = models.CharField("机构简介",max_length=100,null=False,blank=False)
-    is_recommend = models.IntegerField('推荐指数',null=False)
-        
+    master = models.CharField("擅长领域",max_length=50,null=True,blank=False)
+    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=True,blank=False)
+    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=True,blank=False)
+    sp_grade = models.IntegerField("服务商等级",null=True,blank=False)
+    sp_sort = models.IntegerField("排序",null=True,blank=False)
+    area_id = models.CharField("服务提供商所在地",max_length=10,null=True,blank=False)
+    Register_cap = models.IntegerField("注册资金",null=True,blank=False)
+    staff_number = models.IntegerField("职员人数",null=True,blank=False)
+    Annual_totals = models.IntegerField("年营业额",null=True,blank=False)
+    organization_name = models.CharField("机构名称",max_length=40,null=True,blank=False)
+    organization_id = models.IntegerField("机构代码",null=True,blank=False)
+    organization_assets = models.IntegerField("机构资产",null=True,blank=False)
+    organization_profile = models.CharField("机构简介",max_length=100,null=True,blank=False)
+    is_recommend = models.IntegerField('推荐指数',null=True)
+
+    sp_type=models.CharField('合作类型',max_length=60,null=False,blank=False)
+    con_name=models.CharField('联系人姓名',max_length=30,null=False,blank=False)
     PASSAUTH = 1
     NOTPASSAUTH = 0
     WAITAUTH = 2

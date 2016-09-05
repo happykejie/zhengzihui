@@ -1206,6 +1206,36 @@ def register3(request):
 
 #登陆 by cyf
 def login(request):
+    a_click_items=[]
+    click_items = tb_item_click.objects.order_by('-click_counter')[:4]
+    for click_item in click_items:
+        a_click_item = {}    
+        a_click_item['id'] = click_item.item_id#获取项目id
+        a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name#获取项目名字
+        album = tb_album.objects.filter(album_type=0,affiliation_id=click_item.item_id,is_default=1).order_by('-nacl_sort')[0]#获取项目对应的相册id
+        album_id = album.album_id
+        a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]#获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        a_click_item['item_ga'] = tb_item.objects.get(item_id=click_item.item_id).item_ga#获取项目资助金额
+        item=tb_item.objects.get(item_id=click_item.item_id)
+        item_pa_id=item.item_pa_id
+        a_click_item['ipa_name'] = tb_item_pa.objects.get(ipa_id=item_pa_id).ipa_name#获取项目管理单位名称
+        
+        now_seconds = time.time() - 8*60*60  #距离1970的秒数  将东八区转换为0时区
+        a_click_item['item_publish'] = tb_item.objects.get(item_id=click_item.item_id).item_publish.strftime('%Y.%m.%d')#获取项目开始时间
+        a_click_item['item_deadtime'] = tb_item.objects.get(item_id=click_item.item_id).item_deadtime.strftime('%Y.%m.%d')#获取项目截止时间
+        start_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_publish.timetuple())  #utc 0时区
+        end_seconds = time.mktime(tb_item.objects.get(item_id=click_item.item_id).item_deadtime.timetuple())
+        consume_time = (now_seconds-start_seconds)/(end_seconds-start_seconds)*100
+        if consume_time > 100:
+            a_click_item['item_consume_time'] = 100
+            a_click_item['item_key'] = "已结束"
+        else:
+            a_click_item['item_consume_time'] = int(consume_time)
+        
+
+        a_click_items.append(a_click_item)
+    print "testing..."
+    print a_click_items
     errors= []  
     user_name=None  
     password=None
@@ -1237,7 +1267,7 @@ def login(request):
             	return render_to_response('denglu.html', {'errors': errors})
             if password == user.user_password:
                 
-                response = render_to_response('index.html',{'user_name':user.user_name})
+                response = render_to_response('index.html',{'user_name':user.user_name,'a_click_items':a_click_items})
                 
                 response.set_cookie('user_name',user_name)
                 response.set_cookie('user_id',user.user_id)
@@ -1821,3 +1851,258 @@ def merge_service_details(request):
         #print(111)
 		return render_to_response("buswaitforchecked.html",{})
 		
+def get_all_order_of_sp(sp_id):
+    if not sp_id:
+        return '请输入服务商id'
+
+
+    # 获取该商家获得的所有订单
+    all_order = tb_order.objects.filter(sp_id=sp_id)
+    # 为每个订单添加一个服务名称的属性
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+    return all_order
+def bus_order_manage(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
+
+    for order in all_order:
+
+        if order.efile_send :
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+
+
+    return render(request,"bus_order_manage.html",{'all_order':all_order,'sp_id':sp_id})
+
+def change_paper_send_state(request):
+    if 'order_id' in request.GET:
+        order_id = request.GET.get('order_id')
+        temp_order = tb_order.objects.get(order_id=order_id)
+        temp_order.paper_send = 1
+        temp_order.save()
+        #很冗余的代码，就是为了取订单
+        if 'sp_id' in request.COOKIES:
+            sp_id = request.COOKIES['sp_id']
+        else:
+            sp_id = 1
+        all_order = get_all_order_of_sp(sp_id)
+
+        for order in all_order:
+            # print order.goods_id
+
+            if order.efile_send:
+                order.str_efile_send = '已经交付'
+            else:
+                order.str_efile_send = '未交付'
+            if order.paper_send:
+                order.str_paper_send = '已经送达'
+            else:
+                order.str_paper_send = '未送达'
+
+        return render(request,"bus_order_manage.html",{'all_order':all_order})
+    else:
+        return HttpResponse("没有正确的订单号")
+
+
+def bus_counter_manage(request):
+
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+
+    # 获取该商家获得的所有订单
+    all_order = get_all_order_of_sp(sp_id=sp_id)
+    # 为每个订单添加一个服务名称的属性
+    for order in all_order:
+
+        if order.has_pay == 1:
+            order.str_has_pay = '订单已经申请结算,正在结算中'
+        elif order.has_pay == 2:
+            order.str_has_pay = "订单已经结算"
+        else:
+            order.str_has_pay = '未结算'
+
+    return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+def change_has_pay_state(request):
+    if 'order_id' in request.GET:
+        order_id = request.GET.get('order_id')
+        temp_order = tb_order.objects.get(order_id=order_id)
+        temp_order.has_pay = 1#状态1表示申请结算
+        temp_order.save()
+        #很冗余的代码，就是为了取订单
+        if 'sp_id' in request.COOKIES:
+            sp_id = request.COOKIES['sp_id']
+        else:
+            sp_id = 1
+
+        # 获取该商家获得的所有订单
+        all_order = get_all_order_of_sp(sp_id=sp_id)
+        for order in all_order:
+
+            if order.has_pay == 1:
+                order.str_has_pay = '订单已经申请结算,正在结算中'
+            else:
+                order.str_has_pay = '未结算'
+
+        return render(request,"bus_counter_manage.html",{'all_order':all_order})
+    else:
+        return HttpResponse("没有正确的订单号")
+
+def sort_has_pay(request):
+    sp_id = request.GET.get('sp_id')
+    flag = request.GET.get('flag')
+    if flag == '1':
+        all_order = tb_order.objects.filter(sp_id = sp_id).order_by('-has_pay')
+    else:
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('has_pay')
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+        if order.has_pay == 1:
+            order.str_has_pay = '订单已经申请结算,正在结算中'
+        elif order.has_pay == 2:
+            order.str_has_pay = "订单已经结算"
+        else:
+            order.str_has_pay = '未结算'
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+
+    return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+def sort_order_manage(request):
+    sp_id = request.GET.get('sp_id')
+    flag = request.GET.get('flag')
+    if flag == '0':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-add_time')
+    elif flag == '1':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('promise_finish_time')
+
+    else:
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-finish_percentage')
+
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+        if order.efile_send:
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+
+    return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+def applyforjoin(request):	
+    add = []
+    sp_type=""
+    
+    if request.method == 'POST':
+        flag=request.POST.get("flag")
+        myflag=str(flag)
+        print myflag
+        sp_name = request.POST.get("sp_name")
+        con_name = request.POST.get("con_name")
+        tel = request.POST.get("tel")
+        email = request.POST.get("email")
+        sp_type1= request.POST.get("sp_type1","")
+        sp_type2= request.POST.get("sp_type2","")
+        sp_type3= request.POST.get("sp_type3","")
+        if myflag == "1":
+          sp_type=sp_type1
+        if myflag=="2":
+          sp_type=sp_type1+"+"+sp_type2
+        if myflag=="3":
+          sp_type=sp_type1+"+"+sp_type3
+        
+        print sp_type
+
+        
+
+        
+
+
+        add = tb_service_provider()
+       
+        add.tel = request.POST.get("tel")
+        add.email = request.POST.get("email")
+        add.sp_name = request.POST.get("sp_name")
+        add.con_name = request.POST.get("con_name")
+        add.sp_type =sp_type
+        add.save()
+        return render_to_response("success.html", {})
+    return render_to_response("applyforjoin.html",{})
+def success(request):
+    return render_to_response("success.html",{})
+	

@@ -1,63 +1,41 @@
 <div>
-    <link href="/static/css/search_result.css" rel="stylesheet" type="text/css"/>
-    <script src="/static/js/shoucang_item.js" type="text/javascript"></script>
-    
-    <script>
+<div id="serve-title">
+		<p><B>收藏的服务</B></p>
+</div>
+<div class="row-fluit>
+<table align="center" style="width:1000px;">
+<tr>
+{% for good in goods %}
+<td>
+ <div class="collect">
+                        <a href="/service_details/?goodsid={{ good.goods_id }}">
+						<img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /><!--需要后期替换的图片页-->
+                            
+                            {{ good.goods_name }}+服务编号：{{ good.goods_code }}
+							<br>
+                        </a>
+						<p class="shoufei"><small>收费标准:
+						<span class="money">
+							<strong > 首付：{{ good.goods_payahead }}+申报成功应付奖金{{ good.goods_awardafter }}</strong>
+						</span>
+							</small></p>
+						
+                            <div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: {{ good.goods_remaintime }}%; line-height:50px;">
+								</div>
+							</div>
+						<h5 class="shoufei">{{ good.goods_accept_starttime }}  &nbsp;   {{ good.goods_remaintime }}%   &nbsp;      {{ good.goods_accept_endtime }}</h5>
+	</h5>
 	
-    $.ajaxSetup({
-
-    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-
-    });
-	</script>
-        
-        
-        <div id="list">
-            {% for good in goods %}
-            <div class="list-content">
-				<a href="/service_details/?goodsid={{ good.goods_id }}">
-                    <img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /><!--需要后期替换的图片页-->
-				</a>
-
-                <div class="text">
-                    <p class="title">
-                        <a href="/service_details/?goodsid={{ goods.goods_id }}">
-	                        {{ good.goods_name }}+服务编号：{{ good.goods_code }}
-	                    </a>
-                    </p>
-
-                    <p class="benefit">
-                        <span class="benefit-text">
-                            <span class="glyphicon glyphicon-usd"></span>
-                            <span>收费标准</span>
-                        </span>
-                        <span class="benefit-num">
-                            首付：{{ good.goods_payahead }}+申报成功应付奖金{{ good.goods_awardafter }}
-                        </span>
-                    </p>
-	                <center><span><font color="#dc143c">接单时间进度</font></span></center>
-                    <div class="progress">
-                        <div class="progress-bar"></div>
-                        <div class="info" style="left:{{ good.goods_remaintime }}%;">{{ good.goods_remaintime }}%</div>
-                    </div>
-
-                    <div class="date">
-
-                        <span class="start">
-                            {{ good.goods_accept_starttime }}
-                        </span>
-                         <span class="stop">
-                           {{ good.goods_accept_endtime }}
-                        </span>
-                    </div>
-
-                </div>
-                <div class="watch">
-                    <a href="/service_details/?goodsid={{ good.goods_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
-                </div>
-               
-            </div>
-            {% endfor %}
-
-        </div>
-    </div>
+	
+</div> 
+</td>
+{% endfor %}
+</tr>
+{% if not goods %}
+<h3 align="center">你还没有收藏过服务，去看看吧！</h3>
+{% endif %}
+</table>
+</div>
+</div>
