@@ -548,8 +548,8 @@ def merchant(request):
     sp_name=None  
     password=None
     sp = tb_service_provider()
-    if 'sp_name' in request.COOKIES:
-        response = render_to_response('shenbaohezuo.html',{'sp_name':request.COOKIES['sp_name']})
+    if 'sp_id' in request.COOKIES:
+        response = render(request,'bus_index.html',{})
         return response
         
     if request.method == 'POST' :  
@@ -578,19 +578,12 @@ def merchant(request):
                   
                 if sp_type1=="sp_typethree":
                   return render(request,"testpage1.html")
-                
-                response = render_to_response('shenbaohezuo.html',{'sp_name':sp.sp_name,})
+
+                response = render(request, 'bus_index.html', {})
                 
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
                 #print(user.expand.company_name)
-                
-                if 'unregist_tobepay_goodsid' in request.COOKIES:
-                    goodsid = request.COOKIES['unregist_tobepay_goodsid']
-                    responsenotpay = HttpResponseRedirect('/service_list/?itemid='+str(goodsid))
-                    responsenotpay.set_cookie('sp_name',sp_name,3600)
-                    responsenotpay.set_cookie('sp_id',sp.user_id,3600)
-                    return responsenotpay
                 return response
             else:
                 errors.append('密码错误')

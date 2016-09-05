@@ -1026,10 +1026,11 @@ def busindex_sub(request):
         pass
     else:
         mine_leatest_serv = mine_leatest_serv[0:1]
-
+    #get my bussiness info
+    mine_info = tb_service_provider.objects.get(sp_id =sp_id)
     #mine_info_short = tb_user.objects.get()   wait for other
     context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
-               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
+               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,'mine_info':mine_info,}
     response = render(request,"bus_index_sub.html",context)
     response.set_cookie('first_page',1)
     return response
