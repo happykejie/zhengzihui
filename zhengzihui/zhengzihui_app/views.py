@@ -566,10 +566,18 @@ def merchant(request):
                 sp = tb_service_provider.objects.get(sp_name = sp_name)
             except tb_service_provider.DoesNotExist:
                 errors.append('用户名不存在')
-            if sp.sp_auth == 0:
-            	errors.append('请查看邮件完成用户认证')
+            
             	return render_to_response('merchant.html', {'errors': errors})
             if password == sp.psw:
+                sp_type1=request.POST.get('sp_type1')
+                #ms:print "testing..."
+                #print sp_type
+                
+                if sp_type1=="sp_typetwo":
+                  return render(request,"testpage1.html")
+                  
+                if sp_type1=="sp_typethree":
+                  return render(request,"testpage1.html")
                 
                 response = render_to_response('shenbaohezuo.html',{'sp_name':sp.sp_name,})
                 
