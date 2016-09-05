@@ -38,20 +38,20 @@
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
 
-<script defer src="/static/js/jquery.flexslider.js"></script>
-<link rel="stylesheet" href="/static/css/flexslider.css" type="text/css" media="screen" />
+<script defer src="/static/js/sc_jquery.flexslider.js"></script>
+<link rel="stylesheet" href="/static/css/sc_flexslider.css" type="text/css" media="screen" />
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="/static/js/simpleCart.min.js"> </script>
+<script src="/static/js/sc_simpleCart.min.js"> </script>
 
 <!-- Custom Theme files -->
-<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+<link href="/static/css/sc_style.css" rel='stylesheet' type='text/css' />
 
 <!-- Custom Theme files -->
 
 <script src="/static/js/sc_jquery.magnific-popup.js" type="text/javascript"></script>
 
-<script src="/static/js/easyResponsiveTabs.js" type="text/javascript"></script>
+<script src="/static/js/sc_easyResponsiveTabs.js" type="text/javascript"></script>
 <script type="text/javascript">
 			    $(document).ready(function () {
 			        $('#horizontalTab').easyResponsiveTabs({
@@ -93,9 +93,8 @@ $(function(){
 });
 </script>
 
-
+<!--对搜索栏提供自动完成功能，所需要的标签从 /searchforc/ 处取-->
 <script >
-
 	  $(document).ready(function () {
 	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
 	});
@@ -299,7 +298,7 @@ $(function(){
 					    
 					});
 				   </script>
-				   <script type="text/javascript" src="../static/js/jquery.flexisel.js"></script>
+				   <script type="text/javascript" src="/static/js/sc_jquery.flexisel.js"></script>
 				   
 			</div>
 		        </div>
@@ -399,9 +398,11 @@ $(window).load(function() {
 	                    var user_id = "{{request.COOKIES.user_id}}";
 						//alert(test);
 	                    var item_id = "{{ item.item_id }}"
-	                    $.get("/shoucang_item/",{'user_id':user_id,'item_id':item_id}, function(ret){
-		                    alert(ret);
-                            })
+	                    $.get("/free_require/supporting_center/shoucang_item/"
+                                ,{'user_id':user_id,'item_id':item_id}
+                                , function(ret){
+		                            alert(ret);
+                                })
 
                  });
             });
