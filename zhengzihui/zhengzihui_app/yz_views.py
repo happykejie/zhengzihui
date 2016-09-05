@@ -876,7 +876,7 @@ def get_today_order(wt_order ):
 
     return td_order
 
-#YZ
+#YZ 这个views还需要改进，等待女生们
 def busindex(request):
     if 'sp_id' in request.COOKIES:
         sp_id = request.COOKIES['sp_id']
@@ -954,6 +954,86 @@ def busindex(request):
     response = render(request,"bus_index.html",context)
     response.set_cookie('first_page',1)
     return response
+
+
+def busindex_sub(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
+
+    weichuli_order = []
+    chulizhong_order = []
+    daishenghe_order = []
+    yiwancheng_order = []
+
+    for order in all_order:
+        if order.order_state == 1:
+            weichuli_order.append(order)
+        elif order.order_state == 2:
+            chulizhong_order.append(order)
+        elif order.order_state == 3:
+            yiwancheng_order.append(order)
+        else:
+            pass
+
+    all_wfto_num = len(weichuli_order)
+    all_dsh_num = len(daishenghe_order)
+    all_clz_num = len(chulizhong_order)
+    all_ywc_num = len(yiwancheng_order)
+    order_num_info = []
+    order_num_info.append(all_wfto_num)
+    order_num_info.append(all_dsh_num)
+    order_num_info.append(all_ywc_num)
+    order_num_info.append(all_clz_num)
+    #今日数据用的是所有的数据，怎么搞还要想想
+
+    '''#get today order
+    #today_wcl_order = get_today_order(temp_wcl)
+    today_dsh_order = get_today_order(daishenghe_order)
+    today_ywc_order = get_today_order(yiwancheng_order)
+    today_clz_order = get_today_order(chulizhong_order)
+    today_order_num =[]
+    today_order_num.append(0)
+    today_order_num.append(len(today_dsh_order))
+    today_order_num.append(len(today_ywc_order))
+    today_order_num.append(len(today_clz_order))
+    '''
+
+    #get 3 latest comment
+    latest_comment=[]
+    latest_comment= tb_goods_evaluation.objects.all()[:2]
+    #latest_comment =latest_comment[:2]
+
+    mine_comment = []
+    for comment in latest_comment:
+        temp_goods = tb_goods.objects.get(goods_id = comment.goods_id)
+        temp_sp = tb_service_provider.objects.get(sp_id = temp_goods.sp_id)
+        if temp_sp:
+            mine_comment.append(comment)
+
+    mine_notice = []
+    #later WILL changge YZ 没有针对不同的商家推送不同的通知，获取的是全网的通知
+    latest_notice = Tb_Notice.objects.all()[:2]
+
+    mine_notice = latest_notice
+    #以开始接单时间排序，最新发布的服务，这里是为了避免老徐改他的代码所以没有添加一个publish_time的字段，应该是要添加的
+    mine_leatest_serv = tb_goods.objects.filter(sp_id = sp_id).order_by('-goods_accept_starttime')
+    if len(mine_leatest_serv) == 0:
+        pass
+    elif len(mine_leatest_serv) == 1:
+        pass
+    else:
+        mine_leatest_serv = mine_leatest_serv[0:1]
+
+    #mine_info_short = tb_user.objects.get()   wait for other
+    context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
+               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
+    response = render(request,"bus_index_sub.html",context)
+    response.set_cookie('first_page',1)
+    return response
+
 
 def get_all_order_of_sp(sp_id):
     if not sp_id:

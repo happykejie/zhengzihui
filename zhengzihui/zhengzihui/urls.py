@@ -198,6 +198,7 @@ urlpatterns = [
     url(r'^change_has_pay_state/',zhengzihui_app.views.change_has_pay_state,name="change_has_pay_state"),
     url(r'^sort_has_pay/',zhengzihui_app.views.sort_has_pay,name="sort_has_pay"),
     url(r'^sort_order_manage/',zhengzihui_app.views.sort_order_manage,name="sort_order_manage"),
+    url(r'^busindex_sub/$',zhengzihui_app.views.busindex_sub,name='busindex_sub'),
 
 
 

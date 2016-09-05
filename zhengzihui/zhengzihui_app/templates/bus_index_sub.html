@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+</title>
+</head>
+<body>
+
+{% if request.COOKIES.first_page %}
+
+<div class="row col-sm-12 col-md-12 col-lg-12">
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-success">
+	<div class="panel-heading">
+        <h3 class="panel-title">未处理订单 &nbsp; <font color="red">{{order_num_info.0}}</font></h3>
+    </div>
+   		 <div class="panel-body">
+
+	<div class="table-responsive">
+	<table class="table">
+
+    <thead>
+        <tr>
+            <th>编号</th>
+            <th>客户</th>
+            <th>项目名称</th>
+            <th>时间</th>
+            <th>联系人</th>
+
+    </thead>
+    <tbody>
+    {% for order in weichuli_order %}
+    <tr>
+        <td>{{ order.order_no }}    </td>
+        <td>{{ order.buyer_name}}    </td>
+        <td>{{ order.goods_name }}    </td>
+        <td>{{ order.add_time}}    </td>
+        <td>{{ order.buyer_expand_contact }}    </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+	</div>
+    	</div>
+	</div>
+</div>
+
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h3 class="panel-title">今日汇总</h3>
+    </div>
+   		 <div class="panel-body">
+			 <h3 align="center">未处理订单 &nbsp; <font color="red">{{order_num_info.0}}</font>|&nbsp;待审核订单 &nbsp; <font color="red">{{order_num_info.1}}</font></h3>
+    		 <h3 align="center">完成订单 &nbsp; <font color="red">{{order_num_info.2}}</font>|&nbsp;进行中订单 &nbsp; <font color="red">{{order_num_info.3}}</font></h3>
+		 </div>
+	</div>
+</div>
+
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-warning">
+ 	<div class="panel-heading">
+        <h3 class="panel-title">最新点评</h3>
+
+    </div>
+   		 <div class="panel-body">
+			 {% for comment in mine_comment %}
+
+				<h3 align="center">用户<font color="blue" >{{comment.user_name}}</font>对您公司的<font color="red">{{comment.goods_name}}</font>服务有如下评价:<font color="yellow">{{comment.goev_content}}</font></h3>
+			 {% endfor %}
+    	</div>
+	</div>
+</div>
+</div>
+
+
+<div class="row col-sm-12 col-md-12 col-lg-12">
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-danger">
+	<div class="panel-heading">
+        <h3 class="panel-title">政资汇重要通知</h3>
+    </div>
+   		 <div class="panel-body">
+		{% for notice in mine_notice %}
+			 <p align="center">来自政资汇的通知:<font color="yellow">{{notice.Notice_title}}</font> 简略内容:<font color="yellow">{{notice.Notice_short_content}}</font></p>
+		{% endfor %}
+    	</div>
+	</div>
+</div>
+
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-danger">
+ 	<div class="panel-heading">
+        <h3 class="panel-title">最新发布服务</h3>
+    </div>
+   		 <div class="panel-body">
+
+			 {% for goods in latest_serv %}
+				<div class="row">
+					<div class="col-lg-3 col-sm-3 col-md-3 ">
+						<a href="/service_details/?goodsid={{ goods.goods_id }}"><img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /></a>
+
+					</div>
+					<div class="col-lg-9 col-sm-9 col-md-9">
+						<p><font color="blue"> 服务名称：{{ goods.goods_name }} </font> <font color="yellow">服务编号：{{ goods.goods_code }}</font> {% if goods.goods_status == 0 %}<font color="red">已停止服务</font>{% endif %} {% if goods.goods_status == 1 %}正在服务{% endif %}</p>
+
+					</div>
+				</div>
+			{% endfor %}
+
+
+    	</div>
+	</div>
+</div>
+
+<div class="row col-sm-4 col-md-4 col-lg-4">
+
+	<div class="panel panel-info">
+	<div class="panel-heading">
+        <h3 class="panel-title">常用信息</h3>
+    </div>
+   		 <div class="panel-body">
+			 <h1>等待李秋霞上传她的版本，要用到她的数据表</h1>
+    	</div>
+	</div>
+</div>
+</div>
+
+{% endif %}
+
+
+</body>
+</html>
