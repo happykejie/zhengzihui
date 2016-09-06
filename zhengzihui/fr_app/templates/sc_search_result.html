@@ -37,8 +37,6 @@
 
     </script>
 
-
-
 <!--内容部分-->
 
     <div class="content">
@@ -47,129 +45,35 @@
             您所在的位置：
         </span>
         <span>
-            <a href="/index/">
-                首页
+            <a href="/free_require/supporting_center/frame/">
+                配套广场
             </a>
         </span>
         <span>
             <a href="">
-                搜索 "{{search_content}}{{request.session.search_content}}" 的结果
+                {{search_content}}{{request.session.search_content}}
             </a>
         </span>
-    </div>
+        </div>
 
         <div class="filter" id="filter">
-        <div class="f-row clearfix ">
-            <div class="f-head">
-                <span id="bumen">
-                部门:
-                </span>
-            </div>
-            <div class="f-select">
-                <ul class="f-labels">
-                <li><a href="javascript:void(0);">全部</a></li>
-                <li><a href="javascript:void(0);">经济与信息化</a></li>
-                <li><a href="javascript:void(0);">发展与改革</a></li>
-                <li><a href="javascript:void(0);">财政</a></li>
-                <li><a href="javascript:void(0);">科技</a></li>
-                <li><a href="javascript:void(0);">教育</a></li>
-                <li><a href="javascript:void(0);">文化</a></li>
-                <li><a href="javascript:void(0);">卫计</a></li>
-                <li><a href="javascript:void(0);">体育</a></li>
-                <li><a href="javascript:void(0);">知识产权</a></li>
-                <li><a href="javascript:void(0);">农业</a></li>
-                <li><a href="javascript:void(0);">林业</a></li>
-                <li><a href="javascript:void(0);">畜牧</a></li>
-                <li><a href="javascript:void(0);">渔业</a></li>
-                <li><a href="javascript:void(0);">粮食</a></li>
-                <li><a href="javascript:void(0);">中医药</a></li>
-                <li><a href="javascript:void(0);">国土</a></li>
-                <li><a href="javascript:void(0);">住建</a></li>
-                <li><a href="javascript:void(0);">交通</a></li>
-                <li><a href="javascript:void(0);">水利</a></li>
-                <li><a href="javascript:void(0);">能源</a></li>
-                <li><a href="javascript:void(0);">环保</a></li>
-                <li><a href="javascript:void(0);">商务</a></li>
-                <li><a href="javascript:void(0);">投资促进</a></li>
-                <li><a href="javascript:void(0);">工商</a></li>
-                <li><a href="javascript:void(0);">税务</a></li>
-                <li><a href="javascript:void(0);">民政</a></li>
-                <li><a href="javascript:void(0);">人社</a></li>
-                <li><a href="javascript:void(0);">扶贫</a></li>
-                <li><a href="javascript:void(0);">旅游</a></li>
-                <li><a href="javascript:void(0);">人民银行</a></li>
-                <li><a href="javascript:void(0);">银监</a></li>
-                <li><a href="javascript:void(0);">证监</a></li>
-                <li><a href="javascript:void(0);">保监</a></li>
-                <li><a href="javascript:void(0);">质监</a></li>
-                <li><a href="javascript:void(0);">药监</a></li>
-                <li><a href="javascript:void(0);">安监</a></li>
-            </ul>
-                <div class="multiple-btn">
-                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
-                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
-                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
-                </div>
-            </div>
-            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
-            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
-
+        <div class="f-head">
+            <span id="type">
+                服务类型
+            </span>
         </div>
-
-
-
-
         <div class="f-row clearfix">
-            <div class="f-head">
-                <span id="jibie">
-                级别:
-                </span>
-            </div>
             <div class="f-select">
                 <ul class="f-labels ">
                     <li><a href="javascript:void(0);">全部</a></li>
-                    <li><a href="javascript:void(0);">中央财政资金</a></li>
-                    <li><a href="javascript:void(0);">省级财政资金</a></li>
-                    <li><a href="javascript:void(0);">市级财政资金</a></li>
-                    <li><a href="javascript:void(0);">县级财政资金</a></li>
-            </ul>
-                <div class="multiple-btn">
-
-                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
-                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
-                </div>
-            </div>
-            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
-            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
-        </div>
-        <div class="f-row clearfix">
-            <div class="f-head">
-                <span id="zhuangtai">
-                状态:
-                </span>
-            </div>
-            <div class="f-select">
-                <ul class="f-labels ">
-                    <li><a href="javascript:void(0);">全部</a></li>
-                    <li><a href="javascript:void(0);">正在申报</a></li>
-                    <li><a href="javascript:void(0);">截止申报</a></li>
+                    <li><a href="javascript:void(0);">工商代理</a></li>
+                    <li><a href="javascript:void(0);">资质代办</a></li>
+                    <li><a href="javascript:void(0);">知识产权</a></li>
+                    <li><a href="javascript:void(0);">财务服务</a></li>
                 </ul>
-                <div class="multiple-btn">
-                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)"  ><span>确定</span></a></span>
-                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
-                </div>
             </div>
-            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
-            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
         </div>
     </div>
-
-		{% if flag %}
-		<div>
-			<p>您已经选择：{{ selected.bumen }};{{ selected.jibie }};{{ selected.zhuangtai }}</p>
-            <p></p>
-		</div>
-		{% endif %}
 
         <div class="sort">
             <span>
@@ -182,13 +86,13 @@
 
             <span>
                 <a href="#">
-                    级别
+                    按价格
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
             <span>
                 <a href="#">
-                    截止时间
+                    按销量
                 </a>
                 <span class="glyphicon glyphicon-triangle-bottom"></span>
             </span>
