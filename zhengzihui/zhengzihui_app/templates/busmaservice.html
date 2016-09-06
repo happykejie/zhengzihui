@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+
+</title>
+</head>
+<body>
+<div class="container-fruid">
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-1">
+<h1>服务管理</h1>
+</div>
+</div>
+
+{% for goods in goods_list %}
+<div class="row">
+<div class="col-lg-3 col-sm-3 col-md-3 col-lg-offset-2">
+<a href="/service_details/?goodsid={{ goods.goods_id }}"><img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" /></a>
+<br />
+</div>
+<div class="col-lg-5 col-sm-5 col-md-5">
+<br />
+<br />
+<p><h4>服务名称：{{ goods.goods_name }}&nbsp;&nbsp;&nbsp;服务编号：{{ goods.goods_code }} {% if goods.goods_status == 0 %}已停止服务{% endif %} {% if goods.goods_status == 1 %}正在服务{% endif %}</h4>
+<p><h4>对应项目编号：{{ goods.item_id }}</h4>
+<p><h4>收费标准：首付{{ goods.goods_payahead }}中期:{{ goods.goods_awardmid }}奖金:{{ goods.goods_awardafter }}</h4>
+<p><h4>日期：{{ goods.goods_accept_starttime }}——{{ goods.goods_accept_endtime }}</h4>
+<a href="/merge_service_details/?goodsid={{ goods.goods_id }}" class="btn btn-lg btn-danger">我要编辑</a>
+</div>
+</div>
+{% endfor %}
+
+<!--<div id="list">
+            {% for goods in goods_list %}
+            <div class="list-content">
+				<a href="/service_details/?goodsid={{ goods.goods_id }}">
+                    <img  class="img-responsive"  src="/static/zhengzihui_app/img_for_items/default.jpg" />
+				</a>
+
+                <div class="text">
+                    <p class="title">
+                        <a href="/service_details/?goodsid={{ goods.goods_id }}">
+	                        {{ goods.goods_name }}+服务编号：{{ goods.goods_code }}
+	                    </a>
+                    </p>
+
+                    <p class="benefit">
+                        <span class="benefit-text">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <span>收费标准</span>
+                        </span>
+                        <span class="benefit-num">
+                            首付：{{ goods.goods_payahead }}+申报成功应付奖金{{ goods.goods_awardafter }}
+                        </span>
+                    </p>
+	                <center><span><font color="#dc143c">接单时间进度</font></span></center>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                        <div class="info" style="left:{{ goods.goods_remaintime }}%;">{{ goods.goods_remaintime }}%</div>
+                    </div>
+
+                    <div class="date">
+
+                        <span class="start">
+                            {{ goods.goods_accept_starttime }}
+                        </span>
+                         <span class="stop">
+                           {{ goods.goods_accept_endtime }}
+                        </span>
+                    </div>
+
+                </div>
+                <div class="watch">
+
+                    <a href="/service_details/?goodsid={{ goods.goods_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                </div>
+                <div class="line"></div>
+            </div>
+            {% endfor %}
+
+</div>-->
+</div>
+</div>
+</div>
+</body>
+</html>

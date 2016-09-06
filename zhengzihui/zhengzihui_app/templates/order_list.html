@@ -122,7 +122,64 @@
     margin-right:auto;
 }
 </style>
-    <div id="order">
+
+    <div id="order-list">
+        <h3 style="font-weight:bold;">我的订单</h3>
+		<br>
+	
+        <table class="table" align="center" style="width:1000px;">
+           <thead>
+              <tr>
+                 <th><font size=" 2">全部订单{{my_html_use_count}}&nbsp&nbsp&nbsp&nbsp</font><font size=" 2">待支付{{my_html_notpay_count}}&nbsp&nbsp&nbsp&nbsp</font><font size=" 2">待出行&nbsp&nbsp&nbsp&nbsp</font><font size=" 2">待点评{{my_html_noteval_count}}&nbsp&nbsp&nbsp&nbsp</font></th>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+              </tr>
+           </thead>
+           <thead>
+              <tr height=40>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+                 <th></th>
+              </tr>
+           </thead>
+              <thead>
+              <tr height=40>
+                 <th></th>
+                 <th><font size=" 2">产品信息</font></th>
+                 <th><font size=" 2">订单金额</font></th>
+                 <th><font size=" 2">起始时间</font></th>
+                 <th><font size=" 2">订单状态</font></th>
+                 <th><font size=" 2">订单操作</font></th>
+              </tr>
+           </thead>
+           <tbody>
+            {% for order in a_order_list %}
+              <tr>
+                 <td><center><div class="list-content">
+                                <a href="{% url 'service_details' %}?goodsid={{ order.goods_id }}">
+                                    <img src="{{ order.pic_url }}">
+                                </a>
+                            </div><center></td>
+                 <td><br><br><font size=" 2">{{ order.goods_name }}</a></font><br>
+                 <br><br><br><font size=" 2">订单编号{{ order.order_no }}</a></font>
+                 </td>
+                 <td align="center"><br><br>价格{{ order.order_amount }}</td>
+                 <td><br><br>{{ order.add_time }}</td>
+                 <td align="center"><br><br><font size=" 2">{{ order.order_state}}</font></td>
+                 <td><br><button type="submit" class="btn btn-success">立即支付</button><br><br><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="{% url 'order_detail' %}?id={{ order.order_id }}">查看订单</a><!--<a href="{% url 'project_detail' %}?id={{ a_click_item.id }}">查看订单</a>--><p></td>
+              </tr>
+            {% endfor %}
+           </tbody>
+        </table>
+    </div>
+
+
+<!--    <div id="order">
         <p>我的订单</p>
         <div id="order-button">
             <button type="button" class="btn btn-success">全选</button>
@@ -183,7 +240,7 @@
             </div>
         {% endfor %}
         </div>
-    </div>
+    </div>-->
 <script>
     $(document).ready(function(){
         $(".list-content").hover(function(){

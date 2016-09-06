@@ -35,20 +35,40 @@
 	top:630px;
     left: 18%;
 }
+.m{
+	position:absolute;
+	top:630px;
+    left: 28%;
+}
 .l{
 	position:absolute;
 	top:630px;
     left: 38%;
+}
+.n{
+	position:absolute;
+	top:630px;
+    left: 48%;
 }
 .b{
 	position:absolute;
 	top:630px;
     left: 58%;
 }
+.o{
+	position:absolute;
+	top:630px;
+    left: 68%;
+}
 .f{
 	position:absolute;
 	top:630px;
     left: 78%;
+}
+.q{
+	position:absolute;
+	top:630px;
+    left: 88%;
 }
 
 

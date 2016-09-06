@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 import datetime,time
 
 from django.db import models
@@ -114,28 +114,32 @@ defaultImageURLoftb_service_provider_sp_image1 = 'img/tb_service_provider_sp_img
 defaultImageURLoftb_service_provider_sp_image2 = 'img/tb_service_provider_sp_img2/%Y/%m/%d'
         
 class  tb_service_provider(models.Model):
-    sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
-    sp_id = models.IntegerField("内部ID",null=False,blank=False)
+    #sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
+    sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
+    #sp_id = models.IntegerField("内部ID",null=False,blank=False)
+    sp_id = models.AutoField("内部ID",primary_key = True)
     sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
-    psw = models.CharField("密码",max_length=40,null=False,blank=False)
+    psw = models.CharField("密码",max_length=40,null=True,blank=False)
 
     tel = models.CharField("电话",max_length=40,null=False,blank=False)
     email = models.EmailField("邮箱",null=False,blank=False)
-    master = models.CharField("擅长领域",max_length=50,null=False,blank=False)
-    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=False,blank=False)
-    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=False,blank=False)
-    sp_grade = models.IntegerField("服务商等级",null=False,blank=False)
-    sp_sort = models.IntegerField("排序",null=False,blank=False)
-    area_id = models.CharField("服务提供商所在地",max_length=10,null=False,blank=False)
-    Register_cap = models.IntegerField("注册资金",null=False,blank=False)
-    staff_number = models.IntegerField("职员人数",null=False,blank=False)
-    Annual_totals = models.IntegerField("年营业额",null=False,blank=False)
-    organization_name = models.CharField("机构名称",max_length=40,null=False,blank=False)
-    organization_id = models.IntegerField("机构代码",null=False,blank=False)
-    organization_assets = models.IntegerField("机构资产",null=False,blank=False)
-    organization_profile = models.CharField("机构简介",max_length=100,null=False,blank=False)
-    is_recommend = models.IntegerField('推荐指数',null=False)
-        
+    master = models.CharField("擅长领域",max_length=50,null=True,blank=False)
+    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=True,blank=False)
+    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=True,blank=False)
+    sp_grade = models.IntegerField("服务商等级",null=True,blank=False)
+    sp_sort = models.IntegerField("排序",null=True,blank=False)
+    area_id = models.CharField("服务提供商所在地",max_length=10,null=True,blank=False)
+    Register_cap = models.IntegerField("注册资金",null=True,blank=False)
+    staff_number = models.IntegerField("职员人数",null=True,blank=False)
+    Annual_totals = models.IntegerField("年营业额",null=True,blank=False)
+    organization_name = models.CharField("机构名称",max_length=40,null=True,blank=False)
+    organization_id = models.IntegerField("机构代码",null=True,blank=False)
+    organization_assets = models.IntegerField("机构资产",null=True,blank=False)
+    organization_profile = models.CharField("机构简介",max_length=100,null=True,blank=False)
+    is_recommend = models.IntegerField('推荐指数',null=True)
+
+    sp_type=models.CharField('合作类型',max_length=60,null=False,blank=False)
+    con_name=models.CharField('联系人姓名',max_length=30,null=False,blank=False)
     PASSAUTH = 1
     NOTPASSAUTH = 0
     WAITAUTH = 2
@@ -242,6 +246,7 @@ class tb_News(models.Model):
 class Tb_Notice(models.Model):
     Notice_id = models.AutoField(primary_key = True)  
     Notice_title = models.CharField('公告标题',max_length=100,null =False)
+    Notice_short_content = models.CharField('公告短内容',max_length=1000,null=True)
     Article_id = models.IntegerField('文章ID',null =False)
     Notice_time = models.DateField('发布时间')
     Notice_source = models.CharField('公告来源',max_length=100,null =False)
@@ -619,9 +624,32 @@ class tb_SysMessage(models.Model):
     class Meta:
         verbose_name = '系统信息表'
         verbose_name_plural = '系统信息表'
+class tb_goods_wfc(models.Model):
+    goods_id = models.AutoField("自增索引id主键",primary_key = True,null=False)
+    goods_name = models.CharField("服务名称",max_length = 40, null = False)
+    item_id = models.IntegerField("服务对应项目的id",null = False)
+    sp_id = models.IntegerField("服务对应的服务提供商",null = False)
+    goods_fanli = models.CharField("平台返利",null=False,max_length=20)
+	#smod = models.CharField("服务模式",max_length=20,null=True)
+    fea = models.CharField("服务特色",max_length = 1000, null = True)
+    cont = models.CharField("服务内容",max_length = 100, null = True)
+    steps = models.CharField("服务流程",max_length = 100, null = True)
+    exa = models.CharField("成功案例",max_length = 100, null = True)
+    smod = models.CharField("服务模式",max_length = 100, null = True)
+    goods_payahead = models.IntegerField("首付金额",null=False,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=True)
+    goods_awardmid = models.IntegerField("中期奖金",null=True)
+    class Meta:
+        verbose_name = '待测服务信息表'
+        verbose_name_plural = '待测服务信息表'
+    
+    def __unicode__(self):
+        return self.goods_name
+
+
 
 class tb_goods(models.Model):
-    goods_id = models.IntegerField("自增索引id主键",primary_key = True,null=False)
+    goods_id = models.AutoField("自增索引id主键",primary_key = True,null=False)
     item_id = models.IntegerField("服务对应项目的id",null = False)
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
     goods_name = models.CharField("服务名称",max_length = 40, null = False)
@@ -629,7 +657,8 @@ class tb_goods(models.Model):
     #Addby YZ为了服务列表的数据呈现
     goods_code = models.IntegerField("服务编号",null=True)
     goods_payahead = models.IntegerField("首付金额",null=False,default=100)
-    goods_awardafter = models.IntegerField("申报成功后奖金",null=False,default=100)
+    goods_awardafter = models.IntegerField("申报成功后奖金",null=True)
+    goods_awardmid = models.IntegerField("中期奖金",null=True)
     goods_accept_starttime = models.DateTimeField("开始接单时间",null=True)
     goods_accept_endtime = models.DateTimeField("最后接单时间",null=True)
 
@@ -638,6 +667,14 @@ class tb_goods(models.Model):
     goods_pay = models.IntegerField("该服务支持的支付方式",null = False)
     goods_guarantee = models.CharField("商家保证",max_length = 100, null = False)
     goods_sort = models.IntegerField("排序",null = False)#用来排序
+
+  	#smod = models.CharField("模式选择",max_length = 20, null = True)
+    fea = models.CharField("服务特色",max_length = 20, null = True)
+    cont = models.CharField("服务内容",max_length = 100, null = True)
+    steps = models.CharField("服务流程",max_length = 100, null = True)
+    exa = models.CharField("成功案例",max_length = 100, null = True)
+    smod = models.CharField("服务模式",max_length = 100, null = True)
+    goods_fanli = models.CharField("平台返利",null=False,max_length=20)
     
     NOTCOMMEND = 0
     COMMEND = 1
@@ -719,7 +756,11 @@ class tb_goods_evaluation(models.Model):
     goev_servicecredit = models.IntegerField("服务态度评分",null = False)
     goev_content = models.TextField("评价内容",null=False)
     is_anonymous  = models.IntegerField("是否匿名评价",null = False)
-    
+
+    service_provider = models.CharField("对应服务商",max_length = 100, null = True)
+    reply_content = models.TextField("评价内容",null=True)
+    star = models.IntegerField("总体评分",null = True)
+    reply_content = models.TextField("回复内容",null=True)
     SHOW = 1
     NOTSHOW = 0
     GOEV_SHOW_CHOICES = (
@@ -760,7 +801,15 @@ class tb_order(models.Model):
     buyer_name = models.CharField("买家姓名",max_length = 40, null = False)
     buyer_email = models.EmailField("买家电子邮箱",max_length = 40,null=False,blank=False)
     add_time = models.DateTimeField("订单生成时间",auto_now=True,blank=False)
+    promise_finish_time = models.DateTimeField("订单截止交付时间", auto_now=True, blank=False)
+
+    efile_send = models.IntegerField("电子档是否提交",null=False,default=0)
+    paper_send = models.IntegerField("纸质档是否提交",null=False,default=0)
+
     payment_code = models.CharField("支付方式名称代码",max_length = 100,null = False)
+    has_pay = models.IntegerField("是否支付",null=False,default=0)
+    finish_percentage = models.IntegerField('完成进度',null=False,default=0)
+
     payment_time = models.DateTimeField("支付(付款)时间",null=True,blank=False)#这个需要后续完成
     final_time = models.DateTimeField("订单完成时间",null=True,blank=False)#这个也是后续完成
     good_amount = models.IntegerField("商品总价格",null = False)#服务总价格=首付
@@ -880,3 +929,4 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+

@@ -1,0 +1,71 @@
+
+#collects-list{
+	width:100%;
+	height:auto;
+}
+.collects,{
+	margin:10px;
+	float:left;
+    width:250px;
+    height:360px;
+    padding:10px;
+    background-color: #f1f1f1;
+}
+.collects img{
+     width:230px;
+     height:200px;
+ }
+.collects p{
+    margin:0px 0px 0px 0px;
+    color: #757575;
+    font-weight:normal;
+}
+.collects h4{
+	color:black;
+}
+.collects h5{
+	color:#FF6666;
+}
+#collect-serve,#collect-serve-list{
+	width:100%;
+	height:auto;
+}
+.collect,.see{
+	margin:10px;
+	float:left;
+    width:250px;
+    height:360px;
+    padding:10px;
+    background-color: #f1f1f1;
+}
+.collect img, .see img{
+     width:230px;
+     height:200px;
+ }
+.collect p, .see p{
+    margin:0px 0px 0px 0px;
+    color: #757575;
+    font-weight:normal;
+}
+.collect h4, .see h4{
+	color:black;
+}
+.collect h5, .see h5{
+	color:#FF6666;
+    
+.progress{
+margin:15px 20px 5px 20px;
+height:10px;
+position:relative;
+}
+.progress-bar{
+background-color:#46BFBD;
+}
+.progress .info{
+font-size:75%;
+position:absolute;
+height:10px;
+line-height:10px;
+color:#FF6535;
+font-weight:600;
+}

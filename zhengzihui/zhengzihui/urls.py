@@ -1,4 +1,4 @@
-﻿#coding:utf-8
+#coding:utf-8
 """zhengzihui URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -79,11 +79,16 @@ urlpatterns = [
         #等级与成长
     url(r'^zzh/grade_grow/', zhengzihui_app.views.grade_grow,name="grade_grow"),
 
+#商家中心
+    url(r'^zzh/merchant_center/', zhengzihui_app.views.merchant_center,name="merchant_center"),    
+    #商家保存修改信息
+    url(r'^zzh/modify_merchant/', zhengzihui_app.views.modify_merchant,name="modify_merchant"),    
 
     #订单管理
         #全部订单
     url(r'^zzh/all_orders/', zhengzihui_app.views.all_orders,name="all_orders"),
-        #未支付
+    url(r'^zzh/all_orders_back/', zhengzihui_app.views.all_orders_back,name="all_orders_back"),
+    #未支付
     url(r'^zzh/not_pay/', zhengzihui_app.views.not_pay,name="not_pay"),
         #已支付
     url(r'^zzh/payed/', zhengzihui_app.views.payed,name="payed"),
@@ -94,6 +99,9 @@ urlpatterns = [
        #已取消
     url(r'^zzh/delete/', zhengzihui_app.views.delete,name="delete"),
 
+       #订单详情
+    url(r'^zzh/order_detail/', zhengzihui_app.views.order_detail,name="order_detail"),        
+    
        #确认订单
     url(r'^order_enter/', zhengzihui_app.views.order_enter,name="order_enter"),
        #取消订单
@@ -150,7 +158,13 @@ urlpatterns = [
     url(r'^password2/$', zhengzihui_app.views.password2,name='password2'),
     url(r'^password3/$', zhengzihui_app.views.password3,name='password3'),
     url(r'^password4/$', zhengzihui_app.views.password4,name='password4'),
+    url(r'^merchant/$',zhengzihui_app.views.merchant,name='merchant'),
+    url(r'^merchantout/$',zhengzihui_app.views.merchantout,name='merchantout'),
+    url(r'^applyforjoin/$',zhengzihui_app.views.applyforjoin,name='applyforjoin'),
+    url(r'^success/$',zhengzihui_app.views.success,name='success'),
 
+    
+    
     #短信验证页
     url(r'^register_sms/$', zhengzihui_app.views.register_sms, name='register_sms'),
 #    企业画像
@@ -164,7 +178,35 @@ urlpatterns = [
     #支付选择页面
 	url(r'^selectpay/$', zhengzihui_app.views.selectpay,name='selectpay'),
 	#邮箱验证页
-	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',zhengzihui_app.views.active_user,name='active_user')
+	url(r'^register2/(?P<token>\w+.[-_\w]*\w+.[-_\w]*\w+)/$',zhengzihui_app.views.active_user,name='active_user'),
+
+
+
+
+    #点评管理
+    url(r'^bus_comment_manager/$', zhengzihui_app.views.bus_comment_manager,name='bus_comment_manager'),
+    url(r'^service_provider_reply/$', zhengzihui_app.views.service_provider_reply,name='service_provider_reply'),
+    #信息维护
+    url(r'^info_main/$', zhengzihui_app.views.info_main,name='info_main'),
+	#商家入住首页
+	url(r'^busindex/$',zhengzihui_app.views.busindex,name='busindex'),
+	url(r'^buspubservice/',zhengzihui_app.views.buspubservice,name='buspubservice'),
+	url(r'^busmaservice/',zhengzihui_app.views.busmaservice,name='busmaservice'),
+
+	url(r'^merge_service_details/',zhengzihui_app.views.merge_service_details,name='merge_service_details'),
+    #YZ
+    url(r'^bus_order_manage/',zhengzihui_app.views.bus_order_manage,name="bus_order_manage"),
+    url(r'^bus_counter_manage/',zhengzihui_app.views.bus_counter_manage,name="bus_counter_manage"),
+    url(r'^change_paper_send_state/',zhengzihui_app.views.change_paper_send_state,name="change_paper_send_state"),
+    url(r'^change_has_pay_state/',zhengzihui_app.views.change_has_pay_state,name="change_has_pay_state"),
+    url(r'^sort_has_pay/',zhengzihui_app.views.sort_has_pay,name="sort_has_pay"),
+    url(r'^sort_order_manage/',zhengzihui_app.views.sort_order_manage,name="sort_order_manage"),
+    url(r'^busindex_sub/$',zhengzihui_app.views.busindex_sub,name='busindex_sub'),
+
+
+
+
+
 ]
 
 
