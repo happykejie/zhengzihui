@@ -1,0 +1,191 @@
+{% extends 'my_base.html' %}
+
+{% block title %}搜索结果页{% endblock %}
+
+{% block content %}
+
+
+    <link href="/static/css/sc_search_result.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/sc_search_result.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/sc_recommend_item.css"><!--其他推荐要用的css-->
+    <script>
+
+    $.ajaxSetup({
+
+    data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+
+    });
+	</script>
+
+
+
+<!--导航部分-->
+<div class="container">
+
+<!--div class="jumbotron" -->
+    <script>
+            function show(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="block";
+            }
+            function hide(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="none";
+            }
+
+    </script>
+
+<!--内容部分-->
+
+    <div class="content">
+        <div class="path">
+        <span>
+            您所在的位置：
+        </span>
+        <span>
+            <a href="/free_require/supporting_center/frame/">
+                配套广场
+            </a>
+        </span>
+        <span>
+            <a href="">
+                {{search_content}}{{request.session.search_content}}
+            </a>
+        </span>
+        </div>
+
+        <div class="filter" id="filter">
+        <div class="f-head">
+            <span id="type">
+                服务类型
+            </span>
+        </div>
+        <div class="f-row clearfix">
+            <div class="f-select">
+                <ul class="f-labels ">
+                    <li><a href="javascript:void(0);">全部</a></li>
+                    <li><a href="javascript:void(0);">工商代理</a></li>
+                    <li><a href="javascript:void(0);">资质代办</a></li>
+                    <li><a href="javascript:void(0);">知识产权</a></li>
+                    <li><a href="javascript:void(0);">财务服务</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+        <div class="sort">
+            <span>
+                <a href="#">
+                <!--<input type="hidden" name="bumen" value="{{ selected.bumen }}">-->
+                    综合
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+
+            <span>
+                <a href="#">
+                    按价格
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+            <span>
+                <a href="#">
+                    按销量
+                </a>
+                <span class="glyphicon glyphicon-triangle-bottom"></span>
+            </span>
+        </div>
+
+        <div id="list">
+            {% for item in items %}
+            <div class="list-content">
+                <a href="/free_require/supporting_center/iteminfo/?id={{ item.item_id }}">
+                    <img src="{{ item.pic_url }}" />
+                </a>
+                <span>
+                    {{ item.item_key }}
+                </span>
+                <div class="text">
+                    <p class="title">
+                        <label>{{ item.item_about }}</label>
+                        <a href="/free_require/supporting_center/iteminfo/?id={{ item.item_id }}">{{ item.item_name }}</a>
+                    </p>
+                    <p class="agency">
+                        <span class="glyphicon glyphicon-map-marker"></span>
+                        <span>{{ item.pa }}</span>
+                    </p>
+                    <p class="benefit">
+                        <span class="benefit-text">
+                            <span class="glyphicon glyphicon-usd"></span>
+                            <span>额度</span>
+                        </span>
+                        <span class="benefit-num">
+                            {{ item.item_ga }}
+                        </span>
+                    </p>
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                        <div class="info" style="left:{{ item.item_consume_time }}%;">{{ item.item_consume_time }}%</div>
+                    </div>
+                    <diV class="date">
+                        <span class="start">
+                            {{ item.item_publish }}
+                        </span>
+                         <span class="stop">
+                           {{ item.item_deadtime }}
+                        </span>
+                    </diV>
+
+                </div>
+                <div class="watch">
+                    <p>
+                        已经有<span class="sum">{{ item.order_num }}</span>人参与
+                    </p>
+                    <a href="/free_require/supporting_center/iteminfo/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
+                </div>
+                <div class="line"></div>
+            </div>
+            {% endfor %}
+            {% if not items  %}
+                <h3 align="center">还没有相关的项目为您呈现</h3>
+            {% endif %}
+        </div>
+        <div id="load">
+            <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
+        </div>
+    </div>
+
+<!-- 热门推荐-->
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="#"><strong>其他推荐</strong></a>
+   </div>
+
+</nav>
+<div class="main-bottom">
+        {% for thing in recommend %}
+            <div class = "col-lg-3 col-md-3 col-sm-3">
+                <div class="single-sale">
+                <a href="/free_require/supporting_center/iteminfo/?id={{thing.item_id}}">
+                    <img class="img-responsive" src="{{ thing.pic_url }}" /><!---->
+                    <h6>{{thing.item_name}}</h6>
+                </a>
+                <p><span class="orange">额度 &nbsp; ￥&nbsp;</span><span class="orange">{{  thing.item_ga }}</span><span class="send-free"></span></p>
+                <!--<p class="gary-text"><span><h6>点击量：</h6></span><span><del>     </del></span>-->
+                </div>
+            </div>
+            {% empty %}
+            <li>抱歉，还没有相关的其他推荐</li>
+            {% endfor%}
+
+
+    </div>
+
+
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+<div class='verification'>
+    <div>here is mobile verification</div>
+    <div>error: {{err_msg}}</div>
+    <div>
+        <input id='mobile_num' type="text" name="mobile_num" />
+        <button id="next_step" type="button">Next</button></div>
+</div>
+
+<script type="text/javascript">
+
+    var fd = new FormData();
+    fd.append("mobile_num",'123456');
+
+    $('button#next_step').click(function(){
+        $.ajax({
+            url: '/free_require/verification/',
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data){
+                $('div#fr_body').children().remove();
+                $('#fr_body').append(data);
+            }
+        });
+
+    });
+
+</script>

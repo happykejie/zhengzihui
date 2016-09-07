@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}默认标题{% endblock %}</title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="/static/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <script src="/static/jquery-ui-1.10.4/ui/jquery.ui.core.js"></script>
+  <script src="/static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
+  <script src="/static/jquery-ui-1.10.4/ui/jquery.ui.position.js"></script>
+  <script src="/static/jquery-ui-1.10.4/ui/jquery.ui.menu.js"></script>
+  <script src="/static/jquery-ui-1.10.4/ui/jquery.ui.autocomplete.js"></script>
+  <link rel="stylesheet" href="/static/jquery-ui-1.10.4/demos/demos.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+  <script src="/static/js/Popt.js"></script>
+  <script src="/static/js/cityJson.js"></script>
+  <script src="/static/js/citySet.js"></script>
+  	<script >
+
+	  $(document).ready(function () {
+	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
+	});
+	</script>
+   <!--$( "#inputitem" ).autocomplete('/searchforc/', {multiple: true, multipleSeparator: ' '});-->
+
+  <style type="text/css"><!--附加导航样式-->
+    /* Custom Styles */
+    ul.nav-tabs{
+		z-index:1;
+        width: 140px;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    }
+    ul.nav-tabs li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-tabs li:first-child{
+        border-top: none;
+    }
+    ul.nav-tabs li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-tabs li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-tabs li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    ul.nav-tabs.affix{
+        top: 30px; /* Set the top position of pinned element */
+    }
+
+
+	.image{height:250px;width:200px;background: #ffffff}
+
+
+
+
+
+._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative;background-color: white; }
+._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
+._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
+._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+.citySel { background-color: #56b4f8; color: #fff !important; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
+._citys1 a:hover { color: #fff; background-color: #56b4f8; }
+.AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi, {{ user_name }}欢迎来到政资汇！</a>
+
+        </div>
+
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
+			<li><a href="{% url 'login' %}">登录</a></li>
+			<li><a href="{% url 'g_register' %}">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="{% url 'representations' %}">帐号申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+		<!--div class="jumbotron"> </div -->
+<!--网站图标+搜索栏-->
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3">
+      <center><a href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
+    </div>
+
+    <div class="col-sm-9 col-md-9 col-lg-9">
+		<div class="col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+			<div id="chosecity" >
+				<form action="">
+					<input type="text" id="city" style="width: 80%;height:45px;border: hidden;" value="切换城市"/>
+<script type="text/javascript">
+$("#city").click(function (e) {
+	SelCity(this,e);
+});
+</script>
+				</form>
+			</div>
+		</div>
+        <div class="col-sm-10 col-md-10 col-lg-10" style="padding:0px">
+		<div class="search">
+			<div class="row">
+				<form action="/search" method="GET" class="search">
+
+					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
+					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
+    						  <option>全部</option>
+   						  <option>发布部门</option>
+    					  </select>
+    				</div>
+
+    				<div class="col-sm-6 col-md-6 col-lg-6" style="padding:0px">
+					<input class="input input-lg"  id="inputitem" name="inputitem" style="width:100%;">
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2" style="padding:0px">
+					<button type="submit" class="btn btn-primary btn-lg btn-block" style="">搜索</button>
+					</div>
+				</form>
+			<div class="col-sm-2" style="padding:0px">
+			<button type="button" class="btn btn-primary btn-lg btn-block"  onclick="javascript:window.location.href='#'">有偿申报</button>
+			</div>
+			</div>
+		</div>
+        </div>
+      
+  </div>
+</div>
+<br>
+<br>
+ 
+{% block content %}
+<div>这里是默认内容，所有继承自这个模板的，如果不覆盖就显示这里的默认内容。</div>
+{% endblock %}
+
+
+
+
+
+<hr style="border:3 double" width="80%" SIZE=3/>
+<!--底部的广告位2号-->
+<div class="row-fluid" align="center">
+	<img class="img-responsive" src = "/static/images/diguanggao.png">
+</div>
+<div align="center" >
+<table width="1000px" text-align="center">
+<tr>
+<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
+<td width="200px"><a href="{% url 'download' %}"><B><font color="black">政资汇app</font></B></a></td>
+</tr>
+<tr>
+<td><a href="{% url 'introduce' %}" target="_blank"><font color="black">政资汇简介</font></a></td>
+<td><a href="{% url 'business_cooperation' %}"><font color="black">商务合作</font></a></td>
+<td><a href="{% url 'contact_us' %}"><font color="black">联系我们</font></a></td>
+<td><a href="#"><font color="black">政资宝</font></a></td>
+</tr>
+<tr>
+<td><a href="{% url 'trustedwebsite' %}" target="_blank"><font color="black">可信网站</font></a></td>
+<td><a href="{% url 'union_website' %}"><font color="black">网站联盟</font></a></td>
+<td><a href="{% url 'artificial_apeal' %}"><font color="black">投诉建议</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">法律声明</font></a></td>
+<td><a href="{% url 'friend_link' %}"><font color="black">友情链接</font></a></td>
+<td><a href="{% url 'newhire' %}"><font color="black">诚聘英才</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">网站地图</font></a></td>
+<td><a href="{% url 'quanlification' %}"><font color="black">业务资质</font></a></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</body>
+</html>

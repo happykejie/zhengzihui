@@ -1,0 +1,28 @@
+<div class='require_description' >
+    <div >here is require description</div>
+    <div>error: {{err_msg}}</div>
+    <button id="finish_step" type="button">Finish</button>
+</div>
+
+<script type="text/javascript">
+
+    var fd = new FormData();
+    fd.append("require_description",'xxxx');
+
+    $('button#finish_step').click(function(){
+        $.ajax({
+            url: '/free_require/require_description/',
+            data: fd,
+            processData: false,
+            contentType: false,
+            type: 'POST',
+            success: function(data){
+
+                $('div#fr_body').children().remove();
+                $('#fr_body').append(data);
+            }
+        });
+
+    });
+
+</script>
