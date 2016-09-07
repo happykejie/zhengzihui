@@ -672,7 +672,7 @@ def order_details(request):
         order_no = random.randint(0, 1000000)
         while (len(tb_order.objects.filter(order_no=order_no)) == 1):
             order_no = random.randint(0, 1000000)
-        print type(item.item_name)
+        #print type(item.item_name)
         # add_time 用的是插入数据时便生成，即保存最后修改的时间错。
         allorder = tb_order.objects.all()
         lastid = allorder[len(allorder) - 1].order_id

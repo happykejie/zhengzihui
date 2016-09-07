@@ -2101,6 +2101,15 @@ def applyforjoin(request):
         add.sp_name = request.POST.get("sp_name")
         add.con_name = request.POST.get("con_name")
         add.sp_type =sp_type
+        #add by yz
+        '''
+        sp_code = random.randint(0, 1000000)
+        while (len(tb_service_provider.objects.filter(sp_code =sp_code)) == 1):
+            sp_code = random.randint(0, 1000000)
+        add.sp_code = sp_code
+        add.psw = '000000'
+        '''
+
         add.save()
         return render_to_response("success.html", {})
     return render_to_response("applyforjoin.html",{})
