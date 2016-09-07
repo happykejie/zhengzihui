@@ -178,25 +178,56 @@ $("#city").click(function (e) {
 
 					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
 					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
-    						  <option>全部</option>
-   						  <option>发布部门</option>
+    						  <option>所属行业</option>
+   						  <option>领域或产品</option>
+							<option>归口部门受理人员</option>
     					  </select>
     				</div>
+					<!--
+					<script>
+						function checkifNone(){
+							var vaofin=document.getElementById("inputitem").value;
+							if(vaofin!='')
+							{
+								;
+							}
+							else{
+							alert(" 请输入要查询的内容");
+							}
 
+						}
+					</script>
+					-->
     				<div class="col-sm-6 col-md-6 col-lg-6" style="padding:0px">
-					<input class="input input-lg"  id="inputitem" name="inputitem" style="width:100%;">
+					<input class="input input-lg"  id="inputitem" name="inputitem" style="width:100%;" >
                     </div>
                     <div class="col-sm-2 col-md-2 col-lg-2" style="padding:0px">
-					<button type="submit" class="btn btn-primary btn-lg btn-block" style="">搜索</button>
+					<button type="submit" class="btn btn-primary btn-lg btn-block" style=""   >搜索</button>
 					</div>
 				</form>
 			<div class="col-sm-2" style="padding:0px">
-			<button type="button" class="btn btn-primary btn-lg btn-block"  onclick="javascript:window.location.href='#'">有偿申报</button>
+
+			<div class="dropdown">
+   <button type="button" class="btn btn-primary btn-lg btn-block" style="width:60%" id="dropdownMenu1"
+      data-toggle="dropdown">
+      共享
+      <span class="caret"></span>
+   </button>
+   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+      <li role="presentation">
+         <a role="menuitem" tabindex="-1" href="/free_require/frame">需求信息发布</a>
+      </li>
+      <li role="presentation">
+         <a role="menuitem" tabindex="-1" href="#">政咨信息共享</a>
+      </li>
+
+   </ul>
+</div>
 			</div>
 			</div>
 		</div>
         </div>
-      
+
   </div>
 </div>
 <br>

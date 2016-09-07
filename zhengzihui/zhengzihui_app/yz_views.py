@@ -437,7 +437,7 @@ def service_list(request):
     if (id1 == ''):
         service = 0
         noservice = 1
-        return render('request', 'goods_list.html', {'service': service, 'noservice': noservice,})
+        return render(request, 'goods_list.html', {'service': service, 'noservice': noservice,})
     else:
         # print id1
         id1 = int(id1)
