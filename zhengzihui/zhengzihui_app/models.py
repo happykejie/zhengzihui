@@ -652,6 +652,7 @@ class tb_goods(models.Model):
     goods_id = models.AutoField("自增索引id主键",primary_key = True,null=False)
     item_id = models.IntegerField("服务对应项目的id",null = False)
     sp_id = models.IntegerField("服务对应的服务提供商",null = False)
+    goods_area = models.CharField("所在地",max_length = 40,null = False,default="北京")
     goods_name = models.CharField("服务名称",max_length = 40, null = False)
     goods_market_price = models.IntegerField("服务价格",null = False)
     #Addby YZ为了服务列表的数据呈现
@@ -929,4 +930,27 @@ class tb_customcompany(models.Model):
     self_file = models.FileField(upload_to = './upload',null=True)
     item_file = models.FileField(upload_to = './upload',null=True)
     conclusion = models.CharField("网站评价",max_length=100,null=True,blank=False)
+
+class tb_balist(models.Model):
+	ba_id = models.AutoField("结算id",primary_key = True)
+	order_no = models.IntegerField('订单编号',null=False)
+	shangjia = 0
+	peitao =1
+	BA_K_CHOICES = (
+	(shangjia,"商家服务"),
+	(peitao,"配套服务"),
+	)
+	ba_belong = models.IntegerField("服务分类",choices=BA_K_CHOICES,null=False,default= shangjia)
+	NotOK = 0
+	Gok = 1
+	Bok = 2
+	Ok	= 3
+	BA_STAT_CHOICES = (
+	(NotOK,'已下单'),
+	(Gok,"客户已确认"),
+	(Bok,'商家已确认'),
+	(Ok,"已完成"),
+	)
+	ba_sta = models.IntegerField("结算状态",choices=BA_STAT_CHOICES,default= NotOK,null=False,blank=False)
+	ba_time = models.DateTimeField("结算时间",null=True,blank=False,default=None)
 

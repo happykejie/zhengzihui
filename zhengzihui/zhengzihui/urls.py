@@ -202,6 +202,9 @@ urlpatterns = [
     url(r'^sort_has_pay/',zhengzihui_app.views.sort_has_pay,name="sort_has_pay"),
     url(r'^sort_order_manage/',zhengzihui_app.views.sort_order_manage,name="sort_order_manage"),
     url(r'^busindex_sub/$',zhengzihui_app.views.busindex_sub,name='busindex_sub'),
+	url(r'^b_work_index/$',zhengzihui_app.views.b_work_index,name='b_work_index'),
+	url(r'^baforguests/$',zhengzihui_app.views.baforguests,name='baforguests'),
+	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 
 
 

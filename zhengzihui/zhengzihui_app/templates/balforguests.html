@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+</title>
+</head>
+<body>
+</title>
+</head>
+<body>
+<div class="container-fruid">
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-1">
+<h1>客户结算</h1>
+</div>
+</div>
+<br />
+
+<div class="row">
+<div class="col-lg-offset-1 col-lg-3">	
+	<font size="4">行政区选择<font>
+	<select>
+	<option value="">#</option>
+	<option value="">#</option>
+	</select>
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+	</ul>
+</div>	
+<div class="col-lg-3">	
+	<font size="4">服务类型选择<font>
+	<select id = "skind" onchange="Change()" >
+	<option value="0" >商家服务</option>
+	<option value="1" >配套服务</option>
+	</select>
+</div>
+<div class="col-lg-3">	
+	<font size="4">结算状态<font>
+	<select id = "sta" onchange="Change2()" >
+	<option value="0" >已下单</option>
+	<option value="1" >客户已确认</option>
+	<option value="2" >商家已确认</option>
+	<option value="3" >已完成</option>
+	</select>
+</div>		
+</div>
+<script>
+	function Change(){
+		//alert(getCookie("kind"));
+		skind = document.getElementById("skind").value;
+		document.cookie="kind="+skind;
+		//alert(getCookie("kind"));
+		//alert(skind);
+		//document.cookie="kind="+skind;
+		window.location.reload();
+		//alert(document.cookie.match("skind"));
+		//var {{ lis }}
+	}
+	function Change2(){
+		//alert(getCookie("kind"));
+		sta = document.getElementById("sta").value;
+		document.cookie="sta="+sta;
+		//alert(getCookie("kind"));
+		//alert(skind);
+		//document.cookie="kind="+skind;
+		window.location.reload();
+		//alert(document.cookie.match("skind"));
+		//var {{ lis }}
+	}
+	function getCookie(name) 
+	{ 
+    var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+    if(arr=document.cookie.match(reg))
+        return unescape(arr[2]); 
+    else 
+        return null; 
+	}
+
+</script>
+<br />
+<div class="table-responsive col-lg-offset-1 col-lg-10 table-striped">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>订单编号</th>
+        <th>地域</th>
+        <th>服务类型</th>
+		<th>结算金额</th>
+		<th>结算状态</th>
+		<th>查看细节</th>
+	</tr>
+    </thead>
+    <tbody>
+	{% for i in lis %}
+    <tr>
+        <td>{{ i.order_no }}</td>
+        <td>{{ i.area}}</td>
+        {%if i.kind == 0 %}<td>商家服务</td>{% endif %}
+		{%if i.kind == 1 %}<td>配套服务</td>{% endif %}
+        <td>{{ i.price }}</td>
+        {% if i.sta == 0 %}<td>已下单</td>{% endif %}
+		{% if i.sta == 1 %}<td>客户已确认</td>{% endif %}
+		{% if i.sta == 2 %}<td>商家已确认</td>{% endif %}
+		{% if i.sta == 3 %}<td>已完成</td>{% endif %}
+		<td><a href="#" onclick="window.parent.frames.location.href='/bw_badetail/?id={{ i.id }}'">查看详单</a></td>
+	<tr>
+	{% endfor %}
+<!--
+	{% if  request.cookie.kind  %}
+	{% for i in lis %}
+	{% if  i.kind == request.cookie.kind %}
+	 <tr>
+        <td>{{ i.order_no }}</td>
+        <td>{{ i.area}}</td>
+        {%if i.kind == 0 %}<td>商家服务</td>{% endif %}
+		{%if i.kind == 1 %}<td>配套服务</td>{% endif %}
+        <td>{{ i.price }}</td>
+        {% if i.sta == 0 %}<td>已下单</td>{% endif %}
+		{% if i.sta == 1 %}<td>客户已确认</td>{% endif %}
+		{% if i.sta == 2 %}<td>商家已确认</td>{% endif %}
+		{% if i.sta == 3 %}<td>已完成</td>{% endif %}
+		<td></td>
+	<tr>
+	{% endif %}
+	{% endfor %}
+	{% endif %}
+-->
+	</tbody>
+</table> 
+</div>
+</div>
+</body>
+</html>
