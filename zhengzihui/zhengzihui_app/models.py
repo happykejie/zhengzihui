@@ -953,4 +953,5 @@ class tb_balist(models.Model):
 	)
 	ba_sta = models.IntegerField("结算状态",choices=BA_STAT_CHOICES,default= NotOK,null=False,blank=False)
 	ba_time = models.DateTimeField("结算时间",null=True,blank=False,default=None)
+	ba_ftime = models.DateTimeField("验单时间",null=True,blank=False,default=None)
 

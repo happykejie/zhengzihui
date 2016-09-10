@@ -2149,6 +2149,37 @@ def baforguests(request):
 				flis.append(i)
 	return render_to_response("balforguests.html",{'lis':flis})
 
+def baforshopers(request):
+	if 'kind' not in request.COOKIES:
+		allba = tb_balist.objects.all()
+	else:
+		kind = request.COOKIES['kind']
+		#print(kind)
+		allba = tb_balist.objects.filter(ba_belong=kind)
+	lis = []
+	flis = []
+	for i in allba:
+		a_lis = {}
+		a_lis['id']=i.ba_id
+		a_lis['order_no']=i.order_no
+		a_lis['sta']=i.ba_sta
+		a_lis['kind']=i.ba_belong
+		goodsid = tb_order.objects.get(order_no = i.order_no).goods_id
+		a_lis['area']=tb_goods.objects.get(goods_id=goodsid).goods_area
+		a_lis['price']=tb_goods.objects.get(goods_id=goodsid).goods_payahead + tb_goods.objects.get(goods_id=goodsid).goods_awardmid +tb_goods.objects.get(goods_id=goodsid).goods_awardafter
+		#print (a_lis['price'])
+		lis.append(a_lis)
+	if 'sta' not in  request.COOKIES:
+		flis = lis
+	else:
+		for i in lis:
+			#print(i['sta'])
+			a = int(request.COOKIES['sta'])
+			if (i['sta']==a):
+				print(123)
+				flis.append(i)
+	return render_to_response("balforshopers.html",{'lis':flis})
+
 def bw_badetail(request):
 	ba_id = request.GET.get('id')
 	ba = tb_balist.objects.get(ba_id=ba_id)
@@ -2167,4 +2198,26 @@ def bw_badetail(request):
 	res['sta']=ba.ba_sta
 	res['ftime']=ba.ba_time
 	return render_to_response("badetail.html",{'res':res})
+
+def bw_badetailfs(request):
+	ba_id = request.GET.get('id')
+	ba = tb_balist.objects.get(ba_id=ba_id)
+	res = {}
+	res['order_no'] = ba.order_no
+	res['kind'] = ba.ba_belong
+	goodsid = tb_order.objects.get(order_no = ba.order_no).goods_id
+	guestid = tb_order.objects.get(order_no = ba.order_no).buyer_id
+	res['name'] = tb_goods.objects.get(goods_id=goodsid).goods_name
+	res['price'] = tb_goods.objects.get(goods_id=goodsid).goods_payahead + tb_goods.objects.get(goods_id=goodsid).goods_awardmid +tb_goods.objects.get(goods_id=goodsid).goods_awardafter
+	res['loc']=tb_user_expand.objects.get(user_id=guestid).company_address
+	shopid = tb_order.objects.get(order_no = ba.order_no).sp_id
+	res['sname']=tb_companyuser.objects.get(companyUserId=shopid).companyUserCompanyName
+	res['sloc']=tb_companyuser.objects.get(companyUserId=shopid).companyUserCompanyAddress
+	res['con']=tb_companyuser.objects.get(companyUserId=shopid).companyUserContactName
+	#res['otime']=tb_order.objects.get(order_no = ba.order_no).add_time
+	res['fctime']=ba.ba_ftime
+	res['sta']=ba.ba_sta
+	res['ftime']=ba.ba_time
+
+	return render_to_response("badetailfs.html",{'res':res})
 	

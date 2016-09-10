@@ -204,7 +204,9 @@ urlpatterns = [
     url(r'^busindex_sub/$',zhengzihui_app.views.busindex_sub,name='busindex_sub'),
 	url(r'^b_work_index/$',zhengzihui_app.views.b_work_index,name='b_work_index'),
 	url(r'^baforguests/$',zhengzihui_app.views.baforguests,name='baforguests'),
+	url(r'^baforshopers/$',zhengzihui_app.views.baforshopers,name='baforshopers'),
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
+	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
 
 
 

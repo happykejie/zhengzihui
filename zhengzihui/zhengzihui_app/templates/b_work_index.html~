@@ -67,10 +67,10 @@
 <center><a href="#"><font color="white" size="4px" onclick="#">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="baforguests">客户结算</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="baforguests()">客户结算</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">商家结算</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="baforshops()">商家结算</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="#">推送管理</font></a></center>
@@ -111,6 +111,10 @@
 <script>
 	function baforguests(){
 		var url="/baforguests"
+		$('#fra').attr('src',url);
+	}
+	function baforguests(){
+		var url="/baforshopers"
 		$('#fra').attr('src',url);
 	}
 </script>
