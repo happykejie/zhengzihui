@@ -579,7 +579,7 @@ def merchant(request):
                 if sp_type1=="sp_typethree":
                   return render(request,"testpage1.html")
 
-                response = render(request, 'bus_index.html', {})
+                response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
                 
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
@@ -2070,7 +2070,7 @@ def applyforjoin(request):
     sp_type=""
     
     if request.method == 'POST':
-        flag=request.POST.get("flag")
+        flag = request.POST.get("flag")
         myflag=str(flag)
         print myflag
         sp_name = request.POST.get("sp_name")
@@ -2117,7 +2117,11 @@ def success(request):
     return render_to_response("success.html",{})
 
 def b_work_index(request):
-	return render_to_response("b_work_index.html")
+    if 'back_id' in request.COOKIES:
+
+	    return render_to_response("b_work_index.html",{})
+    else:
+        return HttpResponseRedirect('/zzh_back_login/')
 def baforguests(request):
 	if 'kind' not in request.COOKIES:
 		allba = tb_balist.objects.all()

@@ -955,3 +955,44 @@ class tb_balist(models.Model):
 	ba_time = models.DateTimeField("结算时间",null=True,blank=False,default=None)
 	ba_ftime = models.DateTimeField("验单时间",null=True,blank=False,default=None)
 
+#YZ for the back
+class tb_back_user(models.Model):
+    user_id = models.AutoField("用户id", primary_key=True)
+
+    user_name = models.CharField("用户名称", max_length=100, null=False, blank=False)
+    user_password = models.CharField("密码", max_length=100, null=False, blank=False)
+    user_telephone = models.CharField("电话", max_length=40, null=False, blank=False)
+    user_email = models.EmailField("用户邮箱", null=False, blank=False)
+
+    PASSAUTH = 1
+    NOTPASSAUTH = 0
+    USER_AUTH_CHOICES = (
+        (PASSAUTH, '通过验证'),
+        (NOTPASSAUTH, "验证没有通过或者没有验证"),
+
+    )
+    user_auth = models.IntegerField("用户验证状态", choices=USER_AUTH_CHOICES,
+                                    default=NOTPASSAUTH)  # 用户验证状态0：验证没有通过或者没有验证1：验证通过
+
+    Kefu = 2
+    Shenhe = 1
+    super_admin = 0
+    User_Type_CHOICES = (
+        (Kefu, '客服人员'),
+        (Shenhe, '审核人员'),
+        (super_admin, '超级管理员'),
+    )
+    user_type = models.IntegerField("注册用户类型", choices=User_Type_CHOICES, default=Kefu)
+
+    class Meta:
+        verbose_name = '后台用户'
+        verbose_name_plural = '后台用户'
+
+    def __unicode__(self):
+        return self.user_name
+
+    def __unicode__(self):
+        return self.user_email
+
+    def __unicode__(self):
+        return self.user_telephone

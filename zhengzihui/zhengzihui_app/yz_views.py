@@ -1256,3 +1256,91 @@ def sort_order_manage(request):
         order.buyer_expand_contact = str(buyer_expand_contact)
     # request.session['first_page'] = 0
     return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+
+def zzh_back_login(request):
+    errors = []
+    user_name = None
+    password = None
+    back_user = tb_back_user()
+    if 'back_id' in request.COOKIES:
+        response = render(request, 'b_work_index.html', {})
+        #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
+        return response
+
+    if request.method == 'POST':
+        if not request.POST.get('_spname'):
+            errors.append('请输入用户名')
+        else:
+            user_name = request.POST.get('_spname')
+        if not request.POST.get('password'):
+            errors.append('请输入登陆密码')
+        else:
+            password = request.POST.get('password')
+        if user_name is not None and password is not None:
+            try:
+                back_user = tb_back_user.objects.get(user_name=user_name)
+            except tb_back_user.DoesNotExist:
+                errors.append('用户名不存在')
+                return render_to_response('zzh_back_login.html', {'errors': errors})
+            back_user_temp = tb_back_user.objects.get(user_name=user_name)
+            if back_user_temp.user_auth == 0:
+                errors.append('还未通过超级管理员的审核')
+                print "杂速度开发商就的看法时讲课对方"
+                return render(request,'zzh_back_login.html',{'errors':errors})
+            if password == back_user.user_password:
+                back_type = tb_back_user.objects.get(user_name = user_name).user_type
+                # ms:print "testing..."
+                # print sp_type
+
+                if back_type == 1:
+                    #需要传入用户的权限值跳到不同的页面，或者显示不同的页面
+                    return render(request, "testpage1.html")
+
+
+
+                response = HttpResponseRedirect('/b_work_index/')
+
+                response.set_cookie('back_name', back_user.user_name, 3600)
+                response.set_cookie('back_id', back_user.user_id, 3600)
+                # print(user.expand.company_name)
+                return response
+            else:
+                errors.append('密码错误')
+
+    return render_to_response('zzh_back_login.html', {'errors': errors})
+
+
+def backout(request):
+    response = HttpResponseRedirect('/zzh_back_login/')
+    response.delete_cookie('back_name')
+    response.delete_cookie('back_id')
+    return response
+
+
+def zzh_back_reg(request):
+    error = ['用户名已经存在','输入信息有误，未录入完整信息']
+
+    if request.method == 'POST':
+        user_name = request.POST.get("con_name")
+        if tb_back_user.objects.get(user_name = user_name):
+            return render(request, "zzh_back_reg.html", {'error': error[0]})
+        tel = request.POST.get("tel")
+        email = request.POST.get("email")
+        back_psw = request.POST.get("back_psw")
+        back_type = request.POST.get("back_type")
+        print user_name,tel,email,back_psw,back_type
+        newback = tb_back_user()
+        newback.user_name = user_name
+        newback.user_password = back_psw
+        newback.user_telephone = tel
+        newback.user_email = email
+        newback.user_auth = 0
+        if back_type == "Kefu":
+            newback.user_type = 2
+        if back_type == "Shenbao":
+            newback.user_type = 1
+        newback.save()
+        return render(request, "zzh_back_login.html", {})
+
+    return render(request,"zzh_back_reg.html")

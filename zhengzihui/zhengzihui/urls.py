@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 import zhengzihui_app.views
-
+#from yz_urls import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^free_require/', include('fr_app.urls')),
@@ -207,7 +207,12 @@ urlpatterns = [
 	url(r'^baforshopers/$',zhengzihui_app.views.baforshopers,name='baforshopers'),
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
-
+    
+#政资汇后台工作人员
+    #登陆
+    url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
+    #注册
+    url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
 
 
 
