@@ -209,7 +209,8 @@ urlpatterns = [
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
     url(r'^b_work_comment_manager/$',zhengzihui_app.views.b_work_comment_manager,name='b_work_comment_manager'),
 
-
+#商家管理查看详情 LQX   
+    url(r'^bus_order_manage_detail/',zhengzihui_app.views.bus_order_manage_detail,name="bus_order_manage_detail"),
 
 
 
