@@ -759,9 +759,10 @@ class tb_goods_evaluation(models.Model):
     is_anonymous  = models.IntegerField("是否匿名评价",null = False)
 
     service_provider = models.CharField("对应服务商",max_length = 100, null = True)
-    reply_content = models.TextField("评价内容",null=True)
+
     star = models.IntegerField("总体评分",null = True)
     reply_content = models.TextField("回复内容",null=True)
+    location = models.CharField("所在地域",max_length = 100, null = True)
     SHOW = 1
     NOTSHOW = 0
     GOEV_SHOW_CHOICES = (
