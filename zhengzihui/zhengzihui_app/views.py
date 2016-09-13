@@ -2070,37 +2070,15 @@ def sort_has_pay(request):
     return render(request, "bus_counter_manage.html", {'all_order': all_order, 'sp_id': sp_id})
 
 def sort_order_manage(request):
-    sp_id = request.GET.get('sp_id')
-    flag = request.GET.get('flag')
-    if flag == '0':
-        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-add_time')
-    elif flag == '1':
-        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('promise_finish_time')
-
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
     else:
-        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-finish_percentage')
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
 
     for order in all_order:
-        # print order.goods_id
-        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
-        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
-        temp_sptype =tb_service_provider.objects.get(sp_id=order.sp_id).sp_type##服务类型
-        if temp_buyer.expand_id:
 
-            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
-            buyer_expand_address = temp_buyer_expand.company_address
-            #print buyer_expand_address
-
-            if buyer_expand_address == '':
-                buyer_expand_address == '该用户所在公司还未完善地址信息 '
-            buyer_expand_contact = temp_buyer_expand.companyUserContactName
-            if buyer_expand_contact == '':
-                buyer_expand_contact = '该用户所在公司还未指定联系人'
-        else:
-            buyer_expand_address = "用户还未填写,请电话联系"
-            buyer_expand_contact = temp_buyer.user_name
-        goods_name = temp_order.goods_name
-        if order.efile_send:
+        if order.efile_send :
             order.str_efile_send = '已经交付'
         else:
             order.str_efile_send = '未交付'
@@ -2108,23 +2086,12 @@ def sort_order_manage(request):
             order.str_paper_send = '已经送达'
         else:
             order.str_paper_send = '未送达'
-        # 添加的三个属性
-        order.goods_name = goods_name
-        order.buyer_expand_address = str(buyer_expand_address)
-        order.buyer_expand_contact = str(buyer_expand_contact)
-        order.sptype = temp_sptype
-        ##lqx判断服务类型
-        if order.sptype=='申报服务提供商':
-            order.s_type='项目申报'
-        elif order.sptype=='项目申报配套服务工商代办'|'项目申报配套服务资质代办'|'项目申报配套服务知识产权'|'项目申报配套服务财务服务':
-            order.s_type='配套服务'
-        else:
-            order.s_type='融资服务'
-        order.s_type=str(order.s_type) 
-    return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+
+    return render(request,"bus_order_manage.html",{'all_order':all_order,'sp_id':sp_id})
 
 #订单管理-查看详情  lqx  
-def bus_order_manage_detail(request):
+def bw_order_manage_detail(request):
     order_no = request.GET['id']
     if 'sp_id' in request.COOKIES:
         sp_id = request.COOKIES['sp_id']
@@ -2187,8 +2154,7 @@ def bus_order_manage_detail(request):
             order.s_type='融资服务'
         order.s_type=str(order.s_type) 
 
-    return render(request, "bus_order_manage_detail.html", {'all_order': all_order, 'sp_id': sp_id,'merchant':merchant})
-    
+    return render(request, "bw_order_manage_detail.html", {'all_order': all_order, 'sp_id': sp_id,'merchant':merchant})
     
 def applyforjoin(request):	
     add = []
@@ -2247,6 +2213,65 @@ def b_work_index(request):
 	    return render_to_response("b_work_index.html",{})
     else:
         return HttpResponseRedirect('/zzh_back_login/')
+        
+def balfororders(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+    all_order = get_all_order_of_sp(sp_id)
+    filter_order=[]
+
+    sp_type=request.GET.get('sp_type')
+    sp_type1=None
+    sp_type2=None
+    sp_type3=None
+    if sp_type=="项目申报":
+        sp_type1=True
+        
+        #all_order=all_order[:3]
+        
+    elif sp_type=="配套服务":
+        sp_type2=True
+        #all_order=all_order[:2]
+    else:
+        sp_type3=True
+        #all_order=all_order[:3]
+    
+    
+    for order in all_order:
+
+        if order.efile_send :
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+            
+        ##lqx判断服务类型
+        if order.sptype=='申报服务提供商':
+            order.s_type='项目申报'
+        elif order.sptype=='项目申报配套服务工商代办'|'项目申报配套服务资质代办'|'项目申报配套服务知识产权'|'项目申报配套服务财务服务':
+            order.s_type='配套服务'
+        else:
+            order.s_type='融资服务'
+        order.s_type=str(order.s_type)   
+        
+    #print sp_type
+    
+    if sp_type=='项目申报':
+        for order in all_order:
+           print order.sptype
+           if order.sptype=='申报服务提供商':
+              filter_order.append(order)
+      
+    print len(filter_order)
+    
+    return render(request,"balfororders.html",{'all_order':filter_order,'sp_id':sp_id,"sp_type1":sp_type1,"sp_type2":sp_type2,"sp_type3":sp_type3,"sp_type":sp_type,'order.buyer_name':order.buyer_name})  
+          
+        
 def baforguests(request):
 	if 'kind' not in request.COOKIES:
 		allba = tb_balist.objects.all()

@@ -64,7 +64,7 @@
 <!--<div class="text" style="background-color:#00BFFF; line-height:5em">-->
 
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">订单管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="balfororders()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="baforguests()">客户结算</font></a></center>
@@ -122,7 +122,10 @@
         var url="/b_work_comment_manager"
 		$('#fra').attr('src',url);
     }
-
+    function balfororders(){
+		var url="/balfororders"
+		$('#fra').attr('src',url);
+	}
 
 
 

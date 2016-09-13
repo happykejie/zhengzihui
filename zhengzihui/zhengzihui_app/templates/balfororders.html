@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>订单管理</title>
+<script type="text/javascript">
+function service_type()
+{
+    var service_type=document.getElementById("service");
+    //alert(service_type.value);
+    location.href="/balfororders/?sp_type="+service_type.value;
+}
+</script>
+
+<style type="text/css">
+    #one {
+    margin-top:10px;
+    margin-left:80px;
+    margin-right:80px;
+    padding:20px;
+    padding-bottom:10px;
+    padding-right:100px;
+    padding-top:10px;
+
+    border:1px solid black;
+    }
+    
+    label:hover{
+    color: #00AA00;
+
+    }
+</style>
+
+</head>
+<body>
+<div id="one">
+<h2>订单管理</h2>
+    <br>
+    <!--<a href="/sort_order_manage/?sp_id={{sp_id}}&flag=0">按接单时间</a>|<a href="/sort_order_manage/?sp_id={{sp_id}}&flag=1">按交单时间</a>|<a href="/sort_order_manage/?sp_id={{sp_id}}&flag=2">按完成进度最多排序</a>-->
+    <form class="form-horizontal" role="form" method="post"  id="regApplyForm" name="regApplyForm">
+                           <label class="col-sm-1 control-label" style="width:140px;">行政区域划分</label>
+                            <div class="col-sm-1">
+                                <select class="form-control" name="sp_type2" id="testid2" style="height:28px;width:100px; margin-left:0;padding:0"> 
+                                        <option value="0">苹果</option>
+                                </select>
+                            </div>
+                            
+                            <label class="col-sm-1 control-label">服务类型</label>
+                            <div class="col-sm-1" style="width:140px;">
+                                <select onchange="service_type()" class="form-control" id="service" style="height:28px;width:100px; margin-left:0;padding:0"> 
+                                        {% if sp_type1 %}
+                                            <option value="项目申报" selected>项目申报</option>
+                                        {% else  %}
+                                            <option value="项目申报">项目申报</option>
+                                        {% endif %}
+
+                                        {% if sp_type2%}
+                                            <option value="配套服务" selected>配套服务</option>
+                                        {% else %}
+                                            <option value="配套服务">配套服务</option>
+                                        {% endif %}
+                                        {% if sp_type3 %}
+                                            <option value="融资服务" selected>融资服务</option>
+                                        {% else %}
+                                            <option value="融资服务">融资服务</option>
+                                        {% endif %}
+                                </select>
+                            </div>
+                            <label class="col-sm-1 control-label"><a href="/sort_order_manage/?sp_id={{sp_id}}&flag=2" style="color:black;text-decoration:none">完成情况</a></label>
+    </form>
+    <br>
+    <hr style="height:5px;border:none;border-top:2px solid #00DD00;margin-bottom:0;padding-bottom:0" />
+    <table class="table" style="width:1600px;height:200px;margin-top:0;padding-top:0">
+
+        <thead>
+            <tr>
+                <th>订单编号</th>
+                <th>服务类型</th>
+                <th>服务产品名称</th>
+                <th>地域</th>
+                <th>完成情况</th>
+                <th>交单时间</th>
+                <th>详情</th></tr>
+        </thead>    
+        <tbody>
+        {% for order in all_order %}
+        <tr>
+            <td>{{ order.order_no }}</td>
+            <td>{{ order.s_type}}</td>
+            <td>{{ order.goods_name }}</td>
+            <td>{{ order.goods_area }}</td>
+            <td>{{ order.finish_percentage}}%</td>
+            <td>{{ order.promise_finish_time}}</td>
+            <td><a href="{% url 'bw_order_manage_detail' %}?id={{ order.order_no }}">点击查看</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+</body>
+</html>
