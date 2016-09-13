@@ -1288,7 +1288,7 @@ def zzh_back_login(request):
             back_user_temp = tb_back_user.objects.get(user_name=user_name)
             if back_user_temp.user_auth == 0:
                 errors.append('还未通过超级管理员的审核')
-                print "杂速度开发商就的看法时讲课对方"
+                #print "杂速度开发商就的看法时讲课对方"
                 return render(request,'zzh_back_login.html',{'errors':errors})
             if password == back_user.user_password:
                 back_type = tb_back_user.objects.get(user_name = user_name).user_type
@@ -1297,6 +1297,7 @@ def zzh_back_login(request):
 
                 if back_type == 1:
                     #需要传入用户的权限值跳到不同的页面，或者显示不同的页面
+
                     return render(request, "testpage1.html")
 
 

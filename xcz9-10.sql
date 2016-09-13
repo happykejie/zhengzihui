@@ -1,4 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `zhengzihui_test_second` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
+`zhengzihui_app_tb_service_provider`CREATE DATABASE  IF NOT EXISTS `zhengzihui_test_second` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci */;
 USE `zhengzihui_test_second`;
 -- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
 --
