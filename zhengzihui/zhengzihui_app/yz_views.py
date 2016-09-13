@@ -952,7 +952,7 @@ def busindex(request):
     context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
                'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
     response = render(request,"bus_index.html",context)
-    response.set_cookie('first_page',1)
+    #response.set_cookie('first_page',1)
     return response
 
 
@@ -1264,6 +1264,8 @@ def zzh_back_login(request):
     password = None
     back_user = tb_back_user()
     if 'back_id' in request.COOKIES:
+        print request.COOKIES
+        #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
         response = render(request, 'b_work_index.html', {})
         #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
         return response
@@ -1299,10 +1301,12 @@ def zzh_back_login(request):
 
 
 
-                response = HttpResponseRedirect('/b_work_index/')
-
+                response = render(request,'b_work_index.html',{})
                 response.set_cookie('back_name', back_user.user_name, 3600)
                 response.set_cookie('back_id', back_user.user_id, 3600)
+
+                print request.COOKIES
+
                 # print(user.expand.company_name)
                 return response
             else:

@@ -214,7 +214,7 @@ urlpatterns = [
     url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
     #注册
     url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
-
+    url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),
 
 #商家管理查看详情 LQX   
     url(r'^bus_order_manage_detail/',zhengzihui_app.views.bus_order_manage_detail,name="bus_order_manage_detail"),

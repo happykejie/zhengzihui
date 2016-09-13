@@ -1614,6 +1614,9 @@ def cmap(request):
                 #D="130"
                 #E="140"
                 return render_to_response("cust_map.html",{'A':A,'B':B,'C':C,'D':D,'E':E})
+    else:
+        return HttpResponseRedirect('/regCompany/')
+
 
 def custom(request):
      #return render_to_response("e_customization.html",{})
@@ -1635,6 +1638,8 @@ def custom(request):
 def savec(request):
     #ce shi shu ju mu qian xie si le 
     #request.COOKIES['user_id']="2016"
+    if 'user_id' not in request.COOKIES:
+        return HttpResponseRedirect('/regCompany/')
     if (request.method=="POST"):
         company_id=request.COOKIES['user_id']
         hangye=request.POST.get("hangye")
