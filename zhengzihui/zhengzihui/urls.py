@@ -207,6 +207,7 @@ urlpatterns = [
 	url(r'^baforshopers/$',zhengzihui_app.views.baforshopers,name='baforshopers'),
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
+    url(r'^b_work_comment_manager/$',zhengzihui_app.views.b_work_comment_manager,name='b_work_comment_manager'),
 
     
 #政资汇后台工作人员

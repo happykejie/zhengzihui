@@ -2252,7 +2252,7 @@ def baforguests(request):
 		allba = tb_balist.objects.all()
 	else:
 		kind = request.COOKIES['kind']
-		#print(kind)
+		print(kind)
 		allba = tb_balist.objects.filter(ba_belong=kind)
 	lis = []
 	flis = []
@@ -2283,7 +2283,7 @@ def baforshopers(request):
 		allba = tb_balist.objects.all()
 	else:
 		kind = request.COOKIES['kind']
-		#print(kind)
+		print(kind)
 		allba = tb_balist.objects.filter(ba_belong=kind)
 	lis = []
 	flis = []
@@ -2350,3 +2350,16 @@ def bw_badetailfs(request):
 
 	return render_to_response("badetailfs.html",{'res':res})
 	
+def b_work_comment_manager(request):
+    if 'area' not in request.COOKIES:
+        comment_list = tb_goods_evaluation.objects.all()
+    else:
+        area = request.COOKIES['area']
+        print(area)
+        if area == '0':
+            comment_list = tb_goods_evaluation.objects.filter(location = '成都')
+        else:
+            comment_list = tb_goods_evaluation.objects.exclude(location = '成都')
+
+
+    return render_to_response("b_work_comment_manager.html", {'comment_list': comment_list})

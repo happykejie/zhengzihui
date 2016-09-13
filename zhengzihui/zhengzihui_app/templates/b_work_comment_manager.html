@@ -26,31 +26,27 @@
 <br />
 
 <div class="row">
-<div class="col-lg-offset-1 col-lg-3">	
+<div class="col-lg-offset-1 col-lg-3">
 	<font size="4">行政区选择<font>
-	<select>
-	<option value="">#</option>
-	<option value="">#</option>
+	<select id="area" onchange="Change2()" style="height:40px;">
+	<option value="0">成都</option>
+	<option value="1">其他地区</option>
 	</select>
-	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-	</ul>
-</div>	
-<div class="col-lg-3">	
-	<font size="4">服务类型选择<font>
+
+</div>
+<div class="col-lg-3">
+	<font size="4">服务类型选择</font>
 	<select id = "skind" onchange="Change()" style="height:40px;">
 	<option value="0" >商家服务</option>
 	<option value="1" >配套服务</option>
 	</select>
 </div>
-<div class="col-lg-3">	
-	<font size="4">结算状态<font>
-	<select id = "sta" onchange="Change2()" style="height:40px;">
-	<option value="0" >已下单</option>
-	<option value="1" >客户已确认</option>
-	<option value="2" >商家已确认</option>
-	<option value="3" >已完成</option>
-	</select>
-</div>		
+<div class="col-lg-3">
+	<ul class="nav nav-tabs">
+   <li class="active"><a href="#">发表时间</a></li>
+   <li><a href="#">回复情况</a></li>
+    </ul>
+</div>
 </div>
 <script>
 	function Change(){
@@ -66,8 +62,8 @@
 	}
 	function Change2(){
 		//alert(getCookie("kind"));
-		sta = document.getElementById("sta").value;
-		document.cookie="sta="+sta;
+		area = document.getElementById("area").value;
+		document.cookie="area="+area;
 		//alert(getCookie("kind"));
 		//alert(skind);
 		//document.cookie="kind="+skind;
@@ -75,13 +71,13 @@
 		//alert(document.cookie.match("skind"));
 		//var {{ lis }}
 	}
-	function getCookie(name) 
-	{ 
+	function getCookie(name)
+	{
     var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
     if(arr=document.cookie.match(reg))
-        return unescape(arr[2]); 
-    else 
-        return null; 
+        return unescape(arr[2]);
+    else
+        return null;
 	}
 
 </script>
@@ -90,27 +86,25 @@
   <table class="table">
     <thead>
       <tr>
-        <th>订单编号</th>
+        <th>订单名称</th>
+        <th>点评客户名称</th>
         <th>地域</th>
-        <th>服务类型</th>
-		<th>结算金额</th>
-		<th>结算状态</th>
-		<th>查看细节</th>
+        <th>点评内容</th>
+		<th>发表时间</th>
+		<th>已回复内容</th>
+		<th>现在回复</th>
 	</tr>
     </thead>
     <tbody>
-	{% for i in lis %}
+	{% for i in comment_list %}
     <tr>
-        <td>{{ i.order_no }}</td>
-        <td>{{ i.area}}</td>
-        {%if i.kind == 0 %}<td>商家服务</td>{% endif %}
-		{%if i.kind == 1 %}<td>配套服务</td>{% endif %}
-        <td>{{ i.price }}</td>
-        {% if i.sta == 0 %}<td>已下单</td>{% endif %}
-		{% if i.sta == 1 %}<td>客户已确认</td>{% endif %}
-		{% if i.sta == 2 %}<td>商家已确认</td>{% endif %}
-		{% if i.sta == 3 %}<td>已完成</td>{% endif %}
-		<td><a href="#" onclick="window.parent.frames.location.href='/bw_badetailfs/?id={{ i.id }}'">查看详单</a></td>
+        <td>{{ i.goods_name }}</td>
+        <td>{{ i.user_name }}</td>
+        <td>{{ i.location}}</td>
+        <td>{{ i.goev_content }}</td>
+        <td>{{ i.create_time }}</td>
+        <td>{{ i.reply_content }}</td>
+		<td><li><a href="#" onclick="window.parent.frames.location.href='/service_provider_reply/?id={{ goods.goods_id }}'">回复</a></li></td>
 	<tr>
 	{% endfor %}
 <!--
@@ -134,7 +128,7 @@
 	{% endif %}
 -->
 	</tbody>
-</table> 
+</table>
 </div>
 </div>
 </body>
