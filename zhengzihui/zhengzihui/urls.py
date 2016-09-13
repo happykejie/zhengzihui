@@ -208,8 +208,10 @@ urlpatterns = [
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
     url(r'^b_work_comment_manager/$',zhengzihui_app.views.b_work_comment_manager,name='b_work_comment_manager'),
-  url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
-  url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
+    url(r'^bpm_details/$',zhengzihui_app.views.bpm_details,name='bpm_details'),
+    url(r'^bus_project_management/$',zhengzihui_app.views.bus_project_management,name='bus_project_management'),
+    url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
+    url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
 
     
 #政资汇后台工作人员
