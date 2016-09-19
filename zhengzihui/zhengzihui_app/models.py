@@ -9,6 +9,20 @@ from filer.fields.file import FilerFileField
 
 # Create your models here.
 
+#公共虚类
+
+class Common_Area_Info(models.Model):
+    # ...
+    privince = models.CharField("省",max_length=100,null=True)
+    city = models.CharField("市", max_length=100, null=True)
+    distr = models.CharField("区", max_length=100, null=True)
+    xianfen = models.CharField("县份", max_length=100, null=True)
+
+
+    class Meta:
+        abstract = True
+
+
 class tb_user_expand(models.Model):
     user_id = models.AutoField("用户id",primary_key=True)
     company_tel = models.CharField("联系人移动电话",max_length=30,blank=False,null=True)
@@ -307,7 +321,7 @@ class Tb_Apage_Class(models.Model):
         return self.Apcl_name
     
     
-class tb_item(models.Model):
+class tb_item(Common_Area_Info):
     item_id = models.IntegerField('项目ID', primary_key=True, null=False,unique=True)
     item_code = models.CharField('项目编号',max_length=20,null=False,blank=False)
     item_name = models.CharField('项目名称',max_length=100,null=False,)
@@ -1042,3 +1056,10 @@ class Linker(models.Model):
 
         def __unicode__(self):  # python 2
             return self.linkname
+
+
+
+class push_info(models.Model):
+    push_item_id = models.IntegerField('推送项目的id',null=False)
+    push_to_user = models.IntegerField('推送到的用户的id',null=False)
+
