@@ -221,7 +221,11 @@ urlpatterns = [
     url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
     url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),
 
-
+    # 信息共享-xy
+    url(r'^shareinformation', "zhengzihui_app.views.shareinformation", name="shareinformation"),
+    # 发布人信息发布-xy
+    url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
+    url(r'^change', "zhengzihui_app.views.change", name="change"),
 
 
 
