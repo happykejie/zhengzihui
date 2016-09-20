@@ -974,18 +974,16 @@ class tb_balist(models.Model):
 #YZ for the back
 class tb_back_user(models.Model):
     user_id = models.AutoField("用户id", primary_key=True)
-
     user_name = models.CharField("用户名称", max_length=100, null=False, blank=False)
     user_password = models.CharField("密码", max_length=100, null=False, blank=False)
     user_telephone = models.CharField("电话", max_length=40, null=False, blank=False)
     user_email = models.EmailField("用户邮箱", null=False, blank=False)
-
+    last_login = models.DateTimeField('最后登陆',auto_now =True,null = True)
     PASSAUTH = 1
     NOTPASSAUTH = 0
     USER_AUTH_CHOICES = (
         (PASSAUTH, '通过验证'),
         (NOTPASSAUTH, "验证没有通过或者没有验证"),
-
     )
     user_auth = models.IntegerField("用户验证状态", choices=USER_AUTH_CHOICES,
                                     default=NOTPASSAUTH)  # 用户验证状态0：验证没有通过或者没有验证1：验证通过

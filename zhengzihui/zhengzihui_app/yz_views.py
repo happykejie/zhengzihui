@@ -1264,7 +1264,7 @@ def zzh_back_login(request):
     password = None
     back_user = tb_back_user()
     if 'back_id' in request.COOKIES:
-        print request.COOKIES
+        #print request.COOKIES
         #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
         response = render(request, 'b_work_index.html', {})
         #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
@@ -1307,8 +1307,9 @@ def zzh_back_login(request):
                 response = render(request,'b_work_index.html',{})
                 response.set_cookie('back_name', back_user.user_name, 3600)
                 response.set_cookie('back_id', back_user.user_id, 3600)
-
-                print request.COOKIES
+                tb_back_user.objects.get(user_name=user_name).last_login = timezone.now()
+                tb_back_user.objects.get(user_name=user_name).save()
+                #print tb_back_user.objects.get(user_name=user_name).last_login
 
                 # print(user.expand.company_name)
                 return response
