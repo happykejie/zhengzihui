@@ -223,9 +223,10 @@ urlpatterns = [
     url(r'^info_push/$',zhengzihui_app.views.info_push,name="info_push"),
 
     url(r'^push_info_save/$',zhengzihui_app.views.push_info_save,name="push_info_save"),
-    url(r'^shaixuan_push_info_save/$',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
-
-
+    url(r'^shaixuan_push_info/',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
+    url(r'^cmap_yz/$',zhengzihui_app.views.cmap_yz,name="cmap_yz"),
+    url(r'^project_detail_short/$',zhengzihui_app.views.project_detail_short,name="project_detail_short"),
+    url(r'^user_push_info/',zhengzihui_app.views.user_push_info,name="user_push_info"),
 
     # 信息共享-xy
     url(r'^shareinformation', "zhengzihui_app.views.shareinformation", name="shareinformation"),
