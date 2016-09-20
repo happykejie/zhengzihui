@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>用戶的個人地圖</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
+  <script src="../static/jquery-2.14/jquery.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.core.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.widget.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.position.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.menu.js"></script>
+  <script src="../static/jquery-ui-1.10.4/ui/jquery.ui.autocomplete.js"></script>
+  <link rel="stylesheet" href="../static/jquery-ui-1.10.4/demos/demos.css">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">
+  <script src="../static/js/Popt.js"></script>
+  <script src="../static/js/cityJson.js"></script>
+  <script src="../static/js/citySet.js"></script>
+	<link href="/static/css/user_remen.css" rel="stylesheet" type="text/css"/>
+   <script src="../static/js/esl.js"></script>
+</head>
+<body>
+ 
+
+<div class ="container">
+<div class="row">
+
+<div id="container" style="width:100%;height:700px;background-color:#C5DAEF"></div>
+<input id="qiye" type="hidden" value="{{ A }}">
+<input id="zhongyang" type="hidden" value="{{ B }}">
+<input id="shengji" type="hidden" value="{{ C }}">
+<input id="shiji" type="hidden" value="{{ D }}">
+<input id="xianji" type="hidden" value="{{ E }}">
+</div>
+</div>
+
+
+<script type="text/javascript">
+require.config({
+        packages:[{
+            name:'echarts',
+
+            location:'../static/js/echarts/src',
+            main:'echarts'
+        },{
+            name:'zrender',
+            location:'../static/js/zrender/src',
+            main:'zrender'
+        }]
+    });
+  var a0= document.getElementById("qiye").value;
+  var a1= document.getElementById("zhongyang").value;
+  var a2= document.getElementById("shengji").value;
+  var a3= document.getElementById("shiji").value;
+  var a4= document.getElementById("xianji").value;
+  //alert(abc);
+  var  option = {
+    title : {
+        text: '企业画报',
+        subtext: '数据来自政资汇',
+        x:'right',
+        y:'bottom'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: '{a} : {b}'
+    },
+    legend: {
+        x: 'left',
+        selected:{'中央级项目':true,'省级项目':true,'市级项目':true,'县级项目':true},
+        data:['中央级项目','省级项目','市级项目','县级项目']
+    },
+    isShowScrollBar:false,
+    series: [
+        {
+            type:'kforce',
+            categories : [
+                {
+                    name: '描述企业',
+                    itemStyle: {
+                        normal: {
+                            color : '#66CDDA'
+                        }
+                    }
+                },
+                {
+                    name: '中央级项目',
+                    itemStyle: {
+                        normal: {
+                            color : '#D6777D'
+                        }
+                    }
+                },
+                {
+                    name:'省级项目',
+                    itemStyle: {
+                        normal: {
+                            color : '#ECC76D'
+                        }
+                    }
+                },
+                {
+                    name:'市级项目',
+                    itemStyle: {
+                        normal: {
+                            color : '#6BB86A'
+                        }
+                    }
+                },
+                 {
+                    name:'县级项目',
+                    itemStyle: {
+                        normal: {
+                            color : '#C791D5'
+                        }
+                    }
+                },
+            ],
+            itemStyle: {
+                normal: {
+                    label: {
+                        show: true,
+                        textStyle: {
+                            color: '#000000'
+                        }
+                    },
+                    nodeStyle : {
+                        brushType : 'both',
+                        strokeColor : 'rgba(255,215,0,0.4)',
+                        lineWidth : 2
+                    }
+                },emphasis:{
+                    linkStyle : { strokeColor : '#5182AB'}
+                }
+            },
+            minRadius : 40,
+            maxRadius : 50,
+            density : 0.8,
+            attractiveness: 0.8,
+            nodes:[
+                {category:0, name: a0, value : 10},
+
+                {category:1, name: a1,value : 4,onclick:function(params){
+                      var text=(params.target.style.text).split(".")[0];
+                      //alert(text);
+                      var url="/project_detail/"+"?id="+text
+                      //window.location.href=url;
+                      $('#fra').attr('src',url);
+                }},
+                {category:2, name: a2,value : 4,
+                onclick:function(params){
+                      var text=(params.target.style.text).split(".")[0];
+                      //alert(text);
+                      var url="/project_detail/"+"?id="+text
+                      //window.location.href=url;
+                      $('#fra').attr('src',url);
+                }},
+                {category:3, name: a3,value : 4,
+                onclick:function(params){
+                      var text=(params.target.style.text).split(".")[0];
+                      //alert(text);
+                      var url="/project_detail/"+"?id="+text
+                      //window.location.href=url;
+                      $('#fra').attr('src',url);
+                }},
+                {category:4, name: a4,value : 4,
+                onclick:function(params){
+                      var text=(params.target.style.text).split(".")[0];
+                      //alert(text);
+                      var url="/project_detail/"+"?id="+text
+                      //window.location.href=url;
+                      $('#fra').attr('src',url);
+                }},
+            ],
+            links : [
+                {source : 1, target : 0, weight : 1 },
+                {source : 2, target : 0, weight : 1 },
+                {source : 3, target : 0, weight : 1},
+                {source : 4, target : 0, weight : 1},
+                
+            ]
+        }
+    ]
+};
+    require(
+    [
+        'echarts',
+        'echarts/chart/kforce',
+    ],
+    function(ec) {
+        var myChart = ec.init(document.getElementById('container'));
+        myChart.setOption(option);
+    }
+)
+</script>
+</body>
+</html>
+
+
