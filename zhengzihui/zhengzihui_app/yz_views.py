@@ -1268,6 +1268,8 @@ def zzh_back_login(request):
         #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
         response = render(request, 'b_work_index.html', {})
         #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
+	#xcz	
+	#response.set_cookie('user_name',user_name)
         return response
 
     if request.method == 'POST':
@@ -1410,3 +1412,4 @@ def shaixuan_push_info(request):
     distr = request.GET['distr']
 
     get_fit_item = tb_item.objects.filter(province__contains=province,city__contains=city,distr__contains=distr)
+

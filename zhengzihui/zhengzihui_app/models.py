@@ -132,6 +132,7 @@ class  tb_service_provider(models.Model):
     sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
     #sp_id = models.IntegerField("内部ID",null=False,blank=False)
     sp_id = models.AutoField("内部ID",primary_key = True)
+    sp_address = models.CharField("服务商地址",max_length=40,null=True,blank=False)
     sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
     psw = models.CharField("密码",max_length=40,null=True,blank=False)
 

@@ -233,10 +233,18 @@ urlpatterns = [
     url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
     url(r'^change', "zhengzihui_app.views.change", name="change"),
 
+
     #客服人员管理
     url(r'^support_staff_manager/$',zhengzihui_app.views.support_staff_manager,name="support_staff_manager"),
     #审核人员管理
     url(r'^auditor_manager/$',zhengzihui_app.views.auditor_manager,name="auditor_manager"),
+
+    # 后台的客户管理
+    url(r'^b_work_maguests', "zhengzihui_app.views.b_work_maguests", name="b_work_maguests"),
+    url(r'^bw_orderfromguest', "zhengzihui_app.views.bw_orderfromguest", name="bw_orderfromguest"),
+    url(r'^bw_orderdetail', "zhengzihui_app.views.bw_orderdetail", name="bw_orderdetail"),
+
+
 ]
 
 
