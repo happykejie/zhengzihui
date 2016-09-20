@@ -1383,8 +1383,20 @@ def get_all_table_info():
     return all_list_info_show
 
 def info_push(request):
-
     all_list_info_show = get_all_table_info()
+    sortbystatus = 0
+    if 'sortbystatus' in request.GET:
+        sortbystatus = int(request.GET['sortbystatus'])
+
+        sorted_show_info = []
+        if sortbystatus == 1:
+            for show in all_list_info_show:
+                if show[2]==0:
+                    print show
+                    sorted_show_info.append(show)
+            all_list_info_show = sorted_show_info
+            return render(request, 'info_push.html', {'all_list_info_show': all_list_info_show})
+
     return render(request,'info_push.html',{'all_list_info_show':all_list_info_show})
 
 
@@ -1597,3 +1609,14 @@ def project_detail_short(request):
             context = {'item': item, 'article': article[0], 'a_pics': a_pics, 'recommend': recommend,
                        'gettimeInstance': gettimeInstance,}
             return render(request, 'yz_templates/project_detail_short.html', context)
+
+
+def user_push_info(request):
+    user_id = int(request.COOKIES['user_id'])
+    all_push = push_info.objects.filter(push_to_user=user_id)
+    all_item = []
+    for push in all_push:
+        temp = tb_item.objects.get(item_id=push.push_item_id)
+        all_item.append(temp)
+    print all_item
+    return render(request,'yz_templates/user_push_info.html',{'all_item':all_item,})
