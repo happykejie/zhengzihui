@@ -477,7 +477,7 @@ def savec(request):
 
 #发布服务待后台验证
 def buspubservice(request):
-	sp_id=9
+	sp_id=1
 	#if 'user_id' in request.COOKIES:
 	#	sp_id=request.COOKIES['user_id']
 	if(request.method=="POST"):
@@ -551,7 +551,7 @@ def busmaservice(request):
 
 #企业端，服务的退回和修改	
 def merge_service_details(request):
-	sp_id=9
+	sp_id=1
 	#if 'user_id' in request.COOKIES:
 	#	sp_id=request.COOKIES['user_id']
 	if (request.method=="GET"):
@@ -770,17 +770,50 @@ def b_work_maguests(request):
 		mid['contact']=guest.companyUserContactName
 		mid['tel']=guest.company_tel
 		forsave.append(mid)
-	print (forsave)
+	#print (forsave)
 	if 'obm' in request.COOKIES:
-		forsave.sort(key=lambda x:x['count'],reverse=True)
+		forsave.sort(key=lambda x:x['trade'],reverse=True)
 		#response.delete_cookie("obm")
 	if 'obc' in request.COOKIES:
-		forsave.sort(key=lambda x:x['trade'],reverse=True)
+		forsave.sort(key=lambda x:x['count'],reverse=True)
 		#response.delete_cookie("obc")
 	return render_to_response("b_work_maguests.html",{'lis':forsave})
 			
 	#b_work_maguests	
 
+def bw_orderfromguest(request):
+	gid =request.GET.get('id')
+	name = tb_user.objects.get(expand_id=gid).user_name
+	order = tb_order.objects.filter(buyer_id=gid)
+	return render_to_response("b_work_guestorderlist.html",{'lis':order,'name':name})
 
-
+def bw_orderdetail(request):
+	oid =request.GET.get('id')
+	#print (oid)
+	order = tb_order.objects.get(order_id=oid)
+	res={}
+	res['buyername']=order.buyer_name
+	bid = order.buyer_id
+	buyer=tb_user_expand.objects.get(user_id=bid)
+	res['buyerloc']=buyer.company_address
+	res['buyercontact']=buyer.companyUserContactName
+	res['buyertel']=buyer.company_tel
+	spid=order.sp_id
+	sp=tb_service_provider.objects.get(sp_id=spid)
+	res['spname']=sp.sp_name
+	res['spcon']=sp.con_name
+	res['sploc']=sp.sp_address
+	res['orderid']=order.order_no
+	itemid=order.item_id
+	goodsid=order.goods_id
+	item=tb_item.objects.get(item_id=itemid)
+	goods=tb_goods.objects.get(goods_id=goodsid)
+	res['sertype']=item.item_about
+	res['sername']=goods.goods_name
+	res['serid']=goodsid
+	res['serprice']=goods.goods_payahead+goods.goods_awardafter
+	res['ordertime']=order.add_time
+	res['per']=order.finish_percentage
+	return render_to_response("bw_orderdetail.html",{'res':res})
+	
 

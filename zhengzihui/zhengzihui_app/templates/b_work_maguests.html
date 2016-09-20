@@ -87,7 +87,7 @@
 
 </script>
 <br />
-<div class="table-responsive col-lg-offset-1 col-lg-10 table-striped">
+<div class="table-responsive col-lg-offset-1 col-lg-10 table-striped table-hover ">
   <table class="table">
     <thead>
       <tr>
@@ -120,6 +120,9 @@
 	</td>
 	<td>
 		{{ i.trade }}
+	</td>
+	<td>
+		<a href="#" onclick="window.location.href='/bw_orderfromguest/?id={{ i.id }}'">查看详细</a></td>
 	</td>
     </tr>
         {% endfor %}

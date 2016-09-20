@@ -1405,11 +1405,11 @@ def push_info_save(request):
         add.save()
         return HttpResponse('推送成功')
 
-'''
+
 def shaixuan_push_info(request):
     province = request.GET['province']
     city = request.GET['city']
     distr = request.GET['distr']
 
     get_fit_item = tb_item.objects.filter(province__contains=province,city__contains=city,distr__contains=distr)
-'''
+
