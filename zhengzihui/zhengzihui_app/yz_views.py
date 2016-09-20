@@ -1351,3 +1351,65 @@ def zzh_back_reg(request):
         return render(request, "zzh_back_login.html", {})
 
     return render(request,"zzh_back_reg.html")
+
+def get_push_info(user_prefer):
+    #只是找出项目中包含该企业擅长领域的项目，没有增加点击率的考虑
+    all_item = tb_item.objects.filter(item_about__contains = user_prefer)
+    if all_item is None:
+        return None
+    return all_item[0]
+
+
+def info_push(request):
+    all_user = tb_user.objects.all()
+    #获得有填写相关领域的用户，即有企业信息的用户
+    for user in all_user:
+        if user.expand_id is  None:
+            all_user.remove(user)
+
+    all_list_info = []
+    for user in all_user:
+        user_prefer  = user.expand.company_industry
+        item_push = get_push_info(user_prefer)
+        #第三个字段用户判断是否是已经审核过的推送消息
+        info_list = [user,item_push,0]
+        all_list_info.append(info_list)
+    all_list_info_show = all_list_info[0:5]
+    return render(request,'info_push.html',{'all_list_info_show':all_list_info_show})
+
+
+
+def push_info_save(request):
+    user_id = request.GET['user_id']
+    item_id = request.GET['item_id']
+    #用于后续的值比较
+    user_id =int(user_id)
+    item_id = int(item_id)
+    temp_push = push_info.objects.filter(push_item_id=item_id)
+    if len(temp_push):
+        for push in temp_push:
+            print push.push_to_user
+            if push.push_to_user == user_id:
+
+                return HttpResponse('已经向该用户推送该项目')
+            else:
+                add = push_info()
+                add.push_item_id = item_id
+                add.push_to_user = user_id
+                add.save()
+                return HttpResponse('推送成功')
+    else:
+        add = push_info()
+        add.push_item_id = item_id
+        add.push_to_user = user_id
+        add.save()
+        return HttpResponse('推送成功')
+
+'''
+def shaixuan_push_info(request):
+    province = request.GET['province']
+    city = request.GET['city']
+    distr = request.GET['distr']
+
+    get_fit_item = tb_item.objects.filter(province__contains=province,city__contains=city,distr__contains=distr)
+'''
