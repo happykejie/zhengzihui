@@ -1268,6 +1268,8 @@ def zzh_back_login(request):
         #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
         response = render(request, 'b_work_index.html', {})
         #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
+	#xcz	
+	#response.set_cookie('user_name',user_name)
         return response
 
     if request.method == 'POST':

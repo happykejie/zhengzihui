@@ -227,7 +227,8 @@ urlpatterns = [
     url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
     url(r'^change', "zhengzihui_app.views.change", name="change"),
 
-
+    # 后台的客户管理
+    url(r'^b_work_maguests', "zhengzihui_app.views.b_work_maguests", name="b_work_maguests"),
 
 ]
 

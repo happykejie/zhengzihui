@@ -86,7 +86,7 @@
 <center><a href="#"><font color="white" size="4px" onclick="#">产品管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">客户管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="guest_management()">客户管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="#">商家管理</font></a></center>
@@ -130,7 +130,11 @@
 		var url="/bus_project_management"
 		$('#fra').attr('src',url);
 	}
+	function guest_management(){
+		var url="/b_work_maguests"
+		$('#fra').attr('src',url);
 
+	}
 
 </script>
 </div>
