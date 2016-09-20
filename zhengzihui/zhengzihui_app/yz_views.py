@@ -1380,15 +1380,15 @@ def info_push(request):
 def push_info_save(request):
     user_id = request.GET['user_id']
     item_id = request.GET['item_id']
-
-    #user_id =int(user_id)
-    #item_id = int(item_id)
+    #用于后续的值比较
+    user_id =int(user_id)
+    item_id = int(item_id)
     temp_push = push_info.objects.filter(push_item_id=item_id)
     if len(temp_push):
         for push in temp_push:
             print push.push_to_user
             if push.push_to_user == user_id:
-                print 'hekwkfjsakfjskjfskldjf'
+
                 return HttpResponse('已经向该用户推送该项目')
             else:
                 add = push_info()
@@ -1402,3 +1402,11 @@ def push_info_save(request):
         add.push_to_user = user_id
         add.save()
         return HttpResponse('推送成功')
+
+
+def shaixuan_push_info(request):
+    province = request.GET['province']
+    city = request.GET['city']
+    distr = request.GET['distr']
+
+    get_fit_item = tb_item.objects.filter(province__contains=province,city__contains=city,distr__contains=distr)

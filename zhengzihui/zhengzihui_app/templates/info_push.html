@@ -57,11 +57,15 @@
 
 						//alert(test);
 
-	                    $.get("/push_info_save/",{'province':province,'city':city,'distr':distr}, function(ret){
 
-		                    $("#push_btn").text("已经推送");
-                            $("#push_btn").attr("disabled", true);
-                            alert(ret);
+	                    $.get("/shaixuan_push_info/",{'province':province,'city':city,'distr':distr}, function(ret){
+	                            ret_len = length(ret);
+                                $("table tr:gt(0)").each(function(ret_len){
+                                    $(this).children("td").each(function(td_len){
+                                        $(this).text(ret.ret_len.td_len);
+                                                     });
+                                        });
+
 
                             })
 
