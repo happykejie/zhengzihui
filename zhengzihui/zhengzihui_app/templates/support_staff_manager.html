@@ -6,14 +6,95 @@
   <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
   <script src="/static/jquery-2.14/jquery.js"></script>
   <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
-<title>
-客服管理
-</title>
+<title>订单管理</title>
+<script type="text/javascript">
+
+</script>
+
+<style type="text/css">
+    #one {
+    margin-top:10px;
+    margin-left:80px;
+    margin-right:80px;
+    padding:20px;
+    padding-bottom:10px;
+    padding-right:100px;
+    padding-top:10px;
+
+    border:1px solid black;
+    }
+
+    label:hover{
+    color: #00AA00;
+
+    }
+</style>
+
 </head>
 <body>
+<div id="one">
+<h2>客服人员管理</h2>
+    <br>
 
+    <form class="form-inline form-horizontal" role="form" method="post"  id="support_staff" name="support_staff">
+        <div class=" form-group">
+            <label for="name" class="col-sm-5 control-label">名字</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" id="name" placeholder="请输入名字">
+            </div>
+        </div>
+        &nbsp
+        &nbsp
+        &nbsp
+        &nbsp
+        <div class=" form-group">
+            <label for="tel" class="col-sm-5 control-label">手机</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control" id="tel" placeholder="请输入手机">
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+       <div class="form-group">
+            &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp
+           <button type="button" class="btn btn-primary" style="width: 100px; height: 40px;">查询</button>
+           &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+           <label  class=" control-label">或者</label>
+           &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+           <button type="button" class="btn btn-primary" style="width: 100px; height: 40px;">添加新人员</button>
+       </div>
+    </form>
+    <br>
+    <hr style="height:5px;border:none;border-top:2px solid #00DD00;margin-bottom:0;padding-bottom:0" />
+    <table class="table" style="width:1600px;height:200px;margin-top:0;padding-top:0">
 
+        <thead>
+            <tr>
+                <th>姓名</th>
+                <th>电子邮箱</th>
+                <th>手机号码</th>
+                <th>职称</th>
+                <th>最后登陆时间</th>
+                <th>状态</th></tr>
+        </thead>
+        <tbody>
+        {% for order in all_order %}
+        <tr>
+            <td>{{ order.order_no }}</td>
+            <td>{{ order.s_type}}</td>
+            <td>{{ order.goods_name }}</td>
+            <td>{{ order.goods_area }}</td>
+            <td>{{ order.finish_percentage}}%</td>
+            <td>{{ order.promise_finish_time}}</td>
 
+            </td>
+        </tr>
+        {% endfor %}
 
+        </tbody>
+    </table>
+
+</div>>
 </body>
 </html>
