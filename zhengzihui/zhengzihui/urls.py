@@ -232,8 +232,10 @@ urlpatterns = [
     url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
     url(r'^change', "zhengzihui_app.views.change", name="change"),
 
-
-
+    #客服人员管理
+    url(r'^support_staff_manager/$',zhengzihui_app.views.support_staff_manager,name="support_staff_manager"),
+    #审核人员管理
+    url(r'^auditor_manager/$',zhengzihui_app.views.auditor_manager,name="auditor_manager"),
 ]
 
 

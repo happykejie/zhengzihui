@@ -2332,3 +2332,11 @@ def change(request):
         Linker.save()
         flag = True
         return render_to_response('SharePublish.html', {'right': True})
+
+
+#cyf 后台审核人员管理
+def auditor_manager(request):
+    return render_to_response('auditor_manager.html',{})
+
+def support_staff_manager(request):
+    return render_to_response('support_staff_manager.html',{})

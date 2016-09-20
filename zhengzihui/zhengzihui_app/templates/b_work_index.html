@@ -92,10 +92,10 @@
 <center><a href="#"><font color="white" size="4px" onclick="#">商家管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">客服人员管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="support_staff_manager()">客服人员管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">审核人员管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="auditor_manager()">审核人员管理</font></a></center>
 </div>
 
 
@@ -134,7 +134,14 @@
 		var url="/info_push"
 		$('#fra').attr('src',url);
 	}
-
+	function support_staff_manager(){
+		var url="/support_staff_manager"
+		$('#fra').attr('src',url);
+	}
+	function auditor_manager(){
+		var url="/auditor_manager"
+		$('#fra').attr('src',url);
+	}
 
 </script>
 </div>
