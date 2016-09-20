@@ -223,6 +223,7 @@ urlpatterns = [
     url(r'^info_push/$',zhengzihui_app.views.info_push,name="info_push"),
 
     url(r'^push_info_save/$',zhengzihui_app.views.push_info_save,name="push_info_save"),
+    url(r'^shaixuan_push_info_save/$',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
 
 
 
