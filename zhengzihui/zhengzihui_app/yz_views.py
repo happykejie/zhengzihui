@@ -1270,6 +1270,8 @@ def zzh_back_login(request):
         #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
         response = render(request, 'b_work_index.html', {})
         #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
+	#xcz	
+	#response.set_cookie('user_name',user_name)
         return response
 
     if request.method == 'POST':
@@ -1464,6 +1466,7 @@ def shaixuan_push_info(request):
 
         for show in all_show_Temp:
 
+
             if show[1].privince == province :
                 pass
             else:
@@ -1620,3 +1623,4 @@ def user_push_info(request):
         all_item.append(temp)
     print all_item
     return render(request,'yz_templates/user_push_info.html',{'all_item':all_item,})
+
