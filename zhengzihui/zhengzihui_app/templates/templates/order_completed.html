@@ -1,0 +1,14 @@
+{% extends 'my_base.html' %}
+
+{% block title %}订单提交成功{% endblock %}
+
+{% block content %}
+<h1>订单已经成功提交</h1>
+	<h2>接下来您想：</h2>
+	<h3><a href="/service_details/?goodsid={{ goodsid }}">继续浏览</a></h3>
+	<h3><a href="{% url 'index' %}">返回主页</a></h3>
+	<h3><a href="/zzh/user_center/">去到个人主页</a></h3>
+
+
+
+{% endblock %}

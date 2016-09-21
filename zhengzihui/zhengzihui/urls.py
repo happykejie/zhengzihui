@@ -211,6 +211,7 @@ urlpatterns = [
     url(r'^bpm_details/$',zhengzihui_app.views.bpm_details,name='bpm_details'),
     url(r'^bus_project_management/$',zhengzihui_app.views.bus_project_management,name='bus_project_management'),
     url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
+    url(r'^sort_order_time/',zhengzihui_app.views.sort_order_time,name="sort_order_time"),
     url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
 
     
@@ -244,7 +245,9 @@ urlpatterns = [
     url(r'^b_work_maguests', "zhengzihui_app.views.b_work_maguests", name="b_work_maguests"),
     url(r'^bw_orderfromguest', "zhengzihui_app.views.bw_orderfromguest", name="bw_orderfromguest"),
     url(r'^bw_orderdetail', "zhengzihui_app.views.bw_orderdetail", name="bw_orderdetail"),
-
+    # 后台商家管理
+    url(r'^baformerchant/$', zhengzihui_app.views.baformerchant, name='balformerchant'),
+    url(r'^sjglordering/$', zhengzihui_app.views.sjglordering, name='sjglordering'),
 
 ]
 

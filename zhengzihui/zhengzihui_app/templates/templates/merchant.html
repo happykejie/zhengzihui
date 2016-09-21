@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>商家登陆</title>
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+	<script type="application/javascript" src="../static/js/jquery-1.11.1.min.js"></script>
+	<script type="application/javascript" src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/denglu.css"/>
+    
+    <style type="text/css">
+    blockquote{padding:0px;margin:0px;font-size:17.5px;border-left:2px solid #ddd;border-right:5px solid #FFFFFF;border-top:5px solid #FFFFFF;border-bottom:5px solid #FFFFFF}
+    .footer {position: absolute;bottom: 650px;padding: 10px 0;width: 100%;}
+    .g{
+	position:absolute;
+	top:620px;
+    left: 18%;
+}
+.m{
+	position:absolute;
+	top:620px;
+    left: 28%;
+}
+.l{
+	position:absolute;
+	top:620px;
+    left: 38%;
+}
+.n{
+	position:absolute;
+	top:620px;
+    left: 48%;
+}
+.b{
+	position:absolute;
+	top:620px;
+    left: 58%;
+}
+.o{
+	position:absolute;
+	top:620px;
+    left: 68%;
+}
+.f{
+	position:absolute;
+	top:620px;
+    left: 78%;
+}
+.q{
+	position:absolute;
+	top:620px;
+    left: 88%;
+}
+
+
+
+
+    </style>
+    
+</head>
+	<body>
+{% if errors %}
+        <li>
+
+            {% for error in errors %}
+             <p style="color: red;">
+                出错啦: {{error}} below.
+             </p>
+              {% endfor %}
+        </li>
+    {% endif %}
+
+		<table width="100% align="center" border="0" cellpadding="0" cellspacing="0">
+		 	<tr bgcolor="white" height="100">
+		 		<td><div class="logo">
+					&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <img  src="../static/images/denglu/logo.jpg" />
+                    <blockquote style="padding:0px;margin:0px; display:inline-block" >
+				    <br>
+					<center>&nbsp&nbsp&nbsp商家登录</center>
+                    <br>
+                    </blockquote>
+		          </div></td>
+		 	</tr>
+		 	<tr bgcolor="#F5F5F5">
+			<td width="100%">
+				<table height="430" border="0" width="65%" align="left" bgcolor="#F5F5F5">
+					<tr><td align="right"><img  src="../static/images/denglu/loginCom.png"/></td></tr>
+				</table>
+                <br>
+				<table height="400" border="1"  width="20%" align="left" bgcolor="#F5F5F5">
+					<tr><td >
+						<h3 style="margin:0px;padding:0px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;账号登录</h3>
+                        <hr style="height:1px;border:none;border-top:1px solid #D3D3D3; margin-left:20px;margin-right:20px;margin-bottom:0px;padding-bottom:2px;" />
+						<center><ul class="pagination">
+				<li>
+					 <a style="border:none;height:30px;border-right:1px solid #D3D3D3" href="#">账号密码登录</a>
+				</li>
+				<li>
+					 <a style="border:none;height:30px;border-left:1px solid #D3D3D3" href="#">手机动态登录</a>
+				</li>
+
+			</ul></center>
+						   <form id="user-form" action="" method="post">	
+						           {% csrf_token %}
+							  
+								 
+								 <input type="text" class="form-control"  id="name" name="_spname"  placeholder="手机号/邮箱" style="width:220px; margin-left:40px;">
+							  
+							  <br>
+							 
+								 <input type="password" class="form-control"  id="inputPassword" name="password" placeholder="输入密码" style="width:220px; margin-left:40px;">
+							  </div>
+                            
+                                <div style="margin:5px;margin-left:20px;">
+                                        <form>
+                                            <div>
+                                            用户类型：<select name="sp_type1" class="form-control" style="width:150px;height:35px;display:inline-block"> 
+                                                <option value="sp_typeone">申报服务提供商</option> 
+                                                <option value="sp_typetwo">配套服务提供商</option>
+                                                <option value="sp_typethree">融资服务提供商</option>
+                                                
+                                               
+                                            </select> 
+                                            </div>
+                                        </form>  
+                                        
+						   <div class="checkbox" >
+									<label>
+									  <input type="checkbox"><font size="2"> 三十天内自动登录</font>
+									</label>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="{%url 'password1' %}">忘记密码?</a>
+							</div>
+                            
+							<button type="submit" style="width:250px;height:50px; margin-left:20px;margin-right:20px;padding-top:0px; background-color:#F4A460" class="btn btn-primary"><h4><big>登&nbsp;&nbsp;&nbsp;陆</big></h4></button>
+                            <span><a href="{% url 'g_register' %}">《政资会网服务协议》</a>
+							<a href="{% url 'g_register' %}">立即注册</a></span>
+							<br>
+							</form>
+					</td></tr>         
+				</table>
+			</td>
+		</tr>
+		<tr bgcolor="white" height="90" align="center"><td>
+        <br><br><br><br>
+			<div class="footer" >
+            <br><br>
+				<span class="g">
+		   			<a href="" style="color:#808080">关于我们</a> 
+				</span>
+				<span class="m">
+					<a href="" style="color:#808080">联系我们</a> 
+				</span>
+				<span class="l">
+					<a href="" style="color:#808080">商家入驻</a> 
+				</span>
+				<span class="n">
+					<a href="" style="color:#808080">营销中心</a> 
+				</span>
+                <span class="b">
+		   			<a href="" style="color:#808080">手机政资会</a> 
+				</span>
+				<span class="o">
+					<a href="" style="color:#808080">友情链接</a> 
+				</span>
+				<span class="f">
+					<a href="" style="color:#808080">帮助中心</a> 
+				</span>
+				<span class="q">
+					<a href="" style="color:#808080">法律声明</a> 
+				</span>
+			</div>
+		</td></tr>
+		</table>
+        <br><br><br><br><br>
+                <center style="color:#808080">Copyright@2015-2025 成都融亿达科技有限公司版权所有</center>
+		
+		
+<script src="../static/js/jquery.validate.js"></script>
+
+	</body>
+</html>

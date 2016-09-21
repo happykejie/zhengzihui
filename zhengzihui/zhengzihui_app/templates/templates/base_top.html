@@ -1,0 +1,117 @@
+<div class="container">
+<style type="text/css"><!--附加导航样式-->
+    /* Custom Styles */
+    ul.nav-tabs{
+        z-index:1;
+        width: 140px;
+        margin-top: 20px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    }
+    ul.nav-tabs li{
+        margin: 0;
+        border-top: 1px solid #ddd;
+    }
+    ul.nav-tabs li:first-child{
+        border-top: none;
+    }
+    ul.nav-tabs li a{
+        margin: 0;
+        padding: 8px 16px;
+        border-radius: 0;
+    }
+    ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover{
+        color: #fff;
+        background: #0088cc;
+        border: 1px solid #0088cc;
+    }
+    ul.nav-tabs li:first-child a{
+        border-radius: 4px 4px 0 0;
+    }
+    ul.nav-tabs li:last-child a{
+        border-radius: 0 0 4px 4px;
+    }
+    ul.nav-tabs.affix{
+        top: 30px; /* Set the top position of pinned element */
+    }
+    
+    
+    .image{height:250px;width:200px;background: #ffffff}
+    ._citys { width: 450px; display: inline-block; border: 2px solid #eee; padding: 5px; position: relative;background-color: white; }
+._citys span { color: #56b4f8; height: 15px; width: 15px; line-height: 15px; text-align: center; border-radius: 3px; position: absolute; right: 10px; top: 10px; border: 1px solid #56b4f8; cursor: pointer; }
+._citys0 { width: 100%; height: 34px; display: inline-block; border-bottom: 2px solid #56b4f8; padding: 0; margin: 0; }
+._citys0 li { display: inline-block; line-height: 34px; font-size: 15px; color: #888; width: 80px; text-align: center; cursor: pointer; }
+.citySel { background-color: #56b4f8; color: #fff !important; }
+._citys1 { width: 100%; display: inline-block; padding: 10px 0; }
+._citys1 a { width: 83px; height: 35px; display: inline-block; background-color: #f5f5f5; color: #666; margin-left: 6px; margin-top: 3px; line-height: 35px; text-align: center; cursor: pointer; font-size: 13px; overflow: hidden; }
+._citys1 a:hover { color: #fff; background-color: #56b4f8; }
+.AreaS { background-color: #56b4f8 !important; color: #fff !important; }
+</style>
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+        <div class="navbar-header">
+             <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{user_name}} 欢迎来到政资汇！</a>
+        </div>
+        <div style="float:right">
+            <ul class="nav navbar-nav">
+            <li class="active"><a href="#">退出</a></li>
+            <li><a href="#">登录</a></li>
+            <li><a href="#">注册</a></li>
+            <li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+            <li><a href="#">我的订单</a></li>
+            <li><a href="#">手机政资汇</a></li>
+            <li><a href="#">申请加盟</a></li>
+            <li><a href="#">人工申诉</a></li>
+            <li><a href="#">网站导航</a></li>
+         </ul>
+        </div>
+    </nav>  
+        <!--div class="jumbotron"> </div -->
+<!--网站图标+搜索栏-->
+  <div class="row">
+    <div class="col-sm-4">
+      <center><a href="{% url 'index' %}"><img src="../static/images/logo.jpg"></img></a></center>
+    </div>
+	
+    <div class="col-sm-8">
+		<div class="row-fluid">
+			<div id="chosecity" >
+				<form action="">
+					<input type="text" id="city" />
+<script type="text/javascript">
+$("#city").click(function (e) {
+	SelCity(this,e);
+});
+</script>
+				</form>
+			</div>
+		</div>
+		<div class="search">
+			<form action="/search" method="GET" class="search">
+					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:10%">搜索</button>
+			</form>
+			<button type="button" class="btn btn-primary btn-lg" style="float:left;width:15%" onclick="javascript:window.location.href='#'">有偿申报</button>
+		</div>
+      
+  </div>
+</div>
+<br>
+<br>
+<!--导航栏-->
+<!--div class="jumbotron" --> 
+    <script>
+            function show(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="block";
+            }
+            function hide(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="none";
+            }
+        
+    </script>
+

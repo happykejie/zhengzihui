@@ -1,0 +1,175 @@
+{% extends 'my_base.html' %}
+
+{% block title %}政资汇-用户中心{% endblock %}
+
+{% block content %}
+
+
+    <link href="/static/css/user.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/js/user.js" type="text/javascript"></script>
+<!--导航栏-->
+<!--div class="jumbotron" --> 
+    <script>
+            function show(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="block";
+            }
+            function hide(object){
+                id=object.id;
+                div="div"+id;
+                document.getElementById(div).style.display="none";
+            }
+        
+    </script>
+
+
+    <div id="mainbox" class="clearfix">
+        <div id="boxleft">
+            <div class="panel-group" id="menu" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse"  href="#UserCenter" aria-expanded="true" aria-controls="UserCenter">
+                                个人中心<span class="glyphicon glyphicon-chevron-right"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="UserCenter" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <ul class="panel-body">
+
+                            <li><a class="not-clicked" id="{% url 'my_info' %}" href="javascript:void(0);">我的信息</a></li>
+			    <li><a class="not-clicked"  href="/custmap">用户画报</a></li>
+                            <li><a class="not-clicked" id="{% url 'safe_center' %}" href="javascript:void(0);">安全中心</a></li>
+                            <li>支付绑定(待定)</li>
+                            <li>我的等级与成长(待定)</li>
+                            <!--
+                            <li><a class="not-clicked" id="{% url 'pay_combine' %}" href="javascript:void(0);">支付绑定</a></li>
+                            <li><a class="not-clicked" id="{% url 'grade_grow' %}" href="javascript:void(0);">我的等级与成长</a></li>
+                            -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse"  href="#OrderCenter" aria-expanded="false" aria-controls="OrderCenter">
+                                订单管理<span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="OrderCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <ul class="panel-body">
+                            <li><a class="not-clicked" id="{% url 'all_orders' %}" href="javascript:void(0);">全部订单</a></li>
+                            <li><a class="not-clicked" id="{% url 'not_pay' %}" href="javascript:void(0);">待付款</a></li>
+                            <li><a class="not-clicked" id="{% url 'payed' %}" href="javascript:void(0);">已付款</a></li>
+                            <li><a class="not-clicked" id="{% url 'delivered' %}" href="javascript:void(0);">已下单</a></li>
+                            <li><a class="not-clicked" id="{% url 'checked' %}" href="javascript:void(0);">已验收</a></li>
+                            <li><a class="not-clicked" id="{% url 'delete' %}" href="javascript:void(0);">已取消</a></li>
+                        </ul>
+                    </div>
+                </div>
+				 <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse"  href="#CollectCenter" aria-expanded="false" aria-controls="CollectCenter">
+                                我的收藏<span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="CollectCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <ul class="panel-body">
+                            <li><a class="not-clicked" id="{% url 'collects' %}" href="javascript:void(0);">收藏的项目</a></li>
+                            <li><a class="not-clicked" id="{% url 'collect_serve' %}" href="javascript:void(0);">收藏的服务</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headingFour">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse"  href="#EvaluationCenter" aria-expanded="false" aria-controls="EvaluationCenter">
+                                评价管理<span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="EvaluationCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                        <ul class="panel-body">
+                            <li><a class="not-clicked" id="{% url 'my_evaluate' %}" href="javascript:void(0);">我的评价</a></li>
+                            <li><a class="not-clicked" id="{% url 'statistics' %}" href="javascript:void(0);">评价统计</a></li>
+                            <li>其他功能（待定)</li>
+                        </ul>
+                    </div>
+		   
+                </div>
+            </div>
+        </div>
+        <div id="boxright">
+            <div id="load">
+                <img src="/static/images/load2.gif"/>
+            </div>
+            <div id="right-main-box">
+                <h3>{{ user.user_name}}，欢迎您来到政资汇！</h3>
+                <p>浏览过的项目</p>
+                <div id="watch-list" class="clearfix">
+                {% for a_click_item in a_click_items%}
+                    <div class="watch">
+                        <a href="{% url 'project_detail' %}?id={{ a_click_item.id }}">
+                            <img src="{{ a_click_item.pic_url }}"/>
+                            <p>{{ a_click_item.name }}</p>
+                        </a>
+                    </div> 
+                {% endfor %}          
+                </div>
+                <p>推荐的项目</p>
+                <div id="recommend-list" class="clearfix">
+                {% for a_recommend_item in a_recommend_items%}
+                    <div class="recommend">
+                        <a href="{% url 'project_detail' %}?id={{ a_recommend_item.id }}">
+                            <img src="{{ a_recommend_item.pic_url }}"/>
+                            <p>{{ a_recommend_item.name }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+                </div>    
+            </div>
+
+        </div>
+    </div>
+
+ <!--底部的广告位2号-->
+<div class="row-fluid" align="center">
+    <img class="img-responsive" src = "/static/images/测试静态页面用img/diguanggao.png">
+</div>
+<div align="center" >
+<table width="1000px" text-align="center">
+<tr>
+<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇app</font></B></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">政资汇简介</font></a></td>
+<td><a href="#"><font color="black">商务合作</font></a></td>
+<td><a href="#"><font color="black">联系我们</font></a></td>
+<td><a href="#"><font color="black">政资宝</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">可信网站</font></a></td>
+<td><a href="#"><font color="black">网站联盟</font></a></td>
+<td><a href="#"><font color="black">投诉建议</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">法律声明</font></a></td>
+<td><a href="#"><font color="black">友情链接</font></a></td>
+<td><a href="#"><font color="black">诚聘英才</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">网站地图</font></a></td>
+<td><a href="#"><font color="black">业务资质</font></a></td>
+</tr>
+</table>
+</div>
+
+{% endblock %}

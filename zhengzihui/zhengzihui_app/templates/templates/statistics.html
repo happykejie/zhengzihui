@@ -1,0 +1,134 @@
+<div>
+    <style>
+        p{
+            font-family:"Microsoft YaHei UI";
+            font-weight:600;
+        }
+    </style>
+    <div style="text-align:center">
+        <p style="font-size:20px;">用户评价分析统计</p>
+    </div>
+
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2"> 
+            <div class="panel panel-default">
+                <div id="service" class="panel-heading">
+                            <p>服务满意度</p>
+                </div>
+                        <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="morris-donut-chart1"></div>
+                </div>
+                        <!-- /.panel-body -->
+            </div>
+        </div>                <!-- /.panel -->                  
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2"> 
+            <div class="panel panel-default">
+                <div id="describe" class="panel-heading">
+                            <p>描述满意度</p>
+                </div>
+                        <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="morris-donut-chart2"></div>
+                </div>
+                        <!-- /.panel-body -->
+            </div>
+        </div>                <!-- /.panel -->                  
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2"> 
+            <div class="panel panel-default">
+                <div id="user_commit" class="panel-heading">
+                            <p>用户评价习惯</p>
+                </div>
+                        <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div id="morris-donut-chart3"></div>
+                </div>
+                        <!-- /.panel-body -->
+            </div>
+        </div>                <!-- /.panel -->                  
+    </div>
+
+ <script src="/static/js/raphael/raphael-min.js"></script>
+ <script src="/static/js/morrisjs-zss/morris.min.js"></script>
+ <script type="text/javascript">
+ $(document).ready(function(){
+    var no_co = parseInt({{ no_co | safe }});
+    var al_co = parseInt({{ al_co | safe }});
+    var al_or = parseInt({{ al_or | safe }});    
+    if(parseInt({{ no_co | safe }}) > parseInt({{ al_co | safe }})){
+        var $html = $('<p style="color:#E10601;">'+'总共有'+al_or+'个订单，评价的订单少于半数，请以后多填写评价来改善我们的服务！'+'</p>')
+        $("#user_commit").append($html);
+    }
+    else{
+        var $html = $('<p style="color:#E10601;">'+'总共有'+al_or+'个订单，评价的订单多于半数，感谢您的宝贵意见！'+'</p>')
+        $("#user_commit").append($html);
+    }
+ })
+ 
+ Morris.Donut({
+        element: 'morris-donut-chart1',
+         data: [{
+            label: '非常不满意',
+            value: parseInt({{ s1 | safe }})
+            
+        }, {
+            label: '不满意',
+            value: parseInt({{ s2 | safe }})
+           
+        }, {
+            label: '基本满意',
+            value: parseInt({{ s3 | safe }})
+            
+        }, {
+            label: '满意',
+            value: parseInt({{ s4 | safe }})
+           
+        }, {
+            label: '非常满意',
+            value: parseInt({{ s5 | safe }})
+        }],
+     resize: true
+    });
+Morris.Donut({
+        element: 'morris-donut-chart2',
+          data: [{
+            label: '非常不满意',
+            value:  parseInt({{ d1 | safe }})
+            
+        }, {
+            label: '不满意',
+            value:  parseInt({{ d2 | safe }})
+           
+        }, {
+            label: '基本满意',
+            value:  parseInt({{ d3 | safe }})
+            
+        }, {
+            label: '满意',
+            value:  parseInt({{ d4 | safe }})
+           
+        }, {
+            label: '非常满意',
+            value:  parseInt({{ d5 | safe }})     
+        }],
+     resize: true
+    });
+Morris.Donut({
+        element: 'morris-donut-chart3',
+         data: [{
+            label: '已评价',
+            value:  parseInt({{ al_co | safe }}) 
+            
+        }, {
+            label: '未评价',
+            value:  parseInt({{ no_co | safe }}) 
+           
+        }],
+     resize: true
+    });
+ </script>
+</div>

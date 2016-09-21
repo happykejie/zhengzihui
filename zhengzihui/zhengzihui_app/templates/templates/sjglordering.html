@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+</title>
+</head>
+<body>
+</title>
+</head>
+<body>
+<div class="container-fruid">
+<br />
+<br />
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-1">
+<h1>{{ name }}正在执行的订单</h1>
+</div>
+</div>
+<br />
+
+<div class="table-responsive col-lg-offset-2 col-lg-9 table-striped">
+<table class="table table-bordered table-hover table-striped">
+<thead>
+	<tr><h3>标题<h3></tr>
+</thead>
+<tbody>
+{% for i in lis%}
+<tr><td><a href="#" onclick="window.parent.frames.location.href='/bw_orderdetail/?id={{ i.order_id }}'"><font color="black"><h4>{{ i.item_name }}</h4></font></a></td></tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>

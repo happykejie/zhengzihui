@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+订单详情
+</title>
+<style type="text/css">
+    td {
+text-align:center;
+    }
+.table-bordered td,.table-bordered th{border:1px solid black!important}}
+</style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row clearfix">
+            <div class="col-md-12 column">
+                <h3>
+                    客户信息
+                </h3>
+                <table class="table table-bordered"  style="width:1000px;">
+                    <tbody>
+                    {% for order in all_order %}
+                        <tr>
+                            <td  style="width:200px;">
+                                客户名称
+                            </td>
+                            <td>
+                                {{ order.buyer_name}}
+                            </td>
+                          
+                        </tr>
+                        <tr>
+                            <td>
+                              客户地址
+                            </td>
+                            <td>
+                                {{ order.buyer_expand_address }}
+                            </td>
+                          
+                        </tr>
+                        <tr>
+                            <td>
+                                客户联系人
+                            </td>
+                            <td>
+                                {{ order.buyer_expand_contact }}
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                客户联系电话
+                            </td>
+                            <td>
+                                {{order.buyer_expand_tel}}
+                            </td>
+                            
+                        </tr>{% endfor %}
+                        
+                    </tbody>
+                </table>
+                <br><br>
+                <h3>
+                    商家信息
+                </h3>{% for mer in merchant%}
+                <table class="table table-bordered" style="width:1000px;">
+                    <tbody>
+                        <tr>
+                            <td style="width:200px;">
+                                商家名称
+                            </td>
+                            <td>
+                                {{mer.sp_name}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               商家地址
+                            </td>
+                            <td>
+                                area_id:{{mer.area_id}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                商家联系人
+                            </td>
+                            <td>
+                                {{ mer.con_name }}
+                            </td>
+                        </tr>{% endfor %}
+                    </tbody>
+                </table>
+                <br><br>
+                <h3>
+                    交易信息
+                </h3>{% for order in all_order %}
+                <table class="table table-bordered" style="width:1000px;">
+                    <tbody>
+                        <tr>
+                            <td style="width:200px;">
+                                订单编号
+                            </td>
+                            <td>
+                                {{ order.order_no }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                服务类型
+                            </td>
+                            <td>
+                                {{ order.s_type}}
+                            </td>
+                        </tr>
+                            <tr>
+                            <td>
+                                服务产品名称
+                            </td>
+                            <td>
+                                {{ order.goods_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                服务产品编号
+                            </td>
+                            <td>
+                                {{ order.goods_code }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                服务价格
+                            </td>
+                            <td>
+                                {{ order.goods_pay }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                客户下单时间
+                            </td>
+                            <td>
+                                {{ order.add_time }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                商家交单时间
+                            </td>
+                            <td>
+                                {{ order.stime}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                平台交单时间
+                            </td>
+                            <td>
+                              {{ order.ftime }}  
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                完成情况
+                            </td>
+                            <td>
+                               {{ order.finish_percentage}}%
+                            </td>
+                        </tr>{% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
