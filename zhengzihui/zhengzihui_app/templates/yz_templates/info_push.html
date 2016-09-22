@@ -26,26 +26,27 @@
 
 <h2>推送管理</h2>
 <div class="row">
-    <div class=" col-lg-6">
+<div class=" col-lg-10">
 
-	 <form class="form-inline">
-      <div data-toggle="distpicker">
-        <div class="form-group">
-          <label class="sr-only" for="province1">Province</label>
+
+      <div data-toggle="distpicker" id="area_select">
+        <div class="form-group col-lg-3">
+          <label class="sr-only " for="province1">Province</label>
           <select class="form-control" id="province1"><option value="" data-code="">—— 省 ——</option><option value="北京市" data-code="110000" selected="">北京市</option><option value="天津市" data-code="120000">天津市</option><option value="河北省" data-code="130000">河北省</option><option value="山西省" data-code="140000">山西省</option><option value="内蒙古自治区" data-code="150000">内蒙古自治区</option><option value="辽宁省" data-code="210000">辽宁省</option><option value="吉林省" data-code="220000">吉林省</option><option value="黑龙江省" data-code="230000">黑龙江省</option><option value="上海市" data-code="310000">上海市</option><option value="江苏省" data-code="320000">江苏省</option><option value="浙江省" data-code="330000">浙江省</option><option value="安徽省" data-code="340000">安徽省</option><option value="福建省" data-code="350000">福建省</option><option value="江西省" data-code="360000">江西省</option><option value="山东省" data-code="370000">山东省</option><option value="河南省" data-code="410000">河南省</option><option value="湖北省" data-code="420000">湖北省</option><option value="湖南省" data-code="430000">湖南省</option><option value="广东省" data-code="440000">广东省</option><option value="广西壮族自治区" data-code="450000">广西壮族自治区</option><option value="海南省" data-code="460000">海南省</option><option value="重庆市" data-code="500000">重庆市</option><option value="四川省" data-code="510000">四川省</option><option value="贵州省" data-code="520000">贵州省</option><option value="云南省" data-code="530000">云南省</option><option value="西藏自治区" data-code="540000">西藏自治区</option><option value="陕西省" data-code="610000">陕西省</option><option value="甘肃省" data-code="620000">甘肃省</option><option value="青海省" data-code="630000">青海省</option><option value="宁夏回族自治区" data-code="640000">宁夏回族自治区</option><option value="新疆维吾尔自治区" data-code="650000">新疆维吾尔自治区</option><option value="台湾省" data-code="710000">台湾省</option><option value="香港特别行政区" data-code="810000">香港特别行政区</option><option value="澳门特别行政区" data-code="820000">澳门特别行政区</option></select>
         </div>
-        <div class="form-group">
+        <div class="form-group col-lg-3">
           <label class="sr-only" for="city1">City</label>
           <select class="form-control" id="city1"><option value="" data-code="">—— 市 ——</option><option value="北京市市辖区" data-code="110100" selected="">北京市市辖区</option></select>
         </div>
-        <div class="form-group">
+        <div class="form-group col-lg-3">
           <label class="sr-only" for="district1">District</label>
           <select class="form-control" id="district1"><option value="" data-code="">—— 区 ——</option><option value="东城区" data-code="110101" selected="">东城区</option><option value="西城区" data-code="110102">西城区</option><option value="朝阳区" data-code="110105">朝阳区</option><option value="丰台区" data-code="110106">丰台区</option><option value="石景山区" data-code="110107">石景山区</option><option value="海淀区" data-code="110108">海淀区</option><option value="门头沟区" data-code="110109">门头沟区</option><option value="房山区" data-code="110111">房山区</option><option value="通州区" data-code="110112">通州区</option><option value="顺义区" data-code="110113">顺义区</option><option value="昌平区" data-code="110114">昌平区</option><option value="大兴区" data-code="110115">大兴区</option><option value="怀柔区" data-code="110116">怀柔区</option><option value="平谷区" data-code="110117">平谷区</option><option value="密云区" data-code="110118">密云区</option><option value="延庆区" data-code="110119">延庆区</option></select>
         </div>
+	      <button class="product_btn_not col-lg-1" id="shaixuan_btn" onclick="select()" >筛选</button>
       </div>
 
-    </form>
-        <button class="product_btn" id="shaixuan_btn" onclick="A()" >筛选</button>
+
+
 
 
 
@@ -53,13 +54,85 @@
 
 
 			<script type="text/javascript">
-			    function A(){
-			         var province = $('#province1').val();
-	                 var city = $('#city1').val();
-	                 var distr = $('#district1').val();
-                    url = "/shaixuan_push_info/?province="+province+'&city='+city+'&distr='+distr;
-			        window.location.href=url;
-			    }
+			    function select(){
+						    //$(this).removeClass("product_btn_not").addClass("product_btn_yes")
+						    $("#load").next().remove();
+						    $("#load").show();
+						    var province = $('#province1').val();
+						    var city = $('#city1').val();
+						    var distr = $('#district1').val();
+						    //alert('fsdfwerwerwerew');
+				            url = "/shaixuan_push_info/?province=" + province + '&city=' + city + '&distr=' + distr;
+						    $.ajax({
+							    method: "GET", url: url, dataType: "html", success: function (html) {
+								    if (html.length > 0) {  //返回的数据不能为空
+									    $("#load").hide();
+									    $("#load").after(html);
+								    } else {
+									    alert('here');
+									    $("#load").hide();
+									    $("#load").after("<p>好像没有要请求的页面！</p>");
+								    }
+							    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+								    $("#load").hide();
+								    $("#load").after("<p>数据请求出错，请稍后重试！</p>");
+								    console.log(XMLHttpRequest.status);
+								    console.log(XMLHttpRequest.readyState);
+								    console.log(textStatus);
+							    }
+						    })
+    }
+
+				function selectall(){
+						    //$(this).removeClass("product_btn_not").addClass("product_btn_yes")
+						    $("#load").next().remove();
+						    $("#load").show();
+							url = "/shaixuan_push_info/?allpush=1";
+						    $.ajax({
+							    method: "GET", url: url, dataType: "html", success: function (html) {
+								    if (html.length > 0) {  //返回的数据不能为空
+									    $("#load").hide();
+									    $("#load").after(html);
+								    } else {
+									    alert('here');
+									    $("#load").hide();
+									    $("#load").after("<p>好像没有要请求的页面！</p>");
+								    }
+							    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+								    $("#load").hide();
+								    $("#load").after("<p>数据请求出错，请稍后重试！</p>");
+								    console.log(XMLHttpRequest.status);
+								    console.log(XMLHttpRequest.readyState);
+								    console.log(textStatus);
+							    }
+						    })
+    }
+
+				function selectpushornot(){
+						    //$(this).removeClass("product_btn_not").addClass("product_btn_yes")
+						    $("#load").next().remove();
+						    $("#load").show();
+							url = "/shaixuan_push_info/?pushornot=1";
+
+						    $.ajax({
+							    method: "GET", url: url, dataType: "html", success: function (html) {
+								    if (html.length > 0) {  //返回的数据不能为空
+									    $("#load").hide();
+									    $("#load").after(html);
+								    } else {
+									    alert('here');
+									    $("#load").hide();
+									    $("#load").after("<p>好像没有要请求的页面！</p>");
+								    }
+							    }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+								    $("#load").hide();
+								    $("#load").after("<p>数据请求出错，请稍后重试！</p>");
+								    console.log(XMLHttpRequest.status);
+								    console.log(XMLHttpRequest.readyState);
+								    console.log(textStatus);
+							    }
+						    })
+    }
 
 			</script>
 
@@ -67,63 +140,16 @@
 
 
 </div>
-    <div class="col-lg-6">
-    <a href="/info_push/">全部推送</a>|<a href="/info_push/?sortbystatus=1">推送状态</a>
+<div class="col-lg-2 " style="float: left;">
+    <button class="product_btn_not " id="allpush_btn" onclick="selectall()" >全部推送</button>&nbsp;<button class="product_btn_not " id="pushornot_btn" onclick="selectpushornot()" >推送情况</button>
     </div>
 </div>
-    <table class="table table-condensed">
 
-<table class="table table-condensed">
-
-    <thead>
-        <tr>
-            <th>推送项目编号</th>
-            <th>推送项目名称</th>
-            <th>推送客户以及商家名称</th>
-            <th>人工审核状态</th></tr>
-    </thead>
-    <tbody>
-    {% for thing in all_list_info_show %}
-    <tr>
-        <td>{{ thing.1.item_code }}</td>
-        <td><a href = "/project_detail_short/?id={{thing.1.item_id}}">{{ thing.1.item_name}}</a></td>
+<div id="load" class="row" align="center" style="display:none">
+                <img src="/static/images/load2.gif"/>
+</div>
 
 
-        <td><a href = "/cmap_yz/?user_id={{thing.0.user_id}}">{{ thing.0.user_name}}&&{{ thing.0.expand.company_name}}</a></td>
-
-        <td>
-            {% if  thing.2 == 0 %}
-
-           <a href = "/push_info_save/?user_id={{thing.0.user_id}}&item_id={{thing.1.item_id}}"> <button class="product_btn" id="push_btn" >推送</button>
-            {% else %}
-               已经推送过此项目
-           <!--  <script>
-				  $(document).ready(function(){
-                    $("#push_btn").click(function(){
-	                    var user_id = "{{ thing.0.user_id }}";
-
-						//alert(test);
-	                    var item_id = "{{ thing.1.item_id }}"
-	                    $.get("/push_info_save/",{'user_id':user_id,'item_id':item_id}, function(ret){
-
-		                    $("#push_btn").text("已经推送");
-                            $("#push_btn").attr("disabled", true);
-                            alert(ret);
-
-                            })
-
-                 });
-            });
-		</script>
-		-->
-            {% endif %}
-        </td>
-
-    </tr>
-    {% endfor %}
-
-    </tbody>
-</table>
 
 
 </body>

@@ -1358,8 +1358,7 @@ def zzh_back_reg(request):
 def get_push_info(user_prefer):
     #只是找出项目中包含该企业擅长领域的项目，没有增加点击率的考虑
     all_item = tb_item.objects.filter(item_about__contains = user_prefer)
-    print all_item
-    print 'here'
+
     if len(all_item)==0:
         return None
     return all_item[0]
@@ -1404,7 +1403,7 @@ def info_push(request):
             all_list_info_show = sorted_show_info
             return render(request, 'info_push.html', {'all_list_info_show': all_list_info_show})
 
-    return render(request,'info_push.html',{'all_list_info_show':all_list_info_show})
+    return render(request,'yz_templates/info_push.html',{'all_list_info_show':all_list_info_show})
 
 
 
@@ -1436,62 +1435,84 @@ def push_info_save(request):
 
 
 def shaixuan_push_info(request):
-    province = request.GET['province']
-    city = request.GET['city']
-    distr = request.GET['distr']
-    print province,city,distr
-    all_show_Temp = get_all_table_info()
-    all_show = get_all_table_info()
-    all_show1 = get_all_table_info()
-    all_show2 = get_all_table_info()
+    if "city" in request.GET:
+        province = request.GET['province']
+        city = request.GET['city']
+        distr = request.GET['distr']
 
-    for show in all_show_Temp:
-
-        if show[1].privince == province and show[1].city == city and show[1].distr == distr:
-
-            pass
-        else:
-            all_show.remove(show)
-
-
-    if len(all_show) == 0:
+        all_show_Temp = get_all_table_info()
+        all_show = get_all_table_info()
+        all_show1 = get_all_table_info()
+        all_show2 = get_all_table_info()
 
         for show in all_show_Temp:
 
-
-            if show[1].privince == str(province) and show[1].city == str(city):
+            if show[1].privince == province and show[1].city == city and show[1].distr == distr:
 
                 pass
             else:
+                all_show.remove(show)
 
 
-                all_show1.remove(show)
+        if len(all_show) == 0:
 
-    if len(all_show1)==0:
-
-        for show in all_show_Temp:
+            for show in all_show_Temp:
 
 
-            if show[1].privince == province :
-                pass
+                if show[1].privince == str(province) and show[1].city == str(city):
+
+                    pass
+                else:
+
+
+                    all_show1.remove(show)
+
+        if len(all_show1)==0:
+
+            for show in all_show_Temp:
+
+
+                if show[1].privince == province :
+                    pass
+                else:
+                    all_show2.remove(show)
+
+
+        final_all_show = []
+        if len(all_show)==0:
+            if len(all_show1) == 0:
+                if len(all_show2) ==0:
+                    noinfo = '还没有该地区的信息';
+                    return render(request,'yz_templates/shaixuan_info_push.html',{'noinfo':noinfo,})
+                else:
+                    pass
             else:
-                all_show2.remove(show)
-
-
-    final_all_show = []
-    if len(all_show)==0:
-        if len(all_show1) == 0:
-            if len(all_show2) ==0:
-                return HttpResponse('没有该地区的相关信息')
-            else:
-                pass
+                final_all_show = all_show1
         else:
-            final_all_show = all_show1
+            final_all_show = all_show
+        all_list_info_show = final_all_show
+
+    elif "allpush" in request.GET:
+        all_list_info_show = get_all_table_info()
+
     else:
-        final_all_show = all_show
-    all_list_info_show = final_all_show
+        all_list_info_show = get_all_table_info()
 
-    return render(request, 'info_push.html', {'all_list_info_show': all_list_info_show})
+
+        sorted_show_info = []
+
+        for show in all_list_info_show:
+            if show[2]==0:
+
+                sorted_show_info.append(show)
+        all_list_info_show = sorted_show_info
+
+
+
+
+
+
+    return render(request, 'yz_templates/shaixuan_info_push.html', {'all_list_info_show': all_list_info_show})
 
 '''
     show_info = []

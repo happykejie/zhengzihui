@@ -1,0 +1,60 @@
+
+
+
+<div >
+{% if noinfo %}
+	<h2 align="center">{{ noinfo }}</h2>
+{% else %}
+<table class="table table-condensed">
+
+    <thead>
+        <tr>
+            <th>推送项目编号</th>
+            <th>推送项目名称</th>
+            <th>推送客户以及商家名称</th>
+            <th>人工审核状态</th></tr>
+    </thead>
+    <tbody>
+    {% for thing in all_list_info_show %}
+    <tr>
+        <td>{{ thing.1.item_code }}</td>
+        <td><a href = "/project_detail_short/?id={{thing.1.item_id}}">{{ thing.1.item_name}}</a></td>
+
+
+        <td><a href = "/cmap_yz/?user_id={{thing.0.user_id}}">{{ thing.0.user_name}}&&{{ thing.0.expand.company_name}}</a></td>
+
+        <td>
+            {% if  thing.2 == 0 %}
+
+           <a href = "/push_info_save/?user_id={{thing.0.user_id}}&item_id={{thing.1.item_id}}"> <button class="product_btn" id="push_btn" >推送</button>
+            {% else %}
+               已经推送过此项目
+           <!--  <script>
+				  $(document).ready(function(){
+                    $("#push_btn").click(function(){
+	                    var user_id = "{{ thing.0.user_id }}";
+
+						//alert(test);
+	                    var item_id = "{{ thing.1.item_id }}"
+	                    $.get("/push_info_save/",{'user_id':user_id,'item_id':item_id}, function(ret){
+
+		                    $("#push_btn").text("已经推送");
+                            $("#push_btn").attr("disabled", true);
+                            alert(ret);
+
+                            })
+
+                 });
+            });
+		</script>
+		-->
+            {% endif %}
+        </td>
+
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+{% endif %}
+</div>
