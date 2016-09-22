@@ -109,15 +109,22 @@ def getthe_filteditem(request):
     else:
         tmiddle_items = middle_items
 
-    if (selected['bumen'].encode("utf-8") != '全部'):
+    if  (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
-        for i in tmiddle_items:
-            for j in bumenlist:
-                if j in (i.item_about).encode("utf-8"):
-                    items.append(i)
+        for bumen in bumenlist:
+            list_temp1 = bumen.split(":",1)
+            if len(list_temp1)>1:
+                str_temp = list_temp1[1]
+                list_temp2 = str_temp.split("/")
+            print list_temp2
+            for i in tmiddle_items:
+                for j in list_temp2:
+                    if j in (i.item_about).encode("utf-8"):
+                        if i not in items:#去重复
+                            items.append(i)
     else:
 
-        items = tmiddle_items
+    	items=tmiddle_items
 
     if (len(items) > 10):
         items = items[:10]  # 不够10条报错

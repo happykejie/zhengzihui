@@ -27,7 +27,7 @@
     margin-right:auto;
     margin-top:10px;
     height:auto;
-    font-size:90%;
+    font-size:70%;
     border-width:1px;
     border-color: #c0c0c0;
     border-style:solid;
@@ -44,12 +44,12 @@
 .f-head{
     position:absolute;
     height:33px;  /*留出1px的距离来显示空白线*/
-    width:80px;
+    width:120px;
     background-color:#F7F5F5;
 }
 
 .f-head span{
-    display:block;
+    display:inline-block;
     margin-left:6px;
     color: #a9a9a9;
     margin-top:9px;

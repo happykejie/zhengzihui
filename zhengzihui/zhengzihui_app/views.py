@@ -42,8 +42,20 @@ sys.setdefaultencoding('utf8')
 #zss条件筛选
 def filter_labels(request):
     keys = request.GET['filterkeys']
-    if 'bumen' in request.GET:
-        request.session['bumen'] = keys    
+    print keys
+    if 'bumen_class1' in request.GET:
+
+        request.session['bumen'] = keys
+
+    if 'bumen_class2' in request.GET:
+
+        request.session['bumen'] = keys
+    if 'bumen_class3' in request.GET:
+
+        request.session['bumen'] = keys
+    if 'bumen_class4' in request.GET:
+
+        request.session['bumen'] = keys
     if 'jibie' in request.GET:
         request.session['jibie'] = keys 
     if 'zhuangtai' in request.GET:
