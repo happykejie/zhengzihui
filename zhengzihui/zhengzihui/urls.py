@@ -218,6 +218,8 @@ urlpatterns = [
 #政资汇后台工作人员
     #登陆
     url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
+    # 主页
+    url(r'^zzh_back_index/$', zhengzihui_app.views.zzh_back_index, name='zzh_back_index'),
     #注册
     url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
     url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),

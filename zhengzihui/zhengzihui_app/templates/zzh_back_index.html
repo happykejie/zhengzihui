@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <script src="/static/jquery-2.14/jquery.js"></script>
+    <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+    <title>后台主页</title>
+</head>
+
+
+<body>
+
+<div class="row col-sm-12 col-md-12 col-lg-12">
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">订单管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已取消&nbsp; <font color="red">{{order_num_info.0}}</font>|&nbsp;未付款 &nbsp; <font color="red">{{order_num_info.1}}</font></h4>
+    		 <h4 align="center">已付款 &nbsp; <font color="red">{{order_num_info.2}}</font>|&nbsp;已下单 &nbsp; <font color="red">{{order_num_info.3}}</font></h4>
+			 <h4 align="center">已完成 &nbsp; <font color="red">{{order_num_info.4}}</font></h4>
+            <h4 align="right"><a href="{% url 'balfororders' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">客户结算</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已下单&nbsp; <font color="red">{{ba_num_info.0}}</font>|&nbsp;已确认 &nbsp; <font color="red">{{ba_num_info.1}}</font></h4>
+			 <h4 align="center">完成&nbsp; <font color="red">{{ba_num_info.2}}</font> </h4>
+
+             <h4 align="right"><a href="{% url 'baforguests' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">商家结算</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已确认&nbsp; <font color="red">{{sh_num_info.0}}</font>|&nbsp;完成 &nbsp; <font color="red">{{sh_num_info.1}}</font></h4>
+
+
+
+
+             <h4 align="right"><a href="{% url 'baforshopers' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">推送管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已推送&nbsp; <font color="red">{{all_push_num}}</font></h4>
+
+             <h4 align="right"><a href="{% url 'info_push' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+	</div>
+	<div class="row col-sm-12 col-md-12 col-lg-12">
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">点评管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">正常评价&nbsp; <font color="red">{{comment_num_info.1}}</font>|&nbsp;恶意评价 &nbsp; <font color="red">{{comment_num_info.0}}</font></h4>
+    		 <h4 align="center">其它评价 &nbsp; <font color="red">{{comment_num_info.2}}</font></h4>
+             <h4 align="right"><a href="{% url 'b_work_comment_manager' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-success">
+   	<div class="panel-heading">
+        <h4 class="panel-title">项目管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">正常&nbsp; <font color="red">{{item_num_info.0}}</font>|&nbsp;申报时间截止&nbsp; <font color="red">{{item_num_info.1}}</font></h4>
+			 <h4 align="center">内容有误&nbsp; <font color="red">{{item_num_info.2}}</font></h4>
+             <h4 align="right"><a href="{% url 'bus_project_management' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-success">
+   	<div class="panel-heading">
+        <h4 class="panel-title">产品管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">这部分暂时没处理&nbsp; <font color="red">{{order_num_info.0}}</font></font></h4>
+             <h4 align="right"><a href="{% url 'b_work_index' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-success">
+   	<div class="panel-heading">
+        <h4 class="panel-title">客户管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">通过验证&nbsp; <font color="red">{{user_num_info.1}}</font>|&nbsp;未通过或等待验证 &nbsp; <font color="red">{{user_num_info.0}}</font></h4>
+
+             <h4 align="right"><a href="{% url 'b_work_index' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+		</div>
+<div class="row col-sm-12 col-md-12 col-lg-12">
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-warning">
+   	<div class="panel-heading">
+        <h4 class="panel-title">商家管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">通过认证&nbsp; <font color="red">{{mer_num_info.0}}</font>|&nbsp;未通过认证 &nbsp; <font color="red">{{mer_num_info.1}}</font></h4>
+    		 <h4 align="center">等待认证&nbsp; <font color="red">{{mer_num_info.2}}</font>|&nbsp;正在认证 &nbsp; <font color="red">{{mer_num_info.3}}</font></h4>
+             <h4 align="right"><a href="{% url 'balformerchant' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+ 
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-success">
+   	<div class="panel-heading">
+        <h4 class="panel-title">客服人员管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已激活&nbsp; <font color="red">{{back_user_num_info.0}}</font>|&nbsp;未激活 &nbsp; <font color="red">{{back_user_num_info.1}}</font></h4>
+             <h4 align="right"><a href="{% url 'support_staff_manager' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+
+    <div class="row col-sm-3 col-md-3 col-lg-3">
+
+	<div class="panel panel-success">
+   	<div class="panel-heading">
+        <h4 class="panel-title">审核人员管理</h4>
+    </div>
+   		 <div class="panel-body">
+			 <h4 align="center">已激活&nbsp; <font color="red">{{check_user_num_info.0}}</font>|&nbsp;未激活 &nbsp; <font color="red">{{check_user_num_info.1}}</font></h4>
+
+             <h4 align="right"><a href="{% url 'auditor_manager' %}" >更多</a></h4>
+		 </div>
+	</div>
+</div>
+
+    </div>
+
+
+</body>
+</html>

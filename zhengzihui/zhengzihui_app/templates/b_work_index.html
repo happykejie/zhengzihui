@@ -62,7 +62,9 @@
 
 <div class ="row" style="background-color:#009999; line-height:5em">
 <!--<div class="text" style="background-color:#00BFFF; line-height:5em">-->
-
+<div class = "col-sm-1 col-md-1 col-lg-1">
+<center><a href="#"><font color="white" size="4px" onclick="zzh_back_index()">主页</font></a></center>
+</div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="balfororders()">订单管理</font></a></center>
 </div>
@@ -102,13 +104,17 @@
 </div>
 
 <div class="row">
-<iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="#"> </iframe>
+<iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="/zzh_back_index"> </iframe>
 
 
 </div>
 
 
 <script>
+	function zzh_back_index(){
+		var url="/zzh_back_index"
+		$('#fra').attr('src',url);
+	}
 	function baforguests(){
 		var url="/baforguests"
 		$('#fra').attr('src',url);

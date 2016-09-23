@@ -105,7 +105,7 @@ DATABASES = {
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
 
-         'PASSWORD':'123456',#password of mysql user
+         'PASSWORD':'1234',#password of mysql user
 
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql

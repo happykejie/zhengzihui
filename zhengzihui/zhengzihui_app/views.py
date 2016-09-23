@@ -24,6 +24,7 @@ from yz_views import *
 from xcz_views import *
 from cyf_views import *
 from lqx_views import *
+from jianuo_views import *
 #by-xy
 from forms import ShareForm,LinkerForm
 from django.core.urlresolvers import reverse
