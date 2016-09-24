@@ -51,7 +51,7 @@
         </span>
         <span>
             <a href="">
-                {{search_content}}{{request.session.search_content}}
+                {{search_content}}{{request.session.type}}
             </a>
         </span>
         </div>
@@ -109,12 +109,12 @@
                 </span>
                 <div class="text">
                     <p class="title">
-                        <label>{{ item.item_about }}</label>
+                        <label>{{ item.item_name }}</label>
                         <a href="/free_require/supporting_center/iteminfo/?id={{ item.item_id }}">{{ item.item_name }}</a>
                     </p>
                     <p class="agency">
                         <span class="glyphicon glyphicon-map-marker"></span>
-                        <span>{{ item.pa }}</span>
+                        <span>{{ item.supplier }}</span>
                     </p>
                     <p class="benefit">
                         <span class="benefit-text">
@@ -122,7 +122,7 @@
                             <span>额度</span>
                         </span>
                         <span class="benefit-num">
-                            {{ item.item_ga }}
+                            {{ item.price }}
                         </span>
                     </p>
                     <div class="progress">
@@ -131,17 +131,17 @@
                     </div>
                     <diV class="date">
                         <span class="start">
-                            {{ item.item_publish }}
+                            {{ item.start_time }}
                         </span>
                          <span class="stop">
-                           {{ item.item_deadtime }}
+                           {{ item.end_time }}
                         </span>
                     </diV>
 
                 </div>
                 <div class="watch">
                     <p>
-                        已经有<span class="sum">{{ item.order_num }}</span>人参与
+                        
                     </p>
                     <a href="/free_require/supporting_center/iteminfo/?id={{ item.item_id }}" class="btn btn-warning btn-lg btn-block ">查看详情</a>
                 </div>
@@ -153,7 +153,7 @@
             {% endif %}
         </div>
         <div id="load">
-            <img src="../static/images/load2.gif" style="height:100px;width:100px;"/>
+            <img src="/static/images/load2.gif" style="height:100px;width:100px;"/>
         </div>
     </div>
 

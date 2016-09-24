@@ -16,4 +16,5 @@ urlpatterns = [
         ,name='supporting_center_filter_labels'),
     url(r'^supporting_center/shoucang_item/','fr_app.views.supporting_center_shoucang_item'
         ,name="supporting_center_shoucang_item"),
+    url(r'^supporting_center/sc_search_result_load/','fr_app.views.sc_search_result_load'),
 ]

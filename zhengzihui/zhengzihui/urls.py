@@ -207,7 +207,8 @@ urlpatterns = [
 	url(r'^baforshopers/$',zhengzihui_app.views.baforshopers,name='baforshopers'),
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
-
+        url(r'^baformerchantsupervisor/$',zhengzihui_app.views.ba_for_merchant_supervisor,name='ba_for_merchant_supervisor'), #后台管理/商家管理
+	url(r'^bw_merchantsupervisor_detail/$',zhengzihui_app.views.bw_merchantsupervisor_detail,name='bw_merchantsupervisor_detail'),
 
 
 

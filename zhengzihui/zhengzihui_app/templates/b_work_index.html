@@ -89,7 +89,7 @@
 <center><a href="#"><font color="white" size="4px" onclick="#">客户管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">商家管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="ba_for_merchant_supervisor()">商家管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="#">客服人员管理</font></a></center>
@@ -115,6 +115,11 @@
 	}
 	function baforshops(){
 		var url="/baforshopers"
+		$('#fra').attr('src',url);
+	}
+        //add merchant supervisor by zp
+	function ba_for_merchant_supervisor(){
+		var url="/baformerchantsupervisor"
 		$('#fra').attr('src',url);
 	}
 </script>

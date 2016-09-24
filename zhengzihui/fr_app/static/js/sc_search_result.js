@@ -52,61 +52,6 @@ $(document).ready(function(){
             window.location.href = "/free_require/supporting_center/filter_labels/?"+key_name+"="+key_name+"&filterkeys="+value;
     });
 	 
-    //滚动条到达底部触发ajax请求
-    var times = 10  //定义全局请求数据的初始条数
-    $(window).scroll(function(){
-        if($("#load").is(":hidden")){ //用load的隐藏或者显示来标示一次请求是否在进行或者结束
-            var $last = $(".list-content").last();//取得 class = list-content的最后一个元素，也就是最后一个项目详情方块。div YZ
-			var bottom=$last.offset().top+$last.outerHeight();//最后一个元素底部距离浏览器窗口顶部的距离
-			var scrollTop=document.documentElement.scrollTop||document.body.scrollTop||0;//滚动条距离
-		    var windowHeight=document.documentElement.clientHeight||document.body.clientHeight||0;//窗口高度
-            //上面算距离和，下面的判断是为什么，猜想是为了判断load这个div时候出现了吧？？
-            if(scrollTop>=bottom-windowHeight){
-                //console.log(bottom);
-                //console.log(scrollTop);
-                //console.log(windowHeight);
-                $("#load").show();
-                    $.ajax({method:"GET",url:"/search_result_load/",data:{"times":times},dataType:"json",success:function(data){
-						if(data.length > 0){  //返回的数据不能为空
-							$.each(data,function(index,obj){
-                            $last.clone(true).appendTo("#list")// 传递参数true，使复制事件，默认为false
-                            var $last_now = $(".list-content").last();
-                            $last_now.find(".title > a").text(obj.item_name);
-                            $last_now.find("a").attr("href","/item_details/?id="+obj.item_id);
-                            $last_now.find("a > img").attr("src",obj.pic_url);
-                            $last_now.find(".title > label").text(obj.item_about);
-                            $last_now.find(".title > a").attr("href","/item_details/?id="+obj.item_id);
-                            $last_now.children("span").text(obj.item_key);
-                            $last_now.find(".benefit-num").text(obj.item_ga);
-                            $last_now.find(".agency span").last().text(obj.pa);
-                            $last_now.find(".info").css("left",obj.item_consume_time+"%").text(obj.item_consume_time+"%"); //注意控制style里的样式使用css，而不能使用attr
-                            $last_now.find(".start").text(obj.item_publish);
-                            $last_now.find(".stop").text(obj.item_deadtime);
-                            $last_now.find(".sum").text(obj.order_num);
-                            $last_now.find(".witch > a").attr("href","/item_details/?id="+obj.item_id);
-                            //$last_now.animate({opacity:"1"},200);
-                            });
-                            $("#load").hide();
-                            times += 5; //每次取5条数据
-                            //console.log(times);
-                            //console.log(data[0].fields.item_name);  //后台序列化的结果就是将整个对象和方法都序列化啦，而数据内容区域在fields里面
-                            //console.log(data)
-						}else{
-							$("#load").html("<p>数据已经全部加载完毕啦，如果没有感兴趣的内容请移步其他网页！</p>");
-						}
-                         },error: function(XMLHttpRequest, textStatus, errorThrown) {
-                         console.log(XMLHttpRequest.status);
-                         console.log(XMLHttpRequest.readyState);
-                         console.log(textStatus);
-                         }})
-
-            }
-        }
-
-
-    })
-
-
 
 
 })

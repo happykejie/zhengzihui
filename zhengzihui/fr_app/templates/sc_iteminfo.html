@@ -153,7 +153,7 @@ $(function(){
 
 					</h1>
 					
-					<p class="support">资助额度: <span class="item_price">{{ item.item_ga }}</span></p>
+					<p class="support">价格: <span class="item_price">{{ item.price }}</span></p>
 					<p class="deadline">剩余时间：
 					<span class="time-item">
 						<strong id="day_show">0天</strong>
@@ -162,7 +162,7 @@ $(function(){
 						<strong id="second_show">0秒</strong>
 					</span><!--倒计时模块-->
 					</p>
-					<p class="apartment">项目管理部门：<span class = "con_apartment">{{ item.item_pa_name}}</span></p>
+					<p class="apartment">项目提供商：<span class = "con_apartment">{{ item.supplier}}</span></p>
 			  	
 			    	<ul class="subproject">
 						<h3>项目列表</h3>
@@ -237,7 +237,7 @@ $(function(){
 							     </div>	
 							      <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
 									<ul class="tab_list">
-									  	<li> 申报起止时间： {{  gettimeInstance.item_publish }} 到  {{ gettimeInstance.item_deadtime }}  </li>
+									  	<li> 申报起止时间： {{  gettimeInstance.start_time }} 到  {{ gettimeInstance.end_time }}  </li>
                                         <li>更多的关于项目申报时间的信息，请关注后续完善</li>
 									  	
 									  </ul>      

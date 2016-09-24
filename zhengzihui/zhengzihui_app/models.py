@@ -955,3 +955,16 @@ class tb_balist(models.Model):
 	ba_time = models.DateTimeField("结算时间",null=True,blank=False,default=None)
 	ba_ftime = models.DateTimeField("验单时间",null=True,blank=False,default=None)
 
+
+
+class tb_ba_for_merchant_superivisor(models.Model):
+	merchant_id = models.AutoField("商家id",primary_key = True)
+	merchant_name = models.CharField("商家名称",max_length=100,null=True,blank=False)
+	merchant_addr = models.CharField("商家地址",max_length=255,null=True,blank=False)
+	merchant_linkman = models.CharField("联系人",max_length=100,null=True,blank=False)
+	phone_num = models.CharField("联系电话",max_length=20,null=True,blank=False)
+	num_of_orders = models.IntegerField('接单次数',null=False)
+	transaction_amount = models.IntegerField('交易金额',null=False)
+
+
+

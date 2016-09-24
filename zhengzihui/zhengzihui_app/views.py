@@ -211,10 +211,6 @@ def search_result(request):
     return response
 
 
-
-
-
-
 #xcz项目信息滚动加载瀑布流
 def search_result_load(request):
     a_items = []
@@ -2179,6 +2175,56 @@ def baforshopers(request):
 				print(123)
 				flis.append(i)
 	return render_to_response("balforshopers.html",{'lis':flis})
+
+
+def ba_for_merchant_supervisor(request):
+	"""后台管理的商家管理支线 add by zp.
+	"""
+	# filter
+	if 'order' not in request.COOKIES:
+		kind = "ascending_order"
+	else:
+		kind = request.COOKIES['order']
+
+	# order
+        all_list = []
+	if kind=="ascending_order":
+		all_list = tb_ba_for_merchant_superivisor.objects.all().order_by("-num_of_orders")
+	else:
+		all_list = tb_ba_for_merchant_superivisor.objects.all().order_by("num_of_orders")
+
+	# sort
+	lis = []
+	for i in all_list:
+		item = {}
+		item['merchant_id']=i.merchant_id
+		item['merchant_name']=i.merchant_name
+		item['merchant_addr']=i.merchant_addr
+		item['merchant_linkman']=i.merchant_linkman
+		item['phone_num']=i.phone_num
+		item['num_of_orders']=i.num_of_orders
+		item['merchant_addr']=i.merchant_addr
+		item['transaction_amount']=i.transaction_amount
+		lis.append(item)
+
+	return render_to_response("balformerchantsupervisor.html",{'lis':lis})
+
+
+def bw_merchantsupervisor_detail(request):
+	"""后台管理的商家管理支线 add by zp.
+	"""
+	item_id = request.GET.get('id')
+	item = tb_ba_for_merchant_superivisor.objects.get(merchant_id=item_id)
+	res = {}
+	res['merchant_id'] = item.merchant_id
+	res['merchant_name'] = item.merchant_name
+	res['merchant_addr'] = item.merchant_addr
+	res['merchant_linkman'] = item.merchant_linkman
+	res['phone_num'] = item.phone_num
+	res['num_of_orders'] = item.num_of_orders
+	res['transaction_amount'] = item.transaction_amount
+
+	return render_to_response("bw_merchantsupervisor_detail.html",{'res':res})
 
 def bw_badetail(request):
 	ba_id = request.GET.get('id')
