@@ -44,7 +44,7 @@
     <div class="content">
         <div class="path">
         <span>
-            您所在的位置：
+            您所在的位置:
         </span>
         <span>
             <a href="/index/">
@@ -58,52 +58,98 @@
         </span>
     </div>
 
-        <div class="filter" id="filter">
+ <div class="filter" id="filter">
+
+
         <div class="f-row clearfix ">
             <div class="f-head">
-                <span id="bumen">
-                部门:
-                </span>
+                <span id="bumen_class1">政府机关/直属事业单位</span>
             </div>
             <div class="f-select">
                 <ul class="f-labels">
                 <li><a href="javascript:void(0);">全部</a></li>
-                <li><a href="javascript:void(0);">经济与信息化</a></li>
-                <li><a href="javascript:void(0);">发展与改革</a></li>
-                <li><a href="javascript:void(0);">财政</a></li>
-                <li><a href="javascript:void(0);">科技</a></li>
-                <li><a href="javascript:void(0);">教育</a></li>
-                <li><a href="javascript:void(0);">文化</a></li>
-                <li><a href="javascript:void(0);">卫计</a></li>
-                <li><a href="javascript:void(0);">体育</a></li>
-                <li><a href="javascript:void(0);">知识产权</a></li>
-                <li><a href="javascript:void(0);">农业</a></li>
-                <li><a href="javascript:void(0);">林业</a></li>
-                <li><a href="javascript:void(0);">畜牧</a></li>
-                <li><a href="javascript:void(0);">渔业</a></li>
-                <li><a href="javascript:void(0);">粮食</a></li>
-                <li><a href="javascript:void(0);">中医药</a></li>
-                <li><a href="javascript:void(0);">国土</a></li>
-                <li><a href="javascript:void(0);">住建</a></li>
-                <li><a href="javascript:void(0);">交通</a></li>
-                <li><a href="javascript:void(0);">水利</a></li>
-                <li><a href="javascript:void(0);">能源</a></li>
-                <li><a href="javascript:void(0);">环保</a></li>
-                <li><a href="javascript:void(0);">商务</a></li>
-                <li><a href="javascript:void(0);">投资促进</a></li>
-                <li><a href="javascript:void(0);">工商</a></li>
-                <li><a href="javascript:void(0);">税务</a></li>
-                <li><a href="javascript:void(0);">民政</a></li>
-                <li><a href="javascript:void(0);">人社</a></li>
-                <li><a href="javascript:void(0);">扶贫</a></li>
-                <li><a href="javascript:void(0);">旅游</a></li>
-                <li><a href="javascript:void(0);">人民银行</a></li>
-                <li><a href="javascript:void(0);">银监</a></li>
-                <li><a href="javascript:void(0);">证监</a></li>
-                <li><a href="javascript:void(0);">保监</a></li>
-                <li><a href="javascript:void(0);">质监</a></li>
-                <li><a href="javascript:void(0);">药监</a></li>
-                <li><a href="javascript:void(0);">安监</a></li>
+                <li><a href="javascript:void(0);">经信汇:发展改革/经济和信息化/财政/国资/更多</a></li>
+                <li><a href="javascript:void(0);">农林汇:农业/林业/畜牧/渔业/粮食/中医药/烟草/更多</a></li>
+                <li><a href="javascript:void(0);">商务汇:商务/税务/工商/投资促进/海关/更多</a></li>
+                <li><a href="javascript:void(0);">基建汇:国土资源/住房城乡建设/交通运输/水利/能源/环境保护/更多</a></li>
+                <li><a href="javascript:void(0);">民生汇:民政/人力资源社会保障/扶贫/民族/宗教</a></li>
+                <li><a href="javascript:void(0);">监管汇:人民银行/银监/证监/保监/质监/药监/安监/统计/更多</a></li>
+	                <li><a href="javascript:void(0);">科技汇:科技/大数据/更多</a></li><!--测试用选项-->
+
+
+            </ul>
+                <div class="multiple-btn">
+                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+
+        </div>
+		<div class="f-row clearfix ">
+            <div class="f-head">
+                <span id="bumen_class2">科研院所/高等院校</span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels">
+                <li><a href="javascript:void(0);">全部</a></li>
+                <li><a href="javascript:void(0);">中共主题馆:组织部/宣传部/统战部/政策研究室/政法委/编办/直属机关工委/更多</a></li>
+                <li><a href="javascript:void(0);">民主党派馆:民革/民盟/民建/民促/农工党/致公党/九三学社/台盟</a></li>
+                <li><a href="javascript:void(0);">人民团体馆:总工会/共青团/科协/妇联/工商联/青联/残联/供销社/贸易促进会/红十字会/更多</a></li>
+                <li><a href="javascript:void(0);">基建汇:国土资源/住房城乡建设/交通运输/水利/能源/环境保护/更多</a></li>
+                <li><a href="javascript:void(0);">公益组织馆:壹基金公益基金会/阿里巴巴公益基金会/更多</a></li>
+
+
+
+            </ul>
+                <div class="multiple-btn">
+                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+
+        </div>
+		<br><br>
+
+		<div class="f-row clearfix ">
+            <div class="f-head">
+                <span id="bumen_class3">党派/人民团体/公益性组织</span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels">
+                <li><a href="javascript:void(0);">全部</a></li>
+                <li><a href="javascript:void(0);">科研院所:中国科学院/中国工程院/中国农业科学院/中国工程物理研究院/重庆农科院/更多</a></li>
+                <li><a href="javascript:void(0);">高等学校:北京大学/清华大学/复旦大学/浙江大学/南开大学/中国科技大学/中山大学/四川大学/更多</a></li>
+
+
+
+            </ul>
+                <div class="multiple-btn">
+                    <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
+                    <span class="multiple-enter"><a class=" btn btn-xs btn-danger disabled" href="javascript:void(0)" ><span>确定</span></a></span>
+                    <span class="multiple-delete"><a class="btn btn-xs btn-default" href="javascript:void(0)" ><span>取消</span></a></span>
+                </div>
+            </div>
+            <span class="more"><a href="javascript:void(0);"><span class="glyphicon glyphicon-chevron-down"></span><span class="text">&nbsp;更多</span></a></span>
+            <span class="multiple"><a href="javascript:void(0);" ><span class="glyphicon glyphicon-plus"></span><span class="text">&nbsp;多选</span></a></span>
+
+        </div>
+		<br><br>
+		<div class="f-row clearfix ">
+            <div class="f-head">
+                <span id="bumen_class4">国有企业/事业单位</span>
+            </div>
+            <div class="f-select">
+                <ul class="f-labels">
+                <li><a href="javascript:void(0);">全部</a></li>
+                <li><a href="javascript:void(0);">国有企业:中国航天科技集团/海尔集团/长虹集团/东方电力集团/更多</a></li>
+                <li><a href="javascript:void(0);">事业单位:中国农村科技卡开发中心/中国国际交流中心/四川省高高新技术产业金融服务中心/更多</a></li>
+
             </ul>
                 <div class="multiple-btn">
                     <input type = "hidden" name = "bumen" value = "{{ selected.bumen }}">
@@ -116,6 +162,7 @@
 
         </div>
 
+	 <br><br>
 
 
 
@@ -166,7 +213,7 @@
 
 		{% if flag %}
 		<div>
-			<p>您已经选择：{{ selected.bumen }};{{ selected.jibie }};{{ selected.zhuangtai }}</p>
+			<p>您已经选择:{{ selected.bumen }};{{ selected.jibie }};{{ selected.zhuangtai }}</p>
             <p></p>
 		</div>
 		{% endif %}
@@ -198,7 +245,7 @@
             {% for item in items %}
             <div class="list-content">
                 <a href="/project_detail/?id={{ item.item_id }}">
-                    <img src="{{ item.pic_url }}" />
+                    <img src="{{ item.pic_url }}"/>
                 </a>
                 <span>
                     {{ item.item_key }}
@@ -265,11 +312,11 @@
             <div class = "col-lg-3 col-md-3 col-sm-3">
                 <div class="single-sale">
                 <a href="/project_detail/?id={{thing.item_id}}">
-                    <img class="img-responsive" src="{{ thing.pic_url }}" /><!---->
+                    <img class="img-responsive" src="{{ thing.pic_url }}"/><!---->
                     <h6>{{thing.item_name}}</h6>
                 </a>
                 <p><span class="orange">额度 &nbsp; ￥&nbsp;</span><span class="orange">{{  thing.item_ga }}</span><span class="send-free"></span></p>
-                <!--<p class="gary-text"><span><h6>点击量：</h6></span><span><del>     </del></span>-->
+                <!--<p class="gary-text"><span><h6>点击量:</h6></span><span><del>     </del></span>-->
                 </div>
             </div>
             {% empty %}

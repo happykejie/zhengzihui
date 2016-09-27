@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>填写发布人信息</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <link href="../static/css/representations.css" rel='stylesheet' type='text/css' />
+</head>
+<body>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,xxx 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+
+</div>
+	<div>
+		<img class="h" src="../static/images/2.png" alt="placeholder+image">
+	</div>
+	<div class="center">
+		<caption><h2><b>发布人基本信息</b></h2></caption><span class="a" >内容必填</span> <span class="b" >*</span></h3>
+		<hr width="100%">
+<!--表单-->
+<form method="POST" class="form-horizontal" role="form">{% csrf_token %}
+                    <fieldset>
+                       
+                       <div class="form-group">
+                          <label class="col-sm-2 control-label" for="ds_host"><span class = "c">*</span>发布人姓名：</label>
+                          <div class="col-sm-4">
+                          {{ form2.linkname }}
+                          </div>
+                          <label class="col-sm-2 control-label" for="ds_name"><span class = "c">*</span>发布人联系电话：</label>
+                          <div class="col-sm-4">
+                             {{ form2.linktelphon }}
+                          </div>
+                       </div>
+                       <div class="form-group">
+                          <label class="col-sm-2 control-label" for="ds_username"><span class = "c">*</span>发布人邮箱地址：</label>
+                          <div class="col-sm-4">
+                               {{ form2.linkemail }}
+
+                          </div>
+                          <label class="col-sm-2 control-label" for="ds_password"><span class = "c">*</span>发布人单位：</label>
+                          <div class="col-sm-4">
+                               {{ form2.linkadress }}
+
+                          </div>
+                       </div>
+                    </fieldset>
+                    <fieldset>
+                         <legend>其他信息</legend>
+                        <div class="form-group">
+                           <label for="disabledSelect"  class="col-sm-2 control-label">其它备注：</label>
+                           <div class="col-sm-10">
+                               {{ form2.remarks }}
+                           </div>
+						   <label for="disabledSelect"  class="col-sm-2 control-label">信息是否保密：</label>
+                           <div class="col-sm-4">
+                               {{ form2.secret }}
+                           </div>
+                        </div>
+                    </fieldset>
+
+                       <fieldset>
+                         <legend></legend>
+                        <div class="form-group">
+                           
+                           
+                              <center><button type="submit" class="className"  >发布</button></center>
+                           
+						   
+                        </div>
+                    </fieldset>
+      
+		
+    </form>
+<!--表单-->
+ <div class="footer">
+		
+		<hr width="100%">
+		
+			<p class="footer">Copyright © 2002-2016  版权所有  政资汇科技有限公司   苏ICP证B2-20100204  [乙测资字32005078]   </p>
+		
+	</div>
+</body>
+</html>	

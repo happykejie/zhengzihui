@@ -1,0 +1,20 @@
+{% extends 'my_base.html' %}
+
+{% block title %}查看合同信息{% endblock %}
+
+{% block content %}
+  <div class="form-group">
+    <label for="name"><h2>政资会服务协议</h2></label>
+    <textarea class="form-control" rows="20">{{ contact_string }}</textarea>
+  </div>
+
+<form role="form" >
+<div class="checkbox" align="center"  onclick="location.href='http://127.0.0.1:8000/order_details/?goodsid={{ goodsid }}'" >
+      <label>
+      <input type="checkbox"> 同意协议并下订单
+      </label>
+   </div>
+</form>
+
+
+{% endblock %}

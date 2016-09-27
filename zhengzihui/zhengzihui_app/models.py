@@ -9,6 +9,20 @@ from filer.fields.file import FilerFileField
 
 # Create your models here.
 
+#公共虚类
+
+class Common_Area_Info(models.Model):
+    # ...
+    privince = models.CharField("省",max_length=100,null=True)
+    city = models.CharField("市", max_length=100, null=True)
+    distr = models.CharField("区", max_length=100, null=True)
+    xianfen = models.CharField("县份", max_length=100, null=True)
+
+
+    class Meta:
+        abstract = True
+
+
 class tb_user_expand(models.Model):
     user_id = models.AutoField("用户id",primary_key=True)
     company_tel = models.CharField("联系人移动电话",max_length=30,blank=False,null=True)
@@ -118,6 +132,7 @@ class  tb_service_provider(models.Model):
     sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
     #sp_id = models.IntegerField("内部ID",null=False,blank=False)
     sp_id = models.AutoField("内部ID",primary_key = True)
+    sp_address = models.CharField("服务商地址",max_length=40,null=True,blank=False)
     sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
     psw = models.CharField("密码",max_length=40,null=True,blank=False)
 
@@ -307,7 +322,7 @@ class Tb_Apage_Class(models.Model):
         return self.Apcl_name
     
     
-class tb_item(models.Model):
+class tb_item(Common_Area_Info):
     item_id = models.IntegerField('项目ID', primary_key=True, null=False,unique=True)
     item_code = models.CharField('项目编号',max_length=20,null=False,blank=False)
     item_name = models.CharField('项目名称',max_length=100,null=False,)
@@ -759,9 +774,10 @@ class tb_goods_evaluation(models.Model):
     is_anonymous  = models.IntegerField("是否匿名评价",null = False)
 
     service_provider = models.CharField("对应服务商",max_length = 100, null = True)
-    reply_content = models.TextField("评价内容",null=True)
+
     star = models.IntegerField("总体评分",null = True)
     reply_content = models.TextField("回复内容",null=True)
+    location = models.CharField("所在地域",max_length = 100, null = True)
     SHOW = 1
     NOTSHOW = 0
     GOEV_SHOW_CHOICES = (
@@ -955,6 +971,153 @@ class tb_balist(models.Model):
 	ba_time = models.DateTimeField("结算时间",null=True,blank=False,default=None)
 	ba_ftime = models.DateTimeField("验单时间",null=True,blank=False,default=None)
 
+#YZ for the back
+class tb_back_user(models.Model):
+    user_id = models.AutoField("用户id", primary_key=True)
+    user_name = models.CharField("用户名称", max_length=100, null=False, blank=False)
+    user_password = models.CharField("密码", max_length=100, null=False, blank=False)
+    user_telephone = models.CharField("电话", max_length=40, null=False, blank=False)
+    user_email = models.EmailField("用户邮箱", null=False, blank=False)
+    last_login = models.DateTimeField('最后登陆',auto_now =True,null = True)
+    PASSAUTH = 1
+    NOTPASSAUTH = 0
+    USER_AUTH_CHOICES = (
+        (PASSAUTH, '通过验证'),
+        (NOTPASSAUTH, "验证没有通过或者没有验证"),
+    )
+    user_auth = models.IntegerField("用户验证状态", choices=USER_AUTH_CHOICES,
+                                    default=NOTPASSAUTH)  # 用户验证状态0：验证没有通过或者没有验证1：验证通过
+
+    Kefu = 2
+    Shenhe = 1
+    super_admin = 0
+    User_Type_CHOICES = (
+        (Kefu, '客服人员'),
+        (Shenhe, '审核人员'),
+        (super_admin, '超级管理员'),
+    )
+    user_type = models.IntegerField("注册用户类型", choices=User_Type_CHOICES, default=Kefu)
+
+    class Meta:
+        verbose_name = '后台用户'
+        verbose_name_plural = '后台用户'
+
+    def __unicode__(self):
+        return self.user_name
+
+    def __unicode__(self):
+        return self.user_email
+
+    def __unicode__(self):
+        return self.user_telephone
+
+    # 用于政资分享的模块--xy
+
+
+class shareinformation(models.Model):
+        projectname = models.CharField("项目名称", max_length=20, null=False)
+        projectdirect = models.CharField("项目方向和领域", max_length=20, null=False)
+        projectneed = models.CharField("项目申报要求", max_length=30, null=False)
+        projectprocess = models.TextField("项目申报流程", null=False)
+        projectmanage = models.CharField("项目管理部门", max_length=20, null=False)
+        projectlink = models.CharField("项目联系人及电话", max_length=20, null=False)
+        LEVEL_CHOICES = (
+            ('N1', 'YES'),
+            ('N2', 'NO'),
+        )
+        projectsecret = models.CharField("项目是否保密", max_length=10, null=False, choices=LEVEL_CHOICES)
+
+        class Meta:
+            verbose_name = u'政资信息共享'
+            verbose_name_plural = u'政资信息共享'
+
+        def __unicode__(self):  # python 2
+            return self.projectname
+
+    # 用于政资分享的模块--xy
+
+class Linker(models.Model):
+        linkname = models.CharField("联系人姓名", max_length=20, null=False)
+        linkemail = models.EmailField("联系人邮箱", null=False, blank=False)
+        linkadress = models.CharField("联系人地址", max_length=30, null=False)
+        linktelphon = models.CharField("联系人电话", max_length=11, null=False)
+        remarks = models.TextField("备注", null=False)
+        LEVEL_CHOICES = (
+            ('YES', 'YES'),
+            ('NO', 'NO'),
+        )
+
+        secret = models.CharField("是否保密", max_length=10, null=False, choices=LEVEL_CHOICES)
+
+        class Meta:
+            verbose_name = u'政资信息发布人'
+            verbose_name_plural = u'政资信息发布人'
+
+        def __unicode__(self):  # python 2
+            return self.linkname
+
+
+
+class push_info(models.Model):
+    push_item_id = models.IntegerField('推送项目的id',null=False)
+    push_to_user = models.IntegerField('推送到的用户的id',null=False)
+
+class common_info_sp(models.Model):
+
+    sp_name = models.CharField('服务商名称',null=False)
+    sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
+
+    sp_id = models.AutoField("内部ID",primary_key = True)
+
+    sp_address = models.CharField("服务商地址",max_length=40,null=True,blank=False)
+    psw = models.CharField("密码",max_length=40,null=True,blank=False)
+    tel = models.CharField("电话",max_length=40,null=False,blank=False)
+    email = models.EmailField("邮箱",null=False,blank=False)
+    master = models.CharField("擅长领域",max_length=50,null=True,blank=False)
+    sp_image1 = models.ImageField("政资汇账户所有人身份证证件上传",upload_to=defaultImageURLoftb_service_provider_sp_image1,null=True,blank=False)
+    sp_image2 = models.ImageField("账户所代表的公司执照上传",upload_to=defaultImageURLoftb_service_provider_sp_image2,null=True,blank=False)
+    sp_grade = models.IntegerField("服务商等级",null=True,blank=False)
+    sp_sort = models.IntegerField("排序",null=True,blank=False)
+    area_id = models.CharField("服务提供商所在地",max_length=10,null=True,blank=False)
+    Register_cap = models.IntegerField("注册资金",null=True,blank=False)
+    staff_number = models.IntegerField("职员人数",null=True,blank=False)
+    Annual_totals = models.IntegerField("年营业额",null=True,blank=False)
+    organization_name = models.CharField("机构名称",max_length=40,null=True,blank=False)
+    organization_id = models.IntegerField("机构代码",null=True,blank=False)
+    organization_assets = models.IntegerField("机构资产",null=True,blank=False)
+    organization_profile = models.CharField("机构简介",max_length=100,null=True,blank=False)
+    is_recommend = models.IntegerField('推荐指数',null=True)
+
+    sp_type=models.CharField('合作类型',max_length=60,null=False,blank=False)
+    con_name=models.CharField('联系人姓名',max_length=30,null=False,blank=False)
+    PASSAUTH = 1
+    NOTPASSAUTH = 0
+    WAITAUTH = 2
+    AUTHING = 3
+    SP_AUTH_CHOICES=(
+    (NOTPASSAUTH,"未通过认证"),
+    (PASSAUTH,"通过认证"),
+    (WAITAUTH,"等待被认证"),
+    (AUTHING,"正在认证"),
+    )
+
+    sp_auth = models.IntegerField("服务商认证状态",choices=SP_AUTH_CHOICES,default=NOTPASSAUTH,null=False,blank=False)
+
+    RECOMMEND = 1
+    NOTRECOMMED = 0
+    IS_RECOMMEND_CHOICES = (
+    (RECOMMEND,'优先推荐(当有相同报价的服务商，是否优先考虑推荐)'),
+    (NOTRECOMMED,'不优先推荐'),
+    )
+    is_recommend = models.IntegerField("是否优先推荐",choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
+    class Meta:
+        abstract = True
+
+    def __str__(self):
+        return self.sp_name
+
+    def __str__(self):
+        return str(self.sp_code)
 
 
 class tb_ba_for_merchant_superivisor(models.Model):
@@ -967,4 +1130,54 @@ class tb_ba_for_merchant_superivisor(models.Model):
 	transaction_amount = models.IntegerField('交易金额',null=False)
 
 
+#Yz
+'''
+class tb_rongzi_fuwu_pic(models.Model):
+    pic_id = models.IntegerField('ID', primary_key=True,null=False)
+    pic_name = models.CharField('图片名称',max_length=40,null=False)
+    pic_tag = models.CharField('图片标签',max_length=40,null=False)
+    pic_object = models.ImageField('图片文件',upload_to='img_for_fuwu/%Y/%m/%d',null = False,default="img_for_fuwu/none/no_img.jpg")
+    pic_size = models.IntegerField('项目ID',null=False,default=0)
+    upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
+    class Meta:
+        verbose_name = '图片表'
+        verbose_name_plural = '图片表'
+    def __str__(self):   #python 2
+        return self.pic_name
+
+class tb_rongzi_fuwu_service(Common_Area_Info):
+        fuwu_service_code = models.IntegerField('服务对应的编号',null=False)
+        fuwu_service_name = models.CharField('对应融资项目的服务',max_length=1000,null=False)
+        fuwu_service_payahead = models.IntegerField('服务对应的首付价格',null=False)
+        fuwu_service_award = models.IntegerField('服务对应的完成后奖金',null=False)
+        fuwu_service_provider = models.ForeignKey('该服务对应的服务提供商',tb_rongzi_fuwu_sp,null=False)
+        fuwu_service_start_time = models.DateTimeField('服务开始时间')
+        fuwu_service_end_time  =models.DateTimeField('服务截止时间')
+        fuwu_service_feature = models.CharField('服务特色',null=True,default='还没有表明特色')#这里服务特色的存储应该有一个格式:保证完成/提供原件
+        fuwu_service_short_intro = models.CharField('服务简单介绍',null=True,default='还没有上传简介')
+        fuwu_service_liucheng = models.CharField('服务流程',null=True,default='还没有流程信息')
+        fuwu_click_counter = models.IntegerField('点击总量',null=False,default=0)
+
+class tb_rongzi_fuwu_sp(common_info_sp,Common_Area_Info):
+    class Meta:
+        verbose_name = '融资服务商'
+        verbose_name_plural = '融资服务商'
+
+
+class tb_rongzi_item(models.Model,Common_Area_Info):
+    fuwu_code = models.IntegerField('项目对应的编号',null=False)
+    fuwu_name = models.CharField('融资服务的名字',max_length=1000,null=False)
+    fuwu_provide_money = models.IntegerField('此服务可提供的现金资助',null=False,default=0)#不能为空，当项目没有价格时默认为0，为排序这样设计
+    fuwu_start_time = models.DateTimeField('项目开始时间')
+    fuwu_end_time  =models.DateTimeField('项目截止时间')
+    fuwu_pic_url = models.ManyToManyField(tb_rongzi_fuwu_pic)#manytomany的作用？？？
+    fuwu_service = models.ManyToManyField(tb_rongzi_fuwu_service)
+    fuwu_Toptype = models.CharField('第一层分类',null=False)
+    fuwu_Subtype = models.CharField('第二层分类',null=False)
+    fuwu_short_intro = models.CharField('项目简单介绍',null=True,default='还没有添加简介')
+    fuwu_liucheng = models.TextField('项目流程',null=True,default='等待更正流程')
+    fuwu_click_counter = models.IntegerField('点击总量',null=False,default=0)
+    fuwu_type_Value = models.IntegerField('项目类型对应的权值，用于排序',null=True,default=0)#后台人员自己去设置
+
+'''
 

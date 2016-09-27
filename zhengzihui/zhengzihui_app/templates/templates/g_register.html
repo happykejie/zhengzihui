@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>政资汇注册</title>
+	<link rel="stylesheet" href="../static/css/bootstrap.min.css" />
+	<script type="application/javascript" src="../static/js/jquery-1.11.1.min.js"></script>
+	<script type="application/javascript" src="../static/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/css/geren-zhuce.css"/>
+	<script src="../static/js/jquery.js"></script>
+	<script src="../static/js/jquery.validate.min.js"></script>
+	<script src="../static/js/jquery.messages_zh.js"></script>
+	</head>
+	<body>
+		<div class="header">
+			<div class="logo">
+			<img  src="../static/images/denglu/zhuce-logo.jpg" />
+			</div>
+			<div class="denglu">
+			<p>已有政资汇账号？<a href="{% url 'login' %}">登陆</a></p>
+			</div>
+		</div>
+		<div class="center">
+			
+		    <div style="text-align:center" class="jindu">
+		         <img  src="../static/images/denglu/zhuce1.png" />
+		         <br><br><br>
+		    </div>
+          
+			<div class="table1">
+		        <table cellpadding="0" cellspacing="0" style="width:620px; border: none;">
+				  <form action="" method="post">
+				  
+				  <tr >
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_username">用户名</label></td>
+						<td width="220px"><input type='_username' class="form-control" id="_username"  name='_username'   placeholder="请输入用户名" style="width:320px;"></td>
+					</tr>
+					<tr >
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_email">登陆邮箱</label></td>
+						<td width="220px"><input type='_email' class="form-control" id="_email"  name='_email'   placeholder="请输入邮箱" style="width:320px;"></td>
+					</tr>
+					<tr>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="password"> 登陆密码</label></td>
+						<td width="220px"><input type='password' class="form-control"  id="password" name='password'  placeholder="请输入6-18位密码" style="width:320px;"></td>
+						
+					</tr>
+					<tr>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="password2"> 确认登陆密码</label></td>
+						<td width="220px"><input type='password' class="form-control"  id="password2" name='password2'  placeholder="请确认密码" style="width:320px;"></td>
+						
+					</tr>
+					<tr>
+						<td width="120px"><span style="color:red"><strong><big>*</big></strong></span> <label for="_telephone">  手机号</label></td>
+						<td width="220px"><input type='_telephone' class="form-control"  id="_telephone" name='_telephone'  placeholder="请输入手机号" style="width:320px;"></td>
+						
+					</tr>
+				<div class="checkbox">
+				 <button type='submit' style="width:250px;height:35px;" class="btn btn-primary">同意服务条款并注册</button>
+                  </div>
+					</form>
+		        </table>
+		         {% if errors %}
+        <li>
+
+            {% for error in errors %}
+             <p style="color: red;">
+                出错啦: {{error}} .
+             </p>
+              {% endfor %}
+        </li>
+    {% endif %}
+			</div>
+  
+</div>
+
+
+	</body>
+</html>
+

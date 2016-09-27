@@ -1,0 +1,257 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css">  
+  <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        var _tcopentime = new Date().getTime();
+</script>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <meta name="author" content="证资汇" />
+    <meta name="copyright" content="证资汇股份有限公司" />
+          <title>人工申诉_证资汇帮助中心</title>    
+    <meta name='description' content='证资汇帮助中心为您提供人工申诉服务，告诉同程您的反馈，为您提供更好的服务，希望给您的预订疑问提供帮助！' />
+            
+        <script type="text/javascript">
+        var _tcopentime = new Date().getTime();
+    </script>
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?c6a93e2a75a5b1ef9fb5d4553a2226e5";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+    <link rel="stylesheet" type="text/css" href="http://css.40017.cn/cn/c/c/2015/home-wide.css?v=2015032401" media="screen"/>
+    <script type="text/javascript" src="http://js.40017.cn/cn/min/??/cn/public/fish.1.4.7.js,/cn/public/fc.1.1.7.js?v=2015021101"></script>
+        <link rel="stylesheet" type="text/css" href="http://css.40017.cn/cn/min/??/cn/c/home/2015/c_NewHelp.0.0.7.css?v=2014070304"/>
+          <link rel="stylesheet" type="text/css" href="http://css.40017.cn/cn/c/help/c_NewHelp.0.0.2.css?v=2014050501"/>
+</head>
+<body>
+<div class="container">
+<!--导航条 -->
+    <nav class="navbar navbar-default" role="navigation"  style="background-color:white;">
+		<div class="navbar-header" id="section-0">
+			 <a class="navbar-brand" href="{% url 'user_center'%}">Hi,{{user_name}} 欢迎来到政资汇！</a>
+		</div>
+		<div style="float:right">
+			<ul class="nav navbar-nav">
+			<li class="active"><a href="#">退出</a></li>
+			<li><a href="#">登录</a></li>
+			<li><a href="#">注册</a></li>
+			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a href="#">我的订单</a></li>
+			<li><a href="#">手机政资汇</a></li>
+			<li><a href="#">申请加盟</a></li>
+			<li><a href="#">人工申诉</a></li>
+			<li><a href="#">网站导航</a></li>
+		 </ul>
+		</div>
+	</nav>
+  <div class="row">
+    <div class="col-sm-4">
+      <center><a href="{% url 'index' %}"><img src="../static/images/logo.jpg"></img></a></center>
+    </div>
+	
+    <div class="col-sm-8">
+		<div class="row-fluid">
+			<div id="chosecity" >
+				<form action="">
+					<input type="text" id="city" value="切换城市"/>
+<script type="text/javascript">
+$("#city").click(function (e) {
+	SelCity(this,e);
+});
+</script>
+				</form>
+			</div>
+		</div>
+		<div class="search">
+			<form action="/search" method="GET" class="search">
+					<input class="input-lg" type="text" id="inputitem" name="inputitem" style="float:left;width:70%;"/>
+					<button type="submit" class="btn btn-primary btn-lg" style="float:left;width:10%">搜索</button>
+			</form>
+			<button type="button" class="btn btn-primary btn-lg" style="float:left;width:15%" onclick="javascript:window.location.href='#'">有偿申报</button>
+		</div>
+      
+  </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!-- 主体内容 -->
+<div id="content" class="content">
+<input type="hidden" id="levelOneId" name="levelOneId" value="$oneId">
+<input type="hidden" id="levelTwoId" name="levelTwoId" value="0">
+<div class="c_content2">
+<div id="portal-block-263961414493" class="udiyblock"  type="CommonSource"> <form method="post" action="MyAdvice.aspx" id="advice_form">
+    <div class="c_SearchResult">
+        <div class="c_head1">
+            <div class="c_SearchRTitle2 c_fleft">人工申诉</div>
+            
+        </div>
+
+        <div class="c_PQuestion c_clearf">
+            <div class="sumb_info mtop" id="post_from">
+                <div class="sumb_top01">
+                    <dl>
+                        <dt><span>*</span>申诉类型：</dt>
+                        <dd>
+                            <div>
+                                <select name="feedbackRoleId" id="feedbackRoleId" class="input01" onblur="checkinput(this.value,&#39;null&#39;,&#39;RoleIdinfo_error&#39;)">
+                                    <option selected="selected" value="">请选择</option>
+                                   
+									<option value="1" datavalue="2" RoleId="3">申诉类型请客户给出</option>
+									
+                                </select>
+                            </div>
+                            <div class="mgs01" id="RoleIdinfo_error">
+                                <span>请选择申诉类型</span>
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><span>*</span>问题描述：</dt>
+                        <dd>
+                            <div>
+                                <textarea name="advice_content" maxlength="400" id="advice_content" class="input03" onfocus="javascript:if(this.value=='请尽量详细描述您的问题，以便政资汇客服为您提供更加准确周到的服务！'){this.style.color='#000000';this.value='';}"
+                                    onblur="check_content()">请尽量详细描述您的问题，以便政资汇客服为您提供更加准确周到的服务！</textarea></div>
+                            <div class="mgs01">
+                                <span>请输入内容</span></div>
+                            <span class="txt01 ">内容的字数请控制在10-200字之间</span>
+                            <div id="contentinfo c_clearf">
+                                <span></span>
+                            </div>
+                            <div id="contentinfo_ok">
+                                <span></span>
+                            </div>
+                            <div class="mgs01" id="contentinfo_error">
+                                <span>问题描述不能为空</span></div>
+                            <div class="mgs01" id="contentinfo_error1">
+                                <span>问题描述需超过10个汉字</span></div>
+                            <div class="mgs01" id="contentinfo_error2">
+                                <span>问题描述不能超过200个汉字</span></div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="sumb_top02">
+                    <div class="txt">
+                        请留下您的联系方式，以便证资汇客服与您联系</div>
+                    <dl>
+                        <dt><span>*</span>您的姓名：</dt>
+                        <dd>
+                            <div>
+                                <input name="name" id="name" type="text" class="input04" maxlength="10" onblur="checkinput(this.value,'null1','nameinfo_error');"
+                                    value="" /></div>
+                            <div id="nameinfo">
+                                <span></span>
+                            </div>
+                            <div id="nameinfo_ok">
+                                <span></span>
+                            </div>
+                            <div class="mgs01" id="nameinfo_error">
+                                <span>请输入您的姓名</span></div>
+                                <div class="c_rIcon none" id="crIconnameId"></div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt><span>*</span>手机号码：</dt>
+                        <dd>
+                            <div>
+                                <input name="advice_phone" id="advice_phone" type="text" class="input04" maxlength="11"
+                                    value="" onblur="checkinput(this.value,'tel','telinfo_error');" />
+                            </div>                                
+
+                            <div id="telinfo">
+                                <span></span>
+                            </div>
+                            <div id="telinfo_ok">
+                                <span></span>
+                            </div>
+                            <div class="mgs01" id="telinfo_error">
+                                <span>手机号码格式有误，是11位数字，且是13，14，15，17，18开头 </span>
+                            </div>
+                            <div class="c_rIcon none" id="crIcontelId"></div>
+                        </dd>
+                    </dl>
+
+				 <dl>
+                        <dt>&nbsp;</dt>
+                        <dd class="msg02" style="right:500px;">
+                            <!-- <img id="" src="http://img.17u.cn/public/images/page/other/2011031801/btn01.gif" style="cursor: hand;"/> -->
+                            <a id="submitAdv" class="submitBtn normal" href="javascript:void(0)" ></a>
+                            <a id="submitingAdvice" class="submitBtn gray none" href="javascript:void(0)" ></a>
+                        </dd>
+                 </dl>
+		
+                </div>
+            </div>
+        </div>
+    </div>
+</form></div>
+</div>
+</div>
+                   
+
+<!--底部的广告位2号-->
+<div class="row-fluid" align="center">
+	<img class="img-responsive" src = "../static/images/测试静态页面用img/diguanggao.png">
+</div>
+<div align="center" >
+<table width="1000px" text-align="center">
+<tr>
+<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
+<td width="200px"><a href="#"><B><font color="black">政资汇app</font></B></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">政资汇简介</font></a></td>
+<td><a href="#"><font color="black">商务合作</font></a></td>
+<td><a href="#"><font color="black">联系我们</font></a></td>
+<td><a href="#"><font color="black">政资宝</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">可信网站</font></a></td>
+<td><a href="#"><font color="black">网站联盟</font></a></td>
+<td><a href="#"><font color="black">投诉建议</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">法律声明</font></a></td>
+<td><a href="{% url 'friend_link' %}"><font color="black">友情链接</font></a></td>
+<td><a href="#"><font color="black">诚聘英才</font></a></td>
+</tr>
+<tr>
+<td><a href="#"><font color="black">网站地图</font></a></td>
+<td><a href="{% url 'quanlification' %}"><font color="black">业务资质</font></a></td>
+</tr>
+</table>
+</div>
+
+<script type="text/javascript" src="http://js.40017.cn/cn/c/help/peopleAppeal.0.0.5.js?v=2015072116"></script>
+<script src="http://js.40017.cn/cn/min/??/cn/c/c/2014/tc_3_0.js?v=2015071519"  type="text/javascript"></script>
+<script type="text/javascript">
+    var _tcHotmapx = { pid: 96, sp: 100 };
+    var _tcq = _tcq || [];
+    var _timediff = -1;
+    if (typeof _tcopentime != "undefined")
+    { _timediff = new Date().getTime() - _tcopentime; }
+    _tcq.push(['_serialid', '0']);
+    _tcq.push(['_vrcode', '10002-2000-0']);
+    _tcq.push(['_refId', getRefid()]);
+    _tcq.push(['_userId', getMemberId()]);
+    _tcq.push(['_openTime', _timediff]);
+    _tcq.push(['_trackPageview', '/公共/帮助中心/人工申诉']);
+</script>
+<script type='text/javascript' src="http://vstlog.17usoft.com/vst.ashx" charset="utf-8"></script>
+<div style="display:none"></div>
+</div>
+</body>
+</html>

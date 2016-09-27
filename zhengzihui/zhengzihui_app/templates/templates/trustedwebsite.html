@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+    <title>政资汇-可信网站</title>
+    <script src="/static/jQuery-2.14/jquery.js" type="text/javascript"></script>
+    <link href="/static/bootstrap-3.3.5/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js" type="text/javascript"/></script>
+    <link href="/static/css/trustedwebsite.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <div class="bigcontainer">
+        <div class="team-info">
+            <p>可信网站认证</p>
+            <ul>
+            	<li>帮助知名网站防范钓鱼网站，维护网站形象；</li>
+            	<li>帮助中小企业网站破解诚信难题，赢得客户信任；</li>
+            	<li>帮助网民便捷核验网站真实身份，防范被骗。</li>
+            	<li>网站运行监护；</li>
+            	<li>网页篡改监护；</li>
+            	<li>木马病毒监控；</li>
+            	<li>安全警告提示</li>
+            </ul>
+        </div>
+        <div class="content">
+            <ul id="myTab" class="nav nav-tabs">
+   				<li class="active">
+   					<a href="#web-info" data-toggle="tab">网站信息</a>
+      			</li>
+   				<li>
+   					<a href="#safe-info" data-toggle="tab">安全信息</a>
+   				</li>
+   				<li>
+ 					<a href="#honor-info" data-toggle="tab">资质荣誉</a>
+   				</li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+   				<div class="tab-pane fade in active" id="web-info">
+      				<img src="/static/images/trustedwebsite/22.jpg"/>
+      				<img src="/static/images/trustedwebsite/33.jpg"/>
+      				<img src="/static/images/trustedwebsite/11.jpg"/>
+   				</div>
+   				<div class="tab-pane fade" id="safe-info">
+      				<img src="/static/images/trustedwebsite/55.jpg"/>
+      				<img src="/static/images/trustedwebsite/44.jpg"/>
+   				</div>
+   				<div class="tab-pane fade" id="honor-info">
+      				<img src="/static/images/trustedwebsite/77.jpg"/>
+      				<img src="/static/images/trustedwebsite/66.jpg"/>
+   				</div>
+   			</div>
+   		</div> 
+
+        <div class="list-vertical">
+            <p>可信网站推荐</p>
+            <a href="https://www.baidu.com" target="_blank"><img src="/static/images/trustedwebsite/1.jpg" /></a>
+            <a href="https://www.taobao.com" target="_blank"><img src="/static/images/trustedwebsite/2.jpg" /></a>
+            <a href="https://www.1688.com" target="_blank"><img src="/static/images/trustedwebsite/3.jpg" /></a>
+            <a href="http://www.mail.163.com" target="_blank"><img src="/static/images/trustedwebsite/4.jpg" /></a>
+            <a href="http://www.51fund.com/" target="_blank"><img src="/static/images/trustedwebsite/5.jpg" /></a>
+            <a href="http://www.lashou.com" target="_blank"><img src="/static/images/trustedwebsite/6.jpg" /></a>
+        </div>
+    </div>
+<script>
+   $(function(){
+      $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      // Get the name of active tab
+      var activeTab = $(e.target).text(); 
+      // Get the name of previous tab
+      var previousTab = $(e.relatedTarget).text(); 
+      $(".active-tab span").html(activeTab);
+      $(".previous-tab span").html(previousTab);
+   });
+});
+</script>
+</body>
+</html>

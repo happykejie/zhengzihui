@@ -1,0 +1,411 @@
+
+{% extends 'my_base.html' %}
+
+{% block title %}项目详情{% endblock %}
+
+{% block content %}
+
+	<!--百度地图的样式-->
+	<style type="text/css">
+	body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+	#allmap {height: 500px;width:100%;overflow: hidden;}
+	#result {width:100%;font-size:12px;}
+	dl,dt,dd,ul,li{
+		margin:0;
+		padding:0;
+		list-style:none;
+	}
+	dt{
+		font-size:14px;
+		font-family:"微软雅黑";
+		font-weight:bold;
+		border-bottom:1px dotted #000;
+		padding:5px 0 5px 5px;
+		margin:5px 0;
+	}
+	dd{
+		padding:5px 0 0 5px;
+	}
+	li{
+		line-height:28px;
+	}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+	<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=CaqFp82Le1GTt5rT7j5ckZceOOmdbGvE" type="text/javascript"></script>
+
+	<!--百度地图的API到此-->
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+
+<script defer src="/static/js/jquery.flexslider.js"></script>
+<link rel="stylesheet" href="/static/css/flexslider.css" type="text/css" media="screen" />
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/static/js/simpleCart.min.js"> </script>
+
+<!-- Custom Theme files -->
+<link href="/static/css/style.css" rel='stylesheet' type='text/css' />
+
+<!-- Custom Theme files -->
+
+<script src="/static/js/jquery.magnific-popup.js" type="text/javascript"></script>
+
+<script src="/static/js/easyResponsiveTabs.js" type="text/javascript"></script>
+<script type="text/javascript">
+			    $(document).ready(function () {
+			        $('#horizontalTab').easyResponsiveTabs({
+			            type: 'default', //Types: default, vertical, accordion
+			            width: 'auto', //auto or any width like 600px
+			            fit: true   // 100% fit in a container
+			        });
+			    });
+			</script>
+
+<script type="text/javascript">
+
+var intDiff = parseInt({{ gettimeInstance.get_remain_time  }});//倒计时总秒数量这里应该取到的str类型，这里强转为了Int
+
+function timer(intDiff){
+	window.setInterval(function(){
+	var day=0,
+		hour=0,
+		minute=0,
+		second=0;//时间默认值
+	if(intDiff > 0){
+		day = Math.floor(intDiff / (60 * 60 * 24));
+		hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+		minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+		second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+	}
+	if (minute <= 9) minute = '0' + minute;
+	if (second <= 9) second = '0' + second;
+	$('#day_show').html(day+"天");
+	$('#hour_show').html('<s id="h"></s>'+hour+'时');
+	$('#minute_show').html('<s></s>'+minute+'分');
+	$('#second_show').html('<s></s>'+second+'秒');
+	intDiff--;
+	}, 1000);
+}
+
+$(function(){
+	timer(intDiff);
+});
+</script>
+
+
+<script >
+
+	  $(document).ready(function () {
+	  	 $( "#inputitem" ).autocomplete({ source: "/searchforc/"});
+	});
+	</script>
+   <!--$( "#inputitem" ).autocomplete('/searchforc/', {multiple: true, multipleSeparator: ' '});-->
+
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+         data-target="#example-navbar-collapse">
+         <span class="sr-only">切换导航</span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+         <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'index' %}">政资汇</a>
+   </div>
+   <div class="collapse navbar-collapse" id="example-navbar-collapse">
+      <ul class="nav navbar-nav">
+         <li style="width:100px"><a href="#">全部分类</a></li>
+         <li style="width:100px"><a href="#">待定</a></li>
+         <li style="width:100px"><a href="#">待定</a></li>
+         <li style="width:100px"><a href="#">待定</a></li>
+         <li style="width:100px"><a href="#">待定</a></li>
+
+
+
+      </ul>
+   </div>
+
+
+</nav>
+
+			
+<div class="col-md-12 col-sm-12 col-lg-12">
+	<div class="dreamcrub">
+
+
+         <div class="clearfix"></div>
+			   <div class="labout span_1_of_a1">
+				   <div class="flexslider">
+					 <ul class="slides">
+					 {% for pic in a_pics %}
+						<li data-thumb="{{ pic }}">
+							<img src="{{ pic }}" />
+						</li>
+					 {% endfor %}
+					 </ul>
+				  </div>
+			  </div>
+			 
+			  <div class="title">
+							  	
+					<h1>
+					{{ item.item_name }}
+
+					</h1>
+					
+					<p class="support">资助额度: <span class="item_price">{{ item.item_ga }}</span></p>
+					<p class="deadline">剩余时间：
+					<span class="time-item">
+						<strong id="day_show">0天</strong>
+						<strong id="hour_show">0时</strong>
+						<strong id="minute_show">0分</strong>
+						<strong id="second_show">0秒</strong>
+					</span><!--倒计时模块-->
+					</p>
+					<p class="apartment">项目管理部门：<span class = "con_apartment">{{ item.item_pa_name}}</span></p>
+			  	
+			    	<ul class="subproject">
+						<h3>项目列表</h3>
+						<li><a href="#">子项目1</a></li>
+						<li><a href="#">子项目2</a></li>
+						<li><a href="#">子项目3</a></li>
+						<li><a href="#">子项目4</a></li>
+						<li><a href="#">子项目5</a></li>
+						<li><a href="#">子项目6</a></li>
+
+					</ul>
+				
+			    <div class="declare">
+					{% if request.COOKIES.user_name %}
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+			            <a href="{% url 'service_list' %}?itemid={{item.item_id}}"><button class="product_btn" id="shenbao">我要申报</button></a>
+			            {% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
+					{% else %}
+						{% if  gettimeInstance.get_remain_time != '0'   %}
+
+							<a href="{% url 'selectpay' %}?goodsid={{item.item_id}} "><button class="product_btn">我要申报</button></a>
+						{% else %}
+							<div><h4>已过申报日期，但您仍然可以收藏，以便我们为您提供相关项目！</h4></div>
+						{% endif %}
+			        {% endif %}
+
+				    {% if request.COOKIES.user_name %}
+				        <button class="product_btn" id="shoucang">我要收藏</button>
+					{% else %}
+					    <a href="{% url 'regCompany' %} "><button class="product_btn">我要收藏</button></a>
+				    {% endif %}
+
+				    <a class="project_src", href="#">查看原文</a>
+				
+				</div>
+			</div>
+
+
+
+
+			<div class="clearfix"></div>
+		  
+		   <div class="sap_tabs">
+				     <div id="horizontalTab" style="display: block; width: 100%; margin: 0px;font-size: 1.4em;">
+						  <ul class="resp-tabs-list">
+						  	  <li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>项目指南</span></li>
+							  <li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>申报流程</span></li>
+							  <li class="resp-tab-item" aria-controls="tab_item-2" role="tab"><span>申报时限</span></li>
+                              <li class="resp-tab-item" aria-controls="tab_item-3" role="tab"><span>联系方式</span></li>
+                              <li class="resp-tab-item" aria-controls="tab_item-4" role="tab"><span>地图导航</span></li>
+							  <div class="clear"></div>
+						  </ul>
+							<div class="resp-tabs-container">
+							    <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+									<div class="facts">
+									  <ul class="tab_list">
+									  	<li><a>(这里应该是需要后台人员根据项目信息整理出相关的项目申报指南)项目负责人、申报单位登录“四川省科技计划项目管理中心”（网址：http://xmgl.scst.gov.cn/），根据《申报须知》进行身份注册和实名认证，审批通过后方可进行项目申报。已注册过的单位和个人凭用户名和密码登录，不需再注册。</a></li>
+									  </ul>
+							        </div>
+							     </div>
+							      <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
+									<div class="facts">
+									  <ul class="tab_list">
+
+									    <li><a>{{ article.article_content }}</a></li>
+
+									  </ul>
+
+							        </div>
+							     </div>
+							      <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-2">
+									<ul class="tab_list">
+									  	<li> 申报起止时间： {{  gettimeInstance.item_publish }} 到  {{ gettimeInstance.item_deadtime }}  </li>
+                                        <li>更多的关于项目申报时间的信息，请关注后续完善</li>
+
+									  </ul>
+							     </div>
+                                <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-3">
+									<ul class="tab_list">
+									  	<li><a>固定的联系方式</a></li>
+                                        <li>成都XXX公司：842415451</li>
+
+									  </ul>
+							     </div>
+                                <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-4">
+
+									<ul class="tab_list">
+                                        <div id="map" class="col-lg-12 col-md-12 col-sm-12" style="height: 400px;"></div>
+
+
+
+									  </ul>
+							     </div>
+
+							</div>
+					    </div>
+					</div>
+					<br>
+					 <h3 class="recommend">热门推荐</h3>        			
+				     <ul id="Picturecarousel">
+				     	{% for thing in recommend %}
+					
+						<li><img src="{{ thing.pic_url }}" style="width: 250px;height: 200px;"class="img-responsive" /><div  style="margin:0 19%; line-height:1.5;align-content: center"><a href="/project_detail/?id={{ thing.item_id }}">项目名称：{{ thing.item_name }}</a><p>￥{{ thing.item_ga }}</p></div></li>
+					 	{% endfor %}
+						<!--这里的图片可按需要从取推荐的前几个--> 
+				     </ul>
+				    <script type="text/javascript">
+					 $(window).load(function() {
+						$("#Picturecarousel").flexisel({
+							visibleItems: 3,
+							animationSpeed: 1000,
+							autoPlay: true,
+							autoPlaySpeed: 3000,    		
+							pauseOnHover: true,
+							enableResponsiveBreakpoints: true,
+					    	responsiveBreakpoints: { 
+					    		portrait: { 
+					    			changePoint:480,
+					    			visibleItems: 1
+					    		}, 
+					    		landscape: { 
+					    			changePoint:640,
+					    			visibleItems: 2
+					    		},
+					    		tablet: { 
+					    			changePoint:768,
+					    			visibleItems: 3
+					    		}
+					    	}
+					    });
+					    
+					});
+				   </script>
+				   <script type="text/javascript" src="../static/js/jquery.flexisel.js"></script>
+				   
+			</div>
+		        </div>
+
+<!--百度地图的脚本-->
+    <script type="text/javascript">
+	var map = new BMap.Map("map");    // 创建Map实例
+	map.centerAndZoom(new BMap.Point(104.06, 30.67), 11);  // 初始化地图,设置中心点坐标和地图级别
+	var myGeo = new BMap.Geocoder();
+	myGeo.getPoint("{{ item.item_pa_address }}", function(point){//改这里改地图中心点
+			if (point) {
+				map.centerAndZoom(point, 16);
+				map.addOverlay(new BMap.Marker(point));
+			}else{
+				alert("您选择地址没有解析到结果!");
+			}
+		}, "北京市");
+	map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+	map.setCurrentCity("成都");          // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+
+    var content = '<div style="margin:0;line-height:20px;padding:2px;">' +
+                    '<img src="../img/baidu.jpg" alt="" style="float:right;zoom:1;overflow:hidden;width:100px;height:100px;margin-left:3px;"/>' +
+                    '地址：北京市海淀区上地十街10号<br/>电话：(010)59928888<br/>简介：百度大厦位于北京市海淀区西二旗地铁站附近，为百度公司综合研发及办公总部。' +
+                  '</div>';
+
+    //创建检索信息窗口对象
+    var searchInfoWindow = null;
+	searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
+			title  : "百度大厦",      //标题
+			width  : 290,             //宽度
+			height : 105,              //高度
+			panel  : "panel",         //检索结果面板
+			enableAutoPan : true,     //自动平移
+			searchTypes   :[
+				BMAPLIB_TAB_SEARCH,   //周边检索
+				BMAPLIB_TAB_TO_HERE,  //到这里去
+				BMAPLIB_TAB_FROM_HERE //从这里出发
+			]
+		});
+    var marker = new BMap.Marker(poi); //创建marker对象
+    marker.enableDragging(); //marker可拖拽
+    marker.addEventListener("click", function(e){
+	    searchInfoWindow.open(marker);
+    })
+    map.addOverlay(marker); //在地图中添加marker
+	//样式1
+	var searchInfoWindow1 = new BMapLib.SearchInfoWindow(map, "信息框1内容", {
+		title: "信息框1", //标题
+		panel : "panel", //检索结果面板
+		enableAutoPan : true, //自动平移
+		searchTypes :[
+			BMAPLIB_TAB_FROM_HERE, //从这里出发
+			BMAPLIB_TAB_SEARCH   //周边检索
+		]
+	});
+
+/*
+	 function sear(result){//地图搜索
+
+
+        var local = new BMap.LocalSearch(map, {
+  		renderOptions:{map: map}
+        });
+        local.search(result);
+
+        }
+
+*/
+    function loadScript() {
+      var script = document.createElement("script");
+      script.src = "http://api.map.baidu.com/api?v=2.0&ak=CaqFp82Le1GTt5rT7j5ckZceOOmdbGvE&callback=initialize";//此为v2.0版本的引用方式
+      // http://api.map.baidu.com/api?v=1.4&ak=您的密钥&callback=initialize"; //此为v1.4版本及以前版本的引用方式
+      document.body.appendChild(script);
+    }
+
+    window.onload = loadScript;
+    </script>
+
+<!-- FlexSlider -->
+
+<script>
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails"
+  });
+});
+</script>
+
+<!--点击收藏的script脚本-->
+			<script>
+				  $(document).ready(function(){
+                    $("#shoucang").click(function(){
+	                    var user_id = "{{request.COOKIES.user_id}}";
+						//alert(test);
+	                    var item_id = "{{ item.item_id }}"
+	                    $.get("/shoucang_item/",{'user_id':user_id,'item_id':item_id}, function(ret){
+		                    alert(ret);
+                            })
+
+                 });
+            });
+			</script>
+
+{% endblock %}

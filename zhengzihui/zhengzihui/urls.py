@@ -17,7 +17,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 import zhengzihui_app.views
-
+#from yz_urls import *
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^free_require/', include('fr_app.urls')),
@@ -209,9 +209,48 @@ urlpatterns = [
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
         url(r'^baformerchantsupervisor/$',zhengzihui_app.views.ba_for_merchant_supervisor,name='ba_for_merchant_supervisor'), #后台管理/商家管理
 	url(r'^bw_merchantsupervisor_detail/$',zhengzihui_app.views.bw_merchantsupervisor_detail,name='bw_merchantsupervisor_detail'),
+    url(r'^b_work_comment_manager/$',zhengzihui_app.views.b_work_comment_manager,name='b_work_comment_manager'),
+    url(r'^bpm_details/$',zhengzihui_app.views.bpm_details,name='bpm_details'),
+    url(r'^bus_project_management/$',zhengzihui_app.views.bus_project_management,name='bus_project_management'),
+    url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
+    url(r'^sort_order_time/',zhengzihui_app.views.sort_order_time,name="sort_order_time"),
+    url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
 
+    
+#政资汇后台工作人员
+    #登陆
+    url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
+    # 主页
+    url(r'^zzh_back_index/$', zhengzihui_app.views.zzh_back_index, name='zzh_back_index'),
+    #注册
+    url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
+    url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),
+    url(r'^info_push/$',zhengzihui_app.views.info_push,name="info_push"),
 
+    url(r'^push_info_save/$',zhengzihui_app.views.push_info_save,name="push_info_save"),
+    url(r'^shaixuan_push_info/',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
+    url(r'^cmap_yz/$',zhengzihui_app.views.cmap_yz,name="cmap_yz"),
+    url(r'^project_detail_short/$',zhengzihui_app.views.project_detail_short,name="project_detail_short"),
+    url(r'^user_push_info/',zhengzihui_app.views.user_push_info,name="user_push_info"),
 
+    # 信息共享-xy
+    url(r'^shareinformation', "zhengzihui_app.views.shareinformation", name="shareinformation"),
+    # 发布人信息发布-xy
+    url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
+    url(r'^change', "zhengzihui_app.views.change", name="change"),
+
+    #客服人员管理
+    url(r'^support_staff_manager/$',zhengzihui_app.views.support_staff_manager,name="support_staff_manager"),
+    #审核人员管理
+    url(r'^auditor_manager/$',zhengzihui_app.views.auditor_manager,name="auditor_manager"),
+
+    # 后台的客户管理
+    url(r'^b_work_maguests', "zhengzihui_app.views.b_work_maguests", name="b_work_maguests"),
+    url(r'^bw_orderfromguest', "zhengzihui_app.views.bw_orderfromguest", name="bw_orderfromguest"),
+    url(r'^bw_orderdetail', "zhengzihui_app.views.bw_orderdetail", name="bw_orderdetail"),
+    # 后台商家管理
+    url(r'^baformerchant/$', zhengzihui_app.views.baformerchant, name='balformerchant'),
+    url(r'^sjglordering/$', zhengzihui_app.views.sjglordering, name='sjglordering'),
 
 ]
 

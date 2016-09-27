@@ -1,0 +1,24 @@
+<div>
+
+<table class="table table-striped">
+  <caption>最新推送</caption>
+  <thead>
+    <tr>
+      <th>项目名称</th>
+      <th>项目资助额度</th>
+      <th>项目截至时间</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in all_item %}
+
+    <tr>
+      <td><a href = "/project_detail/?id={{item.item_id}}">{{ item.item_name }}</a></td>
+      <td>{{ item.item_ga }}</td>
+      <td>{{ item.item_deadtime }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</ul>
+</div>

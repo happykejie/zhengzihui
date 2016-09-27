@@ -5,10 +5,11 @@ $(document).ready(function(){
     //使每个筛选标签的前10个之后的标签隐藏
     //标签数量不大于8个的，隐藏更多按钮。
     $(".f-labels").each(function(){
-       if($(this).children("li").length <= 8){
+       if($(this).children("li").length <= 3){
            $(this).parent().next(".more").hide();
        }else{
-           $(this).children("li:gt(7)").hide();//表示大于第7个的，开始索引从0开始
+
+           $(this).children("li:gt(2)").hide();//表示大于第2个的，开始索引从0开始//YZ 因为文字太长所以从第三个便开始隐藏
        }
     });
 
@@ -69,7 +70,7 @@ $(document).ready(function(){
         $(this).click(function(){
             var $f_head = $(this).parent().children(".f-head");
             var $f_row = $(this).parent();
-            var $hidden_li = $(this).parent().children(".f-select").children("ul").children("li:gt(7)");//表示大于第7个的，开始索引从0开始
+            var $hidden_li = $(this).parent().children(".f-select").children("ul").children("li:gt(2)");//表示大于第2个的，开始索引从0开始 //YZ因为字太多会撑开div
             var $first_li = $(this).parent().children(".f-select").children("ul").children("li:eq(0)"); //第一个的索引为0
             var $icon_change = $(this).children("a").children(".glyphicon");
             var $text_change = $(this).children("a").children(".text");
@@ -104,7 +105,7 @@ $(document).ready(function(){
             var $f_head = $(this).parent().children(".f-head");
             var $multiple_btn = $(this).parent().children(".f-select").children(".multiple-btn");
             var $multiple_enter = $(this).parent().children(".f-select").children(".multiple-btn").children(".multiple-enter").children("a");
-            var $hidden_li = $(this).parent().children(".f-select").children("ul").children("li:gt(7)");//表示大于第7个的，开始索引从0开始
+            var $hidden_li = $(this).parent().children(".f-select").children("ul").children("li:gt(2)");//表示大于第2个的，开始索引从0开始//YZ因为字太多会撑开div
             var $all_li = $(this).parent().children(".f-select").children("ul").children("li");
             var $first_li = $(this).parent().children(".f-select").children("ul").children("li:eq(0)"); //第一个的索引为0
             var $last_li = $(this).parent().children(".f-select").children("ul").children("li:last-child");//指的是li元素的父元素（ul）的最后一个子元素。
@@ -174,7 +175,7 @@ $(document).ready(function(){
             var $f_head = $(this).parent().parent().parent().children(".f-head");
             var $multiple_btn = $(this).parent();
             var $multiple_enter = $(this).prev(".multiple-enter").children("a");
-            var $hidden_li = $(this).parent().parent().children("ul").children("li:gt(7)");//表示大于第7个的，开始索引从0开始
+            var $hidden_li = $(this).parent().parent().children("ul").children("li:gt(2)");//表示大于第2个的，开始索引从0开始 //YZ因为。。。。。
             var $all_li = $(this).parent().parent().children("ul").children("li");
             var $first_li = $(this).parent().parent().children("ul").children("li:eq(0)"); //第一个的索引为0
             var $last_li = $(this).parent().parent().children("ul").children("li:last-child");

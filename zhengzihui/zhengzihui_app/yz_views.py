@@ -1,6 +1,8 @@
 #coding=utf-8
 
 from views import *
+from django.http import JsonResponse
+#from django.utils import simplejson
 
 '''
 用户中心
@@ -107,15 +109,22 @@ def getthe_filteditem(request):
     else:
         tmiddle_items = middle_items
 
-    if (selected['bumen'].encode("utf-8") != '全部'):
+    if  (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
-        for i in tmiddle_items:
-            for j in bumenlist:
-                if j in (i.item_about).encode("utf-8"):
-                    items.append(i)
+        for bumen in bumenlist:
+            list_temp1 = bumen.split(":",1)
+            if len(list_temp1)>1:
+                str_temp = list_temp1[1]
+                list_temp2 = str_temp.split("/")
+            print list_temp2
+            for i in tmiddle_items:
+                for j in list_temp2:
+                    if j in (i.item_about).encode("utf-8"):
+                        if i not in items:#去重复
+                            items.append(i)
     else:
 
-        items = tmiddle_items
+    	items=tmiddle_items
 
     if (len(items) > 10):
         items = items[:10]  # 不够10条报错
@@ -952,7 +961,7 @@ def busindex(request):
     context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
                'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
     response = render(request,"bus_index.html",context)
-    response.set_cookie('first_page',1)
+    #response.set_cookie('first_page',1)
     return response
 
 
@@ -1256,3 +1265,395 @@ def sort_order_manage(request):
         order.buyer_expand_contact = str(buyer_expand_contact)
     # request.session['first_page'] = 0
     return render(request, "bus_order_manage.html", {'all_order': all_order, 'sp_id': sp_id})
+
+
+def zzh_back_login(request):
+    errors = []
+    user_name = None
+    password = None
+    back_user = tb_back_user()
+    if 'back_id' in request.COOKIES:
+        #print request.COOKIES
+        #print 'ewqewwwwwwwwwwwwwwwwwwwwwwwwwwww'
+        response = render(request, 'b_work_index.html', {})
+        #这里还应该有根据id找到用户的权限，再传值到页面，或者跳到不同的页面
+	#xcz	
+	#response.set_cookie('user_name',user_name)
+        return response
+
+    if request.method == 'POST':
+        if not request.POST.get('_spname'):
+            errors.append('请输入用户名')
+        else:
+            user_name = request.POST.get('_spname')
+        if not request.POST.get('password'):
+            errors.append('请输入登陆密码')
+        else:
+            password = request.POST.get('password')
+        if user_name is not None and password is not None:
+            try:
+                back_user = tb_back_user.objects.get(user_name=user_name)
+            except tb_back_user.DoesNotExist:
+                errors.append('用户名不存在')
+                return render_to_response('zzh_back_login.html', {'errors': errors})
+            back_user_temp = tb_back_user.objects.get(user_name=user_name)
+            if back_user_temp.user_auth == 0:
+                errors.append('还未通过超级管理员的审核')
+                #print "杂速度开发商就的看法时讲课对方"
+                return render(request,'zzh_back_login.html',{'errors':errors})
+            if password == back_user.user_password:
+                back_type = tb_back_user.objects.get(user_name = user_name).user_type
+                # ms:print "testing..."
+                # print sp_type
+
+                if back_type == 1:
+                    #需要传入用户的权限值跳到不同的页面，或者显示不同的页面
+
+                    return render(request, "testpage1.html")
+
+
+
+                response = render(request,'b_work_index.html',{})
+                response.set_cookie('back_name', back_user.user_name, 3600)
+                response.set_cookie('back_id', back_user.user_id, 3600)
+                tb_back_user.objects.get(user_name=user_name).last_login = timezone.now()
+                tb_back_user.objects.get(user_name=user_name).save()
+                #print tb_back_user.objects.get(user_name=user_name).last_login
+
+                # print(user.expand.company_name)
+                return response
+            else:
+                errors.append('密码错误')
+
+    return render_to_response('zzh_back_login.html', {'errors': errors})
+
+
+def backout(request):
+    response = HttpResponseRedirect('/zzh_back_login/')
+    response.delete_cookie('back_name')
+    response.delete_cookie('back_id')
+    return response
+
+
+def zzh_back_reg(request):
+    error = ['用户名已经存在','输入信息有误，未录入完整信息']
+
+    if request.method == 'POST':
+        user_name = request.POST.get("con_name")
+        if tb_back_user.objects.get(user_name = user_name):
+            return render(request, "zzh_back_reg.html", {'error': error[0]})
+        tel = request.POST.get("tel")
+        email = request.POST.get("email")
+        back_psw = request.POST.get("back_psw")
+        back_type = request.POST.get("back_type")
+        print user_name,tel,email,back_psw,back_type
+        newback = tb_back_user()
+        newback.user_name = user_name
+        newback.user_password = back_psw
+        newback.user_telephone = tel
+        newback.user_email = email
+        newback.user_auth = 0
+        if back_type == "Kefu":
+            newback.user_type = 2
+        if back_type == "Shenbao":
+            newback.user_type = 1
+        newback.save()
+        return render(request, "zzh_back_login.html", {})
+
+    return render(request,"zzh_back_reg.html")
+
+def get_push_info(user_prefer):
+    #只是找出项目中包含该企业擅长领域的项目，没有增加点击率的考虑
+    all_item = tb_item.objects.filter(item_about__contains = user_prefer)
+
+    if len(all_item)==0:
+        return None
+    return all_item[0]
+def get_all_table_info():
+    all_user = tb_user.objects.all()
+    # 获得有填写相关领域的用户，即有企业信息的用户
+    for user in all_user:
+        if user.expand_id is None:
+            all_user.remove(user)
+
+    all_list_info = []
+    for user in all_user:
+        user_prefer = user.expand.company_industry
+        item_push = get_push_info(user_prefer)
+        if item_push is not None:
+        # 第三个字段用户判断是否是已经审核过的推送消息
+            info_list = [user, item_push, 0]
+            all_list_info.append(info_list)
+
+    all_list_info_show = []
+    if len(all_list_info)>=5:
+        all_list_info_show = all_list_info[0:5]
+    else:
+        all_list_info_show = all_list_info
+    for info_show in all_list_info_show:
+        if len(push_info.objects.filter(push_to_user=info_show[0].user_id, push_item_id=info_show[1].item_id)):
+            info_show[2] = 1
+    return all_list_info_show
+
+def info_push(request):
+    all_list_info_show = get_all_table_info()
+    sortbystatus = 0
+    if 'sortbystatus' in request.GET:
+        sortbystatus = int(request.GET['sortbystatus'])
+
+        sorted_show_info = []
+        if sortbystatus == 1:
+            for show in all_list_info_show:
+                if show[2]==0:
+                    print show
+                    sorted_show_info.append(show)
+            all_list_info_show = sorted_show_info
+            return render(request, 'info_push.html', {'all_list_info_show': all_list_info_show})
+
+    return render(request,'yz_templates/info_push.html',{'all_list_info_show':all_list_info_show})
+
+
+
+def push_info_save(request):
+    user_id = request.GET['user_id']
+    item_id = request.GET['item_id']
+    #用于后续的值比较
+    user_id =int(user_id)
+    item_id = int(item_id)
+    temp_push = push_info.objects.filter(push_item_id=item_id)
+    if len(temp_push):
+        for push in temp_push:
+            print push.push_to_user
+            if push.push_to_user == user_id:
+
+                return HttpResponse('已经向该用户推送该项目')
+            else:
+                add = push_info()
+                add.push_item_id = item_id
+                add.push_to_user = user_id
+                add.save()
+                return HttpResponse('推送成功')
+    else:
+        add = push_info()
+        add.push_item_id = item_id
+        add.push_to_user = user_id
+        add.save()
+        return HttpResponse('推送成功')
+
+
+def shaixuan_push_info(request):
+    if "city" in request.GET:
+        province = request.GET['province']
+        city = request.GET['city']
+        distr = request.GET['distr']
+
+        all_show_Temp = get_all_table_info()
+        all_show = get_all_table_info()
+        all_show1 = get_all_table_info()
+        all_show2 = get_all_table_info()
+
+        for show in all_show_Temp:
+
+            if show[1].privince == province and show[1].city == city and show[1].distr == distr:
+
+                pass
+            else:
+                all_show.remove(show)
+
+
+        if len(all_show) == 0:
+
+            for show in all_show_Temp:
+
+
+                if show[1].privince == str(province) and show[1].city == str(city):
+
+                    pass
+                else:
+
+
+                    all_show1.remove(show)
+
+        if len(all_show1)==0:
+
+            for show in all_show_Temp:
+
+
+                if show[1].privince == province :
+                    pass
+                else:
+                    all_show2.remove(show)
+
+
+        final_all_show = []
+        if len(all_show)==0:
+            if len(all_show1) == 0:
+                if len(all_show2) ==0:
+                    noinfo = '还没有该地区的信息';
+                    return render(request,'yz_templates/shaixuan_info_push.html',{'noinfo':noinfo,})
+                else:
+                    pass
+            else:
+                final_all_show = all_show1
+        else:
+            final_all_show = all_show
+        all_list_info_show = final_all_show
+
+    elif "allpush" in request.GET:
+        all_list_info_show = get_all_table_info()
+
+    else:
+        all_list_info_show = get_all_table_info()
+
+
+        sorted_show_info = []
+
+        for show in all_list_info_show:
+            if show[2]==0:
+
+                sorted_show_info.append(show)
+        all_list_info_show = sorted_show_info
+
+
+
+
+
+
+    return render(request, 'yz_templates/shaixuan_info_push.html', {'all_list_info_show': all_list_info_show})
+
+'''
+    show_info = []
+    for show in final_all_show:
+        temp = [show[1].item_code,show[1].item_name,show[0].user_name,show[2] ]
+        show_info.append(temp)
+
+    print show_info
+    return JsonResponse(show_info, safe=False)
+'''
+def cmap_yz(request):
+    #ce shi shu ju mu qian xie si le
+
+    #request.COOKIES['user_id']="2016"
+    if 'user_id' in request.GET:
+        user_id = request.GET['user_id']
+        if(len(tb_customcompany.objects.filter(company_id=user_id))==0 ):
+            return  HttpResponse('用戶還未完善申報地圖')
+        else:
+            if(tb_customcompany.objects.get(company_id=user_id)).conclusion=="":
+                return HttpResponse("等待处理")
+            else:
+
+                #conc=tb_customcompany.objects.get(company_id=user_id).conclusion
+                #wu shu ju  xie si le de ce shi shui chan
+                conc="水产"
+                A=tb_user.objects.get(user_id = user_id).user_name
+                B=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)
+                C=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)
+                D=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)
+                E=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)
+                if (len(B)==0):
+                    B=""
+                else:
+                    B=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)[0].item_name
+                if (len(C)==0):
+                    C=""
+                else:
+                    C=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)[0].item_name
+                if (len(D)==0):
+                    D=""
+                else:
+                    D=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  3)[0].item_name
+                if (len(E)==0):
+                    E=""
+                else:
+                    E=str(tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_id)+"."+tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  4)[0].item_name
+
+                #A="100"
+                #B="110"
+                #C="120"
+                #D="130"
+                #E="140"
+                return render_to_response("yz_templates/cust_map_yz.html",{'A':A,'B':B,'C':C,'D':D,'E':E})
+    else:
+        return HttpResponse('用戶還未完善申報地圖')
+
+def project_detail_short(request):
+        project_detail_item_id = 1  # 取一个默认值
+        if request.GET['id']:
+            # 能保证取到吗
+            project_detail_item_id = request.GET['id']
+
+        addclick = tb_item_click.objects.get(item_id=project_detail_item_id)
+        if addclick == None:
+            addclick = tb_item_click(itcl_id=0, item_id=project_detail_item_id, click_counter=1)
+            addclick.save()
+        else:
+            addclick.click_counter += 1
+            addclick.save()
+        item = tb_item.objects.get(item_id=project_detail_item_id)
+        item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name  # 扩展对象属性，直接填写即可YZ
+        item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
+        # print item.item_pa_name
+        # print item.item_pa_name
+        article = tb_article.objects.filter(affiliation_id=project_detail_item_id)
+
+        a_pics = []
+        # article2 = article[2]
+        if (len(article) == 0):
+            # 获取项目起止时间
+            gettimeInstance = tb_item.objects.get(item_id=project_detail_item_id)
+            # 获得热门推荐的项目
+            recommendtemp = get_the_hotrecommend()
+            recommend = get_and_set_info(recommendtemp)
+
+            album = tb_album.objects.filter(album_type=0, affiliation_id=project_detail_item_id, is_default=1).order_by(
+                '-nacl_sort')[0]  # 获取项目对应的相册id
+            album_id = album.album_id
+            pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]  # 获取前四张图片
+            for pic in pics:
+                a_pic = pic.pic_object.url[14:]
+                # print a_pic
+                a_pics.append(a_pic)
+            if not a_pics:
+                pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
+                a_pics.append(pic_url)
+
+            context = {'item': item, 'article': article, 'a_pics': a_pics, 'recommend': recommend,
+                       'gettimeInstance': gettimeInstance,}
+            # print item.item_pa_address
+
+            return render(request, 'yz_templates/project_detail_short.html', context)
+
+        else:
+
+            album = tb_album.objects.filter(album_type=0, affiliation_id=project_detail_item_id, is_default=1).order_by(
+                '-nacl_sort')[0]  # 获取项目对应的相册id
+            album_id = album.album_id
+            pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]  # 获取前四张图片
+            for pic in pics:
+                a_pic = pic.pic_object.url[14:]
+                # print a_pic
+                a_pics.append(a_pic)
+
+            # 获取项目起止时间
+            gettimeInstance = tb_item.objects.get(item_id=project_detail_item_id)
+
+            # 获得热门推荐的项目
+            recommendtemp = get_the_hotrecommend()
+            recommend = get_and_set_info(recommendtemp)
+            print "sdklfsdlflsdkflsdklksdlfksdlfksdkl"
+            context = {'item': item, 'article': article[0], 'a_pics': a_pics, 'recommend': recommend,
+                       'gettimeInstance': gettimeInstance,}
+            return render(request, 'yz_templates/project_detail_short.html', context)
+
+
+def user_push_info(request):
+    user_id = int(request.COOKIES['user_id'])
+    all_push = push_info.objects.filter(push_to_user=user_id)
+    all_item = []
+    for push in all_push:
+        temp = tb_item.objects.get(item_id=push.push_item_id)
+        all_item.append(temp)
+    print all_item
+    return render(request,'yz_templates/user_push_info.html',{'all_item':all_item,})
+

@@ -105,6 +105,21 @@
                     </div>
 		   
                 </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="headinglast">
+                        <h4 class="panel-title">
+                            <a class="collapsed" role="button" data-toggle="collapse"  href="#pushCenter" aria-expanded="false" aria-controls="pushCenter">
+                                政资汇消息推送<span class="glyphicon glyphicon-chevron-down"></span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="pushCenter" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headinglast">
+                        <ul class="panel-body">
+                            <li><a class="not-clicked" id="{% url 'user_push_info' %}" href="javascript:void(0);">全部推送</a></li>
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="boxright">

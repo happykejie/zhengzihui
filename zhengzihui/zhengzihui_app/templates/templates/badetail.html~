@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+	详单
+</title>
+</head>
+<body>
+<div class ="container-fruid">
+<br />
+<br />
+<div class="row">
+	<div class="col-lg-offset-4 col-lg-4">
+		<h1><center>客户结算详情</center><h1>
+	</div>
+</div>
+<div class="row">
+<div class="col-lg-offset-1">
+<h3>订单信息</h3>
+</div>
+</div>
+<table class = "table col-lg-offset-1 col-lg-8 table-bordered">
+<tr><td class ="col-lg-2">订单编号</td><td >{{res.order_no}}</td>
+</tr>
+<tr><td class ="col-lg-2">订单服务类型</td> {%if res.kind == 0 %}<td >商家服务</td>{% endif %}	{%if res.kind == 1 %}<td >配套服务</td>{% endif %}
+</tr>
+<tr><td class ="col-lg-2">订单产品名称</td><td >{{res.name}}</td>
+</tr>
+<tr><td class ="col-lg-2">订单价格</td><td >{{res.price}}</td>
+</tr>
+</table>
+<br />
+<br /><br />
+<br />
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-1">
+<h3>客户信息</h3>
+</div>
+</div>
+<table class = "table col-lg-offset-1 col-lg-8 table-bordered">
+<tr><td class ="col-lg-2">客户名称</td><td>{{res.guestname}}</td>
+</tr>
+<tr><td class ="col-lg-2">客户地址</td> <td>{{res.loc}}</td>
+</tr>
+<tr><td class ="col-lg-2">客户联系人</td><td>{{res.con}}</td>
+</tr>
+<tr><td class ="col-lg-2">下单时间</td><td>{{res.otime}}</td>
+</tr>
+<tr><td class ="col-lg-2">验单时间</td><td>{{res.ctime}}</td>
+</tr>
+<tr><td class ="col-lg-2">结算状况</td>{% if res.sta == 0 %}<td>已下单</td>{% endif %}
+										{% if res.sta == 1 %}<td>客户已确认</td>{% endif %}
+										{% if res.sta == 2 %}<td>商家已确认</td>{% endif %}
+										{% if res.sta == 3 %}<td>已完成</td>{% endif %}
+</tr>
+<tr><td class ="col-lg-2">商家交单时间</td><td>{{res.ftime}}</td>
+</tr>
+</table>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+后台管理
+</title>
+</head>
+<body>
+<div class="container-fruid">
+<div class ="row">
+<div style="float:left;margin-left:50px	;margin-right:100px">
+<a href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a>
+</div>
+<div style="float:left">
+	<h1><font color="grey">
+		{% if request.COOKIES.back_name %}
+		{{ request.COOKIES.back_name }}
+		{% endif %}
+		{% if not request.COOKIES.back_name %}
+		后台管理
+		{% endif %}
+	</font></h1>
+</div>
+
+<div style="float:right;margin-right:100px">
+{% if not request.COOKIES.back_id %}
+<ul class="nav navbar-nav navbar-right"> 
+				<li><a href="#"><h4><font color="grey">登录</font></h4></a></li>
+				<li><a href="#"><h4><font color="grey">注册</font></h4	></a></li>
+</ul>
+{% endif %}
+{% if request.COOKIES.back_id %}
+<ul class="nav navbar-nav navbar-right"> 
+				<li><a href="{% url 'backout' %}"><h4><font color="grey">退出</font></h4></a></li>
+</ul>
+{% endif %}
+</div>
+<div style="float:right;margin-right:100px">
+<ul class="nav navbar-nav navbar-right"> 
+				<li><a href="#"><h4><font color="grey">帮助中心</font></h4></a></li>
+</ul>
+</div>
+<div style="float:right;margin-right:150px">
+{% if request.COOKIES.back_id %}
+	<h5><font color="grey">员工名称：{{ request.COOKIES.back_name }}</font></h5>
+<p>	
+<ul class="nav navbar-nav navbar-right"> 
+				<li><a href="#"><h5><font color="grey">设置</font></h5></a></li>
+				<li><a href="#"><h5><font color="grey">帐号管理</font></h5	></a></li>
+				<li><a href="#"><h5><font color="grey">提醒</font></h5></a></li>
+</ul>
+{% endif %}
+</div>
+</div>
+<br />
+<br />
+
+<div class ="row" style="background-color:#009999; line-height:5em">
+<!--<div class="text" style="background-color:#00BFFF; line-height:5em">-->
+
+<div class = "col-sm-1 col-md-1 col-lg-1">
+<center><a href="#"><font color="white" size="4px" onclick="balfororders()">订单管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1">
+<center><a href="#"><font color="white" size="4px" onclick="baforguests()">客户结算</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="baforshops()">商家结算</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="info_push()">推送管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="b_work_comment_manager()">点评管理</font></a></center>
+
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1">
+<center><a href="#"><font color="white" size="4px" onclick="project_management()">项目管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="#">产品管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="guest_management()">客户管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="baformerchant()">商家管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="#">客服人员管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="4px" onclick="#">审核人员管理</font></a></center>
+</div>
+
+
+</div>
+
+<div class="row">
+<iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="#"> </iframe>
+
+
+</div>
+
+
+<script>
+	function baforguests(){
+		var url="/baforguests"
+		$('#fra').attr('src',url);
+	}
+	function baforshops(){
+		var url="/baforshopers"
+		$('#fra').attr('src',url);
+	}
+
+	function b_work_comment_manager(){
+        var url="/b_work_comment_manager"
+		$('#fra').attr('src',url);
+    	}
+    function balfororders(){
+		var url="/balfororders"
+		$('#fra').attr('src',url);
+	}
+    function baformerchant() {
+        var url = "/baformerchant"
+        $('#fra').attr('src', url);
+    }
+	function project_management(){
+		var url="/bus_project_management"
+		$('#fra').attr('src',url);
+	}
+
+	function guest_management() {
+        var url = "/b_work_maguests"
+        $('#fra').attr('src', url);
+    }
+    function info_push() {
+        var url = "/info_push"
+        $('#fra').attr('src', url);
+    }
+
+
+
+
+
+
+</script>
+</div>
+</div>
+</body>
+</html>

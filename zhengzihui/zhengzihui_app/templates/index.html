@@ -85,7 +85,10 @@
 .AreaS { background-color: #56b4f8 !important; color: #fff !important; }
 dd:hover{color:red !important;background:#eee;}
 dd.hover-red:hover{color:red !important;background:#eee;}
-
+td{padding:5px; text-align:center;}
+.footer {position: absolute;bottom: 650px;padding: 10px 0;width: 100%;}
+.g{text-decoration:none;position:absolute;color:#808080;padding:10px; border-left:solid #808080;}
+a:hover{color:#808080;}
 </style>
 </head>
 <body>
@@ -96,15 +99,15 @@ dd.hover-red:hover{color:red !important;background:#eee;}
 		<div style="float:left">
 			 <ul class="nav navbar-nav">
 
-			
+
 			 {% if user_name %}
-			 <li><a  href="{% url 'user_center'%}">Hi! {{ user_name }}</a></li>
-			<li class="active"><a href="{% url 'logout' %}">退出</a></li>
+			 <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"    href="{% url 'user_center'%}">Hi! {{ user_name }}</a></li>
+			<li class="active"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'logout' %}">退出</a></li>
 
 
 			{% else %}
-			<li><a href="{% url 'login' %}">登录</a></li>
-			<li><a href="{% url 'regCompany' %}">注册</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'login' %}">登录</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'regCompany' %}">注册</a></li>
 			{% endif %}
 
 
@@ -114,52 +117,51 @@ dd.hover-red:hover{color:red !important;background:#eee;}
 
 		<div style="float:right">
 			<ul class="nav navbar-nav">
-			
-			<li><a href="{% url 'user_center'%}">我的政资汇</a></li>
-			<li><a href="{%url 'download'%}">手机政资汇</a></li>
-			<li><a href="#">微信</a></li>
-			<li><a href="#">客服电话</a></li>
+
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'user_center'%}">我的政资汇</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{%url 'download'%}">手机政资汇</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">微信</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">客服电话</a></li>
 			<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="black">合作中心</font><strong class="caret"></strong></a>
+							 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="black">合作中心</font><strong class="caret"></strong></a>
 							<ul class="dropdown-menu">
 								<li>
-									 <a href="{% url 'business_cooperation' %}">申报合作</a>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'business_cooperation' %}">申报合作</a>
 								</li>
 								<li>
-									 <a href="#">配套合作</a>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">融资合作</a>
 								</li>
 								<li>
-									 <a href="#">融资合作</a>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">配套合作</a>
 								</li>
 								<li>
-									 <a href="{% url 'union_website' %} ">网站联盟</a>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'union_website' %} ">网站联盟</a>
 								</li>
+									<li>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'applyforjoin' %}">申请加盟</a>
+								</li>
+								<li>
+									 <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'merchant' %}">商家登录</a>
+								</li>
+
+
 							</ul>
-			</li>
 
-			<li><a href="#">融资广场</a></li>
-			<li><a href="#">配套中心</a></li>
-						<li class="dropdown">
-							 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="black">商家加盟</font><strong class="caret"></strong></a>
-							<ul class="dropdown-menu">
-								<li>
-									 <a href="{% url 'applyforjoin' %}">申请加盟</a>
-								</li>
-								<li>
-									 <a href="{% url 'merchant' %}">商家登录</a>
-								</li>
-								
-			</li>
 
-           
-		 </ul>
-		</div>
+
+
+
+
+
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">融资广场</a></li>
+			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">配套中心</a></li>
+							</div>
 	</nav>
 		<!--div class="jumbotron"> </div -->
 <!--网站图标+搜索栏-->
   <div class="row">
     <div class="col-sm-3 col-md-3 col-lg-3">
-      <center><a href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
+      <center><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
     </div>
 
     <div class="col-sm-9 col-md-9 col-lg-9">
@@ -183,8 +185,8 @@ $("#city").click(function (e) {
 					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
 					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
     						  <option>所属行业</option>
-   						  <option>领域或产品</option>	
-							<option>归口部门受理人员</option>	
+   						  <option>领域或产品</option>
+							<option>归口部门受理人员</option>
     					  </select>
     				</div>
 					<!--
@@ -212,17 +214,17 @@ $("#city").click(function (e) {
 			<div class="col-sm-2" style="padding:0px">
 
 			<div class="dropdown">
-   <button type="button" class="btn btn-primary btn-lg btn-block" style="width:60%" id="dropdownMenu1" 
+   <button type="button" class="btn btn-primary btn-lg btn-block" style="width:60%" id="dropdownMenu1"
       data-toggle="dropdown">
       共享
       <span class="caret"></span>
    </button>
    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
       <li role="presentation">
-         <a role="menuitem" tabindex="-1" href="/free_require/frame">需求信息发布</a>
+         <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   role="menuitem" tabindex="-1" href="/free_require/frame">需求信息发布</a>
       </li>
       <li role="presentation">
-         <a role="menuitem" tabindex="-1" href="#">政咨信息共享</a>
+         <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   role="menuitem" tabindex="-1" href="#">政咨信息共享</a>
       </li>
 
    </ul>
@@ -249,66 +251,46 @@ $("#city").click(function (e) {
 				div="div"+id;
 				document.getElementById(div).style.display="none";
 			}
-		
+
 	</script>
 	<div class="row-fluid">
 		<div class="category-type">
         <div class="text" style="background-color:#00BFFF; line-height:3em">
 <font color="white">
 <B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a class="hover-red" href="{% url 'search_result'%}"><font color="white">中央资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="{% url 'search_result'%}"><font color="white">省级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="{% url 'search_result'%}"><font color="white">市级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a href="{% url 'search_result'%}"><font color="white">县级资金</a></B></font></div>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="{% url 'search_result'%}"><font color="white">中央资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">省级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">市级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">县级资金</a></B></font></div>
 		</div>
-		<div class="col-sm-2" style="margin:0px; padding:11px 0px;background-color:#696969;>
+		<div class="col-sm-2" style="margin:0px; padding:11px 0px;background-color:#99CCFF;>
 				<ul class="nav">
 					<li id="111" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						    <dd class="hover-red" style="line-height:6em; text-align:center;"><a class="hover-red" href="#" style="text-decoration:none">政府部门/</a>
-							<a class="hover-red" href="#" style="text-decoration:none"><font size="2">直属机构/</font></a>
-							<a  href="#" style="text-decoration:none">管理机构</a></dd>
-
-
+						    <dd class="hover-red" style="line-height:6em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="#" style="text-decoration:none">政府部门/</a>
+							<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="#" style="text-decoration:none"><font size="2">直属机构/</font></a>
+							<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#" style="text-decoration:none">管理机构</a></dd>
 
 					</li>
-                    
-
-
-
-
 
 
 					<li id="112" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#"style="text-decoration:none">党派/</a>
-						<a href="#" style="text-decoration:none">人民团体/</a>
-						<a href="#" style="text-decoration:none">公益性组织</a></dd>
-
-
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"style="text-decoration:none">党派/</a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">人民团体/</a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">公益性组织</a></dd>
 
 					</li>
-
-				
-
-
-
 
 
 					<li id="113" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#" style="text-decoration:none">科研院所/</a>
-						<a href="#" style="text-decoration:none">高等院校</a></dd>
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">科研院所/</a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">高等院校</a></dd>
 
 
 					</li>
 
-
-
-
-
-
-
 					<li id="114" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a href="#" style="text-decoration:none">国有企业/</a>
-						<a href="#" style="text-decoration:none">事业单位</a></dd>
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">国有单位/</a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">事业单位</a></dd>
 
 
 					</li>
@@ -323,75 +305,27 @@ $("#city").click(function (e) {
 			<div id="div111"  style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a ><font color="black"><small>经信汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>发展改革 </small></font></a>
-						/<a href="#"><font color="black"><small>经济和信息化</small></font></a>
-						/<a href="#"><font color="black"><small>财政</small></font></a>
-						/<a href="#"><font color="black"><small>国资</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>经信汇</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>科教汇</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>农林汇</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>基建汇</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>商务汇</big>&gt </font></a>
+	</span>
 					<p><span>
-						<a ><font color="black"><small>科教汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>科技</small></font></a>
-						/<a href="#"><font color="black"><small>教育</small></font></a>
-						/<a href="#"><font color="black"><small>文化</small></font></a>
-						/<a href="#"><font color="black"><small>卫生计生</small></font></a>
-						/<a href="#"><font color="black"><small>体育</small></font></a>
-						/<a href="#"><font color="black"><small>知识产权</small></font></a>
-						/<a href="#"><font color="black"><small>新闻出版广电</small></font></a>
-						/<a href="#"><font color="black"><small>旅游</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					</p>
-					<p><span>
-						<a ><font color="black"><small>农林汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>农业</small></font></a>
-						/<a href="#"><font color="black"><small>畜牧</small></font></a>
-						/<a href="#"><font color="black"><small>渔业</small></font></a>
-						/<a href="#"><font color="black"><small>粮食</small></font></a>
-						/<a href="#"><font color="black"><small>中医药</small></font></a>
-						/<a href="#"><font color="black"><small>烟草</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a ><font color="black"><small>基建汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>国土资源</small></font></a>
-						/<a href="#"><font color="black"><small>住房城乡建设</small></font></a>
-						/<a href="#"><font color="black"><small>交通运输</small></font></a>
-						/<a href="#"><font color="black"><small>水利</small></font></a>
-						/<a href="#"><font color="black"><small>能源</small></font></a>
-						/<a href="#"><font color="black"><small>环境保护</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a ><font color="black"><small>商务汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>商务</small></font></a>
-						/<a href="#"><font color="black"><small>税务</small></font></a>
-						/<a href="#"><font color="black"><small>工商</small></font></a>
-						/<a href="#"><font color="black"><small>投资促进</small></font></a>
-						/<a href="#"><font color="black"><small>海关</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a ><font color="black"><small>民生汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>民政</small></font></a>
-						/<a href="#"><font color="black"><small>人力资源社会保障</small></font></a>
-						/<a href="#"><font color="black"><small>扶贫</small></font></a>
-						/<a href="#"><font color="black"><small>民政</small></font></a>
-						/<a href="#"><font color="black"><small>宗教</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a  ><font color="black"><small>监管汇</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>人民银行</small></font></a>
-						/<a href="#"><font color="black"><small>银监</small></font></a>
-						/<a href="#"><font color="black"><small>证监</small></font></a>
-						/<a href="#"><font color="black"><small>保监</small></font></a>
-						/<a href="#"><font color="black"><small>质监</small></font></a>
-						/<a href="#"><font color="black"><small>药监</small></font></a>
-						/<a href="#"><font color="black"><small>安监</small></font></a>
-						/<a href="#"><font color="black"><small>统计</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>民生汇</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   ><font color="black"><big>监管汇</big>&gt </font></a>
+
 						</span>
 				</div>
 				<div class="col-sm-4">
@@ -403,47 +337,18 @@ $("#city").click(function (e) {
 			<div id="div112" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a ><font color="black"><small>中共主题馆</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>组织部</small></font></a>
-						/<a href="#"><font color="black"><small>宣传部</small></font></a>
-						/<a href="#"><font color="black"><small>统战部</small></font></a>
-						/<a href="#"><font color="black"><small>政策研究室</small></font></a>
-						/<a href="#"><font color="black"><small>政法部</small></font></a>
-						/<a href="#"><font color="black"><small>编办</small></font></a>
-						/<a href="#"><font color="black"><small>直属机关工委</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-					</span>
-					<p><span>
-						<a ><font color="black"><small>民主党派馆</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>民革</small></font></a>
-						/<a href="#"><font color="black"><small>民盟</small></font></a>
-						/<a href="#"><font color="black"><small>民建</small></font></a>
-						/<a href="#"><font color="black"><small>民促</small></font></a>
-						/<a href="#"><font color="black"><small>农工党</small></font></a>
-						/<a href="#"><font color="black"><small>致公党</small></font></a>
-						/<a href="#"><font color="black"><small>九三学社</small></font></a>
-						/<a href="#"><font color="black"><small>台盟</small></font></a>
-					</span>
-					<p><span>
-						<a ><font color="black"><small>人民团体馆</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>总工会</small></font></a>
-						/<a href="#"><font color="black"><small>共青团</small></font></a>
-						/<a href="#"><font color="black"><small>科协</small></font></a>
-						/<a href="#"><font color="black"><small>妇联</small></font></a>
-						/<a href="#"><font color="black"><small>工商联</small></font></a>
-						/<a href="#"><font color="black"><small>青联</small></font></a>
-						/<a href="#"><font color="black"><small>残联</small></font></a>
-						/<a href="#"><font color="black"><small>供销社</small></font></a>
-						/<a href="#"><font color="black"><small>贸易促进会</small></font></a>
-						/<a href="#"><font color="black"><small>红十字会</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						
-						</span>
-					<p><span>
-						<a ><font color="black"><small>公益组织馆</small>&gt</font></a>
-						：<a href="#"><font color="black"><small>壹基金公益基金会</small></font></a>
-						/<a href="#"><font color="black"><small>阿里巴巴公益基金会</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>中共主题馆</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>民主党派馆</big>&gt </font></a>
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>人民团体馆</big>&gt </font></a>
+
+
+
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>公益组织馆</big>&gt</font></a>
+
 						</span>
 				</div>
 				<div class="col-sm-4">
@@ -455,25 +360,10 @@ $("#city").click(function (e) {
 			<div id="div113" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a ><font color="black"><small>科研院所</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>中国科学院</small></font></a>
-						/<a href="#"><font color="black"><small>中国工程院</small></font></a>
-						/<a href="#"><font color="black"><small>中国农业科学院</small></font></a>
-						/<a href="#"><font color="black"><small>中国工程物理研究院</small></font></a>
-						/<a href="#"><font color="black"><small>重庆农科院</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a><font color="black"><small>高等院校</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>北京大学</small></font></a>
-						/<a href="#"><font color="black"><small>清华大学</small></font></a>
-						/<a href="#"><font color="black"><small>复旦大学</small></font></a>
-						/<a href="#"><font color="black"><small>浙江大学</small></font></a>
-						/<a href="#"><font color="black"><small>南开大学</small></font></a>
-						/<a href="#"><font color="black"><small>中国科技大学</small></font></a>
-						/<a href="#"><font color="black"><small>中山大学</small></font></a>
-						/<a href="#"><font color="black"><small>四川大学</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>科研院所</big>&gt </font></a>
+
+						<a><font color="black"><big>高等院校</big>&gt </font></a>
+
 						</span>
 				</div>
 				<div class="col-sm-4">
@@ -485,19 +375,11 @@ $("#city").click(function (e) {
 			<div id="div114" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a ><font color="black"><small>国有企业</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>中国航天科技集团</small></font></a>
-						/<a href="#"><font color="black"><small>海尔集团</small></font></a>
-						/<a href="#"><font color="black"><small>长虹集团</small></font></a>
-						/<a href="#"><font color="black"><small>东方电气</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
-						</span>
-					<p><span>
-						<a><font color="black"><small>事业单位</small>&gt </font></a>
-						：<a href="#"><font color="black"><small>中国农村科技开发中心</small></font></a>
-						/<a href="#"><font color="black"><small>中国国际交流中心</small></font></a>
-						/<a href="#"><font color="black"><small>四川省高新技术产业金融服务中心</small></font></a>
-						/<a href="#"><font color="black"><small>更多</small></font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>企业单位</big>&gt </font></a>
+
+
+						<a><font color="black"><big>事业单位</big>&gt </font></a>
+
 						</span>
 				</div>
 				<div class="col-sm-4">
@@ -508,15 +390,8 @@ $("#city").click(function (e) {
 			</div>
 			<div id="div115" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>国土</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>住建</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>交通</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>水利</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>能源</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>环保</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+					<p><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"><font color="black"><B>部门</B>&gt </font></a>
+
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/2.png" style="height:160px;width:900px;">
@@ -526,13 +401,8 @@ $("#city").click(function (e) {
 			</div>
 			<div id="div116" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>商务</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>投资促进</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>工商</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>税务</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+					<p><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"><font color="black"><B>部门</B>&gt </font></a>
+
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/3.png" style="height:160px;width:900px;">
@@ -542,13 +412,8 @@ $("#city").click(function (e) {
 			</div>
 			<div id="div117" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>民政</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>人社</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>扶贫</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>旅游</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+					<p><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"><font color="black"><B>部门</B>&gt </font></a>
+
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/1.png" style="height:160px;width:900px;">
@@ -558,16 +423,8 @@ $("#city").click(function (e) {
 			</div>
 			<div id="div118" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>人民银行</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>银监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>证监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>保监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>质监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>药监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>安监</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+					<p><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"><font color="black"><B>部门</B>&gt </font></a>
+
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/2.png" style="height:160px;width:900px;">
@@ -577,12 +434,8 @@ $("#city").click(function (e) {
 			</div>
 			<div id="div119" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-2" style="margin:0px; padding:0px;">
-					<p><a href="#"><font color="black"><B>部门</B>&gt </font></a>
-					<p><center><a href="#"><font color="black"><B>全部</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>工商代办</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>会计</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>技术转移</B></font></a></center>
-					<p><center><a href="#"><font color="black"><B>更多</B></font></a></center>
+					<p><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"><font color="black"><B>部门</B>&gt </font></a>
+
 				</div>
 				<div class="col-sm-4">
 					<img class="img-responsive" src="../static/images/测试静态页面用img/3.png" style="height:160px;width:900px;">
@@ -598,7 +451,7 @@ $("#city").click(function (e) {
 					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 					<li data-target="#myCarousel" data-slide-to="1"></li>
 					<li data-target="#myCarousel" data-slide-to="2"></li>
-				</ol>   
+				</ol>
 				<div class="carousel-inner">
 					<div class="item active">
 						<img class="img-responsive" src="../static/images/测试静态页面用img/1.png" alt="First slide" style="height:359px;width:1100px;">
@@ -612,16 +465,16 @@ $("#city").click(function (e) {
 				</div>
 				</div>
 			<!-- 轮播（Carousel）导航 -->
-				<a class="carousel-control left" href="{% url 'search_result'%}" 
+				<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   class="carousel-control left" href="{% url 'search_result'%}"
 					data-slide="prev">&lsaquo;</a>
-				<a class="carousel-control right" href="{% url 'merchant' %}" 
+				<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   class="carousel-control right" href="{% url 'merchant' %}"
 					data-slide="next">&rsaquo;</a>
 		</div>
-	
+
 		<div class="col-sm-4" style="display:block;z-index:3;margin:0px;float:right">
-				<a href="/savec"><img class="img-responsive" src="../static/images/测试静态页面用img/fuwubao.png" style="height:170px;width:1000px"></a>
+				<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/savec"><img class="img-responsive" src="../static/images/测试静态页面用img/fuwubao.png" style="height:170px;width:1000px"></a>
 				<br>
-				<a href="/custmap"><img class="img-responsive" src="../static/images/测试静态页面用img/sanzhao.png" style="height:170px;width:1000px"></a>
+				<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/custmap"><img class="img-responsive" src="../static/images/测试静态页面用img/sanzhao.png" style="height:170px;width:1000px"></a>
 		</div>
 		</div>
 		</div>
@@ -629,25 +482,25 @@ $("#city").click(function (e) {
 <div class="col-sm-6">
 <div style="position:absolute;right:250px;">
 
-<a href="{% url 'search_result'%}" ><font color="black"><B>正在申报</B></font></a>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'search_result'%}" ><font color="black"><B>正在申报</B></font></a>
 </div>
 </div>
 <div class="col-sm-4">
 <div style="position:absolute;left:0px;">
 
-<a href="{% url 'search_result'%}" ><font color="black"><B>截止申报</B></font></a>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'search_result'%}" ><font color="black"><B>截止申报</B></font></a>
 </div>
 </div>
-<br>		
 <br>
-<br>		
-<br><br>		
+<br>
+<br>
+<br><br>
 <br>
 <!--正在申报的项目-->
 <div class="row-fluid">
 <div class="col-sm-6">
 <div style="position:absolute;left:150px;">
-<a href="#" ><font size="5" color="black"><B>热门申报&nbsp;&nbsp;&nbsp;&nbsp;</B></font></a>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#" ><font size="5" color="black"><B>热门申报&nbsp;&nbsp;&nbsp;&nbsp;</B></font></a>
 </div>
 </div>
 </div>
@@ -671,8 +524,8 @@ function ToWhite(obj){
 {% for a_click_item in a_click_items%}
 <td>
  <div class="collect">
-                        <a href="{% url 'project_detail' %}?id={{ a_click_item.id }}"><img src="{{ a_click_item.pic_url }}"/>
-                            
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'project_detail' %}?id={{ a_click_item.id }}"><img src="{{ a_click_item.pic_url }}"/>
+
                             {{ a_click_item.name }}
 							<br>
                         </a>
@@ -686,15 +539,15 @@ function ToWhite(obj){
 						</span>
 							</small></p>
                             <div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: {{ a_click_item.item_consume_time }}%; line-height:50px;">
 								</div>
 							</div>
 						<h5 class="shoufei">{{ a_click_item.item_publish}}  &nbsp;   {{ a_click_item.item_consume_time }}%   &nbsp;      {{ a_click_item.item_deadtime}}</h5>
 	</h5>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 </td>
 {% endfor %}
@@ -725,32 +578,30 @@ $(document).ready(function(){
 <div style="position:fixed; top:100px;left:-25px;">
         <div class="col-sm-1 col-md-1 col-lg-1" id="myScrollspy">
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="500">
-                <li class="active"><a href="#section-1">政府馆</a></li>
-                <li><a href="#section-2">党团馆</a></li>
-                <li><a href="#section-3">院校馆</a></li>
-				<li><a href="#section-4">企事业馆</a></li>
-				<li><a href="#section-5">融资广场</a></li>
-				<li><a href="#section-6">配套中心</a></li>
-                <!--<li><a href="#section-4">基建汇</a></li>
-                <li><a href="#section-5">商务汇</a></li>
-                <li><a href="#section-6">民生汇</a></li>
-                <li><a href="#section-7">能源汇</a></li>
-                <li><a href="#section-8">监管汇</a></li>
-                <li><a href="#section-9">商事汇</a></li>
-                <li><a href="#section-10">政策汇</a></li>-->
+                <li class="active"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-1">政府馆</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-2">党团馆</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-3">院校馆</a></li>
+				<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-4">企事业馆</a></li>
+                <!--<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-4">基建汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-5">商务汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-6">民生汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-7">能源汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-8">监管汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-9">商事汇</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-10">政策汇</a></li>-->
             </ul>
         </div>
 </div>
 	<div class="col-sm-9 col-md-9 col-lg-11"></div>
 	<div class="col-sm-1 col-md-1 col-lg-1" id="myScrollspy1" >
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
-                <li class="active"><a href="#">登录</a></li>
-                <li><a href="#"><small>直通车</small></a></li>
-                <li><a href="#"><small>资金</small></a></li>
-                <li><a href="#"><small>关注</small></a></li>
-                <li><a href="#"><small>历史浏览</small></a></li>
-		<li><a href="#section-0"><small>返回顶部</small></a></li>
-		<li><a href="#"><small>用户反馈</small></a></li>
+                <li class="active"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">登录</a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>直通车</small></a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>资金</small></a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>关注</small></a></li>
+                <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>历史浏览</small></a></li>
+		<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#section-0"><small>返回顶部</small></a></li>
+		<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>用户反馈</small></a></li>
             </ul>
      </div>
 </div>
@@ -832,13 +683,13 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>1F  政府馆</label>-->
 <ul class="nav nav-list" contenteditable="true">
-                  <li id="1" onclick=show1F(this)><a href="#">经信汇</a></li>
-                  <li id="2" onclick=show1F(this)><a href="#">科教汇</a></li>
-				  <li id="3" onclick=show1F(this)><a href="#">农林汇</a></li>
-				  <li id="4" onclick=show1F(this)><a href="#">基建汇</a></li>
-				  <li id="5" onclick=show1F(this)><a href="#">商务汇</a></li>
-				  <li id="6" onclick=show1F(this)><a href="#">民生汇</a></li>
-				  <li id="7" onclick=show1F(this)><a href="#">监管汇</a></li>
+                  <li id="1" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">经信汇</a></li>
+                  <li id="2" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">科教汇</a></li>
+				  <li id="3" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">农林汇</a></li>
+				  <li id="4" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">基建汇</a></li>
+				  <li id="5" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">商务汇</a></li>
+				  <li id="6" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">民生汇</a></li>
+				  <li id="7" onclick=show1F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">监管汇</a></li>
 </div>
 <div class="col-md-10">
 
@@ -847,7 +698,7 @@ function show6F(obj){
 <table class="table" >
 <tr>
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -863,18 +714,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ item.item_publish }}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ item.item_deadtime }}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 					 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -890,18 +741,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
+
+
                     </div>
 					<div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -917,21 +768,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -947,18 +798,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
+
 	</div>
-         
+
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -974,46 +825,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
+
 	</div>
-              
- <div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1029,19 +852,19 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1057,19 +880,19 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1085,16 +908,44 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
+
+ <div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
 </table>
 </div>
 
@@ -1103,7 +954,7 @@ function show6F(obj){
 <tr>
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1119,20 +970,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1148,21 +999,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 </td>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1178,21 +1029,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 </td>
 
  <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1208,16 +1059,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
@@ -1232,7 +1083,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1248,18 +1099,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1275,21 +1126,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1305,16 +1156,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1328,7 +1179,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1344,18 +1195,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1371,16 +1222,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1394,7 +1245,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1410,16 +1261,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
@@ -1429,7 +1280,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1445,18 +1296,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1472,21 +1323,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1502,16 +1353,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1524,7 +1375,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1540,18 +1391,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1567,16 +1418,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1609,12 +1460,12 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>2F</label>-->
 <ul class="nav nav-list" contenteditable="true">
-				  
 
-                  <li id="8" onclick=show2F(this)><a href="#">中共</a></li>
-                  <li id="9" onclick=show2F(this)><a href="#">民主党派</a></li>
-				  <li id="10" onclick=show2F(this)><a href="#">人民团体</a></li>
-				  <li id="11" onclick=show2F(this)><a href="#">公益组织</a></li>
+
+                  <li id="8" onclick=show2F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">中共</a></li>
+                  <li id="9" onclick=show2F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">民主党派</a></li>
+				  <li id="10" onclick=show2F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">人民团体</a></li>
+				  <li id="11" onclick=show2F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">公益组织</a></li>
                 </ul>
 </div>
 <div class="col-md-10">
@@ -1624,7 +1475,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1640,18 +1491,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1667,21 +1518,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1697,16 +1548,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1714,7 +1565,7 @@ function show6F(obj){
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1730,18 +1581,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1757,20 +1608,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1786,22 +1637,22 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1817,18 +1668,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1844,20 +1695,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1873,16 +1724,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
@@ -1893,7 +1744,7 @@ function show6F(obj){
 <table class="table">
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1909,18 +1760,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1936,21 +1787,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -1966,16 +1817,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -1984,7 +1835,7 @@ function show6F(obj){
 <tr>
 <td  class="image" onmouseover="ToGreen(this)" onmouseout="ToWhite(this)">
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2000,16 +1851,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 </tr>
 </table>
@@ -2020,7 +1871,7 @@ function show6F(obj){
 <tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2036,18 +1887,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2063,18 +1914,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2090,20 +1941,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2119,18 +1970,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2146,18 +1997,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2173,20 +2024,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2202,18 +2053,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2229,18 +2080,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2256,16 +2107,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 
 
@@ -2284,7 +2135,7 @@ function show6F(obj){
 <tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2300,18 +2151,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2327,18 +2178,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2354,20 +2205,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2383,18 +2234,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2410,21 +2261,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2440,16 +2291,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 
 </tr>
@@ -2477,8 +2328,8 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>3F</label>-->
 <ul class="nav nav-list" contenteditable="true">
-                  <li id="12" onclick=show3F(this)><a href="#">科研院所</a></li>
-                  <li id="13" onclick=show3F(this)><a href="#">高等院校</a></li>
+                  <li id="12" onclick=show3F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">科研院所</a></li>
+                  <li id="13" onclick=show3F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">高等院校</a></li>
                 </ul>
 </div>
 <div class="col-md-10">
@@ -2489,7 +2340,7 @@ function show6F(obj){
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2505,18 +2356,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2532,18 +2383,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2559,20 +2410,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2588,18 +2439,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2615,18 +2466,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2642,20 +2493,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 </tr>
 <tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2671,18 +2522,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2698,112 +2549,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
 
 
+                    </div>
 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-
-
-
-</tr>
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2819,23 +2579,26 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
+
+
+
 
 
 </tr>
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2851,18 +2614,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2878,20 +2641,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2907,16 +2670,104 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
+
+
+</tr>
+<tr>
+
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
+
+
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
 
 
 </tr>
@@ -2928,7 +2779,7 @@ function show6F(obj){
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2944,18 +2795,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -2971,21 +2822,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3001,23 +2852,23 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 
 </tr>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3033,16 +2884,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -3072,8 +2923,8 @@ function show6F(obj){
 <div class="col-md-2">
 <!--<label>4F</label>-->
 <ul class="nav nav-list" contenteditable="true">
-                  <li id="14" onclick=show4F(this)><a href="#">国有企业</a></li>
-				  <li id="15" onclick=show4F(this)><a href="#">事业单位</a></li>
+                  <li id="14" onclick=show4F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">国有企业</a></li>
+				  <li id="15" onclick=show4F(this)><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">事业单位</a></li>
                 </ul>
 </div>
 <div class="col-md-10">
@@ -3084,7 +2935,7 @@ function show6F(obj){
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3100,18 +2951,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3127,21 +2978,21 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3157,16 +3008,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 
@@ -3175,7 +3026,7 @@ function show6F(obj){
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3191,18 +3042,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3218,20 +3069,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3247,23 +3098,23 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3279,18 +3130,18 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3306,20 +3157,20 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3335,16 +3186,16 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
+
+
+                    </div>
 
 
 </tr>
@@ -3356,7 +3207,7 @@ function show6F(obj){
 <tr>
 
 <div class="collect">
-                        <a href="/project_detail/?id=2">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
                             <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
                             <h4>项目名称{{item.item_name}}</h4>
 							<br>
@@ -3372,1116 +3223,118 @@ function show6F(obj){
 						</span>
 							</small></p>
 							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
 									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
 									<span class="sr-only">40% 完成</span>
 								</div>
 							</div>
 						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
 	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
 
 
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-</tr>
-
-
-
-
-</table>
-</div>
-</div>
-</div>
-
-
-</div>
-</div>
-</div>
-
-<div class="row-fluid">
-<div class="col-sm-6">
-<div style="position:absolute;left:150px;">
-<font size="4" color="black"><B>5F 融资广场&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
-</div>
-</div>
-</div>
-<br>
-<br>
-<div id="section-5">
-<div>
-<div>
-<div class="container">
-<div class="col-md-2">
-<!--<label>5F</label>-->
-<ul class="nav nav-list" contenteditable="true">
-                  <li id="16" onclick=show5F(this)><a href="#">吸引投资</a></li>
-                  <li id="17" onclick=show5F(this)><a href="#">争取贷款</a></li>
-				  <li id="18" onclick=show5F(this)><a href="#">企业上市</a></li>
-</div>
-<div class="col-md-10">
-
-
-<div id="div16" >
-<table class="table" >
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-
-
-</tr>
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-</tr>
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-</tr>
-</table>
-</div>
-
-<div id="div17" style="display:none">
-<table class="table">
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-
-
-</tr>
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-</tr>
-</table>
-</div>
-
-<div id="div18" style="display:none">
-<table class="table">
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-</tr>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="row-fluid">
-<div class="col-sm-6">
-<div style="position:absolute;left:150px;">
-<font size="4" color="black"><B>6F 配套中心&nbsp;&nbsp;&nbsp;&nbsp;</B></font>
-</div>
-</div>
-</div>
-<br>
-<br>
-<div id="section-6">
-<div>
-<div>
-<div class="container">
-<div class="col-md-2">
-<!--<label>6F</label>-->
-<ul class="nav nav-list" contenteditable="true">
-                  <li id="19" onclick=show5F(this)><a href="#">工商代理</a></li>
-                  <li id="20" onclick=show5F(this)><a href="#">资质代办</a></li>
-				  <li id="21" onclick=show5F(this)><a href="#">知识产权</a></li>
-				  <li id="22" onclick=show5F(this)><a href="#">财务服务</a></li>
-				  <li id="23" onclick=show5F(this)><a href="#">更多</a></li>
-</div>
-<div class="col-md-10">
-
-
-<div id="div19" >
-<table class="table" >
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-</tr>
-</table>
-</div>
-
-<div id="div20" style="display:none">
-<table class="table">
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-</tr>
-</table>
-</div>
-
-<div id="div21" style="display:none">
-<table class="table">
-<tr>
-
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-</tr>
-</table>
-</div>
-
-<div id="div22" style="display:none">
-<table class="table">
-<tr>
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
-                    </div> 
-					<div class="collect">
-                        <a href="/project_detail/?id=2">
-                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
-                            <h4>项目名称{{item.item_name}}</h4>
-							<br>
-                        </a>
-						<p class="shoufei"><small>资助额度:
-						<span class="money">
-							<strong > {{goods.goods_market_price}}</stong>
-						</span>
-							</small></p>
-						<p class="shoufei"><small>管理单位:
-						<span class="money">
-							<strong > 四川省财政厅</stong>
-						</span>
-							</small></p>
-							<div class="progress">
-								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
-									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
-									<span class="sr-only">40% 完成</span>
-								</div>
-							</div>
-						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
-	</span>
-	
-	
                     </div>
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
+
+
+
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
+
+
+<div class="collect">
+                        <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/project_detail/?id=2">
+                            <img src="/static/zhengzihui_app/img_for_items/2016/05/01/4adbe14f-a557-11e5-bd34-dc85def86878.png"/>
+                            <h4>项目名称{{item.item_name}}</h4>
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{goods.goods_market_price}}</stong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:
+						<span class="money">
+							<strong > 四川省财政厅</stong>
+						</span>
+							</small></p>
+							<div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60"
+									aria-valuemin="0" aria-valuemax="100" style="width: 40%;">
+									<span class="sr-only">40% 完成</span>
+								</div>
+							</div>
+						<span><h5>开始时间:{{ publish_time_format}}  &nbsp;   {{finish_percentage}}%完成   &nbsp;      截止时间：{{ datetime_format}}</h5>
+	</span>
+
+
+                    </div>
+
 </tr>
+
+
+
+
 </table>
 </div>
-
-<div id="div23" style="display:none">
-
-
-
-
+</div>
+</div>
 
 
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
 
-
-
-
-<!--4F到8F未写-->
 <br>
 <br>
 <hr style="border:3 double" width="80%" SIZE=3/>
@@ -4492,34 +3345,79 @@ function show6F(obj){
 <div align="center" >
 <table width="1000px" text-align="center">
 <tr>
-<td width="200px"><a href="#"><B><font color="black">关于政资汇</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">加盟合作</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">联系我们</font></B></a></td>
-<td width="200px"><a href="#"><B><font color="black">政资汇旗下网站</font></B></a></td>
-<td width="200px"><a href="{% url 'download' %}"><B><font color="black">政资汇app</font></B></a></td>
+<td class="h" width="200px"><a href="#"><B><font face="宋体" size="5"  color="#444444">关于政资汇</font></B></a></td>
+<td class="h" width="200px"><a href="#"><B><font face="宋体" size="5" color="#444444">加盟合作</font></B></a></td>
+<td class="h" width="200px"><a href="#"><B><font face="宋体" size="5" color="#444444">联系我们</font></B></a></td>
+<td class="h" width="200px"><a href="#"><B><font face="宋体" size="5" color="#444444">政资汇旗下网站</font></B></a></td>
+<td class="h" width="200px"><a href="{% url 'download' %}"><B><font face="宋体" size="5" color="#444444">政资汇app</font></B></a></td>
 </tr>
 <tr>
-<td><a href="{% url 'introduce' %}" target="_blank"><font color="black">政资汇简介</font></a></td>
-<td><a href="{% url 'business_cooperation' %}"><font color="black">商务合作</font></a></td>
-<td><a href="{% url 'contact_us' %}"><font color="black">联系我们</font></a></td>
-<td><a href="#"><font color="black">政资宝</font></a></td>
+<td><a href="{% url 'introduce' %}" target="_blank"><font face="sans-serif" size="3" color="#888888">政资汇简介</font></a></td>
+<td><a href="{% url 'business_cooperation' %}"><font face="sans-serif" size="3" color="#888888">商务合作</font></a></td>
+<td><a href="{% url 'contact_us' %}"><font face="sans-serif" size="3" color="#888888">联系我们</font></a></td>
+<td><a href="#"><font face="sans-serif" size="3" color="#888888">政资宝</font></a></td>
+<td rowspan=5 ><img src="/static/images/zhengzihuiapp.png"></img></td>
 </tr>
 <tr>
-<td><a href="{% url 'trustedwebsite' %}" target="_blank"><font color="black">可信网站</font></a></td>
-<td><a href="{% url 'union_website' %}"><font color="black">网站联盟</font></a></td>
-<td><a href="{% url 'artificial_apeal' %}"><font color="black">投诉建议</font></a></td>
+<td><a href="{% url 'trustedwebsite' %}" target="_blank"><font face="sans-serif" size="3" color="#888888">可信网站</font></a></td>
+<td><a href="{% url 'union_website' %}"><font face="sans-serif" size="3" color="#888888">网站联盟</font></a></td>
+<td><a href="{% url 'artificial_apeal' %}"><font face="sans-serif" size="3" color="#888888">投诉建议</font></a></td>
 </tr>
 <tr>
-<td><a href="#"><font color="black">法律声明</font></a></td>
-<td><a href="{% url 'friend_link' %}"><font color="black">友情链接</font></a></td>
-<td><a href="{% url 'newhire' %}"><font color="black">诚聘英才</font></a></td>
+<td><a href="#"><font face="sans-serif" size="3" color="#888888">法律声明</font></a></td>
+<td><a href="{% url 'friend_link' %}"><font face="sans-serif" size="3" color="#888888">友情链接</font></a></td>
+<td><a href="{% url 'newhire' %}"><font face="sans-serif" size="3" color="#888888">诚聘英才</font></a></td>
 </tr>
 <tr>
-<td><a href="#"><font color="black">网站地图</font></a></td>
-<td><a href="{% url 'quanlification' %}"><font color="black">业务资质</font></a></td>
+<td><a href="#"><font face="sans-serif" size="3" color="#888888">网站地图</font></a></td>
+<td><a href="{% url 'quanlification' %}"><font face="sans-serif" size="3" color="#888888">业务资质</font></a></td>
 </tr>
 </table>
 </div>
+<br>
+<center><hr style="height:1px;border:none;border-top:1px solid #555555; width:1200px" /></center>
+          <div style="width:100%">
+				<span style="color:#808080; left: 18%;background-color:green;">
+		   			<a  class="g" href="" style="text-decoration:none; left: 20%;">关于我们</a>
+				</span>
+
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 25%;">联系我们</a>
+				</span>
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 30%;">政资动态</a>
+				</span>
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 35%;">网站地图</a>
+				</span>
+                <span>
+		   			<a class="g" href="" style="text-decoration:none; left: 40%;">公司资质</a>
+				</span>
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 45%;">加入我们</a>
+				</span>
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 50%;">支付中心</a>
+				</span>
+				<span>
+					<a class="g" href="" style="text-decoration:none; left: 55%;">我也要与政资会合作</a>
+				</span>
+                <span>
+					<a class="g" href="" style="text-decoration:none; left: 65%;">热门服务</a>
+				</span>
+                <span>
+					<a class="g" href="" style="text-decoration:none; left: 70%;">友情链接</a>
+				</span>
+                <span>
+					<a class="g" href="" style="text-decoration:none; left: 75%;">安全中心</a>
+				</span>
+                <span>
+					<a class="g" href="" style="text-decoration:none; left: 80%;">政资会移动版</a>
+				</span>
+		</div>
+<br><br><br>
+                <center style="color:#808080">Copyright@2015-2025 成都融亿达科技有限公司版权所有</center>
+
 </div>
 </div>
 </body>

@@ -1,0 +1,44 @@
+<div>
+<div id="serve-title">
+		<p><B>收藏的项目</B></p>
+</div>
+
+<div class="row-fluit>
+<table align="center" style="width:1000px;">
+<tr>
+{% for item in items %}
+<td>
+ <div class="collect">
+                        <a href="/project_detail/?id={{ item.item_id }}"><img src="{{ item.pic_url }}" />
+                            
+                            {{ item.item_name }}
+							<br>
+                        </a>
+						<p class="shoufei"><small>资助额度:
+						<span class="money">
+							<strong > {{item.item_ga}}</strong>
+						</span>
+							</small></p>
+						<p class="shoufei"><small>管理单位:{{item.pa}}
+						<span class="money">
+						</span>
+							</small></p>
+                            <div class="progress">
+								<div class="progress-bar" role="progressbar" aria-valuenow="60" 
+									aria-valuemin="0" aria-valuemax="100" style="width: {{ item.item_consume_time }}%; line-height:50px;">
+								</div>
+							</div>
+						<h5 class="shoufei">{{ item.item_publish }}     {{ item.item_consume_time }}%         {{ item.item_deadtime }}</h5>
+	</h5>
+	
+	
+</div> 
+</td>
+{% endfor %}
+</tr>
+{% if not items  %}
+<h3 align="center">你还没有收藏过项目，去看看吧！</h3>
+{% endif %}
+</table>
+</div>
+</div>
