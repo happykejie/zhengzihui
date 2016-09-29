@@ -251,6 +251,18 @@ urlpatterns = [
     # 后台商家管理
     url(r'^baformerchant/$', zhengzihui_app.views.baformerchant, name='balformerchant'),
     url(r'^sjglordering/$', zhengzihui_app.views.sjglordering, name='sjglordering'),
+    url(r'^servicemanagement/$', zhengzihui_app.views.servicemanagement, name='servicemanagement'),
+    url(r'^uncservicemanagement/$', zhengzihui_app.views.uncservicemanagement, name='uncservicemanagement'),
+    url(r'^cservicemanagement/$', zhengzihui_app.views.cservicemanagement, name='cservicemanagement'),
+    url(r'^managedetail/$', zhengzihui_app.views.managedetail, name='managedetail'),
+    url(r'^checkservice/$', zhengzihui_app.views.checkservice, name='checkservice'),
+    url(r'^passwfc/$', zhengzihui_app.views.passwfc, name='passwfc'),
+    url(r'^delwfc/$', zhengzihui_app.views.delwfc, name='delwfc'),
+    url(r'^delg/$', zhengzihui_app.views.delg, name='delg'),
+    url(r'^starts/$', zhengzihui_app.views.starts, name='starts'),
+    url(r'^pauses/$', zhengzihui_app.views.pauses, name='pauses'),
+
+
 
     url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
     url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),

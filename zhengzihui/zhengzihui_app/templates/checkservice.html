@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+  <script src="/static/jquery-2.14/jquery.js"></script>
+  <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
+<title>
+审核服务
+</title>
+</head>
+<body>
+<br />
+<br />
+<br />
+<br />
+<div class="container-fruid">
+<div class="row">
+<div class="col-lg-offset-2 col-lg-3 col-sm-3 col-md-3">
+<h2>
+<p>审核商品id:{{ goods.goods_id }}
+<p>收费模式
+</h2>
+</div>
+</div>
+<br />
+<br />
+<script>
+///function check()
+//{	
+//	var a =  document.getElementById("sname").value;
+//	var b =  document.getElementById("paya").value;
+//	alert(a);
+//	alert(b);
+	//alert(a);
+	//if((a=="")||(b=="")){
+	//	alert("服务名，启动经费不为空");
+//	return false;
+	//}
+	//else{
+		//alert(453);
+	//	return true;
+	//}
+//}]
+function A(){
+	var a =  document.getElementById("sname").value;
+	var b =  document.getElementById("paya").value;
+	//alert(b);
+	if((a=="")||(b=="")){
+		alert("服务名，启动经费不为空");
+		return false;
+	}
+	else{
+		//alert(453);
+		return true;
+	}
+}
+</script>
+
+<input type="hidden" name="deletegoodsid" value="{{ goods.goods_id }}" />
+<div class="row">
+	<div class="col-lg-offset-2	 col-lg-2 col-sm-2 col-md-2"><center><h3><font color="grey">服务名称:</font></h3></center></div>
+	<div class="col-lg-offset-4">
+	<br />
+	<br />
+	<h4><p><input name="sname"  id="sname" type="text" value="{{ goods.goods_name }}" placeholder="" disabled="disabled"></h4>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-offset-2	 col-lg-2 col-sm-2 col-md-2"><center><h3><font color="grey">模式选择:</font></h3></center></div>
+<div class="col-lg-offset-4">
+	<br />
+	<br />
+	<h4><p><input name="modon" type="radio" value="启动经费">&nbsp;启动经费 <input name="paya" id="paya" type="text" value="{{ goods.goods_payahead }}" placeholder="金额" disabled="disabled"></h4>
+	<h4><p><input name="modtw" type="radio" value="中期经费">&nbsp;中期经费 <input name="payb" type="text" value="{{ goods.goods_awardmid }}" placeholder="金额" disabled="disabled"></h4>
+	<h4><p><input name="modth" type="radio" value="成功赏金" >&nbsp;成功赏金 <input name="payc" type="text" value="{{ goods.goods_awardafter }}" placeholder="金额" disabled="disabled"></h4>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h2>
+服务特色
+</h2>
+</div>
+</div>
+<br />
+<br />
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h2>
+服务内容
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="fuwuneirong" name="fuwuneirong" disabled="disabled" style="width:100%;">{{ goods.cont }}</textarea>
+</div>
+</div>
+
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h2>
+服务流程
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="fuwuliucheng" name="fuwuliucheng" disabled="disabled" style="width:100%;">{{ goods.steps }}</textarea>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h2>
+成功案例
+</h2>
+</div>
+</div>
+<br />
+<br />
+<div class="row">
+<div class="col-lg-offset-3	 col-lg-4 col-sm-4 col-md-4">
+<textarea class="form-control" rows="6" id="chenggonganli" name="chenggonganli" disabled="disabled" style="width:100%;">{{ goods.exa }}</textarea>
+</div>
+</div>
+<br />
+<br />
+
+
+<div class="row">
+<div class="col-lg-offset-2 col-lg-2 col-sm-2 col-md-2">
+<h3>
+平台返利{{ goods.goods_fanli }}
+</h3>
+</div>
+</div>
+<br />
+<br />
+<br />
+
+
+<div class="row">
+<div class="col-lg-4 col-lg-offset-2">
+<button type="button" class="btn-lg btn-success" onclick="window.location.href='/passwfc?id={{goods.goods_id}}'">通过</button>
+</div>
+<div class="col-lg-4">
+<button type="button" class="btn-lg btn-warning" onclick="window.location.href='/delwfc?id={{goods.goods_id}}'">拒绝</button>
+</div>
+</div>
+
+</div>
+</body>
+</html>
