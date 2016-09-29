@@ -826,5 +826,85 @@ def bw_orderdetail(request):
 	res['ordertime']=order.add_time
 	res['per']=order.finish_percentage
 	return render_to_response("bw_orderdetail.html",{'res':res})
-	
+
+def servicemanagement(request):
+	#res = tb_goods_wfc.objects.all()
+	return render_to_response("bw_servicemanagement.html",{})
+
+def uncservicemanagement(request):
+	res = tb_goods_wfc.objects.all()
+	return render_to_response("bw_csman.html",{'res':res})
+
+def cservicemanagement(request):
+	checked='1'
+	res = tb_goods.objects.all()
+	return render_to_response("bw_csman.html",{'res':res,'checked':checked})
+
+def managedetail(request):
+	sid = request.GET.get("id")
+	res=tb_goods.objects.get(goods_id = sid)
+	return render_to_response("managedetail.html",{'goods':res})
+
+def checkservice(request):
+	sid = request.GET.get("id")
+	#print (sid)
+	res = tb_goods_wfc.objects.get(goods_id = sid)
+	return render_to_response("checkservice.html",{'goods':res})
+
+def delwfc(request):
+	sid = request.GET.get("id")
+	i=tb_goods_wfc.objects.get(goods_id = sid)
+	i.fea="请返回修改"
+	i.save()
+	return HttpResponseRedirect('/b_work_index/')
+
+def delg(request):
+	sid = request.GET.get("id")
+	#print (sid)
+	tb_goods.objects.get(goods_id = sid).delete()
+	return HttpResponseRedirect('/b_work_index/')
+
+def passwfc(request):
+	sid = request.GET.get("id")
+	i=tb_goods_wfc.objects.get(goods_id = sid)
+	add = tb_goods()
+	add.item_id =i.item_id
+	add.goods_name=i.goods_name
+	add.sp_id=i.sp_id
+	add.goods_payahead=i.goods_payahead
+	add.awardafter=i.goods_awardafter
+	add.awardmid=i.goods_awardmid
+	add.goods_market_price=i.goods_payahead
+	add.goods_price=i.goods_payahead
+	add.goods_price_discouint=i.goods_payahead
+	add.goods_pay=1
+	add.goods_guarantee=i.cont
+	add.goods_sort=0
+	add.goods_fanli=i.goods_fanli
+	add.steps=i.steps
+	add.smod =i.smod 
+	add.exa=i.exa
+	add.cont=i.cont
+	add.goods_commend=1
+	add.goods_evaluation_good_star=0
+	add.goods_evaluation_count=0
+	add.goods_show=1
+	add.goods_status=1
+	add.save()
+	i.delete()
+	return HttpResponseRedirect('/b_work_index/')
+
+def pauses(request):
+	sid = request.GET.get("id")
+	i =tb_goods.objects.get(goods_id = sid)
+	i.goods_status=0
+	i.save()
+	return HttpResponseRedirect('/b_work_index/')
+
+def starts(request):
+	sid = request.GET.get("id")
+	i =tb_goods.objects.get(goods_id = sid)
+	i.goods_status=1
+	i.save()
+	return HttpResponseRedirect('/b_work_index/')
 

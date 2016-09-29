@@ -85,17 +85,16 @@
 <center><a href="#"><font color="white" size="4px" onclick="project_management()">项目管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="#">产品管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="service_management()">产品管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="guest_management()">客户管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<<<<<<< HEAD
 <center><a href="#"><font color="white" size="4px" onclick="ba_for_merchant_supervisor()">商家管理</font></a></center>
-=======
-<center><a href="#"><font color="white" size="4px" onclick="baformerchant()">商家管理</font></a></center>
->>>>>>> origin/dev_master
+
+<!--<center><a href="#"><font color="white" size="4px" onclick="baformerchant()">商家管理</font></a></center>-->
+
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center><a href="#"><font color="white" size="4px" onclick="support_staff_manager()">客服人员管理</font></a></center>
@@ -115,11 +114,16 @@
 
 
 <script>
+	function service_management(){
+		var url = "/servicemanagement"
+		$('#fra').attr('src',url);
+	}
 	function zzh_back_index(){
 		var url="/zzh_back_index"
 		$('#fra').attr('src',url);
 	}
 	function baforguests(){
+		//alert(11);
 		var url="/baforguests"
 		$('#fra').attr('src',url);
 	}
@@ -127,13 +131,13 @@
 		var url="/baforshopers"
 		$('#fra').attr('src',url);
 	}
-<<<<<<< HEAD
+
         //add merchant supervisor by zp
 	function ba_for_merchant_supervisor(){
 		var url="/baformerchantsupervisor"
 		$('#fra').attr('src',url);
 	}
-=======
+
 
 	function b_work_comment_manager(){
         var url="/b_work_comment_manager"
@@ -154,16 +158,14 @@
 		$('#fra').attr('src', url);
 	}
 
-	function guest_management(){
-		var url="/b_work_maguests"
-		$('#fra').attr('src',url);
-	}
 
     function baformerchant() {
+	
         var url = "/baformerchant"
         $('#fra').attr('src', url);
     }
 	function info_push(){
+		//alert(1111);
 		var url="/info_push"
 		$('#fra').attr('src',url);
 	}
@@ -177,9 +179,6 @@
 	}
 
 
-
-
->>>>>>> origin/dev_master
 </script>
 </div>
 </div>
