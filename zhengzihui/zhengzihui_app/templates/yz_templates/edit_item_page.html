@@ -32,7 +32,7 @@
 	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<p>项目原文地址:{{ item.url.0 }}</p>
+<p><a href ="{{ item.url.0 }}">项目原文地址</a></p>
 
 <form role="form">
   <div class="form-group">
@@ -90,7 +90,7 @@
    <div class="panel panel-default">
    <div class="panel-heading">
       <h3 class="panel-title">
-         公司信息
+         其他信息
       </h3>
    </div>
    <div class="panel-body">
@@ -98,7 +98,7 @@
 
 
    <div class="form-group">
-      <label for="companyName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司名称：</label>
+      <label for="companyName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目资助金额：</label>
       <div class="col-sm-3">
          <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请输入公司全称" style="display:inline;" value="{{companyName}}">
       </div>
@@ -109,7 +109,7 @@
 
 
    <div class="form-group">
-      <label for="companyLocation" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司地域：</label>
+      <label for="companyLocation" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目发布时间：</label>
       <div class="col-sm-3">
          <input type="text" class="form-control" id="companyLocation" name="companyLocation" onblur="checkCompanyLocation();" placeholder="请输入公司所处省市" style="display:inline;" value="{{companyLocation}}">
       </div>
@@ -119,7 +119,7 @@
 
 
    <div class="form-group">
-      <label for="companyAddress" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册地址：</label>
+      <label for="companyAddress" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目截至时间：</label>
       <div class="col-sm-3">
          <input type="text" class="form-control" id="companyAddress" name="companyAddress" onblur="checkCompanyAddress();" placeholder="如：大慈寺路28号B座8楼5号" style="display:inline;" value="{{companyAddress}}">
       </div>
@@ -129,7 +129,7 @@
 
 
    <div class="form-group">
-      <label for="companyCapital" class="col-sm-2 control-label"><font color="#FF0000" >*</font>公司注册资本：</label>
+      <label for="companyCapital" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目相关的行业：</label>
       <div class="col-sm-3">
          <input type="text" class="form-control" id="companyCapital" name="companyCapital" onblur="checkCompanyCapital();" placeholder="单位（元）" style="display:inline;" value="{{companyCapital}}">
       </div>
@@ -139,46 +139,35 @@
 
 
    <div class="form-group">
-      <label for="companyPeople" class="col-sm-2 control-label">公司人数：</label>
+      <label for="companyPeople" class="col-sm-2 control-label">项目关键字：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyPeople" name="companyPeople" style="display:inline;" value="{{companyPeople}}">
-         <option>请选择</option>
-         <option>1-49</option>
-         <option>50-99</option>
-         <option>100-499</option>
-         <option>500-999</option>
-         <option>1000以上</option>
-      </select>
+       <input type="text"class="form-control" id="companyPeople" name="companyPeople" style="display:inline;" value="{{companyPeople}}">
+
       </div>
       </div>
 
 
    <div class="form-group">
-      <label for="companyIndustry" class="col-sm-2 control-label">公司行业：</label>
+      <label for="companyIndustry" class="col-sm-2 control-label">项目状态：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyIndustry" name="companyIndustry" style="display:inline;" value="{{companyIndustry}}">
-         <option>请选择</option>
-         <option>互联网</option>
-         <option>金融</option>
-         <option>教育</option>
-         <option>农业</option>
-         <option>畜牧业</option>
-      </select>
+       <input type="text" class="form-control" id="companyIndustry" name="companyIndustry" style="display:inline;" value="{{companyIndustry}}">
+
       </div>
       </div>
 
    <div class="form-group">
-      <label for="companyNature" class="col-sm-2 control-label">公司性质：</label>
+      <label for="companyNature" class="col-sm-2 control-label">项目是否热门：</label>
       <div class="col-sm-3">
-      <select class="form-control" id="companyNature" name="companyNature" style="display:inline;" value="{{companyNature}}">
-         <option>请选择</option>
-         <option>政府机关/事业单位</option>
-         <option>国营</option>
-         <option>私营</option>
-         <option>中外合资</option>
-         <option>外资</option>
-         <option>其他</option>
-      </select>
+       <input type="text" class="form-control" id="companyNature" name="companyNature" style="display:inline;" value="{{companyNature}}">
+
+      </div>
+      </div>
+
+       <div class="form-group">
+      <label for="companyNature111" class="col-sm-2 control-label">项目是否推荐：</label>
+      <div class="col-sm-3">
+       <input type="text" class="form-control" id="companyNature111" name="companyNature111" style="display:inline;" value="{{companyNature}}">
+
       </div>
       </div>
 
