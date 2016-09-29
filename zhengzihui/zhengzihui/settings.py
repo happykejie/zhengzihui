@@ -17,6 +17,9 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 
 import os
+
+from mongoengine import connect
+connect('zhengzihui', host='127.0.0.1', port=27017)
 #YZ addfor suit
 '''
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
@@ -104,10 +107,11 @@ DATABASES = {
       #there have a option
 	 'NAME':'zhengzihui_test_second',#your database name
 	 'USER':'root',#your username of mysql
-         'PASSWORD':'0000',#password of mysql user
+         'PASSWORD':'123456',#password of mysql user
 	 'HOST':'127.0.0.1',#localhost
 	 'PORT':'3306',#defaut port of mysql
     }
+
 }
 
 

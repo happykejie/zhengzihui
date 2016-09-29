@@ -252,6 +252,10 @@ urlpatterns = [
     url(r'^baformerchant/$', zhengzihui_app.views.baformerchant, name='balformerchant'),
     url(r'^sjglordering/$', zhengzihui_app.views.sjglordering, name='sjglordering'),
 
+    url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
+    url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),
+
+
 ]
 
 

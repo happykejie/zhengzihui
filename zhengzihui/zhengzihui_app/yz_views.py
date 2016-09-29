@@ -1,7 +1,7 @@
 #coding=utf-8
 
 from views import *
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 #from django.utils import simplejson
 
 '''
@@ -16,6 +16,26 @@ from django.http import JsonResponse
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+
+def testfordata(request):
+    scrapy_itemtemp = from_scrapy.objects[:10]
+    scrapy_item = list(scrapy_itemtemp)
+    print scrapy_item[0].title[0]
+
+    context = {
+        'scrapy_item': scrapy_item
+    }
+
+    return render(request,'yz_templates/data_temp_list.html',context)
+
+def edit_item(request):
+
+    title = request.GET['title']
+    print title
+    temp = from_scrapy.objects(title=title)
+
+
+    return render(request,'yz_templates/edit_item_page.html',{'item':temp[0]})
 
 
 def get_the_hotrecommend():

@@ -1,4 +1,4 @@
-#coding:utf-8
+﻿#coding:utf-8
 import datetime,time
 
 from django.db import models
@@ -6,6 +6,21 @@ from django.utils import timezone#引入datetime 和 timezone 为了was_publishe
 
 from filer.fields.image import FilerImageField #YZ add for filer
 from filer.fields.file import FilerFileField
+
+
+from django.db import models
+from mongoengine import *
+
+connect('zhengzihui', host='127.0.0.1', port=27017)
+
+class from_scrapy(Document):
+
+    title =StringField()
+    time = StringField()
+    url = StringField()
+    content =StringField()
+    meta = {'strict': False}#important
+
 
 # Create your models here.
 
