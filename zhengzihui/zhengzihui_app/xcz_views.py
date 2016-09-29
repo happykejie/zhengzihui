@@ -175,7 +175,7 @@ def search_result(request):
     else:
     	tmiddle_items=middle_items
 
-
+    list_temp2 = []
     if  (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
         for bumen in bumenlist:
@@ -183,12 +183,13 @@ def search_result(request):
             if len(list_temp1)>1:
                 str_temp = list_temp1[1]
                 list_temp2 = str_temp.split("/")
-            print list_temp2
-            for i in tmiddle_items:
-                for j in list_temp2:
-                    if j in (i.item_about).encode("utf-8"):
-                        if i not in items:#去重复
-                            items.append(i)
+
+            if len(list_temp2)!=0:
+                for i in tmiddle_items:
+                    for j in list_temp2:
+                        if j in (i.item_about).encode("utf-8"):
+                            if i not in items:#去重复
+                                items.append(i)
     else:
 
     	items=tmiddle_items
