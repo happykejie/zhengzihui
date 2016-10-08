@@ -73,7 +73,7 @@ def Searchgoods(request):
         #搜索
             for gname in seg_list:
                 #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
-                ads+=tb_item.objects.filter(item_name__contains = gname)
+                ads+=tb_item.objects.filter(item_about__contains = gname)
         #去重复
             for i in ads: 
                 if i not in items:
