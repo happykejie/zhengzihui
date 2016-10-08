@@ -264,6 +264,10 @@ urlpatterns = [
 
 
 
+    url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
+    url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),
+
+
 ]
 
 
