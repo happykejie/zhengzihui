@@ -16,6 +16,24 @@ from django.http import JsonResponse,HttpResponse
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+def indexto_search_result(request):
+    if 'zhuangtai' in request.GET:
+        zhuangtai = request.GET['zhuangtai']
+        request.session['zhuangtai'] = zhuangtai
+        return HttpResponseRedirect('/search_result/')
+    if 'jibie' in request.GET:
+        jibie = request.GET['jibie']
+        request.session['jibie'] = jibie
+        return HttpResponseRedirect('/search_result/')
+    if 'bumen' in request.GET:
+        bumen = request.GET['bumen']
+        print bumen
+        request.session['bumen'] = bumen
+        return HttpResponseRedirect('/search_result/')
+        #return HttpResponse(request.session['jibie'])
+      #  zhuangtai = request.session1['']
+    #else:
+     #   return HttpResponseRedirect('/search_result/')
 
 def testfordata(request):
     scrapy_itemtemp = from_scrapy.objects[:10]
