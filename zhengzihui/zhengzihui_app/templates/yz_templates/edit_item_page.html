@@ -75,10 +75,20 @@
    <div class="form-group">
       <label for="password2" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目级别：</label>
       <div class="col-sm-3">
-         <input type="password" class="form-control" id="password2" name="password2" onblur="checkPassword2();"placeholder="请根据原文为该项目分级;4,3,2,1" style="display:inline;" value="{{password2}}">
+               <label class="checkbox-inline">
+    <input type="radio" name="optionsRadiosinline" id="optionsRadios1" value="option1" checked>县级资金
+  </label>
+  <label class="checkbox-inline">
+    <input type="radio" name="optionsRadiosinline" id="optionsRadios2" value="option2">市级资金
+  </label>
+                 <label class="checkbox-inline">
+    <input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="option3" checked>省级资金
+  </label>
+  <label class="checkbox-inline">
+    <input type="radio" name="optionsRadiosinline" id="optionsRadios4" value="option4">中央资金
+  </label>
       </div>
-      <span class="label label-success" id="password2Success"></span>
- 	  <span class="label label-danger" id="password2Danger"></span>
+
    </div>
       </div>
       </div>
@@ -100,7 +110,7 @@
    <div class="form-group">
       <label for="companyName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目资助金额：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请输入公司全称" style="display:inline;" value="{{companyName}}">
+         <input type="text" class="form-control" id="companyName" name="companyName" onblur="checkCompanyName();" placeholder="请根据原文输入资助金额" style="display:inline;" value="{{companyName}}">
       </div>
       <span class="label label-success" id="companyNameSuccess"></span>
  	  <span class="label label-danger" id="companyNameDanger"></span>
@@ -170,6 +180,8 @@
 
       </div>
       </div>
+
+
 
 
 

@@ -115,7 +115,7 @@ a:hover{color:#808080;}
 
         </div>
 
-		<div style="float:right">
+		<div style="float:right" id="section-0">
 			<ul class="nav navbar-nav">
 
 			<li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'user_center'%}">我的政资汇</a></li>
@@ -159,7 +159,7 @@ a:hover{color:#808080;}
 	</nav>
 		<!--div class="jumbotron"> </div -->
 <!--网站图标+搜索栏-->
-  <div class="row">
+  <div class="row" >
     <div class="col-sm-3 col-md-3 col-lg-3">
       <center><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'index' %}"><img src="/static/images/logo.jpg"></img></a></center>
     </div>
@@ -184,9 +184,9 @@ $("#city").click(function (e) {
 
 					<div class="col-md-2 col-sm-2 col-lg-2" style="padding:0px">
 					 <select class="form-control" name= "Typeforsearch" id="Typeforsearch" style="height:45px">
-    						  <option>所属行业</option>
-   						  <option>领域或产品</option>
-							<option>归口部门受理人员</option>
+						  <option>领域或产品</option>
+    						  <option>所属行业</option>				  
+						  <!--<option>归口部门受理人员</option>-->
     					  </select>
     				</div>
 					<!--
@@ -224,7 +224,7 @@ $("#city").click(function (e) {
          <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   role="menuitem" tabindex="-1" href="/free_require/frame">需求信息发布</a>
       </li>
       <li role="presentation">
-         <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   role="menuitem" tabindex="-1" href="#">政咨信息共享</a>
+         <a   onmouseover="style.color='red'"onmouseout="style.color='black'"   role="menuitem" tabindex="-1" href="{% url 'shareinformation' %}">政咨信息共享</a>
       </li>
 
    </ul>
@@ -258,39 +258,35 @@ $("#city").click(function (e) {
         <div class="text" style="background-color:#00BFFF; line-height:3em">
 <font color="white">
 <B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;部门分类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="{% url 'search_result'%}"><font color="white">中央资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">省级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">市级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="{% url 'search_result'%}"><font color="white">县级资金</a></B></font></div>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="/indexto_search_result/?jibie=中央财政资金"><font color="white">中央资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result/?jibie=省级财政资金"><font color="white">省级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result/?jibie=市级财政资金"><font color="white">市级资金</font></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result/?jibie=县级财政资金"><font color="white">县级资金</font></a></div>
 		</div>
 		<div class="col-sm-2" style="margin:0px; padding:11px 0px;background-color:#99CCFF;>
 				<ul class="nav">
 					<li id="111" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						    <dd class="hover-red" style="line-height:6em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="#" style="text-decoration:none">政府部门/</a>
-							<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="#" style="text-decoration:none"><font size="2">直属机构/</font></a>
-							<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#" style="text-decoration:none">管理机构</a></dd>
-
+						    <dd class="hover-red" style="line-height:6em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  class="hover-red" href="/indexto_search_result?bumen=经信汇:发展改革/经济和信息化/财政/国资/更多,农林汇:农业/林业/畜牧/渔业/粮食/中医药/烟草/更多,商务汇:商务/税务/工商/投资促进/海关/更多,基建汇:国土资源/住房城乡建设/交通运输/水利/能源/环境保护/更多,民生汇:民政/人力资源社会保障/扶贫/民族/宗教,监管汇:人民银行/银监/证监/保监/质监/药监/安监/统计/更多" style="text-decoration:none">政府部门/直属事业单位</a></dd>
 					</li>
 
 
 					<li id="112" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#"style="text-decoration:none">党派/</a>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">人民团体/</a>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">公益性组织</a></dd>
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result?bumen=中共主题馆:组织部/宣传部/统战部/政策研究室/政法委/编办/直属机关工委/更多,民主党派馆:民革/民盟/民建/民促/农工党/致公党/九三学社/台盟,人民团体馆:总工会/共青团/科协/妇联/工商联/青联/残联/供销社/贸易促进会/红十字会/更多,基建汇:国土资源/住房城乡建设/交通运输/水利/能源/环境保护/更多,公益组织馆:壹基金公益基金会/阿里巴巴公益基金会/更多"style="text-decoration:none">党派/人民团体/公益性组织</a>
+					</dd>
 
 					</li>
 
 
 					<li id="113" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">科研院所/</a>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">高等院校</a></dd>
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result?bumen=科研院所:中国科学院/中国工程院/中国农业科学院/中国工程物理研究院/重庆农科院/更多,高等学校:北京大学/清华大学/复旦大学/浙江大学/南开大学/中国科技大学/中山大学/四川大学/更多" style="text-decoration:none">科研院所/高等院校</a>
+					</dd>
 
 
 					</li>
 
 					<li id="114" onmouseover="show(this)" onmouseout="hide(this)" style="list-style:none">
-						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">国有单位/</a>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="#" style="text-decoration:none">事业单位</a></dd>
+						<dd  style="line-height:6em; font-weight:1000em; text-align:center;"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"  href="/indexto_search_result?bumen=国有企业:中国航天科技集团/海尔集团/长虹集团/东方电力集团/更多,事业单位:中国农村科技卡开发中心/中国国际交流中心/四川省高高新技术产业金融服务中心/更多" style="text-decoration:none">国有单位/事业单位</a>
+						</dd>
 
 
 					</li>
@@ -305,26 +301,23 @@ $("#city").click(function (e) {
 			<div id="div111"  style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>经信汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><a href="/indexto_search_result?bumen=经信汇:发展改革/经济和信息化/财政/国资/更多"> <big>经信汇</big>&gt </a></font></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>科教汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><a href="/indexto_search_result?bumen=农林汇:农业/林业/畜牧/渔业/粮食/中医药/烟草/更多"> <big>农林汇</big>&gt </a></font></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>农林汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><a href="/indexto_search_result?bumen=基建汇:国土资源/住房城乡建设/交通运输/水利/能源/环境保护/更多"> <big>基建汇</big>&gt </a></font></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>基建汇</big>&gt </font></a>
-
-
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>商务汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><a href="/indexto_search_result?bumen=商务汇:商务/税务/工商/投资促进/海关/更多"> <big>商务汇</big>&gt</a> </font></a>
 	</span>
 					<p><span>
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>民生汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><a href="/indexto_search_result?bumen=民生汇:民政/人力资源社会保障/扶贫/民族/宗教"> <big>民生汇</big>&gt </a></font></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   ><font color="black"><big>监管汇</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   ><font color="black"><a href="/indexto_search_result?bumen=监管汇:人民银行/银监/证监/保监/质监/药监/安监/统计/更多"> <big>监管汇</big>&gt</a> </font></a>
 
 						</span>
 				</div>
@@ -337,17 +330,17 @@ $("#city").click(function (e) {
 			<div id="div112" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>中共主题馆</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=中共主题馆:组织部/宣传部/统战部/政策研究室/政法委/编办/直属机关工委/更多"><big>中共主题馆</big>&gt </a></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>民主党派馆</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=民主党派馆:民革/民盟/民建/民促/农工党/致公党/九三学社/台盟"><big>民主党派馆</big>&gt </a></a>
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>人民团体馆</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=人民团体馆:总工会/共青团/科协/妇联/工商联/青联/残联/供销社/贸易促进会/红十字会/更多"><big>人民团体馆</big>&gt </a></a>
 
 
 
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>公益组织馆</big>&gt</font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=公益组织馆:壹基金公益基金会/阿里巴巴公益基金会/更多"><big>公益组织馆</big>&gt</a></a>
 
 						</span>
 				</div>
@@ -360,9 +353,9 @@ $("#city").click(function (e) {
 			<div id="div113" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>科研院所</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=科研院所:中国科学院/中国工程院/中国农业科学院/中国工程物理研究院/重庆农科院/更多">科研院所 </a></a>
 
-						<a><font color="black"><big>高等院校</big>&gt </font></a>
+						<a><a href="/indexto_search_result?bumen=高等学校:北京大学/清华大学/复旦大学/浙江大学/南开大学/中国科技大学/中山大学/四川大学/更多">高等院校</big>&gt</a></a>
 
 						</span>
 				</div>
@@ -375,10 +368,10 @@ $("#city").click(function (e) {
 			<div id="div114" style="margin:0px; padding:0px;display:none;position:absolute;z-index:2;background-color:white;height:359px" onmouseover="this.style.display='block';" onmouseout="this.style.display='none';">
 				<div class="col-sm-8" style="margin:0px; padding:0px;">
 					<p><span>
-						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><font color="black"><big>企业单位</big>&gt </font></a>
+						<a   onmouseover="style.color='red'"onmouseout="style.color='black'"  ><a href="/indexto_search_result?bumen=国有企业:中国航天科技集团/海尔集团/长虹集团/东方电力集团/更多"><big>国有企业</big>&gt</a></a>
 
 
-						<a><font color="black"><big>事业单位</big>&gt </font></a>
+						<a><a href="/indexto_search_result?bumen=事业单位:中国农村科技卡开发中心/中国国际交流中心/四川省高高新技术产业金融服务中心/更多"><big>事业单位</big>&gt </a></a>
 
 						</span>
 				</div>
@@ -482,13 +475,13 @@ $("#city").click(function (e) {
 <div class="col-sm-6">
 <div style="position:absolute;right:250px;">
 
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'search_result'%}" ><font color="black"><B>正在申报</B></font></a>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/indexto_search_result/?zhuangtai=正在申报" ><font color="black"><B>正在申报</B></font></a>
 </div>
 </div>
 <div class="col-sm-4">
 <div style="position:absolute;left:0px;">
 
-<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'search_result'%}" ><font color="black"><B>截止申报</B></font></a>
+<a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="/indexto_search_result/?zhuangtai=截止申报" ><font color="black"><B>截止申报</B></font></a>
 </div>
 </div>
 <br>
@@ -595,7 +588,7 @@ $(document).ready(function(){
 	<div class="col-sm-9 col-md-9 col-lg-11"></div>
 	<div class="col-sm-1 col-md-1 col-lg-1" id="myScrollspy1" >
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="125">
-                <li class="active"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#">登录</a></li>
+                <li class="active"><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="{% url 'login' %}">登录</a></li>
                 <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>直通车</small></a></li>
                 <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>资金</small></a></li>
                 <li><a   onmouseover="style.color='red'"onmouseout="style.color='black'"   href="#"><small>关注</small></a></li>
