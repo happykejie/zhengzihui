@@ -207,20 +207,29 @@ def getthe_filteditem(request):
                 tmiddle_items.append(i)
     else:
         tmiddle_items = middle_items
-
-    if  (selected['bumen'].encode("utf-8") != '全部'):
+    list_temp2 = []
+    if (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
+        print bumenlist
         for bumen in bumenlist:
-            list_temp1 = bumen.split(":",1)
-            if len(list_temp1)>1:
-                str_temp = list_temp1[1]
+            #print (bumen)
+            if ":" not in bumen:
+                # print (bumen)
+                for i in tmiddle_items:
+                    if bumen in (i.item_about).encode("utf-8"):
+                        items.append(i)
+            else:
+                list_temp1 = bumen.split(":", 1)
+                if len(list_temp1) > 1:
+                    str_temp = list_temp1[1]
                 list_temp2 = str_temp.split("/")
-            print list_temp2
-            for i in tmiddle_items:
-                for j in list_temp2:
-                    if j in (i.item_about).encode("utf-8"):
-                        if i not in items:#去重复
-                            items.append(i)
+
+            if len(list_temp2) != 0:
+                for i in tmiddle_items:
+                    for j in list_temp2:
+                        if j in (i.item_about).encode("utf-8"):
+                            if i not in items:  # 去重复
+                                items.append(i)
     else:
 
     	items=tmiddle_items
@@ -244,8 +253,8 @@ def item_sortbyLevel(request):
     a_items = []
     items = []
     filted_item = getthe_filteditem(request)
-    print request.COOKIES['search_content']
-    print len(filted_item)
+    #print request.COOKIES['search_content']
+    #print len(filted_item)
     if len(filted_item) == 0:
         goodsname = ''
         ads = []

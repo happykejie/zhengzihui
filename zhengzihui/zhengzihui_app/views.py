@@ -111,10 +111,15 @@ def user_center(request):
             a_click_item = {}
             a_click_item['id'] = click_item.item_id  # 获取项目id
             a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name  # 获取项目名字
-            album = tb_album.objects.filter(album_type=0, affiliation_id=click_item.item_id, is_default=1).order_by('-nacl_sort')[0]  # 获取项目对应的相册id
-            album_id = album.album_id
-            a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            album = tb_album.objects.filter(album_type=0, affiliation_id=click_item.item_id, is_default=1).order_by('-nacl_sort')  # 获取项目对应的相册id
+            if len(album):
+
+                album_id = album[0].album_id
+                a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            else:
+                a_click_item['pic_url'] ='/static/images/12.png'
             a_click_items.append(a_click_item)
+
     '''recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
     for recommend_item in recommend_items:
         a_recommend_item= {}

@@ -68,6 +68,9 @@ def Searchgoods(request):
 	#分词
             #一样更新session中的'bumen'值YZ
             request.session['search_content']=goodsname.encode("utf-8")
+            selected['bumen'] = '来自xu搜索'
+            request.session['bumen'] = '来自xu搜索'
+
             
             seg_list = jieba.cut(goodsname,cut_all=False)
         #搜索
@@ -78,8 +81,9 @@ def Searchgoods(request):
             for i in ads: 
                 if i not in items:
                     items.append(i)
-
+            #print items
             a_items = get_and_set_info(items)
+            print a_items
             ''' request.session['yz_search_result_temp'] = items
             test1 = request.session['yz_search_result_temp']
             print type(test1)'''
@@ -163,7 +167,10 @@ def search_result(request):
         middle_items = list(middle_items)
     else:
     	middle_items=tb_item.objects.all()
-    #print(middle_items)
+
+
+
+
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
         #待修改，只是根据item_status字段来判断的话会出错。因为一旦给值就固定了，需要根据截止时间来判断
@@ -175,6 +182,9 @@ def search_result(request):
     else:
     	tmiddle_items=middle_items
     #print(tmiddle_items)
+
+
+
     list_temp2 = []
     if  (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
@@ -202,10 +212,15 @@ def search_result(request):
     else:
     	items=tmiddle_items
     #print(items)
+
     if (len(items)>10):
     	items = items[:10]#不够10条报错
     else:
         items = items
+    #来自主页的检索需要置空此处，否则会多查询结果
+    if selected['bumen'] == '来自xu搜索':
+        items=[]
+
     a_items = get_and_set_info(items)
     #获得热门推荐的项目YZ
     recommend = []
