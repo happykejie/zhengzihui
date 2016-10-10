@@ -267,7 +267,7 @@ urlpatterns = [
 
     url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
     url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),
-
+    url(r'^save_editData/$',zhengzihui_app.views.save_editData,name='save_editData'),
 
 ]
 

@@ -56,6 +56,64 @@ def edit_item(request):
     return render(request,'yz_templates/edit_item_page.html',{'item':temp[0]})
 
 
+def save_editData(request):
+
+    item_all = tb_item.objects.order_by('-item_id')
+    item_id =  int(item_all[0].item_id) + 1
+
+    item_code = item_id
+    itcl_id = 0#默认值
+    item_pa_id = 1 #默认值，是容易打
+    item_from = 0#0代表爬虫，1代表从分享信息中来
+    xianfen = '默认'
+    #从页面取得的数据
+    item_name = request.GET['item_name']
+    item_level = int(request.GET['jibie'])
+    item_ga = request.GET['item_ga']
+    item_publish = request.GET['item_pub']
+    item_deadtime = request.GET['item_deadtime']
+    item_about = request.GET['item_about']
+    item_key = request.GET['item_guanjianzi']
+    item_status = int(request.GET['item_status'])
+    is_hot = int(request.GET['item_hot'])
+    is_recommend = int(request.GET['item_recommend'])
+    privince = request.GET['privince']
+    city = request.GET['city']
+    distr = request.GET['distr']
+    item_url = request.GET['item_url']
+    #print item_all1[0].item_code
+    if len(tb_item.objects.filter(item_name=item_name)):
+        return HttpResponse('已经添加了该名称的项目，请修改名字后添加')
+
+
+    add = tb_item()
+    add.item_id=item_id
+    add.item_code=item_code
+    add.item_name=item_name
+    add.itcl_id =itcl_id
+    add.item_about =item_about
+    add.item_level=item_level
+    add.item_pa_id= item_pa_id
+    add.item_deadtime=item_deadtime
+    add.item_publish=item_publish
+    add.privince =privince
+    add.city =city
+    add.distr = distr
+    add.xianfen =xianfen
+    add.item_from = item_from
+    add.item_ga = item_ga
+    add.item_key = item_key
+    add.item_status =item_status
+    add.is_hot =is_hot
+    add.is_recommend =is_recommend
+    add.item_url = item_url
+    add.save()
+    yuanming =request.GET['yuanming']
+
+    #等待新数据改善
+
+    return render(request,'yz_templates/edit_success.html',{})
+
 def get_the_hotrecommend():
     recommenditem = tb_item.objects.filter(is_recommend=1)
     return recommenditem[:4]
@@ -82,11 +140,14 @@ def get_and_set_info(items):
         else:
             a_item['item_consume_time'] = int(consume_time)
         a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-        album = tb_album.objects.filter(album_type=0, affiliation_id=item.item_id, is_default=1).order_by('-nacl_sort')[
-            0]  # 获取项目对应的相册id
-        album_id = album.album_id
-        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[
+        album = tb_album.objects.filter(album_type=0, affiliation_id=item.item_id, is_default=1).order_by('-nacl_sort')  # 获取项目对应的相册id
+        if len(album):
+            album_id = album[0].album_id
+
+            a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[
                             14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        else:
+            a_item['pic_url']='/static/images/12.png'
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))  # 获取项目对应订单的数量
         a_items.append(a_item)
     return a_items
@@ -356,13 +417,13 @@ def project_detail(request):
         # 能保证取到吗
         project_detail_item_id = request.GET['id']
 
-    addclick = tb_item_click.objects.get(item_id=project_detail_item_id)
-    if addclick == None:
+    addclick = tb_item_click.objects.filter(item_id=project_detail_item_id)
+    if len(addclick)==0 :
         addclick = tb_item_click(itcl_id=0, item_id=project_detail_item_id, click_counter=1)
         addclick.save()
     else:
-        addclick.click_counter += 1
-        addclick.save()
+        addclick[0].click_counter += 1
+        addclick[0].save()
     item = tb_item.objects.get(item_id=project_detail_item_id)
     item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name  # 扩展对象属性，直接填写即可YZ
     item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
@@ -380,13 +441,21 @@ def project_detail(request):
         recommend = get_and_set_info(recommendtemp)
 
         album = tb_album.objects.filter(album_type=0, affiliation_id=project_detail_item_id, is_default=1).order_by(
-            '-nacl_sort')[0]  # 获取项目对应的相册id
-        album_id = album.album_id
-        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]  # 获取前四张图片
-        for pic in pics:
-            a_pic = pic.pic_object.url[14:]
-            # print a_pic
-            a_pics.append(a_pic)
+            '-nacl_sort')  # 获取项目对应的相册id
+        if len(album):
+            album_id = album[0].album_id
+            pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')  # 获取前四张图片
+            if len(pics)>=4:
+                pics = pics [:4]
+            else:
+                pics=pics[:len(pics)]
+            for pic in pics:
+                a_pic = pic.pic_object.url[14:]
+                # print a_pic
+                a_pics.append(a_pic)
+        else:
+            a_pics = []
+
         if not a_pics:
             pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
             a_pics.append(pic_url)

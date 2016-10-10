@@ -635,7 +635,11 @@ def selectpay(request):
         #goodsid 肯定存在的
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
-            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            goods = tb_goods.objects.filter(goods_id = service_detail_goods_id)
+            if len(goods):
+                goods=goods[0]
+            else:
+                return HttpResponse('该项目暂时还没有服务商，您可以收藏该项目！')
             response = render(request,'selectpay.html', {'goods':goods})
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
@@ -644,7 +648,11 @@ def selectpay(request):
     else:
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
-            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            goods = tb_goods.objects.filter(goods_id = service_detail_goods_id)
+            if len(goods):
+                goods=goods[0]
+            else:
+                return HttpResponse('你还未登陆，请登录。且您访问的项目暂时还没有服务商提供服务！')
             response =  HttpResponseRedirect("/regCompany")
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
