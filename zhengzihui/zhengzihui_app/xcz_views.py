@@ -73,7 +73,7 @@ def Searchgoods(request):
         #搜索
             for gname in seg_list:
                 #filter(someziduan__contains = something) 代表模糊过滤出包含something的所有objectYZ
-                ads+=tb_item.objects.filter(item_about__contains = gname)
+                ads+=tb_item.objects.filter(item_name__contains = gname)
         #去重复
             for i in ads: 
                 if i not in items:
@@ -902,6 +902,10 @@ def passwfc(request):
 	add.save()
 	i.delete()
 	return HttpResponseRedirect('/b_work_index/')
+
+def custpicforshow(request):
+	return render_to_response("custpicforshow.html",{})
+
 
 def pauses(request):
 	sid = request.GET.get("id")
