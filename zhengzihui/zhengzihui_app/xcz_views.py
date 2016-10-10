@@ -903,6 +903,10 @@ def passwfc(request):
 	i.delete()
 	return HttpResponseRedirect('/b_work_index/')
 
+def custpicforshow(request):
+	return render_to_response("custpicforshow.html",{})
+
+
 def pauses(request):
 	sid = request.GET.get("id")
 	i =tb_goods.objects.get(goods_id = sid)

@@ -163,6 +163,8 @@ urlpatterns = [
     url(r'^merchantout/$',zhengzihui_app.views.merchantout,name='merchantout'),
     url(r'^applyforjoin/$',zhengzihui_app.views.applyforjoin,name='applyforjoin'),
     url(r'^success/$',zhengzihui_app.views.success,name='success'),
+    url(r'^jff/$',zhengzihui_app.views.custpicforshow,name='custpicforshow'),
+
 
     
     
