@@ -27,6 +27,7 @@ urlpatterns = [
     
     url(r'^payok/$',zhengzihui_app.views.Payback,name='payok'),
     #zss 二级页面
+    url(r'^indexto_search_result/$',zhengzihui_app.views.indexto_search_result,name='indexto_search_result'),
     url(r'^search_result/$',zhengzihui_app.views.search_result,name='search_result'),
     
     ########################排序

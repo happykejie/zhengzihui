@@ -33,7 +33,7 @@ def index(request):
 
         a_click_items.append(a_click_item)
 
-        request.session['bumen']='财政'
+        request.session['bumen']='全部'
         request.session['jibie']='全部'
         request.session['zhuangtai']='全部'
     return render(request,'index.html',{'a_click_items':a_click_items})
@@ -133,8 +133,6 @@ def search_result(request):
 
         selected['bumen'] = value
 
-
-
         flag = True
     else:
         selected['bumen'] = ''
@@ -168,9 +166,10 @@ def search_result(request):
     #print(middle_items)
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
+        #待修改，只是根据item_status字段来判断的话会出错。因为一旦给值就固定了，需要根据截止时间来判断
 
     	for i in middle_items:
-            print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
+            #print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
             if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
     			tmiddle_items.append(i)
     else:
@@ -179,6 +178,7 @@ def search_result(request):
     list_temp2 = []
     if  (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
+        print bumenlist
         for bumen in bumenlist:
 	    #print (bumen)
 	    if ":" not in bumen:
