@@ -40,7 +40,7 @@ urlpatterns = [
     url(r'^search_result_load/$',zhengzihui_app.views.search_result_load,name='search_result_load'),#用来干嘛的？？
     url(r'^filter_labels/$',zhengzihui_app.views.filter_labels,name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
     #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了      
-    url(r'^item_details/$','zhengzihui_app.views.item_details',name='item_details'),#当有id传入，可显示项目的相关信息
+    url(r'^item_details/$',zhengzihui_app.views.item_details,name='item_details'),#当有id传入，可显示项目的相关信息
     url(r'^project_detail/$',zhengzihui_app.views.project_detail,name='project_detail'),#当有id传入，可显示项目的相关信息
     
 
@@ -234,10 +234,10 @@ urlpatterns = [
     url(r'^user_push_info/',zhengzihui_app.views.user_push_info,name="user_push_info"),
 
     # 信息共享-xy
-    url(r'^shareinformation', "zhengzihui_app.views.shareinformation", name="shareinformation"),
+    url(r'^shareinformation', zhengzihui_app.views.shareinformation, name="shareinformation"),
     # 发布人信息发布-xy
-    url(r'^Publish', "zhengzihui_app.views.Publish", name="Publish"),
-    url(r'^change', "zhengzihui_app.views.change", name="change"),
+    url(r'^Publish', zhengzihui_app.views.Publish, name="Publish"),
+    url(r'^change', zhengzihui_app.views.change, name="change"),
 
     #客服人员管理
     url(r'^support_staff_manager/$',zhengzihui_app.views.support_staff_manager,name="support_staff_manager"),
@@ -245,9 +245,9 @@ urlpatterns = [
     url(r'^auditor_manager/$',zhengzihui_app.views.auditor_manager,name="auditor_manager"),
 
     # 后台的客户管理
-    url(r'^b_work_maguests', "zhengzihui_app.views.b_work_maguests", name="b_work_maguests"),
-    url(r'^bw_orderfromguest', "zhengzihui_app.views.bw_orderfromguest", name="bw_orderfromguest"),
-    url(r'^bw_orderdetail', "zhengzihui_app.views.bw_orderdetail", name="bw_orderdetail"),
+    url(r'^b_work_maguests', zhengzihui_app.views.b_work_maguests, name="b_work_maguests"),
+    url(r'^bw_orderfromguest', zhengzihui_app.views.bw_orderfromguest, name="bw_orderfromguest"),
+    url(r'^bw_orderdetail', zhengzihui_app.views.bw_orderdetail, name="bw_orderdetail"),
     # 后台商家管理
     url(r'^baformerchant/$', zhengzihui_app.views.baformerchant, name='balformerchant'),
     url(r'^sjglordering/$', zhengzihui_app.views.sjglordering, name='sjglordering'),
