@@ -2,7 +2,7 @@
 
 from views import *
 
-
+#申请加盟BY jianuo
 def applyforjoin(request):
     add = []
     sp_type = ""
@@ -36,11 +36,13 @@ def applyforjoin(request):
         add.sp_type = sp_type
         # add by yz
 
-
+        all_sp=tb_service_provider.objects.order_by('-sp_id')
+        sp_id = all_sp[0].sp_id
 
         sp_code = random.randint(0, 1000000)
         while (len(tb_service_provider.objects.filter(sp_code=sp_code)) == 1):
             sp_code = random.randint(0, 1000000)
+        add.sp_id = int(sp_id)
         add.sp_code = sp_code
         add.psw = '000000'
 

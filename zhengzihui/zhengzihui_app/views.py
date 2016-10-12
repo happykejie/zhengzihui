@@ -834,76 +834,7 @@ def merge_service_details(request):
 
 
 
-#申请加盟BY jianuo
-def applyforjoin(request):	
-    add = []
-    sp_type=""
-    
-    if request.method == 'POST':
-        flag = request.POST.get("flag")
-        myflag=str(flag)
-        #print myflag
-        sp_name = request.POST.get("sp_name")
-        con_name = request.POST.get("con_name")
-        tel = request.POST.get("tel")
-        email = request.POST.get("email")
-        sp_type1= request.POST.get("sp_type1","")
-        sp_type2= request.POST.get("sp_type2","")
-        sp_type3= request.POST.get("sp_type3","")
-        if myflag == "1":
-          sp_type=sp_type1
-        if myflag=="2":
-          sp_type=sp_type1+"+"+sp_type2
-        if myflag=="3":
-          sp_type=sp_type1+"+"+sp_type3
-        
-        print sp_type
 
-        
-
-        
-
-
-        add = tb_service_provider()
-       
-        add.tel = request.POST.get("tel")
-        add.email = request.POST.get("email")
-        add.sp_name = request.POST.get("sp_name")
-        add.con_name = request.POST.get("con_name")
-        add.sp_type =sp_type
-        #add by yz
-
-        
-
-        sp_code = random.randint(0, 1000000)
-        while (len(tb_service_provider.objects.filter(sp_code =sp_code)) == 1):
-            sp_code = random.randint(0, 1000000)
-        add.sp_code = sp_code
-        add.psw = '000000'
-
-        add.sp_auth =0#默认值\
-        add.master ='000'#默认值\
-        add.sp_image1 ='000'
-        add.sp_image2 ='000'
-        add.sp_grade =00#默认值\
-        add.sp_sort=00#默认值
-        add.area_id='00'
-        add.Register_cap =00
-        add.staff_number =00
-        add.Annual_totals =00
-        add.organization_name ='00'
-        add.organization_id =00
-        add.organization_assets =00
-        add.organization_profile ='000'
-        add.is_recommend =0
-		
-		
-
-        add.save()
-        return render_to_response("success.html", {})
-    return render_to_response("applyforjoin.html",{})
-def success(request):
-    return render_to_response("success.html",{})
 
 
 

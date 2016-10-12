@@ -4,6 +4,10 @@ from views import *
 from django.http import JsonResponse,HttpResponse
 #from django.utils import simplejson
 
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
+
 '''
 用户中心
 '''
@@ -35,13 +39,64 @@ def indexto_search_result(request):
     #else:
      #   return HttpResponseRedirect('/search_result/')
 
+#重新改写Paginator
+class JuncheePaginator(Paginator):
+    def __init__(self, object_list, per_page, range_num=5, orphans=0, allow_empty_first_page=True):
+        Paginator.__init__(self, object_list, per_page, orphans, allow_empty_first_page)
+        self.range_num = range_num
+
+    def page(self, number):
+        self.page_num = number
+        return super(JuncheePaginator, self).page(number)
+
+    def _page_range_ext(self):
+        num_count = 2 * self.range_num + 1
+        if self.num_pages <= num_count:
+            return range(1, self.num_pages + 1)
+        num_list = []
+        num_list.append(self.page_num)
+        for i in range(1, self.range_num + 1):
+            if self.page_num - i <= 0:
+                num_list.append(num_count + self.page_num - i)
+            else:
+                num_list.append(self.page_num - i)
+
+            if self.page_num + i <= self.num_pages:
+                num_list.append(self.page_num + i)
+            else:
+                num_list.append(self.page_num + i - num_count)
+        num_list.sort()
+        return num_list
+
+    page_range_ext = property(_page_range_ext)
+
 def testfordata(request):
-    scrapy_itemtemp = from_scrapy.objects[:10]
+    scrapy_itemtemp = from_scrapy.objects[0:]
     scrapy_item = list(scrapy_itemtemp)
     print scrapy_item[0].title[0]
 
+    page = 0
+    if 'page' in request.GET:
+        page = int(request.GET.get('page'))#类型一定要搞清楚呀
+    else:
+        page = 1
+    #默认Blogs变量为scrapy_item这个变量，懒得改了
+    blogs = scrapy_item
+    paginator = JuncheePaginator(blogs, 8)
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)
+
+    print blogs.paginator.page_range_ext
+
+
+    request.session['scrapydata_page'] = blogs.number
+
     context = {
-        'scrapy_item': scrapy_item
+        'scrapy_item': scrapy_item,'blogs':blogs
     }
 
     return render(request,'yz_templates/data_temp_list.html',context)
@@ -63,7 +118,7 @@ def save_editData(request):
 
     item_code = item_id
     itcl_id = 0#默认值
-    item_pa_id = 1 #默认值，是容易打
+    item_pa_id = 1 #默认值，是
     item_from = 0#0代表爬虫，1代表从分享信息中来
     xianfen = '默认'
     #从页面取得的数据

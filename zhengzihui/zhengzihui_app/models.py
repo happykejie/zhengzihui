@@ -146,7 +146,7 @@ class  tb_service_provider(models.Model):
     #sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
     sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
     #sp_id = models.IntegerField("内部ID",null=False,blank=False)
-    sp_id = models.AutoField("内部ID",primary_key = True)
+    sp_id = models.IntegerField("内部ID",primary_key = True,null=False)
     sp_address = models.CharField("服务商地址",max_length=40,null=True,blank=False)
     sp_name = models.CharField("服务商名称",max_length=40,null=False,blank=False)
     psw = models.CharField("密码",max_length=40,null=True,blank=False)
@@ -1143,6 +1143,9 @@ class tb_ba_for_merchant_superivisor(models.Model):
 	phone_num = models.CharField("联系电话",max_length=20,null=True,blank=False)
 	num_of_orders = models.IntegerField('接单次数',null=False)
 	transaction_amount = models.IntegerField('交易金额',null=False)
+
+
+#张平的MODEL
 
 
 #Yz
