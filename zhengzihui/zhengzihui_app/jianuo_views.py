@@ -70,7 +70,7 @@ def applyforjoin(request):
 def success(request):
     return render_to_response("success.html", {})
 
-
+#项目管理
 def bus_project_management(request):
     if 'sp_id' in request.COOKIES:
 
@@ -316,6 +316,11 @@ def zzh_back_index(request):
     item_num_info.append(all_clz_itemnum)
 
     # 产品管理
+    weis = tb_goods_wfc.objects.all()
+    shou=tb_goods.objects.all()
+    all_wei=len(weis)
+    all_shou=len(shou)
+
     # 客户管理
     users = tb_user.objects.all()
     tongguo_user = []
@@ -397,11 +402,33 @@ def zzh_back_index(request):
     check_user_num_info.append(all_cweijihuo_num)
     content = {'yiquxiao_order': yiquxiao_order, 'order_num_info': order_num_info, 'kehuyixiadan_ba': kehuyixiadan_ba,
                'ba_num_info': ba_num_info,
-
                'shangqueren_ba': shangqueren_ba, 'sh_num_info': sh_num_info, 'eping_comment': eping_comment,
                'comment_num_info': comment_num_info, 'zhengchang_item': zhengchang_item, 'item_num_info': item_num_info,
                'user_num_info': user_num_info,'back_user_num_info':back_user_num_info,"mtongguo":mtongguo,"mer_num_info"
                :mer_num_info,"yijihuo_check_user":yijihuo_check_user,"check_user_num_info":check_user_num_info,"all_push_num"
-               :all_push_num,"notpush_num":notpush_num}
+               :all_push_num,"notpush_num":notpush_num,"all_wei":all_wei,"all_shou":all_shou,}
     return render_to_response("zzh_back_index.html", content)
+
+
+
+
+def supporting_guests(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 1
+
+    # 获取该商家获得的所有订单
+    all_order = get_all_order_of_sp(sp_id=sp_id)
+    # 为每个订单添加一个服务名称的属性
+    for order in all_order:
+
+        if order.has_pay == 1:
+            order.str_has_pay = '订单已经申请结算,正在结算中'
+        elif order.has_pay == 2:
+            order.str_has_pay = "订单已经结算"
+        else:
+            order.str_has_pay = '未结算'
+            # request.session['first_page'] = 0
+	return render_to_response("supporting_guests.html",{'all_order': all_order, 'sp_id': sp_id})
 

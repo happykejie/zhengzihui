@@ -218,8 +218,12 @@ urlpatterns = [
     url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
     url(r'^sort_order_time/',zhengzihui_app.views.sort_order_time,name="sort_order_time"),
     url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
+    #配套
+    url(r'^supporting_orders/',zhengzihui_app.views.supporting_orders,name="supporting_orders"),
+    url(r'^sort_order/',zhengzihui_app.views.sort_order,name="sort_order"),
+    url(r'^change_paper_send_state2/',zhengzihui_app.views.change_paper_send_state2,name="change_paper_send_state2"),
+    url(r'^supporting_guests/',zhengzihui_app.views.supporting_guests,name="supporting_guests"),
 
-    
 #政资汇后台工作人员
     #登陆
     url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
