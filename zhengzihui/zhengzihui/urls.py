@@ -222,6 +222,8 @@ urlpatterns = [
     url(r'^supporting_orders/',zhengzihui_app.views.supporting_orders,name="supporting_orders"),
     url(r'^sort_order/',zhengzihui_app.views.sort_order,name="sort_order"),
     url(r'^change_paper_send_state2/',zhengzihui_app.views.change_paper_send_state2,name="change_paper_send_state2"),
+    url(r'^supporting_guests/',zhengzihui_app.views.supporting_guests,name="supporting_guests"),
+
 #政资汇后台工作人员
     #登陆
     url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
