@@ -1,4 +1,7 @@
 ﻿#coding:utf-8
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 import datetime,time
 
 from django.db import models
@@ -27,12 +30,10 @@ class from_scrapy(Document):
 #公共虚类
 
 class Common_Area_Info(models.Model):
-    # ...
     privince = models.CharField("省",max_length=100,null=True)
     city = models.CharField("市", max_length=100, null=True)
     distr = models.CharField("区", max_length=100, null=True)
     xianfen = models.CharField("县份", max_length=100, null=True)
-
 
     class Meta:
         abstract = True
@@ -1077,12 +1078,42 @@ class push_info(models.Model):
     push_item_id = models.IntegerField('推送项目的id',null=False)
     push_to_user = models.IntegerField('推送到的用户的id',null=False)
 
-class common_info_sp(models.Model):
 
-    sp_name = models.CharField('服务商名称',null=False)
+
+
+class tb_ba_for_merchant_superivisor(models.Model):
+	merchant_id = models.AutoField("商家id",primary_key = True)
+	merchant_name = models.CharField("商家名称",max_length=100,null=True,blank=False)
+	merchant_addr = models.CharField("商家地址",max_length=255,null=True,blank=False)
+	merchant_linkman = models.CharField("联系人",max_length=100,null=True,blank=False)
+	phone_num = models.CharField("联系电话",max_length=20,null=True,blank=False)
+	num_of_orders = models.IntegerField('接单次数',null=False)
+	transaction_amount = models.IntegerField('交易金额',null=False)
+
+
+
+
+
+#Yz
+
+class tb_rongzi_fuwu_pic(models.Model):
+    pic_name = models.CharField('图片名称',max_length=40,null=False)
+    pic_tag = models.CharField('图片标签',max_length=40,null=False)
+    pic_object = models.ImageField('图片文件',upload_to='img_for_fuwu/%Y/%m/%d',null = False,default="img_for_fuwu/none/no_img.jpg")
+    upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
+
+    class Meta:
+        verbose_name = '图片表'
+        verbose_name_plural = '图片表'
+    def __str__(self):   #python 2
+            return self.pic_name
+
+class tb_rongzi_fuwu_sp(Common_Area_Info):
+    sp_id = models.AutoField("内部ID",primary_key = True)
+    sp_name = models.CharField('服务商名称',max_length=100,null=False)
     sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
 
-    sp_id = models.AutoField("内部ID",primary_key = True)
+
 
     sp_address = models.CharField("服务商地址",max_length=40,null=True,blank=False)
     psw = models.CharField("密码",max_length=40,null=True,blank=False)
@@ -1126,63 +1157,26 @@ class common_info_sp(models.Model):
     )
     is_recommend = models.IntegerField("是否优先推荐",choices=IS_RECOMMEND_CHOICES,default=RECOMMEND,null=False,blank=False)
     class Meta:
-        abstract = True
-
-    def __str__(self):
-        return self.sp_name
-
-    def __str__(self):
-        return str(self.sp_code)
-
-
-class tb_ba_for_merchant_superivisor(models.Model):
-	merchant_id = models.AutoField("商家id",primary_key = True)
-	merchant_name = models.CharField("商家名称",max_length=100,null=True,blank=False)
-	merchant_addr = models.CharField("商家地址",max_length=255,null=True,blank=False)
-	merchant_linkman = models.CharField("联系人",max_length=100,null=True,blank=False)
-	phone_num = models.CharField("联系电话",max_length=20,null=True,blank=False)
-	num_of_orders = models.IntegerField('接单次数',null=False)
-	transaction_amount = models.IntegerField('交易金额',null=False)
-
-
-#张平的MODEL
-
-
-#Yz
-'''
-class tb_rongzi_fuwu_pic(models.Model):
-    pic_id = models.IntegerField('ID', primary_key=True,null=False)
-    pic_name = models.CharField('图片名称',max_length=40,null=False)
-    pic_tag = models.CharField('图片标签',max_length=40,null=False)
-    pic_object = models.ImageField('图片文件',upload_to='img_for_fuwu/%Y/%m/%d',null = False,default="img_for_fuwu/none/no_img.jpg")
-    pic_size = models.IntegerField('项目ID',null=False,default=0)
-    upload_time = models.DateTimeField('图片上传时间',auto_now = True,null = False)
-    class Meta:
-        verbose_name = '图片表'
-        verbose_name_plural = '图片表'
-    def __str__(self):   #python 2
-        return self.pic_name
-
-class tb_rongzi_fuwu_service(Common_Area_Info):
-        fuwu_service_code = models.IntegerField('服务对应的编号',null=False)
-        fuwu_service_name = models.CharField('对应融资项目的服务',max_length=1000,null=False)
-        fuwu_service_payahead = models.IntegerField('服务对应的首付价格',null=False)
-        fuwu_service_award = models.IntegerField('服务对应的完成后奖金',null=False)
-        fuwu_service_provider = models.ForeignKey('该服务对应的服务提供商',tb_rongzi_fuwu_sp,null=False)
-        fuwu_service_start_time = models.DateTimeField('服务开始时间')
-        fuwu_service_end_time  =models.DateTimeField('服务截止时间')
-        fuwu_service_feature = models.CharField('服务特色',null=True,default='还没有表明特色')#这里服务特色的存储应该有一个格式:保证完成/提供原件
-        fuwu_service_short_intro = models.CharField('服务简单介绍',null=True,default='还没有上传简介')
-        fuwu_service_liucheng = models.CharField('服务流程',null=True,default='还没有流程信息')
-        fuwu_click_counter = models.IntegerField('点击总量',null=False,default=0)
-
-class tb_rongzi_fuwu_sp(common_info_sp,Common_Area_Info):
-    class Meta:
         verbose_name = '融资服务商'
         verbose_name_plural = '融资服务商'
 
+class tb_rongzi_fuwu_service(Common_Area_Info):
+    fuwu_service_code = models.IntegerField('服务对应的编号',null=False)
+    fuwu_service_name = models.CharField('对应融资项目的服务',max_length=1000,null=False)
+    fuwu_service_payahead = models.IntegerField('服务对应的首付价格',null=False)
+    fuwu_service_award = models.IntegerField('服务对应的完成后奖金',null=False)
+    fuwu_service_provider = models.ForeignKey(tb_rongzi_fuwu_sp,verbose_name='该服务对应的服务提供商',null=False)
+    fuwu_service_start_time = models.DateTimeField('服务开始时间')
+    fuwu_service_end_time  =models.DateTimeField('服务截止时间')
+    fuwu_service_feature = models.CharField('服务特色',null=True,max_length=100,default='还没有表明特色')#这里服务特色的存储应该有一个格式:保证完成/提供原件
+    fuwu_service_short_intro = models.CharField('服务简单介绍',max_length=1000,null=True,default='还没有上传简介')
+    fuwu_service_liucheng = models.CharField('服务流程',max_length=1000,null=True,default='还没有流程信息')
+    fuwu_click_counter = models.IntegerField('点击总量',null=False,default=0)
 
-class tb_rongzi_item(models.Model,Common_Area_Info):
+
+
+
+class tb_rongzi_item(Common_Area_Info):
     fuwu_code = models.IntegerField('项目对应的编号',null=False)
     fuwu_name = models.CharField('融资服务的名字',max_length=1000,null=False)
     fuwu_provide_money = models.IntegerField('此服务可提供的现金资助',null=False,default=0)#不能为空，当项目没有价格时默认为0，为排序这样设计
@@ -1190,12 +1184,13 @@ class tb_rongzi_item(models.Model,Common_Area_Info):
     fuwu_end_time  =models.DateTimeField('项目截止时间')
     fuwu_pic_url = models.ManyToManyField(tb_rongzi_fuwu_pic)#manytomany的作用？？？
     fuwu_service = models.ManyToManyField(tb_rongzi_fuwu_service)
-    fuwu_Toptype = models.CharField('第一层分类',null=False)
-    fuwu_Subtype = models.CharField('第二层分类',null=False)
-    fuwu_short_intro = models.CharField('项目简单介绍',null=True,default='还没有添加简介')
+    fuwu_Toptype = models.CharField('第一层分类',max_length=100,null=False)
+    fuwu_Subtype = models.CharField('第二层分类',max_length=100,null=False)
+    fuwu_short_intro = models.CharField('项目简单介绍',max_length=100,null=True,default='还没有添加简介')
     fuwu_liucheng = models.TextField('项目流程',null=True,default='等待更正流程')
     fuwu_click_counter = models.IntegerField('点击总量',null=False,default=0)
     fuwu_type_Value = models.IntegerField('项目类型对应的权值，用于排序',null=True,default=0)#后台人员自己去设置
+    def __str__(self):   #python 2
+            return self.fuwu_name
 
-'''
 

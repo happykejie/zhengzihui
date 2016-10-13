@@ -243,7 +243,7 @@ $(document).ready(function(){
     $("#filter .f-labels  li").bind("click.simple",function(){
             var key_name = $(this).parent().parent().prev(".f-head").children("span").attr("id");
             var value = $(this).children("a").text();
-            window.location.href = "/filter_labels/?"+key_name+"="+key_name+"&filterkeys="+value;       
+            window.location.href = "/filter_labels/?"+key_name+"="+key_name+"&filterkeys="+value;
     });
 	
  

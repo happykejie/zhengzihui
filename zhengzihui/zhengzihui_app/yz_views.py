@@ -20,6 +20,100 @@ from django.core.paginator import EmptyPage
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+
+def get_the_rongzi_item(type,sorttype):
+    pass
+
+def rongzi_filter_labels(request):
+    keys= ''
+    firstclass=''
+    noinfo = 0
+    if 'filterkeys' in request.GET:
+        keys = request.GET['filterkeys']
+        request.session['rongzi_filterkeys'] = keys
+
+    if 'key_name' in request.GET:
+        firstclass =  request.GET['key_name']
+    #排序需要
+
+    if firstclass=='bumen_class1':
+
+        firstclass = '股权融资'
+        request.session['rongzi_firstclass'] = firstclass
+
+    if firstclass=='bumen_class2' :
+
+        firstclass = '债权融资'
+        request.session['rongzi_firstclass'] = firstclass
+    if firstclass=='bumen_class3':
+        firstclass = '资本市场'
+        request.session['rongzi_firstclass'] = firstclass
+
+    #排序获取item
+
+
+    if 'sortflag' in request.GET:
+        if request.GET['type']=='renqi':
+            print keys,firstclass,request.session['rongzi_firstclass'],request.session['rongzi_filterkeys']
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_click_counter')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_click_counter')
+
+        elif  request.GET['type']=='leixing':
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_type_Value')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_type_Value')
+        else:
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_provide_money')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_provide_money')
+        return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item,'noinfo':noinfo})
+        #pass#根据排序规则进行排序并返回
+    #不排序，只是filter和一开始进入到该页面
+    else:
+
+        rongzi_item = []
+        #筛选部分
+        if keys=='全部':
+
+            rongzi_item  = tb_rongzi_item.objects.filter(fuwu_Toptype=firstclass)#获得相关项目返回
+        else:
+            rongzi_item  = tb_rongzi_item.objects.filter(fuwu_Toptype=firstclass,fuwu_Subtype=keys)
+
+        for item in rongzi_item:
+            starttime = item.fuwu_start_time
+            endtime = item.fuwu_end_time
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1 - (float(days_remain) / float(days_total))) * 100)
+            item.finish_percentage = finish_percentage  # 完成百分比为对象添加的属性
+        #print rongzi_item
+        if len(rongzi_item)==0:
+            noinfo = 1
+        #print 'ksjfsdjfksdjfksdjfksjfkjdfksdjkf'
+        return render(request,'yz_templates/rongzi_index.html',{'noinfo':noinfo,'rongzi_item':rongzi_item})
+
+
+
+def rongzi_item_detail_wfb(request):
+    id = request.GET['id']
+    temp_item = tb_rongzi_item.objects.get(id=id)
+    temp_item.fuwu_click_counter=temp_item.fuwu_click_counter+1
+    temp_item.save()
+    return HttpResponse('您想要查看的融资服务正在建设中。')
+
+def rongzi_index(request):
+    rongzi_item=tb_rongzi_item.objects.all()
+    return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item})
 def indexto_search_result(request):
     if 'zhuangtai' in request.GET:
         zhuangtai = request.GET['zhuangtai']
