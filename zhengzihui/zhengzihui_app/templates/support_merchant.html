@@ -74,7 +74,7 @@
 <center><a href="#"><font color="white" size="4px" onclick="supporting_guests()">结算管理</font></a></center>
 </div>
     <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">点评管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="auxiliary_comment()">点评管理</font></a></center>
 </div>
     <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="#">信息维护</font></a></center>
@@ -108,6 +108,10 @@
 		$('#fra').attr('src',url);
 	}
 
+	function auxiliary_comment(){
+	    var url="/auxiliary_comment"
+        $('#fra').attr('src',url);
+    }
 
 </script>
 </div>

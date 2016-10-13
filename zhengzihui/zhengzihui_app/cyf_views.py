@@ -404,3 +404,8 @@ def support_staff_manager(request):
             else:
                 return render_to_response("support_staff_manager.html", {'message': '<script type="text/javascript">alert("请将信息填写完整！");</script>'})
     return render_to_response('support_staff_manager.html',{})
+
+
+#配套中心点评服务
+def auxiliary_comment(request):
+    return render_to_response("auxiliary_comment.html",{})
