@@ -283,6 +283,7 @@ urlpatterns = [
     url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
     url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),
     url(r'^save_editData/$',zhengzihui_app.views.save_editData,name='save_editData'),
+    url(r'^auxiliary_comment/$',zhengzihui_app.views.auxiliary_comment,name='auxiliary_comment'),
 
     url(r'^rongzi_index/$',zhengzihui_app.views.rongzi_index,name='rongzi_index'),
     url(r'^rongzi_filter_labels/$',zhengzihui_app.views.rongzi_filter_labels,name='rongzi_filter_labels'),
