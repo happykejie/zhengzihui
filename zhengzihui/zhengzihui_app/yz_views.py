@@ -113,7 +113,7 @@ def rongzi_item_detail_wfb(request):
 
 def rongzi_index(request):
     rongzi_item=tb_rongzi_item.objects.all()
-    return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item})
+    return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item,'noinfo':0})
 def indexto_search_result(request):
     if 'zhuangtai' in request.GET:
         zhuangtai = request.GET['zhuangtai']
