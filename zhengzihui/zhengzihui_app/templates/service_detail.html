@@ -123,8 +123,12 @@
 
 <div align="center">
 				 <!--将跳转到完善资料页面-->
-					 <button type="button" class="btn-lg btn-primary" id="shoucang" onclick="show()">我要收藏</button>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp <a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
-		
+				 <button type="button" class="btn-lg btn-primary" id="shoucang" onclick="show()">我要收藏</button>&nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp
+	{% if finish_percentage == 100 %}
+		<h2>您浏览的项目的相关服务已经过期！但是您任然可以收藏该服务！</h2>
+	{% else %}
+	<a href="{% url 'contact_details' %}?goodsid={{goods.goods_id}}"><button type="btn" class="btn btn-danger btn-lg">我要申报</button></a>
+	{% endif %}
 </div>
                 
 

@@ -174,14 +174,27 @@ def search_result(request):
     
     if  (selected['zhuangtai'].encode("utf-8") != '全部'):
         #待修改，只是根据item_status字段来判断的话会出错。因为一旦给值就固定了，需要根据截止时间来判断
+        if selected['zhuangtai'] == '正在申报':
+            for i in middle_items:
+                #print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
+                endtime = i.item_deadtime
+                days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+                print days_remain
+                if days_remain>0:
+    			    tmiddle_items.append(i)
 
-    	for i in middle_items:
-            #print allthezhuangtai.index(selected['zhuangtai'].encode("utf-8"))
-            if allthezhuangtai.index(selected['zhuangtai'].encode("utf-8")) == i.item_status:
-    			tmiddle_items.append(i)
+        else:
+            for i in middle_items:
+
+                endtime = i.item_deadtime
+                days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+                if days_remain<=0:
+    			    tmiddle_items.append(i)
+
+
     else:
     	tmiddle_items=middle_items
-    #print(tmiddle_items)
+
 
 
 
