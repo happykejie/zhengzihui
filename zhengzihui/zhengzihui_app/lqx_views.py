@@ -32,6 +32,8 @@ def modify_merchant(request):
     
 
     return HttpResponseRedirect('/zzh/merchant_center')
+
+#未认证的商家能登录吗？？？？？YZ
 def merchant(request):
     errors= []  
     sp_name=None  

@@ -135,7 +135,7 @@ def user_center(request):
 
 #总览 cyf
 #def view_all(request):
-   # return HttpResponse("hello world")
+   # return HttpResponse("helo world")
 
 
 
