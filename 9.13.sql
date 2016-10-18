@@ -1,1 +1,0 @@
-UPDATE `zhengzihui_test_second`.`zhengzihui_app_tb_back_user` SET `user_type` = '2' WHERE `user_id` = '1'

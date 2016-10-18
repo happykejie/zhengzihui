@@ -350,7 +350,7 @@ def b_work_comment_manager(request):
         comment_list = tb_goods_evaluation.objects.all()
     else:
         area = request.COOKIES['area']
-        print(area)
+        #print(area)
         if area == '0':
             comment_list = tb_goods_evaluation.objects.filter(location = '成都')
         else:
@@ -402,6 +402,53 @@ def support_staff_manager(request):
             else:
                 return render_to_response("support_staff_manager.html", {'message': '<script type="text/javascript">alert("请将信息填写完整！");</script>'})
     return render_to_response('support_staff_manager.html',{})
+
+
+#审核人员管理
+def check_staff_manager(request):
+    list1 = []
+    list2 = []
+    add = tb_back_user()
+    if 'kind' not in request.COOKIES:
+        pass
+    else:
+        kind = request.COOKIES['kind']
+        #查询
+        if kind=='0':
+            _name = request.POST.get('name')
+            _tel =  request.POST.get('tel')
+            if _name and not _tel:
+                list1 = tb_back_user.objects.filter(user_name = _name)
+            if _tel and not _name:
+                list1 = tb_back_user.objects.filter(user_telephone=_tel)
+            if _tel and _name:
+                list1 = tb_back_user.objects.filter(user_name=_name)
+                list2 = tb_back_user.objects.filter(user_telephone=_tel)
+                if list1!=list2:
+                    return render_to_response("check_staff_manager.html",{'message':'<script type="text/javascript">alert("您输入的姓名电话不匹配，请重新输入或使用单一查询条件！");</script>'})
+            if not list1:
+                return render_to_response("check_staff_manager.html", {'message': '<script type="text/javascript">alert("查无此人！");</script>'})
+            return render_to_response('check_staff_manager.html',{'list':list1})
+        else:
+            _name = request.POST.get('name')
+            _tel = request.POST.get('tel')
+            if _name and _tel:
+                add.user_name = _name
+                add.user_type = 1
+                add.user_telephone = _tel
+                add.user_password = "123456"
+                add.user_auth = 1
+                add.save()
+                list1 = tb_back_user.objects.filter(user_name=_name)
+                return render_to_response('check_staff_manager.html', {'list': list1})
+            else:
+                return render_to_response("check_staff_manager.html", {'message': '<script type="text/javascript">alert("请将信息填写完整！");</script>'})
+    return render_to_response('check_staff_manager.html',{})
+
+
+
+
+
 
 
 #配套中心点评服务

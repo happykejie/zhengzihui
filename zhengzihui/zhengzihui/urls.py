@@ -293,6 +293,7 @@ urlpatterns = [
     #配套服务服务部分
     url(r'^pub_support/$',zhengzihui_app.views.pub_support,name='pub_support'),
     url(r'^mana_support/$',zhengzihui_app.views.mana_support,name='mana_support'),
+    url(r'^check_staff_manager/$',zhengzihui_app.views.check_staff_manager,name='check_staff_manager'),
 
 
 ]
