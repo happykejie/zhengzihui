@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
   <script src="/static/jquery-2.14/jquery.js"></script>
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script> 
   <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
 <title>
 后台管理
@@ -63,49 +63,83 @@
 <div class ="row" style="background-color:#009999; line-height:5em">
 <!--<div class="text" style="background-color:#00BFFF; line-height:5em">-->
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="zzh_back_index()">主页</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="zzh_back_index()">主页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="balfororders()">订单管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="balfororders()">订单管理</font></a></center>
 </div>
-<div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="baforguests()">客户结算</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="baforshops()">商家结算</font></a></center>
+
+<!--<div class = "col-sm-1 col-md-1 col-lg-1">
+<center><a href="#"><font color="white" size="3px" onclick="baforguests()">客户结算</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="info_push()">推送管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="baforshops()">商家结算</font></a></center>
+</div>-->
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center>
+<div class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font color="white" size="3px">结算管理</font><span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="#"><font onclick="baforguests()">客服结算管理</font></a></li>
+<li class="divider"></li>
+<li><a href="#"><font onclick="baforshops()">商家结算管理</font></a></li>
+</ul>
+</div>
+</center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="b_work_comment_manager()">点评管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="info_push()">推送管理</font></a></center>
+</div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="3px" onclick="b_work_comment_manager()">点评管理</font></a></center>
 
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="project_management()">项目管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="project_management()">项目管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="service_management()">产品管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="service_management()">产品管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="guest_management()">客户管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="guest_management()">客户管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 
-<center><a href="#"><font color="white" size="4px" onclick="ba_for_merchant_supervisor()">商家管理</font></a></center>
+<center><a href="#"><font color="white" size="3px" onclick="ba_for_merchant_supervisor()">商家管理</font></a></center>
 
 <!--<center><a href="#"><font color="white" size="4px" onclick="baformerchant()">商家管理</font></a></center>-->
 
 </div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="support_staff_manager()">客服人员管理</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1" >
-<center><a href="#"><font color="white" size="4px" onclick="auditor_manager()">审核人员管理</font></a></center>
-</div>
 
-
+<!--<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="2px" onclick="support_staff_manager()">客服人员管理</font></a></center>
 </div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center><a href="#"><font color="white" size="2px" onclick="auditor_manager()">审核人员管理</font></a></center>
+</div>-->
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center>
+<div class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font color="white" size="3px">人员管理</font><span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="#"><font onclick="support_staff_manager()">客服人员管理</font></a></li>
+<li class="divider"></li>
+<li><a href="#"><font onclick="auditor_manager()">审核人员管理</font></a></li>
+</ul>
+</div>
+</center>
+</div>
+<!--<div class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white" size="3px">人员管理</font><b class="caret"></b></a>
+</center>
+<ul class="dropdown-menu">
+<li><a href="#"><font color="white" size="2px" onclick="support_staff_manager()">客服人员管理</font></a></li>
+<li><a href="#"><font color="white" size="2px" onclick="auditor_manager()">审核人员管理</font></a></li>
+</ul>
+</div>
+</div>
+</div>-->
+
 
 <div class="row">
 <iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="/zzh_back_index"> </iframe>

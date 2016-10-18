@@ -700,7 +700,7 @@ def baforguests(request):
 		allba = tb_balist.objects.all()
 	else:
 		kind = request.COOKIES['kind']
-		print(kind)
+		#print(kind)
 		allba = tb_balist.objects.filter(ba_belong=kind)
 	lis = []
 	flis = []
@@ -722,7 +722,7 @@ def baforguests(request):
 			#print(i['sta'])
 			a = int(request.COOKIES['sta'])
 			if (i['sta']==a):
-				print(123)
+				#print(123)
 				flis.append(i)
 	return render_to_response("balforguests.html",{'lis':flis})
 
