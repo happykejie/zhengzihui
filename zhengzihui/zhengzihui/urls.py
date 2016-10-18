@@ -19,7 +19,7 @@ from django.contrib import admin
 import zhengzihui_app.views
 #from yz_urls import *
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^item_sortbyLevel',zhengzihui_app.views.item_sortbyLevel,name='item_sortbyLevel'),url(r'^admin/', include(admin.site.urls)),
     url(r'^free_require/', include('fr_app.urls')),
     url(r'^index/$',zhengzihui_app.views.index,name='index'),
     url(r'^hire/$',zhengzihui_app.views.newhire,name='newhire'),
@@ -27,38 +27,16 @@ urlpatterns = [
     
     url(r'^payok/$',zhengzihui_app.views.Payback,name='payok'),
     #zss 二级页面
-    url(r'^indexto_search_result/$',zhengzihui_app.views.indexto_search_result,name='indexto_search_result'),
+
     url(r'^search_result/$',zhengzihui_app.views.search_result,name='search_result'),
-    
-    ########################排序
-    #url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),
-    url(r'^item_sortbyLevel',zhengzihui_app.views.item_sortbyLevel,name='item_sortbyLevel'),
-    url(r'^item_sortbyComprihensive',zhengzihui_app.views.item_sortbyComprihensive,name='item_sortbyComprihensive'),
-    url(r'^search_result_sort_deadtime/$',zhengzihui_app.views.search_result_sort_deadtime,name='search_result_sort_deadtime'),
+
     
     
     
     url(r'^search_result_load/$',zhengzihui_app.views.search_result_load,name='search_result_load'),#用来干嘛的？？
     url(r'^filter_labels/$',zhengzihui_app.views.filter_labels,name='filter_labels'),#当用户选择了筛选条件之后，将值传到主页，再次跳到主页
-    #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了      
-    url(r'^item_details/$',zhengzihui_app.views.item_details,name='item_details'),#当有id传入，可显示项目的相关信息
-    url(r'^project_detail/$',zhengzihui_app.views.project_detail,name='project_detail'),#当有id传入，可显示项目的相关信息
-    
 
-    #下面是服务商的三种排序方式
-    url(r'^sortServByComp/$',zhengzihui_app.views.sortServByComp,name="sortServByComp"),
-    url(r'^sortServBypayahead/$',zhengzihui_app.views.sortServBypayahead,name="sortServBypayahead"),
-    url(r'^sortServByaward/$',zhengzihui_app.views.sortServByaward,name="sortServByaward"),
-    url(r'^service_details/$',zhengzihui_app.views.service_details,name="service_details"),
-    url(r'^service_list/$',zhengzihui_app.views.service_list,name="service_list"),
 
-    #预定流程
-    url(r'^contact_details/$',zhengzihui_app.views.contact_details,name="contact_details"),
-    url(r'^order_details/$',zhengzihui_app.views.order_details,name="order_details"),
-    url(r'^order_completed/$',zhengzihui_app.views.order_completed,name="order_completed"),
-    url(r'^pay/', zhengzihui_app.views.pay,name="pay"),
-    url(r'^shoucang_item/',zhengzihui_app.views.shoucang_item,name="shoucang_item"),
-    url(r'^shoucang_goods/',zhengzihui_app.views.shoucang_goods,name="shoucang_goods"),
 
     url(r'^searchforc/', zhengzihui_app.views.tag_autocomplete,name='auto'),
     
@@ -115,11 +93,7 @@ urlpatterns = [
     url(r'^order_add_commit/', zhengzihui_app.views.order_add_commit,name="order_add_commit"),
 	
 	
-	#收藏管理
-		#收藏的项目
-	url(r'^zzh/collects/', zhengzihui_app.views.collects,name="collects"),
-		#收藏的服务
-    url(r'^zzh/collect_sever/', zhengzihui_app.views.collect_serve,name="collect_serve"),
+
 		
 		
     #评价管理
@@ -210,7 +184,7 @@ urlpatterns = [
 	url(r'^baforshopers/$',zhengzihui_app.views.baforshopers,name='baforshopers'),
 	url(r'^bw_badetail/$',zhengzihui_app.views.bw_badetail,name='bw_badetail'),
 	url(r'^bw_badetailfs/$',zhengzihui_app.views.bw_badetailfs,name='bw_badetailfs'),
-        url(r'^baformerchantsupervisor/$',zhengzihui_app.views.ba_for_merchant_supervisor,name='ba_for_merchant_supervisor'), #后台管理/商家管理
+    url(r'^baformerchantsupervisor/$',zhengzihui_app.views.ba_for_merchant_supervisor,name='ba_for_merchant_supervisor'), #后台管理/商家管理
 	url(r'^bw_merchantsupervisor_detail/$',zhengzihui_app.views.bw_merchantsupervisor_detail,name='bw_merchantsupervisor_detail'),
     url(r'^b_work_comment_manager/$',zhengzihui_app.views.b_work_comment_manager,name='b_work_comment_manager'),
     url(r'^bpm_details/$',zhengzihui_app.views.bpm_details,name='bpm_details'),
@@ -218,23 +192,13 @@ urlpatterns = [
     url(r'^balfororders/$',zhengzihui_app.views.balfororders,name='balfororders'),##houtaidingdanguanli
     url(r'^sort_order_time/',zhengzihui_app.views.sort_order_time,name="sort_order_time"),
     url(r'^bw_order_manage_detail/',zhengzihui_app.views.bw_order_manage_detail,name="bw_order_manage_detail"),#houtai管理查看详情 LQX 
+    #配套
+    url(r'^supporting_orders/',zhengzihui_app.views.supporting_orders,name="supporting_orders"),
+    url(r'^sort_order/',zhengzihui_app.views.sort_order,name="sort_order"),
+    url(r'^change_paper_send_state2/',zhengzihui_app.views.change_paper_send_state2,name="change_paper_send_state2"),
+    url(r'^supporting_guests/',zhengzihui_app.views.supporting_guests,name="supporting_guests"),
 
-    
-#政资汇后台工作人员
-    #登陆
-    url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
-    # 主页
-    url(r'^zzh_back_index/$', zhengzihui_app.views.zzh_back_index, name='zzh_back_index'),
-    #注册
-    url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
-    url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),
-    url(r'^info_push/$',zhengzihui_app.views.info_push,name="info_push"),
 
-    url(r'^push_info_save/$',zhengzihui_app.views.push_info_save,name="push_info_save"),
-    url(r'^shaixuan_push_info/',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
-    url(r'^cmap_yz/$',zhengzihui_app.views.cmap_yz,name="cmap_yz"),
-    url(r'^project_detail_short/$',zhengzihui_app.views.project_detail_short,name="project_detail_short"),
-    url(r'^user_push_info/',zhengzihui_app.views.user_push_info,name="user_push_info"),
 
     # 信息共享-xy
     url(r'^shareinformation', zhengzihui_app.views.shareinformation, name="shareinformation"),
@@ -266,9 +230,64 @@ urlpatterns = [
     url(r'^pauses/$', zhengzihui_app.views.pauses, name='pauses'),
 
 
+  url(r'^indexto_search_result/$',zhengzihui_app.views.indexto_search_result,name='indexto_search_result'),
+    ########################排序
+    #url(r'^search_result_sort_starttime/$','zhengzihui_app.views.search_result_sort_starttime',name='search_result_sort_starttime'),
+    url(r'^item_sortbyLevel',zhengzihui_app.views.item_sortbyLevel,name='item_sortbyLevel'),
+    url(r'^item_sortbyComprihensive',zhengzihui_app.views.item_sortbyComprihensive,name='item_sortbyComprihensive'),
+    url(r'^search_result_sort_deadtime/$',zhengzihui_app.views.search_result_sort_deadtime,name='search_result_sort_deadtime'),
 
+    #修复从搜索结果界面获得到 item_details/ url的bug,并没有写，但是出现了
+    url(r'^item_details/$',zhengzihui_app.views.item_details,name='item_details'),#当有id传入，可显示项目的相关信息
+    url(r'^project_detail/$',zhengzihui_app.views.project_detail,name='project_detail'),#当有id传入，可显示项目的相关信息
+
+
+    #下面是服务商的三种排序方式
+    url(r'^sortServByComp/$',zhengzihui_app.views.sortServByComp,name="sortServByComp"),
+    url(r'^sortServBypayahead/$',zhengzihui_app.views.sortServBypayahead,name="sortServBypayahead"),
+    url(r'^sortServByaward/$',zhengzihui_app.views.sortServByaward,name="sortServByaward"),
+    url(r'^service_details/$',zhengzihui_app.views.service_details,name="service_details"),
+    url(r'^service_list/$',zhengzihui_app.views.service_list,name="service_list"),
+
+    #预定流程
+    url(r'^contact_details/$',zhengzihui_app.views.contact_details,name="contact_details"),
+    url(r'^order_details/$',zhengzihui_app.views.order_details,name="order_details"),
+    url(r'^order_completed/$',zhengzihui_app.views.order_completed,name="order_completed"),
+    url(r'^pay/', zhengzihui_app.views.pay,name="pay"),
+    url(r'^shoucang_item/',zhengzihui_app.views.shoucang_item,name="shoucang_item"),
+    url(r'^shoucang_goods/',zhengzihui_app.views.shoucang_goods,name="shoucang_goods"),
+
+#个人中心收藏管理
+		#收藏的项目
+	url(r'^zzh/collects/', zhengzihui_app.views.collects,name="collects"),
+		#收藏的服务
+    url(r'^zzh/collect_sever/', zhengzihui_app.views.collect_serve,name="collect_serve"),
+
+#政资汇后台工作人员
+    #登陆
+    url(r'^zzh_back_login/$',zhengzihui_app.views.zzh_back_login,name='zzh_back_login'),
+    # 主页
+    url(r'^zzh_back_index/$', zhengzihui_app.views.zzh_back_index, name='zzh_back_index'),
+    #注册
+    url(r'^zzh_back_reg/$',zhengzihui_app.views.zzh_back_reg,name='zzh_back_reg'),
+    url(r'^backout/$',zhengzihui_app.views.backout,name='backout'),
+    url(r'^info_push/$',zhengzihui_app.views.info_push,name="info_push"),
+
+    url(r'^push_info_save/$',zhengzihui_app.views.push_info_save,name="push_info_save"),
+    url(r'^shaixuan_push_info/',zhengzihui_app.views.shaixuan_push_info,name="shaixuan_push_info"),
+    url(r'^cmap_yz/$',zhengzihui_app.views.cmap_yz,name="cmap_yz"),
+    url(r'^project_detail_short/$',zhengzihui_app.views.project_detail_short,name="project_detail_short"),
+    url(r'^user_push_info/',zhengzihui_app.views.user_push_info,name="user_push_info"),
+
+    #MongO数据导入部分
     url(r'^yz_testfordata/$',zhengzihui_app.views.testfordata,name='testfordata'),
     url(r'^edit_item/$',zhengzihui_app.views.edit_item,name='edit_item'),
+    url(r'^save_editData/$',zhengzihui_app.views.save_editData,name='save_editData'),
+    url(r'^auxiliary_comment/$',zhengzihui_app.views.auxiliary_comment,name='auxiliary_comment'),
+
+    url(r'^rongzi_index/$',zhengzihui_app.views.rongzi_index,name='rongzi_index'),
+    url(r'^rongzi_filter_labels/$',zhengzihui_app.views.rongzi_filter_labels,name='rongzi_filter_labels'),
+    url(r'^rongzi_item_detail_wfb/$',zhengzihui_app.views.rongzi_item_detail_wfb,name='rongzi_item_detail_wfb'),
 
 
 ]

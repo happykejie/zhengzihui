@@ -4,6 +4,10 @@ from views import *
 from django.http import JsonResponse,HttpResponse
 #from django.utils import simplejson
 
+from django.core.paginator import Paginator
+from django.core.paginator import PageNotAnInteger
+from django.core.paginator import EmptyPage
+
 '''
 用户中心
 '''
@@ -16,6 +20,100 @@ from django.http import JsonResponse,HttpResponse
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+
+def get_the_rongzi_item(type,sorttype):
+    pass
+
+def rongzi_filter_labels(request):
+    keys= ''
+    firstclass=''
+    noinfo = 0
+    if 'filterkeys' in request.GET:
+        keys = request.GET['filterkeys']
+        request.session['rongzi_filterkeys'] = keys
+
+    if 'key_name' in request.GET:
+        firstclass =  request.GET['key_name']
+    #排序需要
+
+    if firstclass=='bumen_class1':
+
+        firstclass = '股权融资'
+        request.session['rongzi_firstclass'] = firstclass
+
+    if firstclass=='bumen_class2' :
+
+        firstclass = '债权融资'
+        request.session['rongzi_firstclass'] = firstclass
+    if firstclass=='bumen_class3':
+        firstclass = '资本市场'
+        request.session['rongzi_firstclass'] = firstclass
+
+    #排序获取item
+
+
+    if 'sortflag' in request.GET:
+        if request.GET['type']=='renqi':
+            print keys,firstclass,request.session['rongzi_firstclass'],request.session['rongzi_filterkeys']
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_click_counter')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_click_counter')
+
+        elif  request.GET['type']=='leixing':
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_type_Value')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_type_Value')
+        else:
+            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+                rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_provide_money')
+            else:
+                rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_provide_money')
+        return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item,'noinfo':noinfo})
+        #pass#根据排序规则进行排序并返回
+    #不排序，只是filter和一开始进入到该页面
+    else:
+
+        rongzi_item = []
+        #筛选部分
+        if keys=='全部':
+
+            rongzi_item  = tb_rongzi_item.objects.filter(fuwu_Toptype=firstclass)#获得相关项目返回
+        else:
+            rongzi_item  = tb_rongzi_item.objects.filter(fuwu_Toptype=firstclass,fuwu_Subtype=keys)
+
+        for item in rongzi_item:
+            starttime = item.fuwu_start_time
+            endtime = item.fuwu_end_time
+            days_total = (endtime - starttime).days
+
+            days_remain = (endtime.replace(tzinfo=None) - datetime.datetime.now()).days
+
+
+            if days_remain <= 0:
+                finish_percentage = 100
+            else:
+                finish_percentage = int((1 - (float(days_remain) / float(days_total))) * 100)
+            item.finish_percentage = finish_percentage  # 完成百分比为对象添加的属性
+        #print rongzi_item
+        if len(rongzi_item)==0:
+            noinfo = 1
+        #print 'ksjfsdjfksdjfksdjfksjfkjdfksdjkf'
+        return render(request,'yz_templates/rongzi_index.html',{'noinfo':noinfo,'rongzi_item':rongzi_item})
+
+
+
+def rongzi_item_detail_wfb(request):
+    id = request.GET['id']
+    temp_item = tb_rongzi_item.objects.get(id=id)
+    temp_item.fuwu_click_counter=temp_item.fuwu_click_counter+1
+    temp_item.save()
+    return HttpResponse('您想要查看的融资服务正在建设中。')
+
+def rongzi_index(request):
+    rongzi_item=tb_rongzi_item.objects.all()
+    return render(request,'yz_templates/rongzi_index.html',{'rongzi_item':rongzi_item,'noinfo':0})
 def indexto_search_result(request):
     if 'zhuangtai' in request.GET:
         zhuangtai = request.GET['zhuangtai']
@@ -35,13 +133,64 @@ def indexto_search_result(request):
     #else:
      #   return HttpResponseRedirect('/search_result/')
 
+#重新改写Paginator
+class JuncheePaginator(Paginator):
+    def __init__(self, object_list, per_page, range_num=5, orphans=0, allow_empty_first_page=True):
+        Paginator.__init__(self, object_list, per_page, orphans, allow_empty_first_page)
+        self.range_num = range_num
+
+    def page(self, number):
+        self.page_num = number
+        return super(JuncheePaginator, self).page(number)
+
+    def _page_range_ext(self):
+        num_count = 2 * self.range_num + 1
+        if self.num_pages <= num_count:
+            return range(1, self.num_pages + 1)
+        num_list = []
+        num_list.append(self.page_num)
+        for i in range(1, self.range_num + 1):
+            if self.page_num - i <= 0:
+                num_list.append(num_count + self.page_num - i)
+            else:
+                num_list.append(self.page_num - i)
+
+            if self.page_num + i <= self.num_pages:
+                num_list.append(self.page_num + i)
+            else:
+                num_list.append(self.page_num + i - num_count)
+        num_list.sort()
+        return num_list
+
+    page_range_ext = property(_page_range_ext)
+
 def testfordata(request):
-    scrapy_itemtemp = from_scrapy.objects[:10]
+    scrapy_itemtemp = from_scrapy.objects[0:]
     scrapy_item = list(scrapy_itemtemp)
     print scrapy_item[0].title[0]
 
+    page = 0
+    if 'page' in request.GET:
+        page = int(request.GET.get('page'))#类型一定要搞清楚呀
+    else:
+        page = 1
+    #默认Blogs变量为scrapy_item这个变量，懒得改了
+    blogs = scrapy_item
+    paginator = JuncheePaginator(blogs, 8)
+    try:
+        blogs = paginator.page(page)
+    except PageNotAnInteger:
+        blogs = paginator.page(1)
+    except EmptyPage:
+        blogs = paginator.page(paginator.num_pages)
+
+    print blogs.paginator.page_range_ext
+
+
+    request.session['scrapydata_page'] = blogs.number
+
     context = {
-        'scrapy_item': scrapy_item
+        'scrapy_item': scrapy_item,'blogs':blogs
     }
 
     return render(request,'yz_templates/data_temp_list.html',context)
@@ -55,6 +204,64 @@ def edit_item(request):
 
     return render(request,'yz_templates/edit_item_page.html',{'item':temp[0]})
 
+
+def save_editData(request):
+
+    item_all = tb_item.objects.order_by('-item_id')
+    item_id =  int(item_all[0].item_id) + 1
+
+    item_code = item_id
+    itcl_id = 0#默认值
+    item_pa_id = 1 #默认值，是
+    item_from = 0#0代表爬虫，1代表从分享信息中来
+    xianfen = '默认'
+    #从页面取得的数据
+    item_name = request.GET['item_name']
+    item_level = int(request.GET['jibie'])
+    item_ga = request.GET['item_ga']
+    item_publish = request.GET['item_pub']
+    item_deadtime = request.GET['item_deadtime']
+    item_about = request.GET['item_about']
+    item_key = request.GET['item_guanjianzi']
+    item_status = int(request.GET['item_status'])
+    is_hot = int(request.GET['item_hot'])
+    is_recommend = int(request.GET['item_recommend'])
+    privince = request.GET['privince']
+    city = request.GET['city']
+    distr = request.GET['distr']
+    item_url = request.GET['item_url']
+    #print item_all1[0].item_code
+    if len(tb_item.objects.filter(item_name=item_name)):
+        return HttpResponse('已经添加了该名称的项目，请修改名字后添加')
+
+
+    add = tb_item()
+    add.item_id=item_id
+    add.item_code=item_code
+    add.item_name=item_name
+    add.itcl_id =itcl_id
+    add.item_about =item_about
+    add.item_level=item_level
+    add.item_pa_id= item_pa_id
+    add.item_deadtime=item_deadtime
+    add.item_publish=item_publish
+    add.privince =privince
+    add.city =city
+    add.distr = distr
+    add.xianfen =xianfen
+    add.item_from = item_from
+    add.item_ga = item_ga
+    add.item_key = item_key
+    add.item_status =item_status
+    add.is_hot =is_hot
+    add.is_recommend =is_recommend
+    add.item_url = item_url
+    add.save()
+    yuanming =request.GET['yuanming']
+
+    #等待新数据改善
+
+    return render(request,'yz_templates/edit_success.html',{})
 
 def get_the_hotrecommend():
     recommenditem = tb_item.objects.filter(is_recommend=1)
@@ -82,11 +289,14 @@ def get_and_set_info(items):
         else:
             a_item['item_consume_time'] = int(consume_time)
         a_item['pa'] = tb_item_pa.objects.get(ipa_id=item.item_pa_id).ipa_name
-        album = tb_album.objects.filter(album_type=0, affiliation_id=item.item_id, is_default=1).order_by('-nacl_sort')[
-            0]  # 获取项目对应的相册id
-        album_id = album.album_id
-        a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[
+        album = tb_album.objects.filter(album_type=0, affiliation_id=item.item_id, is_default=1).order_by('-nacl_sort')  # 获取项目对应的相册id
+        if len(album):
+            album_id = album[0].album_id
+
+            a_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[
                             14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+        else:
+            a_item['pic_url']='/static/images/12.png'
         a_item['order_num'] = len(tb_order.objects.filter(item_id=item.item_id))  # 获取项目对应订单的数量
         a_items.append(a_item)
     return a_items
@@ -146,20 +356,29 @@ def getthe_filteditem(request):
                 tmiddle_items.append(i)
     else:
         tmiddle_items = middle_items
-
-    if  (selected['bumen'].encode("utf-8") != '全部'):
+    list_temp2 = []
+    if (selected['bumen'].encode("utf-8") != '全部'):
         bumenlist = (selected['bumen'].encode("utf-8")).split(',')
+        print bumenlist
         for bumen in bumenlist:
-            list_temp1 = bumen.split(":",1)
-            if len(list_temp1)>1:
-                str_temp = list_temp1[1]
+            #print (bumen)
+            if ":" not in bumen:
+                # print (bumen)
+                for i in tmiddle_items:
+                    if bumen in (i.item_about).encode("utf-8"):
+                        items.append(i)
+            else:
+                list_temp1 = bumen.split(":", 1)
+                if len(list_temp1) > 1:
+                    str_temp = list_temp1[1]
                 list_temp2 = str_temp.split("/")
-            print list_temp2
-            for i in tmiddle_items:
-                for j in list_temp2:
-                    if j in (i.item_about).encode("utf-8"):
-                        if i not in items:#去重复
-                            items.append(i)
+
+            if len(list_temp2) != 0:
+                for i in tmiddle_items:
+                    for j in list_temp2:
+                        if j in (i.item_about).encode("utf-8"):
+                            if i not in items:  # 去重复
+                                items.append(i)
     else:
 
     	items=tmiddle_items
@@ -183,8 +402,8 @@ def item_sortbyLevel(request):
     a_items = []
     items = []
     filted_item = getthe_filteditem(request)
-    print request.COOKIES['search_content']
-    print len(filted_item)
+    #print request.COOKIES['search_content']
+    #print len(filted_item)
     if len(filted_item) == 0:
         goodsname = ''
         ads = []
@@ -356,13 +575,13 @@ def project_detail(request):
         # 能保证取到吗
         project_detail_item_id = request.GET['id']
 
-    addclick = tb_item_click.objects.get(item_id=project_detail_item_id)
-    if addclick == None:
+    addclick = tb_item_click.objects.filter(item_id=project_detail_item_id)
+    if len(addclick)==0 :
         addclick = tb_item_click(itcl_id=0, item_id=project_detail_item_id, click_counter=1)
         addclick.save()
     else:
-        addclick.click_counter += 1
-        addclick.save()
+        addclick[0].click_counter += 1
+        addclick[0].save()
     item = tb_item.objects.get(item_id=project_detail_item_id)
     item.item_pa_name = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_name  # 扩展对象属性，直接填写即可YZ
     item.item_pa_address = (tb_item_pa.objects.get(ipa_id=item.item_pa_id)).ipa_address
@@ -380,13 +599,21 @@ def project_detail(request):
         recommend = get_and_set_info(recommendtemp)
 
         album = tb_album.objects.filter(album_type=0, affiliation_id=project_detail_item_id, is_default=1).order_by(
-            '-nacl_sort')[0]  # 获取项目对应的相册id
-        album_id = album.album_id
-        pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0:4]  # 获取前四张图片
-        for pic in pics:
-            a_pic = pic.pic_object.url[14:]
-            # print a_pic
-            a_pics.append(a_pic)
+            '-nacl_sort')  # 获取项目对应的相册id
+        if len(album):
+            album_id = album[0].album_id
+            pics = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')  # 获取前四张图片
+            if len(pics)>=4:
+                pics = pics [:4]
+            else:
+                pics=pics[:len(pics)]
+            for pic in pics:
+                a_pic = pic.pic_object.url[14:]
+                # print a_pic
+                a_pics.append(a_pic)
+        else:
+            a_pics = []
+
         if not a_pics:
             pic_url = '/static/zhengzihui_app/img_for_items/default.jpg'
             a_pics.append(pic_url)

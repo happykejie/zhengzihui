@@ -43,7 +43,8 @@ sys.setdefaultencoding('utf8')
 #zss条件筛选
 def filter_labels(request):
     keys = request.GET['filterkeys']
-    print keys
+    #print keys
+    #print request.GET['key_name']
     if 'bumen_class1' in request.GET:
 
         request.session['bumen'] = keys
@@ -111,10 +112,15 @@ def user_center(request):
             a_click_item = {}
             a_click_item['id'] = click_item.item_id  # 获取项目id
             a_click_item['name'] = (tb_item.objects.get(item_id=click_item.item_id)).item_name  # 获取项目名字
-            album = tb_album.objects.filter(album_type=0, affiliation_id=click_item.item_id, is_default=1).order_by('-nacl_sort')[0]  # 获取项目对应的相册id
-            album_id = album.album_id
-            a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            album = tb_album.objects.filter(album_type=0, affiliation_id=click_item.item_id, is_default=1).order_by('-nacl_sort')  # 获取项目对应的相册id
+            if len(album):
+
+                album_id = album[0].album_id
+                a_click_item['pic_url'] = tb_pic.objects.filter(album_id=album_id).order_by('-pic_id')[0].pic_object.url[14:]  # 获得最大pic_id的图片 切片14是去除前缀zhengzihui_app 否则图片不能显示
+            else:
+                a_click_item['pic_url'] ='/static/images/12.png'
             a_click_items.append(a_click_item)
+
     '''recommend_items = tb_item.objects.filter(is_recommend=1).order_by('-item_id')[:15]#获取推荐的前15的项目
     for recommend_item in recommend_items:
         a_recommend_item= {}
@@ -635,7 +641,11 @@ def selectpay(request):
         #goodsid 肯定存在的
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
-            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            goods = tb_goods.objects.filter(goods_id = service_detail_goods_id)
+            if len(goods):
+                goods=goods[0]
+            else:
+                return HttpResponse('该项目暂时还没有服务商，您可以收藏该项目！')
             response = render(request,'selectpay.html', {'goods':goods})
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
@@ -644,7 +654,11 @@ def selectpay(request):
     else:
         if request.GET['goodsid']:
             service_detail_goods_id = request.GET['goodsid']
-            goods = tb_goods.objects.get(goods_id = service_detail_goods_id)
+            goods = tb_goods.objects.filter(goods_id = service_detail_goods_id)
+            if len(goods):
+                goods=goods[0]
+            else:
+                return HttpResponse('你还未登陆，请登录。且您访问的项目暂时还没有服务商提供服务！')
             response =  HttpResponseRedirect("/regCompany")
             if 'unregist_tobepay_goodsid' in request.COOKIES:
                 response.delete_cookie('unregist_tobepay_goodsid') 
@@ -821,76 +835,7 @@ def merge_service_details(request):
 
 
 
-#申请加盟BY jianuo
-def applyforjoin(request):	
-    add = []
-    sp_type=""
-    
-    if request.method == 'POST':
-        flag = request.POST.get("flag")
-        myflag=str(flag)
-        #print myflag
-        sp_name = request.POST.get("sp_name")
-        con_name = request.POST.get("con_name")
-        tel = request.POST.get("tel")
-        email = request.POST.get("email")
-        sp_type1= request.POST.get("sp_type1","")
-        sp_type2= request.POST.get("sp_type2","")
-        sp_type3= request.POST.get("sp_type3","")
-        if myflag == "1":
-          sp_type=sp_type1
-        if myflag=="2":
-          sp_type=sp_type1+"+"+sp_type2
-        if myflag=="3":
-          sp_type=sp_type1+"+"+sp_type3
-        
-        print sp_type
 
-        
-
-        
-
-
-        add = tb_service_provider()
-       
-        add.tel = request.POST.get("tel")
-        add.email = request.POST.get("email")
-        add.sp_name = request.POST.get("sp_name")
-        add.con_name = request.POST.get("con_name")
-        add.sp_type =sp_type
-        #add by yz
-
-        
-
-        sp_code = random.randint(0, 1000000)
-        while (len(tb_service_provider.objects.filter(sp_code =sp_code)) == 1):
-            sp_code = random.randint(0, 1000000)
-        add.sp_code = sp_code
-        add.psw = '000000'
-
-        add.sp_auth =0#默认值\
-        add.master ='000'#默认值\
-        add.sp_image1 ='000'
-        add.sp_image2 ='000'
-        add.sp_grade =00#默认值\
-        add.sp_sort=00#默认值
-        add.area_id='00'
-        add.Register_cap =00
-        add.staff_number =00
-        add.Annual_totals =00
-        add.organization_name ='00'
-        add.organization_id =00
-        add.organization_assets =00
-        add.organization_profile ='000'
-        add.is_recommend =0
-		
-		
-
-        add.save()
-        return render_to_response("success.html", {})
-    return render_to_response("applyforjoin.html",{})
-def success(request):
-    return render_to_response("success.html",{})
 
 
 

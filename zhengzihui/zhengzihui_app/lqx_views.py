@@ -32,7 +32,6 @@ def modify_merchant(request):
     
 
     return HttpResponseRedirect('/zzh/merchant_center')
-##商家登录页面        
 def merchant(request):
     errors= []  
     sp_name=None  
@@ -62,15 +61,15 @@ def merchant(request):
                 sp_type1=request.POST.get('sp_type1')
                 #ms:print "testing..."
                 #print sp_type
-                
+                response = HttpResponse()
                 if sp_type1=="sp_typetwo":
-                  return render(request,"testpage1.html")
+                  response =  render(request,"support_merchant.html")
+
                   
                 if sp_type1=="sp_typethree":
-                  return render(request,"testpage1.html")
-
-                response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
-                
+                  response = render(request,"testpage1.html")
+                if sp_type1=='sp_typeone':
+                    response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
                 #print(user.expand.company_name)
@@ -403,3 +402,98 @@ def sjglordering(request):
 	name = tb_service_provider.objects.get(sp_id=gid).sp_name
 	order = tb_order.objects.filter(sp_id=gid)
 	return render(request,"sjglordering.html",{'lis':order,'name':name})   
+  
+#配套商家dingdanguanli
+def supporting_orders(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 2
+    all_order = get_all_order_of_sp(sp_id)
+
+    for order in all_order:
+
+        if order.efile_send :
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+
+    #request.COOKIES['first_page'] = 0
+    return render(request,"supporting_orders.html",{'all_order':all_order,'sp_id':sp_id})
+
+def sort_order(request):
+    sp_id = request.GET.get('sp_id')
+    flag = request.GET.get('flag')
+    if flag == '0':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-add_time')
+    elif flag == '1':
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('promise_finish_time')
+
+    else:
+        all_order = tb_order.objects.filter(sp_id=sp_id).order_by('-finish_percentage')
+
+    for order in all_order:
+        # print order.goods_id
+        temp_order = tb_goods.objects.get(goods_id=order.goods_id)
+        temp_buyer = tb_user.objects.get(user_id=order.buyer_id)
+        if temp_buyer.expand_id:
+
+            temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
+            buyer_expand_address = temp_buyer_expand.company_address
+            print buyer_expand_address
+
+            if buyer_expand_address == '':
+                buyer_expand_address == '该用户所在公司还未完善地址信息 '
+            buyer_expand_contact = temp_buyer_expand.companyUserContactName
+            if buyer_expand_contact == '':
+                buyer_expand_contact = '该用户所在公司还未指定联系人'
+        else:
+            buyer_expand_address = "用户还未填写,请电话联系"
+            buyer_expand_contact = temp_buyer.user_name
+        goods_name = temp_order.goods_name
+        if order.efile_send:
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+        # 添加的三个属性
+        order.goods_name = goods_name
+        order.buyer_expand_address = str(buyer_expand_address)
+        order.buyer_expand_contact = str(buyer_expand_contact)
+    # request.session['first_page'] = 0
+    return render(request, "supporting_orders.html", {'all_order': all_order, 'sp_id': sp_id})
+def change_paper_send_state2(request):
+    if 'order_id' in request.GET:
+        order_id = request.GET.get('order_id')
+        temp_order = tb_order.objects.get(order_id=order_id)
+        temp_order.paper_send = 1
+        temp_order.save()
+        # 很冗余的代码，就是为了取订单
+        if 'sp_id' in request.COOKIES:
+            sp_id = request.COOKIES['sp_id']
+        else:
+            sp_id = 2
+        all_order = get_all_order_of_sp(sp_id)
+
+        for order in all_order:
+            # print order.goods_id
+
+            if order.efile_send:
+                order.str_efile_send = '已经交付'
+            else:
+                order.str_efile_send = '未交付'
+            if order.paper_send:
+                order.str_paper_send = '已经送达'
+            else:
+                order.str_paper_send = '未送达'
+        # request.COOKIES['first_page'] = 0
+        return render(request, "supporting_orders.html", {'all_order': all_order})
+    else:
+        return HttpResponse("没有正确的订单号")  
