@@ -404,9 +404,9 @@ def cmap(request):
                 return HttpResponse("等待处理")
             else:
                 user_id=request.COOKIES['user_id']
-                #conc=tb_customcompany.objects.get(company_id=user_id).conclusion 
+                conc=tb_customcompany.objects.get(company_id=user_id).conclusion 
                 #wu shu ju  xie si le de ce shi shui chan 
-                conc="水产"
+                #conc="水产"
                 A=tb_user.objects.get(user_id = user_id).user_name
                 B=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  1)
                 C=tb_item.objects.filter(item_about__contains =  conc) .filter(item_level=  2)
@@ -498,8 +498,8 @@ def savec(request):
 #发布服务待后台验证
 def buspubservice(request):
 	sp_id=1
-	#if 'user_id' in request.COOKIES:
-	#	sp_id=request.COOKIES['user_id']
+	if 'user_id' in request.COOKIES:
+		sp_id=request.COOKIES['user_id']
 	if(request.method=="POST"):
 		mod=""
 		fea=""
@@ -562,8 +562,8 @@ def buspubservice(request):
 #企业端，服务管理
 def busmaservice(request):
 	sp_id=1
-	#if 'user_id' in request.COOKIES:
-	#	sp_id=request.COOKIES['user_id']
+	if 'user_id' in request.COOKIES:
+		sp_id=request.COOKIES['user_id']
 	goods = tb_goods.objects.filter(sp_id=sp_id)
 	return render_to_response("busmaservice.html",{'goods_list':goods,})
 	
@@ -747,9 +747,9 @@ def bw_badetailfs(request):
 	res['price'] = tb_goods.objects.get(goods_id=goodsid).goods_payahead + tb_goods.objects.get(goods_id=goodsid).goods_awardmid +tb_goods.objects.get(goods_id=goodsid).goods_awardafter
 	res['loc']=tb_user_expand.objects.get(user_id=guestid).company_address
 	shopid = tb_order.objects.get(order_no = ba.order_no).sp_id
-	res['sname']=tb_companyuser.objects.get(companyUserId=shopid).companyUserCompanyName
-	res['sloc']=tb_companyuser.objects.get(companyUserId=shopid).companyUserCompanyAddress
-	res['con']=tb_companyuser.objects.get(companyUserId=shopid).companyUserContactName
+	res['sname']=tb_service_provider.objects.get(sp_id=shopid).sp_name
+	res['sloc']=tb_service_provider.objects.get(sp_id=shopid).sp_address
+	res['con']=tb_service_provider.objects.get(sp_id=shopid).tel
 	#res['otime']=tb_order.objects.get(order_no = ba.order_no).add_time
 	res['fctime']=ba.ba_ftime
 	res['sta']=ba.ba_sta
