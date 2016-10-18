@@ -962,3 +962,87 @@ def starts(request):
 	i.save()
 	return HttpResponseRedirect('/b_work_index/')
 
+def pub_support(request):
+	sp_id=1
+	'''if 'sp_id' not in request.COOKIES:
+		#sp_id=request.COOKIES['user_id']
+		return HttpResponseRedirect('/merchant')'''
+	if 'sp_id' in request.COOKIES:
+		sp_id=request.COOKIES['sp_id']
+	if(request.method=="POST"):
+		mod=""
+		fea=""
+		payt=0
+		payth=0
+		if(request.POST.get("modon")):
+			mod+=request.POST.get("modon")
+			pay=request.POST.get("paya")
+		if(request.POST.get("modtw")):
+			mod+=request.POST.get("modtw")
+			payt=request.POST.get("payb")
+		if(request.POST.get("modth")):
+			mod+=request.POST.get("modth")
+			payth=request.POST.get("payc")
+		#print(mod)
+		if(request.POST.get("feaon")):
+			fea+=request.POST.get("feaon")
+			fea+="  "
+		if(request.POST.get("featw")):
+			fea+=request.POST.get("featw")
+			fea+="  "
+		if(request.POST.get("feath")):
+			fea+=request.POST.get("feath")
+			fea+="  "
+		if(request.POST.get("feafo")):
+			fea+=request.POST.get("feafo")
+			fea+="  "
+		if(request.POST.get("feafi")):
+			fea+=request.POST.get("feafi")
+			fea+="  "
+		#print(fea)
+		
+		sname=request.POST.get("sname")
+		#payt=request.POST.get("payb")
+		fuwuneirong=request.POST.get("fuwuneirong")
+		fuwuliucheng=request.POST.get("fuwuliucheng")
+		chenggonganli=request.POST.get("chenggonganli")
+		fanli=request.POST.get("fanli")
+		#print(fanli)
+		add=tb_goods_wfc()
+		add.goods_payahead=pay
+		add.goods_awardmid=payt
+		add.goods_awardafter=payth
+		#add.goods_id
+		add.goods_name=sname
+		add.item_id=1
+		add.sp_id=sp_id
+		add.goods_fanli=fanli
+		add.fea=fea
+		add.cont=fuwuneirong
+		add.steps=fuwuliucheng
+		add.exa=chenggonganli
+		add.smod=mod
+		add.save()
+        #print(111)
+		return render_to_response("buswaitforchecked.html",{})
+	else:
+		return render_to_response("buspubservice.html",{})
+	#return HttpResponse("morning")
+
+
+def mana_support(request):
+	sp_id=1
+	'''if request.COOKIES['sp_id'] is None:
+		#sp_id=request.COOKIES['user_id']
+		print 111
+		return HttpResponseRedirect('/merchant')
+	
+	'''
+	#if sp_id in request.COOKIES:
+	sp_id=request.COOKIES['sp_id']
+	print (request.COOKIES['sp_id'])
+	goods = tb_goods.objects.filter(sp_id=sp_id)
+	return render_to_response("busmaservice.html",{'goods_list':goods,})
+	#return HttpResponse("byebye")
+
+

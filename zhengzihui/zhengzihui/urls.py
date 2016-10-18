@@ -288,6 +288,11 @@ urlpatterns = [
     url(r'^rongzi_index/$',zhengzihui_app.views.rongzi_index,name='rongzi_index'),
     url(r'^rongzi_filter_labels/$',zhengzihui_app.views.rongzi_filter_labels,name='rongzi_filter_labels'),
     url(r'^rongzi_item_detail_wfb/$',zhengzihui_app.views.rongzi_item_detail_wfb,name='rongzi_item_detail_wfb'),
+	
+	
+    #配套服务服务部分
+    url(r'^pub_support/$',zhengzihui_app.views.pub_support,name='pub_support'),
+    url(r'^mana_support/$',zhengzihui_app.views.mana_support,name='mana_support'),
 
 
 ]

@@ -1638,6 +1638,7 @@ def get_push_info(user_prefer):
 def get_all_table_info():
     all_user = tb_user.objects.all()
     # 获得有填写相关领域的用户，即有企业信息的用户
+
     for user in all_user:
         if user.expand_id is None:
             all_user.remove(user)

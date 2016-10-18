@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
   <script src="/static/jquery-2.14/jquery.js"></script>
+  <script src="/static/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+
   <link rel="stylesheet" href="/static/bootstrap-3.3.5/css/bootstrap.min.css">
 <title>
 商家入驻
@@ -65,9 +66,6 @@
 <center><a href="#"><font color="white" size="4px" onclick="zzh_back_index()">主页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">服务维护</font></a></center>
-</div>
-<div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="supporting_orders()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
@@ -76,9 +74,22 @@
     <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="auxiliary_comment()">点评管理</font></a></center>
 </div>
-    <div class = "col-sm-1 col-md-1 col-lg-1">
+<div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="#">信息维护</font></a></center>
 </div>
+<div class = "col-sm-1 col-md-1 col-lg-1" >
+<center>
+<div class="dropdown">
+<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font color="white" size="3px">服务管理</font><span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="#"><font onclick="pub_support()">配套发布</font></a></li>
+<li class="divider"></li>
+<li><a href="#"><font onclick="mana_support()">配套管理</font></a></li>
+</ul>
+</div>
+</center>
+</div>
+
 
 </div>
 
@@ -108,9 +119,18 @@
 		$('#fra').attr('src',url);
 	}
 
+	function pub_support(){
+	        var url="/pub_support"
+        	$('#fra').attr('src',url);
+	}
+	function mana_support(){
+	        var url="/mana_support"
+        	$('#fra').attr('src',url);
+	}
 	function auxiliary_comment(){
 	    var url="/auxiliary_comment"
         $('#fra').attr('src',url);
+
     }
 
 </script>
