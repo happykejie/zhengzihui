@@ -1,12 +1,10 @@
 #coding=utf-8
 from views import *
 
-
-
-
-
-
-
+SECRET_KEY = '+a^0qwojpxsam*xa5*y_5o+#9fej#+w72m998sjc!e)oj9im*y'
+token_confirm = Token(SECRET_KEY)
+appkey='23297047'
+secret='45af9457a7d64b7ff5d04162f01d804a'
 
 
 

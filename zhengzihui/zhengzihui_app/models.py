@@ -68,7 +68,7 @@ class tb_user_expand(models.Model):
 
 class tb_user(models.Model):
     user_id = models.AutoField("用户id",primary_key = True)
-    expand = models.ForeignKey(tb_user_expand,verbose_name='对应的扩展表',null=True)
+    expand = models.ForeignKey(tb_user_expand,verbose_name='对应的扩展表',default=99999,null=True)
     user_name = models.CharField("用户名称",max_length=100,null=False,blank=False)
     user_password = models.CharField("密码",max_length=100,null=False,blank=False)
     user_telephone = models.CharField("电话",max_length=40,null=False,blank=False)

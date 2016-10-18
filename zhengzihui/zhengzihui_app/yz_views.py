@@ -125,7 +125,7 @@ def indexto_search_result(request):
         return HttpResponseRedirect('/search_result/')
     if 'bumen' in request.GET:
         bumen = request.GET['bumen']
-        print bumen
+        #print bumen
         request.session['bumen'] = bumen
         return HttpResponseRedirect('/search_result/')
         #return HttpResponse(request.session['jibie'])
@@ -1152,10 +1152,11 @@ def get_today_order(wt_order ):
 
 #YZ 这个views还需要改进，等待女生们
 def busindex(request):
+    sp_id = 1
     if 'sp_id' in request.COOKIES:
         sp_id = request.COOKIES['sp_id']
     else:
-        sp_id = 1
+        return HttpResponseRedirect('/merchant')
     all_order = get_all_order_of_sp(sp_id)
 
     weichuli_order = []
@@ -1326,7 +1327,7 @@ def get_all_order_of_sp(sp_id):
 
             temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
             buyer_expand_address = temp_buyer_expand.company_address
-            print buyer_expand_address
+            #print buyer_expand_address
 
             if buyer_expand_address == '':
                 buyer_expand_address == '该用户所在公司还未完善地址信息 '
@@ -1461,7 +1462,7 @@ def sort_has_pay(request):
 
             temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
             buyer_expand_address = temp_buyer_expand.company_address
-            print buyer_expand_address
+            #print buyer_expand_address
 
             if buyer_expand_address == '':
                 buyer_expand_address == '该用户所在公司还未完善地址信息 '
@@ -1505,7 +1506,7 @@ def sort_order_manage(request):
 
             temp_buyer_expand = tb_user_expand.objects.get(user_id=order.buyer_id)
             buyer_expand_address = temp_buyer_expand.company_address
-            print buyer_expand_address
+            #print buyer_expand_address
 
             if buyer_expand_address == '':
                 buyer_expand_address == '该用户所在公司还未完善地址信息 '
@@ -1611,7 +1612,7 @@ def zzh_back_reg(request):
         email = request.POST.get("email")
         back_psw = request.POST.get("back_psw")
         back_type = request.POST.get("back_type")
-        print user_name,tel,email,back_psw,back_type
+        #print user_name,tel,email,back_psw,back_type
         newback = tb_back_user()
         newback.user_name = user_name
         newback.user_password = back_psw
@@ -1670,7 +1671,7 @@ def info_push(request):
         if sortbystatus == 1:
             for show in all_list_info_show:
                 if show[2]==0:
-                    print show
+                    #print show
                     sorted_show_info.append(show)
             all_list_info_show = sorted_show_info
             return render(request, 'info_push.html', {'all_list_info_show': all_list_info_show})
@@ -1688,7 +1689,7 @@ def push_info_save(request):
     temp_push = push_info.objects.filter(push_item_id=item_id)
     if len(temp_push):
         for push in temp_push:
-            print push.push_to_user
+            #print push.push_to_user
             if push.push_to_user == user_id:
 
                 return HttpResponse('已经向该用户推送该项目')
@@ -1906,7 +1907,7 @@ def project_detail_short(request):
             # 获得热门推荐的项目
             recommendtemp = get_the_hotrecommend()
             recommend = get_and_set_info(recommendtemp)
-            print "sdklfsdlflsdkflsdklksdlfksdlfksdkl"
+            #print "sdklfsdlflsdkflsdklksdlfksdlfksdkl"
             context = {'item': item, 'article': article[0], 'a_pics': a_pics, 'recommend': recommend,
                        'gettimeInstance': gettimeInstance,}
             return render(request, 'yz_templates/project_detail_short.html', context)
@@ -1919,6 +1920,6 @@ def user_push_info(request):
     for push in all_push:
         temp = tb_item.objects.get(item_id=push.push_item_id)
         all_item.append(temp)
-    print all_item
+    #print all_item
     return render(request,'yz_templates/user_push_info.html',{'all_item':all_item,})
 

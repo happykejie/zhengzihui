@@ -417,14 +417,17 @@ def pay(request):
     #order.save()
 	pay_url = p_alipay.alipay.create_direct_pay_by_user(_goods_id, "充值测试", "hello zhong",
                                                             _total_price) 
-	return render(request, 'pay.html', {'pay_url': pay_url})
-	 
+	return render(request, 'pay.html', {'pay_url': pay_url})	 
 #企业画报
 def cmap(request):
     #ce shi shu ju mu qian xie si le 
 
     #request.COOKIES['user_id']="2016"
+    if 'user_id' not in request.COOKIES:
+        return HttpResponseRedirect('/regCompany/')
     if 'user_id' in request.COOKIES:
+	if(tb_user.objects.get(user_id=request.COOKIES['user_id']).user_type)==0:
+	    return HttpResponse("您不是企业用户，无法使用此功能")
         if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0 :
             return  render_to_response("e_customization.html",{})
         else:
@@ -472,12 +475,14 @@ def custom(request):
      #return render_to_response("e_customization.html",{})
     #ce shi shu ju mu qian xie si le 
     #request.COOKIES['user_id']="2016"
+    if 'user_id' not in request.COOKIES:
+        return HttpResponseRedirect('/regCompany/')
     if 'user_id' in request.COOKIES:
         if(len(tb_customcompany.objects.filter(company_id=request.COOKIES['user_id'])))==0:
           #print (123) 
           return render_to_response("e_customization.html",{})
         else:
-            return HttpResponse("等待处理")       
+            return HttpResponseRedirect('/custmap')       
            
         #else:
          #   return HttpResponse("map for e_man")
@@ -501,7 +506,6 @@ def savec(request):
         ziben=request.POST.get("ziben")
         zimiaoshu=request.POST.get("qiyejianjie")
         xiangmumiaoshu=request.POST.get("xiangmujianjie")
-
         zimiaoshutu=request.POST.get("jianjiefile")
         xiangmutu=request.POST.get("xiangmufile")
         #print(xiangmutu)
@@ -526,8 +530,11 @@ def savec(request):
 #发布服务待后台验证
 def buspubservice(request):
 	sp_id=1
-	if 'user_id' in request.COOKIES:
-		sp_id=request.COOKIES['user_id']
+	'''if 'sp_id' not in request.COOKIES:
+		#sp_id=request.COOKIES['user_id']
+		return HttpResponseRedirect('/merchant')'''
+	if 'sp_id' in request.COOKIES:
+		sp_id=request.COOKIES['sp_id']
 	if(request.method=="POST"):
 		mod=""
 		fea=""
@@ -590,8 +597,15 @@ def buspubservice(request):
 #企业端，服务管理
 def busmaservice(request):
 	sp_id=1
-	if 'user_id' in request.COOKIES:
-		sp_id=request.COOKIES['user_id']
+	'''if request.COOKIES['sp_id'] is None:
+		#sp_id=request.COOKIES['user_id']
+		print 111
+		return HttpResponseRedirect('/merchant')
+	
+	'''
+	#if sp_id in request.COOKIES:
+	sp_id=request.COOKIES['sp_id']
+	print (request.COOKIES['sp_id'])
 	goods = tb_goods.objects.filter(sp_id=sp_id)
 	return render_to_response("busmaservice.html",{'goods_list':goods,})
 	
@@ -600,8 +614,8 @@ def busmaservice(request):
 #企业端，服务的退回和修改	
 def merge_service_details(request):
 	sp_id=1
-	#if 'user_id' in request.COOKIES:
-	#	sp_id=request.COOKIES['user_id']
+	if 'sp_id' in request.COOKIES:
+		sp_id=request.COOKIES['sp_id']
 	if (request.method=="GET"):
 		mid=request.GET.get("goodsid")
 		#print (mid)
@@ -674,7 +688,6 @@ def merge_service_details(request):
 #后台管理主页
 def b_work_index(request):
     if 'back_id' in request.COOKIES:
-
 	    return render_to_response("b_work_index.html",{})
     else:
         return HttpResponseRedirect('/zzh_back_login/')
