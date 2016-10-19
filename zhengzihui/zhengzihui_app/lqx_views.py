@@ -64,13 +64,13 @@ def merchant(request):
                 #ms:print "testing..."
                 #print sp_type
                 response = HttpResponse()
-                if sp_type1=="sp_typetwo":
+                if sp_type1=="2":
                   response =  render(request,"support_merchant.html")
 
                   
-                if sp_type1=="sp_typethree":
-                  response = render(request,"testpage1.html")
-                if sp_type1=='sp_typeone':
+                if sp_type1=="3":
+                  response = render(request,"financing_merchant.html")
+                if sp_type1=='1':
                     response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
@@ -498,4 +498,26 @@ def change_paper_send_state2(request):
         # request.COOKIES['first_page'] = 0
         return render(request, "supporting_orders.html", {'all_order': all_order})
     else:
-        return HttpResponse("没有正确的订单号")  
+        return HttpResponse("没有正确的订单号")
+
+#融资服务
+def financing_orders(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+    else:
+        sp_id = 2
+    all_order = get_all_order_of_sp(sp_id)
+
+    for order in all_order:
+
+        if order.efile_send :
+            order.str_efile_send = '已经交付'
+        else:
+            order.str_efile_send = '未交付'
+        if order.paper_send:
+            order.str_paper_send = '已经送达'
+        else:
+            order.str_paper_send = '未送达'
+
+    #request.COOKIES['first_page'] = 0
+    return render(request,"financing_orders.html",{'all_order':all_order,'sp_id':sp_id})
