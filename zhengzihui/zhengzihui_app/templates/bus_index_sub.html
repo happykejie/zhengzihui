@@ -20,6 +20,7 @@
 	<div class="panel-heading">
         <h3 class="panel-title">未处理订单 &nbsp; <font color="red">{{order_num_info.0}}</font></h3>
     </div>
+
    		 <div class="panel-body">
 
 	<div class="table-responsive">
@@ -73,10 +74,14 @@
 
     </div>
    		 <div class="panel-body">
+	     {% if mine_comment %}
 			 {% for comment in mine_comment %}
 
 				<h3 align="center">用户<font color="blue" >{{comment.user_name}}</font>对您公司的<font color="red">{{comment.goods_name}}</font>服务有如下评价:<font color="yellow">{{comment.goev_content}}</font></h3>
 			 {% endfor %}
+		     {% else %}
+		     <h3>暂无用户对您公司的服务点评！</h3>
+		     {% endif %}
     	</div>
 	</div>
 </div>
@@ -105,6 +110,7 @@
         <h3 class="panel-title">最新发布服务</h3>
     </div>
    		 <div class="panel-body">
+	     {% if latest_serv %}
 
 			 {% for goods in latest_serv %}
 				<div class="row">
@@ -118,6 +124,9 @@
 					</div>
 				</div>
 			{% endfor %}
+		     {% else %}
+		     <h2>您还未发布过服务</h2>
+		     {% endif %}
 
 
     	</div>

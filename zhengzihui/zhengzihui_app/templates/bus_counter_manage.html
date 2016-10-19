@@ -12,6 +12,7 @@
 <body>
 
     <h2>结算管理</h2>
+    {% if all_order%}
     <a href="/sort_has_pay/?sp_id={{sp_id}}&flag=1">已结算</a>|<a href="/sort_has_pay/?sp_id={{sp_id}}&flag=0">未结算</a>
 <table class="table table-condensed">
 
@@ -53,7 +54,9 @@
     </tbody>
 </table>
 
-
+{% else %}
+    <h2>还没有订单，所以暂时不提供结算功能</h2>
+    {% endif %}
 <!--点击编辑的script脚本-->
 			<script>
 				  $(document).ready(function(){

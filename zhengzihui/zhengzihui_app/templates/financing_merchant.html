@@ -63,30 +63,23 @@
 
 <div class ="row" style="background-color:#009999; line-height:5em">
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">主页</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="busindex_sub()">主页</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="financing_orders()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">结算管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="#">资源管理</font></a></center>
 </div>
     <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="#">点评管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">信息维护</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="info_main()">信息维护</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center>
-<div class="dropdown">
-<a class="dropdown-toggle" data-toggle="dropdown" href="#"><font color="white" size="3px">服务管理</font><span class="caret"></span></a>
-<ul class="dropdown-menu">
-<li><a href="#"><font onclick="pub_support()">配套发布</font></a></li>
-<li class="divider"></li>
-<li><a href="#"><font onclick="mana_support()">配套管理</font></a></li>
-</ul>
-</div>
+
 </center>
 </div>
 
@@ -97,7 +90,7 @@
 </div>
 
 <div class="row">
-<iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="/zzh_back_index"></iframe>
+<iframe id="fra" class="col-sm-12 col-md-12 col-lg-12" scrolling="yes" marginwidth="0px" frameborder="0" height="1000px" src="/busindex_sub"></iframe>
 
 
 </div>
@@ -108,6 +101,16 @@
 
     function financing_orders(){
     	   var url="/supporting_orders"
+		//var url="/balfororders"
+		$('#fra').attr('src',url);
+	}
+    function busindex_sub(){
+    	   var url="/busindex_sub"
+		//var url="/balfororders"
+		$('#fra').attr('src',url);
+	}
+	function info_main(){
+    	   var url="/rongzi_info_main"
 		//var url="/balfororders"
 		$('#fra').attr('src',url);
 	}

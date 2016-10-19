@@ -20,6 +20,8 @@ from django.core.paginator import EmptyPage
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+def rongzi_info_main(request):
+    return render(request,'yz_templates/info_main.html',{})
 
 def get_the_rongzi_item(type,sorttype):
     pass
@@ -54,19 +56,20 @@ def rongzi_filter_labels(request):
 
     if 'sortflag' in request.GET:
         if request.GET['type']=='renqi':
-            print keys,firstclass,request.session['rongzi_firstclass'],request.session['rongzi_filterkeys']
-            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+            #print keys,firstclass,request.session['rongzi_firstclass'],request.session['rongzi_filterkeys']
+            #加入firstclass的判断主要是因为刚进入到融资广场的时候就点排序的话
+            if firstclass==''or request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
                 rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_click_counter')
             else:
                 rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_click_counter')
 
         elif  request.GET['type']=='leixing':
-            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+            if  firstclass==''or request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
                 rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_type_Value')
             else:
                 rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_type_Value')
         else:
-            if request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
+            if   firstclass==''or request.session['rongzi_firstclass']=='' or request.session['rongzi_filterkeys']==''or request.session['rongzi_filterkeys']=='全部':
                 rongzi_item = tb_rongzi_item.objects.order_by('-fuwu_provide_money')
             else:
                 rongzi_item=tb_rongzi_item.objects.filter(fuwu_Toptype=request.session['rongzi_firstclass'],fuwu_Subtype=request.session['rongzi_filterkeys']).order_by('-fuwu_provide_money')
@@ -1205,8 +1208,8 @@ def busindex(request):
     mine_comment = []
     for comment in latest_comment:
         temp_goods = tb_goods.objects.get(goods_id = comment.goods_id)
-        temp_sp = tb_service_provider.objects.get(sp_id = temp_goods.sp_id)
-        if temp_sp:
+        temp_sp = tb_service_provider.objects.filter(sp_id = temp_goods.sp_id)
+        if len(temp_sp):
             mine_comment.append(comment)
 
     mine_notice = []
@@ -1232,8 +1235,9 @@ def busindex(request):
 
 
 def busindex_sub(request):
+    sp_id = 0
     if 'sp_id' in request.COOKIES:
-        sp_id = request.COOKIES['sp_id']
+        sp_id = int(request.COOKIES['sp_id'])
     else:
         sp_id = 1
     all_order = get_all_order_of_sp(sp_id)
@@ -1284,10 +1288,11 @@ def busindex_sub(request):
     mine_comment = []
     for comment in latest_comment:
         temp_goods = tb_goods.objects.get(goods_id = comment.goods_id)
-        temp_sp = tb_service_provider.objects.get(sp_id = temp_goods.sp_id)
-        if temp_sp:
-            mine_comment.append(comment)
 
+        if temp_goods.sp_id == sp_id:
+            mine_comment.append(comment)
+    print mine_comment
+    print sp_id
     mine_notice = []
     #later WILL changge YZ 没有针对不同的商家推送不同的通知，获取的是全网的通知
     latest_notice = Tb_Notice.objects.all()[:2]

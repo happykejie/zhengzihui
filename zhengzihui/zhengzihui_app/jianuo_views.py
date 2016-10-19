@@ -169,6 +169,7 @@ def bpm_details(request):
 
 # 后台首页 by jianuo
 def zzh_back_index(request):
+    sp_id = 0
     if 'sp_id' in request.COOKIES:
         sp_id = request.COOKIES['sp_id']
     else:
@@ -268,6 +269,8 @@ def zzh_back_index(request):
 
     # 点评管理
     comment_list = tb_goods_evaluation.objects.all()
+
+
     eping_comment = []
     zhengchang_comment = []
     qitaping_comment = []
@@ -430,5 +433,6 @@ def supporting_guests(request):
         else:
             order.str_has_pay = '未结算'
             # request.session['first_page'] = 0
-	return render_to_response("supporting_guests.html",{'all_order': all_order, 'sp_id': sp_id})
+    #return HttpResponse('Testing')
+	return render(request,'supporting_guests.html',{'all_order': all_order, 'sp_id': sp_id})
 

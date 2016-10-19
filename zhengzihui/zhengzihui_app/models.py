@@ -1107,7 +1107,7 @@ class tb_rongzi_fuwu_pic(models.Model):
         verbose_name_plural = '图片表'
     def __str__(self):   #python 2
             return self.pic_name
-
+'''#这里不用是为了在登录的时候方便整合，统一接口
 class tb_rongzi_fuwu_sp(Common_Area_Info):
     sp_id = models.AutoField("内部ID",primary_key = True)
     sp_name = models.CharField('服务商名称',max_length=100,null=False)
@@ -1159,7 +1159,7 @@ class tb_rongzi_fuwu_sp(Common_Area_Info):
     class Meta:
         verbose_name = '融资服务商'
         verbose_name_plural = '融资服务商'
-
+'''
 class tb_rongzi_fuwu_service(Common_Area_Info):
     fuwu_service_code = models.IntegerField('服务对应的编号',null=False)
     fuwu_service_name = models.CharField('对应融资项目的服务',max_length=1000,null=False)

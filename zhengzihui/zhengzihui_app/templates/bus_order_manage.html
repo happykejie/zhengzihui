@@ -12,6 +12,7 @@
 <body>
 
 <h2>订单管理</h2>
+{% if all_order %}
     <a href="/sort_order_manage/?sp_id={{sp_id}}&flag=0">按接单时间</a>|<a href="/sort_order_manage/?sp_id={{sp_id}}&flag=1">按交单时间</a>|<a href="/sort_order_manage/?sp_id={{sp_id}}&flag=2">按完成进度最多排序</a>
 <table class="table table-condensed">
 
@@ -53,6 +54,8 @@
     </tbody>
 </table>
 
-
+{% else %}
+<h2>暂时没有订单！</h2>
+{% endif %}
 </body>
 </html>

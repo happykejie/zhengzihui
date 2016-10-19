@@ -40,7 +40,14 @@ def merchant(request):
     password=None
     sp = tb_service_provider()
     if 'sp_id' in request.COOKIES:
-        response = render(request,'bus_index.html',{})
+        sp_id = int(request.COOKIES['sp_id'])
+        sp_type = tb_service_provider.objects.get(sp_id =sp_id).sp_type
+        if sp_type =='1':
+            response = render(request,'bus_index.html',{})
+        elif sp_type=='2':
+            response = render(request,'support_merchant.html',{})
+        else:
+            response = render(request,'financing_merchant.html',{})
         return response
         
     if request.method == 'POST' :  
@@ -64,14 +71,27 @@ def merchant(request):
                 #ms:print "testing..."
                 #print sp_type
                 response = HttpResponse()
-                if sp_type1=="2":
-                  response =  render(request,"support_merchant.html")
-
-                  
-                if sp_type1=="3":
-                  response = render(request,"financing_merchant.html")
-                if sp_type1=='1':
-                    response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
+                if sp_type1=="2" and sp.sp_type == '2':
+                  if sp.sp_auth == 1:
+                    response =  render(request,"support_merchant.html")
+                  else:
+                        return HttpResponse('请等待政资汇对您的认证！')
+                elif sp_type1=="2" and sp.sp_type != '2':
+                  return HttpResponse("您不是配套服务提供商！")
+                if sp_type1=="3" and sp.sp_type == '3':
+                  if sp.sp_auth == 1:
+                    response = render(request,"financing_merchant.html")
+                  else:
+                        return HttpResponse('请等待政资汇对您的认证！')
+                elif sp_type1=="3" and sp.sp_type != '3':
+                  return HttpResponse("您不是融资服务提供商！")
+                if sp_type1=='1'and sp.sp_type == '1':
+                    if sp.sp_auth == 1:
+                        response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
+                    else:
+                        return HttpResponse('请等待政资汇对您的认证！')
+                elif sp_type1=="1" and sp.sp_type != '1':
+                    return HttpResponse("您不是申报服务提供商！")
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
                 #print(user.expand.company_name)
