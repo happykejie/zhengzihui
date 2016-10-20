@@ -143,7 +143,7 @@ class tb_companyuser(models.Model):
 defaultImageURLoftb_service_provider_sp_image1 = 'img/tb_service_provider_sp_img1/%Y/%m/%d'
 defaultImageURLoftb_service_provider_sp_image2 = 'img/tb_service_provider_sp_img2/%Y/%m/%d'
         
-class  tb_service_provider(models.Model):
+class  tb_service_provider(Common_Area_Info):
     #sp_code = models.IntegerField("服务提供商编码",primary_key=True,null=False,blank=False)
     sp_code = models.IntegerField("服务提供商编码",null=True,blank=False)
     #sp_id = models.IntegerField("内部ID",null=False,blank=False)
@@ -171,6 +171,15 @@ class  tb_service_provider(models.Model):
 
     sp_type=models.CharField('合作类型',max_length=60,null=False,blank=False)
     con_name=models.CharField('联系人姓名',max_length=30,null=False,blank=False)
+    con_number=models.CharField('联系人电话',max_length=50,null=True,blank=True)
+    con_email=models.CharField('联系人邮箱',max_length=50,null=True,blank=True)
+
+    chargeman_number=models.CharField('负责人电话',max_length=50,null=True,blank=True)
+    chargeman_name=models.CharField('负责人姓名',max_length=50,null=True,blank=True)
+    chargeman_email=models.CharField('负责人邮箱',max_length=50,null=True,blank=True)
+
+    short_intro = models.CharField('服务商简介',max_length=1000,null=True,blank=True)
+
     PASSAUTH = 1
     NOTPASSAUTH = 0
     WAITAUTH = 2
@@ -199,6 +208,11 @@ class  tb_service_provider(models.Model):
 
     def __str__(self):
         return str(self.sp_code)
+
+
+class sp_inservice_area(Common_Area_Info):
+    sp_id = models.IntegerField('服务商的id',null=False)
+
 
    
     

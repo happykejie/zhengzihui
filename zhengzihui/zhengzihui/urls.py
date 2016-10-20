@@ -289,8 +289,12 @@ urlpatterns = [
     url(r'^rongzi_index/$',zhengzihui_app.views.rongzi_index,name='rongzi_index'),
     url(r'^rongzi_filter_labels/$',zhengzihui_app.views.rongzi_filter_labels,name='rongzi_filter_labels'),
     url(r'^rongzi_item_detail_wfb/$',zhengzihui_app.views.rongzi_item_detail_wfb,name='rongzi_item_detail_wfb'),
-    url(r'^rongzi_info_main/$',zhengzihui_app.views.rongzi_info_main,name='rongzi_info_main'),
 
+
+
+    url(r'^rongzi_info_main/$',zhengzihui_app.views.rongzi_info_main,name='rongzi_info_main'),
+    url(r'^addnew_area/$',zhengzihui_app.views.addnew_area,name='addnew_area'),
+    url(r'^resource_manage/$',zhengzihui_app.views.resource_manage,name='resource_manage'),
 
     #配套服务服务部分
     url(r'^pub_support/$',zhengzihui_app.views.pub_support,name='pub_support'),

@@ -20,8 +20,64 @@ from django.core.paginator import EmptyPage
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+def resource_manage(request):
+    return render(request,'yz_templates/resource_manage.html',{})
+def addnew_area(request):
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+
+        if 'privince' in request.GET:
+            if len(sp_inservice_area.objects.filter(privince=request.GET['privince'],city = request.GET['city'],distr = request.GET['distr'])):
+                return HttpResponse('2')
+
+            sp = sp_inservice_area()
+            print request.GET['privince']
+            sp.privince = request.GET['privince']
+            sp.city = request.GET['city']
+            sp.distr = request.GET['distr']
+            sp.xianfen = '默认县份'
+            sp.sp_id = sp_id
+            sp.save()
+            return HttpResponse('1')
+
+
+    else:
+        #return HttpResponse('herer')
+        return HttpResponse('3')
+
+
 def rongzi_info_main(request):
-    return render(request,'yz_templates/info_main.html',{})
+
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+        sp = tb_service_provider.objects.get(sp_id = sp_id)
+        all_area = sp_inservice_area.objects.filter(sp_id=sp_id)
+        if 'flag' in request.GET:
+
+            chargeman_name = request.GET['chargeman_name']
+            chargeman_number = request.GET['chargeman_number']
+            chargeman_email = request.GET['chargeman_email']
+            con_email = request.GET['con_email']
+            con_name = request.GET['con_name']
+            con_number = request.GET['con_number']
+            short_intro = request.GET['short_intro']
+
+            temp_sp = tb_service_provider.objects.get(sp_id = sp_id)
+            temp_sp.chargeman_name = chargeman_name
+            temp_sp.chargeman_number = chargeman_number
+            temp_sp.chargeman_email = chargeman_email
+            temp_sp.con_name = con_name
+            temp_sp.con_number = con_number
+            temp_sp.con_email = con_email
+            temp_sp.short_intro = short_intro
+            temp_sp.save()
+
+            return render(request,'yz_templates/info_main.html',{'sp':sp,'all_area':all_area})
+        else:
+            return render(request,'yz_templates/info_main.html',{'sp':sp,'all_area':all_area})
+    else:
+        #return HttpResponse('herer')
+        return HttpResponseRedirect('/merchant/')
 
 def get_the_rongzi_item(type,sorttype):
     pass
@@ -1235,7 +1291,7 @@ def busindex(request):
 
 
 def busindex_sub(request):
-    sp_id = 0
+    sp_id = 1
     if 'sp_id' in request.COOKIES:
         sp_id = int(request.COOKIES['sp_id'])
     else:

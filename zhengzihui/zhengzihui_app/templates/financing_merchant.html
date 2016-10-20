@@ -69,7 +69,7 @@
 <center><a href="#"><font color="white" size="4px" onclick="financing_orders()">订单管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">资源管理</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="resource_manage()">资源管理</font></a></center>
 </div>
     <div class = "col-sm-1 col-md-1 col-lg-1">
 <center><a href="#"><font color="white" size="4px" onclick="#">点评管理</font></a></center>
@@ -111,6 +111,11 @@
 	}
 	function info_main(){
     	   var url="/rongzi_info_main"
+		//var url="/balfororders"
+		$('#fra').attr('src',url);
+	}
+	function resource_manage(){
+    	   var url="/resource_manage"
 		//var url="/balfororders"
 		$('#fra').attr('src',url);
 	}
