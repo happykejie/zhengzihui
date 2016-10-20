@@ -27,7 +27,7 @@ def addnew_area(request):
         sp_id = request.COOKIES['sp_id']
 
         if 'privince' in request.GET:
-            if len(sp_inservice_area.objects.filter(privince=request.GET['privince'],city = request.GET['city'],distr = request.GET['distr'])):
+            if len(sp_inservice_area.objects.filter(sp_id=sp_id,privince=request.GET['privince'],city = request.GET['city'],distr = request.GET['distr'])):
                 return HttpResponse('2')
 
             sp = sp_inservice_area()
@@ -1283,8 +1283,9 @@ def busindex(request):
         mine_leatest_serv = mine_leatest_serv[0:1]
 
     #mine_info_short = tb_user.objects.get()   wait for other
+    all_area = sp_inservice_area.objects.filter(sp_id = sp_id)
     context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
-               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,}
+               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,'all_area':all_area}
     response = render(request,"bus_index.html",context)
     #response.set_cookie('first_page',1)
     return response
@@ -1364,9 +1365,10 @@ def busindex_sub(request):
         mine_leatest_serv = mine_leatest_serv[0:1]
     #get my bussiness info
     mine_info = tb_service_provider.objects.get(sp_id =sp_id)
+    all_area = sp_inservice_area.objects.filter(sp_id = sp_id)
     #mine_info_short = tb_user.objects.get()   wait for other
     context = {'weichuli_order':weichuli_order, 'order_num_info':order_num_info,'mine_comment':mine_comment, 'mine_notice':mine_notice, 'mine_leatest_serv':mine_leatest_serv,
-               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,'mine_info':mine_info,}
+               'mine_info_short':None,'latest_serv':mine_leatest_serv,'today_order_num':None,'mine_info':mine_info,'all_area':all_area}
     response = render(request,"bus_index_sub.html",context)
     response.set_cookie('first_page',1)
     return response

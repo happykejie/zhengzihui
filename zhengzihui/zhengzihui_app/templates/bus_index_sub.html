@@ -140,7 +140,7 @@
         <h3 class="panel-title">常用信息</h3>
     </div>
    		 <div class="panel-body">
-			 <p>服务区域： 成都 </p>
+			 <p>服务区域： {% for area in all_area %} {{ area.privince }};{% endfor %} </p>
 			 <p>服务商联系人:{{mine_info.con_name}}</p>
 			 <p>联系电话：{{mine_info.tel}}</p>
     	</div>

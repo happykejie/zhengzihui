@@ -25,7 +25,7 @@ def applyforjoin(request):
         if myflag == "3":
             sp_type = sp_type1 + "+" + sp_type3
 
-        print sp_type
+        #sprint sp_type
 
         add = tb_service_provider()
 
@@ -37,7 +37,7 @@ def applyforjoin(request):
         # add by yz
 
         all_sp=tb_service_provider.objects.order_by('-sp_id')
-        sp_id = all_sp[0].sp_id
+        sp_id = all_sp[0].sp_id+1
 
         sp_code = random.randint(0, 1000000)
         while (len(tb_service_provider.objects.filter(sp_code=sp_code)) == 1):
@@ -434,5 +434,5 @@ def supporting_guests(request):
             order.str_has_pay = '未结算'
             # request.session['first_page'] = 0
     #return HttpResponse('Testing')
-	return render(request,'supporting_guests.html',{'all_order': all_order, 'sp_id': sp_id})
+    return render(request,'supporting_guests.html',{'all_order': all_order, 'sp_id': sp_id})
 

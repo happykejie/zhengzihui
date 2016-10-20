@@ -42,10 +42,11 @@ def merchant(request):
     if 'sp_id' in request.COOKIES:
         sp_id = int(request.COOKIES['sp_id'])
         sp_type = tb_service_provider.objects.get(sp_id =sp_id).sp_type
-        if sp_type =='1':
-            response = render(request,'bus_index.html',{})
-        elif sp_type=='2':
+        if '配套服务'in sp_type :
+
             response = render(request,'support_merchant.html',{})
+        elif '项目申报' in sp_type:
+            response = render(request,'bus_index.html',{})
         else:
             response = render(request,'financing_merchant.html',{})
         return response
@@ -71,26 +72,26 @@ def merchant(request):
                 #ms:print "testing..."
                 #print sp_type
                 response = HttpResponse()
-                if sp_type1=="2" and sp.sp_type == '2':
+                if sp_type1=="2" and ('配套服务'in sp.sp_type) :
                   if sp.sp_auth == 1:
                     response =  render(request,"support_merchant.html")
                   else:
                         return HttpResponse('请等待政资汇对您的认证！')
-                elif sp_type1=="2" and sp.sp_type != '2':
+                elif sp_type1=="2" and ('配套服务'not in sp.sp_type):
                   return HttpResponse("您不是配套服务提供商！")
-                if sp_type1=="3" and sp.sp_type == '3':
+                if sp_type1=="3" and ('融资'in sp.sp_type) :
                   if sp.sp_auth == 1:
                     response = render(request,"financing_merchant.html")
                   else:
                         return HttpResponse('请等待政资汇对您的认证！')
-                elif sp_type1=="3" and sp.sp_type != '3':
+                elif sp_type1=="3" and ('融资'not in sp.sp_type):
                   return HttpResponse("您不是融资服务提供商！")
-                if sp_type1=='1'and sp.sp_type == '1':
+                if sp_type1=='1'and (sp.sp_type=='项目申报' ) :
                     if sp.sp_auth == 1:
                         response = HttpResponseRedirect('/busindex/')#render(request,'bus_index.html',{})#HttpResponseRedirect('/busindex/')
                     else:
                         return HttpResponse('请等待政资汇对您的认证！')
-                elif sp_type1=="1" and sp.sp_type != '1':
+                elif sp_type1=="1" and (sp.sp_type!='项目申报' ):
                     return HttpResponse("您不是申报服务提供商！")
                 response.set_cookie('sp_name',sp_name,3600)
                 response.set_cookie('sp_id',sp.sp_id,3600)
@@ -344,7 +345,7 @@ def balfororders(request):
         order.s_type=str(order.s_type)   
         
     #print sp_type
-    
+    order = []
     if sp_type=='项目申报':
         for order in all_order:
            print order.sptype
