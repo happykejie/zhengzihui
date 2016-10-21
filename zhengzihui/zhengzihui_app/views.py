@@ -752,6 +752,7 @@ def info_main(request):
 
 
 
+'''
 def busmaservice(request):
 	sp_id=1
 	#if 'user_id' in request.COOKIES:
@@ -834,7 +835,7 @@ def merge_service_details(request):
 
 
 
-
+'''
 
 
 

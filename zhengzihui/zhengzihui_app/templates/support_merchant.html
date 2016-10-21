@@ -75,7 +75,7 @@
 <center><a href="#"><font color="white" size="4px" onclick="auxiliary_comment()">点评管理</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1">
-<center><a href="#"><font color="white" size="4px" onclick="#">信息维护</font></a></center>
+<center><a href="#"><font color="white" size="4px" onclick="info_me()">信息维护</font></a></center>
 </div>
 <div class = "col-sm-1 col-md-1 col-lg-1" >
 <center>
@@ -104,6 +104,10 @@
 
 
 <script>
+	function info_me(){
+		var url="/support_info_main"
+		$('#fra').attr('src',url);
+	}
 	function zzh_back_index(){
 		var url="/busindex_sub"
 		$('#fra').attr('src',url);

@@ -289,7 +289,7 @@ urlpatterns = [
     url(r'^rongzi_index/$',zhengzihui_app.views.rongzi_index,name='rongzi_index'),
     url(r'^rongzi_filter_labels/$',zhengzihui_app.views.rongzi_filter_labels,name='rongzi_filter_labels'),
     url(r'^rongzi_item_detail_wfb/$',zhengzihui_app.views.rongzi_item_detail_wfb,name='rongzi_item_detail_wfb'),
-
+    url(r'^support_info_main/$',zhengzihui_app.views.support_info_main,name='support_info_main'),
 
 
     url(r'^rongzi_info_main/$',zhengzihui_app.views.rongzi_info_main,name='rongzi_info_main'),

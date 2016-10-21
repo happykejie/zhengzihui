@@ -605,9 +605,10 @@ def busmaservice(request):
 	'''
 	#if sp_id in request.COOKIES:
 	sp_id=request.COOKIES['sp_id']
-	print (request.COOKIES['sp_id'])
+	#print (sp_id)
 	goods = tb_goods.objects.filter(sp_id=sp_id)
-	return render_to_response("busmaservice.html",{'goods_list':goods,})
+	#print (goods)
+	return render_to_response("busmaservice.html",{'goods_list':goods})
 	
 
 
@@ -1044,5 +1045,40 @@ def mana_support(request):
 	goods = tb_goods.objects.filter(sp_id=sp_id)
 	return render_to_response("busmaservice.html",{'goods_list':goods,})
 	#return HttpResponse("byebye")
+
+def support_info_main(request):
+
+    if 'sp_id' in request.COOKIES:
+        sp_id = request.COOKIES['sp_id']
+	print sp_id
+        sp = tb_service_provider.objects.get(sp_id = sp_id)
+	print sp
+        all_area = sp_inservice_area.objects.filter(sp_id=sp_id)
+        if 'flag' in request.GET:
+
+            chargeman_name = request.GET['chargeman_name']
+            chargeman_number = request.GET['chargeman_number']
+            chargeman_email = request.GET['chargeman_email']
+            con_email = request.GET['con_email']
+            con_name = request.GET['con_name']
+            con_number = request.GET['con_number']
+            short_intro = request.GET['short_intro']
+
+            temp_sp = tb_service_provider.objects.get(sp_id = sp_id)
+            temp_sp.chargeman_name = chargeman_name
+            temp_sp.chargeman_number = chargeman_number
+            temp_sp.chargeman_email = chargeman_email
+            temp_sp.con_name = con_name
+            temp_sp.con_number = con_number
+            temp_sp.con_email = con_email
+            temp_sp.short_intro = short_intro
+            temp_sp.save()
+
+            return render(request,'yz_templates/info_main.html',{'sp':sp,'all_area':all_area})
+        else:
+            return render(request,'yz_templates/info_main.html',{'sp':sp,'all_area':all_area})
+    else:
+        #return HttpResponse('herer')
+        return HttpResponseRedirect('/merchant/')
 
 
