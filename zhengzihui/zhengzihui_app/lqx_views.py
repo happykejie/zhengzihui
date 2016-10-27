@@ -287,18 +287,12 @@ def bw_order_manage_detail(request):
         order.sptype = temp_sptype
         order.stime = temp_stime  # 商家交单时间
         order.ftime = temp_ftime  # 平台交单时间
-        ##lqx判断服务类型
-        if order.sptype == '申报服务提供商':
-            order.s_type = '项目申报'
-        elif order.sptype == '项目申报配套服务工商代办' | '项目申报配套服务资质代办' | '项目申报配套服务知识产权' | '项目申报配套服务财务服务':
-            order.s_type = '配套服务'
-        else:
-            order.s_type = '融资服务'
-        order.s_type = str(order.s_type)
+        order.s_type = str(order.sptype)
 
     return render(request, "bw_order_manage_detail.html",
                   {'all_order': all_order, 'sp_id': sp_id, 'merchant': merchant})
-                  
+
+
 def balfororders(request):
     if 'sp_id' in request.COOKIES:
         sp_id = request.COOKIES['sp_id']
@@ -334,27 +328,20 @@ def balfororders(request):
             order.str_paper_send = '已经送达'
         else:
             order.str_paper_send = '未送达'
-            
-        ##lqx判断服务类型
-        if order.sptype=='申报服务提供商':
-            order.s_type='项目申报'
-        elif order.sptype=='项目申报配套服务工商代办'|'项目申报配套服务资质代办'|'项目申报配套服务知识产权'|'项目申报配套服务财务服务':
-            order.s_type='配套服务'
-        else:
-            order.s_type='融资服务'
-        order.s_type=str(order.s_type)   
+
+        order.s_type=str(order.sptype)
         
     #print sp_type
     order = []
     if sp_type=='项目申报':
         for order in all_order:
            print order.sptype
-           if order.sptype=='申报服务提供商':
+           if order.sptype=='项目申报':
               filter_order.append(order)
       
     print len(filter_order)
     
-    return render(request,"balfororders.html",{'all_order':filter_order,'sp_id':sp_id,"sp_type1":sp_type1,"sp_type2":sp_type2,"sp_type3":sp_type3,"sp_type":sp_type,'order.buyer_name':order.buyer_name})  
+    return render(request,"balfororders.html",{'all_order':filter_order,'sp_id':sp_id,"sp_type1":sp_type1,"sp_type2":sp_type2,"sp_type3":sp_type3,"sp_type":sp_type,})
 #lqx订单管理
 def sort_order_time(request):
 	if 'sp_id' in request.COOKIES:
@@ -376,7 +363,7 @@ def sort_order_time(request):
 		##lqx判断服务类型
 		if order.sptype == '申报服务提供商':
 			order.s_type = '项目申报'
-		elif order.sptype == '项目申报配套服务工商代办' | '项目申报配套服务资质代办' | '项目申报配套服务知识产权' | '项目申报配套服务财务服务':
+		elif order.sptype == '项目申报配套服务':
 			order.s_type = '配套服务'
 		else:
 			order.s_type = '融资服务'
@@ -384,7 +371,7 @@ def sort_order_time(request):
 
 	# print sp_type
 	return render(request, "balfororders.html", {'all_order': all_order, 'sp_id': sp_id})
-    
+
 ##商家管理lqx
 def baformerchant(request):
     if 'sp_id' in request.COOKIES:

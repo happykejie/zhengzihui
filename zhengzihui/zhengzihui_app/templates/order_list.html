@@ -159,7 +159,7 @@
            </thead>
            <tbody>
             {% for order in a_order_list %}
-              <tr>
+              <tr class="aaa">
                  <td><center><div class="list-content">
                                 <a href="{% url 'service_details' %}?goodsid={{ order.goods_id }}">
                                     <img src="{{ order.pic_url }}">
@@ -170,8 +170,17 @@
                  </td>
                  <td align="center"><br><br>价格{{ order.order_amount }}</td>
                  <td><br><br>{{ order.add_time }}</td>
-                 <td align="center"><br><br><font size=" 2">{{ order.order_state}}</font></td>
-                 <td><br><button type="submit" class="btn btn-success">立即支付</button><br><br><p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="{% url 'order_detail' %}?id={{ order.order_id }}">查看订单</a><!--<a href="{% url 'project_detail' %}?id={{ a_click_item.id }}">查看订单</a>--><p></td>
+                 <td class="order-status-text" align="center"><br><br><font size=" 2">{{ order.order_state}}</font></td>
+                 <td class="operation">
+                     <a id="enter" title="{% url 'order_enter' %}?id={{ order.order_id }}" class="btn btn-success btn-block opration-a">确认完成</a>
+                    <a id="give_up" title="{% url 'order_giveup' %}?id={{ order.order_id }}" class="btn btn-success btn-block opration-a">申请关闭</a>
+                    <a id="pay" href="{% url 'pay' %}?goodsidtopay={{ order.goods_id }}" class="btn btn-success btn-block ">去支付</a>
+                    <a id="delete" title="{% url 'order_delete' %}?id={{ order.order_id }}" class="btn btn-success btn-block opration-a">删除订单</a>
+                    <a id="commit" href="{% url 'order_commit' %}?id={{ order.order_id }}" class="btn btn-success btn-block ">去评论</a>
+                    <p id="lock1">申请正在处理中</p>
+                    <p id="lock2">(现在不可操作)</p>
+                    <p id="commited">已评价</p><br>
+                     <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="{% url 'order_detail' %}?id={{ order.order_id }}">查看订单</a><!--<a href="{% url 'project_detail' %}?id={{ a_click_item.id }}">查看订单</a>--><span></td>
               </tr>
             {% endfor %}
            </tbody>
@@ -179,7 +188,7 @@
     </div>
 
 
-<!--    <div id="order">
+    <!--<div id="order">
         <p>我的订单</p>
         <div id="order-button">
             <button type="button" class="btn btn-success">全选</button>
@@ -268,17 +277,17 @@
                 }else{
                     $(this).find("#commited").show();
                 }
-        		
+
         	}
         	if(text ==="申请处理中"){
         		$(this).find("#lock1").show();
         		$(this).find("#lock2").show();
         	}
-        	
-        });
-        
 
-       
+        });
+
+
+
     	$("#order-list").find(".opration").each(function(){
     		$(this).children(".opration-a").each(function(){
                 $(this).click(function(){
@@ -286,7 +295,7 @@
             			var hide = $(this).parent().parent();   //注意要在ajax的外面使用this，否则this的上下文指的是ajax对象
             			var url = $(this).attr("title");
                 		$.ajax({method:"GET",url:url,dataType:"text",success:function(text){
-                    		if(text === '0'){  
+                    		if(text === '0'){
                         		hide.animate({height:"0px",opacity:"0"},500).fadeOut("fast",function(){
                         		});
                    	 		}
@@ -302,9 +311,38 @@
                 		}})
                 	}
     		    })
-    	
+
         	});
     	});
+
+        $(".operation").children("a").hide();//先隐藏所有操作按钮
+        $(".operation").children("p").hide();//先隐藏所有操作按钮
+        $(".aaa").each(function(){
+        	var text = $(this).find(".order-status-text").text().trim();
+            var commit = $(this).find(".commit-status").text().trim();
+        	if(text === "未付款" || text === "已取消"){
+        		$(this).find("#pay").show();
+        		$(this).find("#delete").show();
+        	}
+            if(text ==="已付款" || text === "已发货"){
+        		$(this).find("#enter").show();
+        		$(this).find("#give_up").show();
+        	}
+        	if(text ==="已验收"){
+        		$(this).find("#delete").show();
+                if(commit === "未评价"){
+                    $(this).find("#commit").show();
+                }else{
+                    $(this).find("#commited").show();
+                }
+
+        	}
+        	if(text ==="申请处理中"){
+        		$(this).find("#lock1").show();
+        		$(this).find("#lock2").show();
+        	}
+
+        });
     })
 </script>
 </div>
