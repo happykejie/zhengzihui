@@ -15,7 +15,9 @@
 <ul>
     
     {% for item in blogs %}
-	<li><a href="/edit_item/?title={{item.title.0}}">{{item.title.0}}</a></li>
+	<li><a href="/edit_item/?title={{item.title}}">{{item.title}}</a></li>
+<!--{% if item.edit  %}
+<h3>已经编辑</h3>{%  endif  %} -->
     {% endfor %}
 
 

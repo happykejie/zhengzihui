@@ -22,6 +22,7 @@ class from_scrapy(Document):
     time = StringField()
     url = StringField()
     content =StringField()
+    # edit = StringField()
     meta = {'strict': False}#important
 
 

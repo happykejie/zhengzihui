@@ -38,13 +38,14 @@
     <link rel="stylesheet" type="text/css" href="/static/yz_static/zzsc.css">
     <link rel="stylesheet" href="/static/yz_static/dcalendar.picker.css"/>
 </head>
-<body>
-<p><a href ="{{ item.url.0 }}">项目原文地址</a></p>
+<body onload = 'showinhtml()'>
+<p><a href ="{{ item.url }}">项目原文地址</a></p>
+
 
 <form role="form">
   <div class="form-group">
     <label for="name">项目文章内容</label>
-    <textarea class="form-control " style="width: 100%;height: 500px" rows="3" id="content" >{{ item.content.0 }}</textarea>
+<div><p  id='pre'>{{item.content}}</p></div>
   </div>
 </form>
 
@@ -62,7 +63,7 @@
    <div class="form-group">
       <label for="regName" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目名称：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="regName" name="item_name" onblur="checkRegName();" placeholder="" style="display:inline;" value="{{item.title.0}}">
+         <input type="text" class="form-control" id="regName" name="item_name" onblur="checkRegName();" placeholder="" style="display:inline;" value="{{item.title}}">
       </div>
       <span class="label label-success" id="regNameSuccess"></span>
  	  <span class="label label-danger" id="regNameDanger"></span>
@@ -71,7 +72,7 @@
        <div class="form-group">
       <label for="password" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目原文链接：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="password" name="item_url" onblur="checkPassword();" placeholder="" style="display:inline;" value="{{item.url.0}}">
+         <input type="text" class="form-control" id="password" name="item_url" onblur="checkPassword();" placeholder="" style="display:inline;" value="{{item.url}}">
       </div>
       <span class="label label-success" id="passwordSuccess"></span>
  	  <span class="label label-danger" id="passwordDanger"></span>
@@ -135,7 +136,7 @@
    <div class="form-group">
       <label for="companyLocation" class="col-sm-2 control-label"><font color="#FF0000" >*</font>项目发布时间：</label>
       <div class="col-sm-3">
-         <input type="text" class="form-control" id="companyLocation" name="item_pub" onblur="checkCompanyLocation();" placeholder="请输入项目发布时间" style="display:inline;" value="{{item.time.0}}">
+         <input type="text" class="form-control" id="companyLocation" name="item_pub" onblur="checkCompanyLocation();" placeholder="请输入项目发布时间" style="display:inline;" value="{{item.time}}">
           <p>Tip:如果发布日期不是2013-12-13这样的格式，请一定更改为此格式再提交</p>
 
       </div>
@@ -185,7 +186,7 @@
        <div class="form-group">
 
       <div class="col-sm-3">
-       <input type="hidden"class="form-control"  id ='yuanming' name="yuanming" style="display:inline;" value="{{ item.title.0 }}">
+       <input type="hidden"class="form-control"  id ='yuanming' name="yuanming" style="display:inline;" value="{{ item.title }}">
 
       </div>
       </div>
@@ -535,6 +536,20 @@ function regCompanySub(){
 
 
 
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+//alert('Hi');
+
+var data =$("#pre").text();
+//alert(data);
+$("#pre").html(data);
+//var data_after = $("#pre").val();
+//alert(data_after);
+//$("#content").html(data_after);
+
+});
 </script>
 
 </body>

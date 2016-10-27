@@ -226,7 +226,7 @@ class JuncheePaginator(Paginator):
 def testfordata(request):
     scrapy_itemtemp = from_scrapy.objects[0:]
     scrapy_item = list(scrapy_itemtemp)
-    print scrapy_item[0].title[0]
+    
 
     page = 0
     if 'page' in request.GET:
@@ -256,12 +256,27 @@ def testfordata(request):
 
 def edit_item(request):
 
-    title = request.GET['title']
-    print title
-    temp = from_scrapy.objects(title=title)
-
-
-    return render(request,'yz_templates/edit_item_page.html',{'item':temp[0]})
+    title = str(request.GET['title'])
+    #print title 
+    flag = 0
+    temp = None
+    all_item = from_scrapy.objects.all()
+    for item in all_item:
+	
+       # print str(item.title)
+        if (title in item.title):
+            
+            temp = item
+            flag = 1  		
+          
+        
+   
+    if temp !=None:
+	return render(request,'yz_templates/edit_item_page.html',{'item':temp})
+    else:
+	#a = type(title)
+        info = (title==all_item[0].title)#+str(flag)
+	return HttpResponse(info)
 
 
 def save_editData(request):
@@ -1701,7 +1716,7 @@ def get_push_info(user_prefer):
 def get_all_table_info():
     all_user = tb_user.objects.all()
     # 获得有填写相关领域的用户，即有企业信息的用户
-
+    all_user = list(all_user)
     for user in all_user:
         if user.expand_id is None:
             all_user.remove(user)
@@ -1727,6 +1742,7 @@ def get_all_table_info():
 
 def info_push(request):
     all_list_info_show = get_all_table_info()
+    all_list_info_show = list(all_list_info_show)
     sortbystatus = 0
     if 'sortbystatus' in request.GET:
         sortbystatus = int(request.GET['sortbystatus'])
