@@ -20,6 +20,8 @@ from django.core.paginator import EmptyPage
 '''获取数据库的项目信息并完成序列化，可以输入到模板的横条项目框中
     输入项目对象列表；输出一个列表，包含所有序列化的项目
 '''
+def nothing(request):
+    return HttpResponse('该项目为测试项目，无原文链接')
 def resource_manage(request):
     return render(request,'yz_templates/resource_manage.html',{})
 def addnew_area(request):

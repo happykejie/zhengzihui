@@ -296,7 +296,9 @@ urlpatterns = [
     url(r'^addnew_area/$',zhengzihui_app.views.addnew_area,name='addnew_area'),
     url(r'^resource_manage/$',zhengzihui_app.views.resource_manage,name='resource_manage'),
 
-    #配套服务服务部分
+   #为测试项目的无URL部分准备的默认
+    url(r'^nothing/$',zhengzihui_app.views.nothing,name='nothing'),
+   #配套服务服务部分
     url(r'^pub_support/$',zhengzihui_app.views.pub_support,name='pub_support'),
     url(r'^mana_support/$',zhengzihui_app.views.mana_support,name='mana_support'),
     url(r'^check_staff_manager/$',zhengzihui_app.views.check_staff_manager,name='check_staff_manager'),
